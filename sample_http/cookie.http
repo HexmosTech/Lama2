@@ -1,0 +1,11 @@
+# Type (GET/POST/PUT)
+POST 
+
+# URL
+http://localhost:8000/v1/coachingperiod/
+
+# DATA
+{"start_date":"2021-12-29T13:33:53.919Z","end_date":"2022-01-01T13:33:04.721Z","user_id":"26203969-96e4-4813-bf8d-7b2daba79cfe","attribute_data":{"47":"4","52":"4"}}
+
+# HEADERS
+Cookie:'sessionid=foo;another-cookie=bar'

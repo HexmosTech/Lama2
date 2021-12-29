@@ -9,7 +9,7 @@ is capable of making pure text-powered client requests.
 ## General Usage
 
 ```
-$ httpelf <request>.http
+$ elf <request>.http
 ```
 
 Find some sample request files in the 
@@ -46,5 +46,5 @@ git pull
 1. Clone [APIHub](https://gitlab.com/flyweightgroup/apihub) repo. 
 1. Create a folder for your service (ex: `impression_collector`)
 1. Start defining `*.http` files for each service specific API. 
-1. Use `httpelf file.http` to test the newly defined APIs. 
+1. Use `elf file.http` to test the newly defined APIs. 
 1. Push the API files once ready into APIHub repo
