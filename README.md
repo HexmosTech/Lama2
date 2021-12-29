@@ -12,22 +12,15 @@ $ httpelf <request>.http
 
 Find some sample request files in the 
 
-## Installation
+## Installation/Updation
 
-### Step 1: Install `httpie`
-
-In Ubuntu, this can be done via:
+If you're on ubuntu, just run:
 
 ```
-sudo snap install httpie
+git pull
+./install.sh
 ```
 
-### Step 2: Get the `httpelf` binary
-
-Simply download the binary in the `./build/` directory and place it 
-in your preferred `bin` folder, such as `/usr/bin` or `~/.local/bin`.
-
-## Build
-
-Take a look at `~/.build.sh`; it installs the necessary dependencies
-and invokes go build to generate the binary
+This will install golang/httpie if necessary,
+build `httpelf` and finally move the binary
+into `/usr/bin`
