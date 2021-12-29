@@ -65,7 +65,7 @@ func main() {
 	content := string(b) // convert content to a 'string'
 
 	r_httpv := regexp.MustCompile(`(?sm)^(GET|HEAD|POST|PUT|DELETE|CONNECT|OPTIONS|TRACE|PATCH)\s*$`)
-	r_url := regexp.MustCompile(`(?sm)^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b?([-a-zA-Z0-9()@:%_\+.~#?&//=]*).*?$`)
+	r_url := regexp.MustCompile(`(?sm)^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.?[a-zA-Z0-9()]{1,6}\b?([-a-zA-Z0-9()@:%_\+.~#?&\//=]*).*?$`)
 	r_json_obj := regexp.MustCompile(`(?sm)\s([{\[].*[}\]])$`)
 	r_varjson := regexp2.MustCompile(`(?!http)(?sm)^[\S]+=(?:(?!\S+=)\S+)+\s*$`, 0)
 	r_headers := regexp2.MustCompile(`(?!http)(?sm)^[\S]+:(?:(?!\S+:)\S+)+\s*$`, 0)
@@ -75,6 +75,8 @@ func main() {
 	json_obj := findFirst(r_json_obj, content)
 	varjson := findEach2(r_varjson, content)
 	headers := findEach2(r_headers, content)
+
+	fmt.Print("URL", url)
 
 	command := make([]string, 0)
 	if json_obj != "" {
