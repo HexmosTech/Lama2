@@ -48,3 +48,9 @@ git pull
 1. Start defining `*.http` files for each service specific API. 
 1. Use `elf file.http` to test the newly defined APIs. 
 1. Push the API files once ready into APIHub repo
+
+## `.http` format
+
+1. Lines starting with `#` are comments and are ignored altogether
+1. Order of directives doesn't matter (experiment putting headers before json or json before url). One can simply "dump" pieces of the query into the file as they emerge in the mind & expect `elf` to just handle it
+1. Cookies are specified as a header: `Cookie:'sessionid=foo;another-cookie=bar'`
