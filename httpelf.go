@@ -68,6 +68,11 @@ func SubstringIndex(str string, substr string) (int, bool) {
 }
 
 func main() {
+	if len(os.Args) < 2 {
+		fmt.Println("\u001B[31mArgument missing\u001B[0m")
+		fmt.Println("Usage: elf <request_file>.http")
+		os.Exit(0)
+	}
 	b, err := ioutil.ReadFile(os.Args[1]) // just pass the file name
 	if err != nil {
 		fmt.Print(err)
