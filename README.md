@@ -4,6 +4,8 @@
 the nascent `.http` file format to represent http(s) requests &
 is capable of making pure text-powered client requests.
 
+[[_TOC_]]
+
 ## General Usage
 
 ```
