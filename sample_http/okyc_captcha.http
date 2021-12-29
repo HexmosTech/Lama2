@@ -1,0 +1,25 @@
+GET
+https://sandbox.veri5digital.com/okyc/api/v1.0/getNewCaptcha
+{
+    "headers": {
+        "client_code": "FLYW2102",
+        "sub_client_code": "",
+        "actor_type": "NA",
+        "channel_code": "null",
+        "stan": "115710590423",
+        "user_handle_type": "SYSTEM",
+        "user_handle_value": "SYSTEM",
+        "location": "",
+        "transmission_datetime": "1571751024923",
+        "run_mode": "REAL",
+        "client_ip": "0.0.0.0",
+        "operation_mode": "SELF",
+        "channel_version": "0.0.1",
+        "function_code": "REVISED",
+        "function_sub_code": "DEFAULT"
+    },
+    "request": {
+        "uuid":""
+    }
+}
+
