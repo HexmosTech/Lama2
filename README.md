@@ -1,4 +1,4 @@
-# `httpelf`: text-powered API client
+# `httpelf`: text-powered REST API client
 
 `httpelf` is a text-file based REST API client & manager. It uses
 the nascent `.http` file format to represent http(s) requests &
@@ -9,6 +9,8 @@ is capable of making pure text-powered client requests.
 ```
 $ httpelf <request>.http
 ```
+
+Find some sample request files in the 
 
 ## Installation
 
