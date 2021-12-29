@@ -12,7 +12,20 @@ $ httpelf <request>.http
 
 Find some sample request files in the 
 
-## Installation/Updation
+### Installation
+
+If you're on ubuntu, just run:
+
+```
+git clone git@gitlab.com:flyweightgroup/apihub.git 
+./install.sh
+```
+
+This will install golang/httpie if necessary,
+build `httpelf` and finally move the binary
+into `/usr/bin`
+
+### Updates
 
 If you're on ubuntu, just run:
 
@@ -21,9 +34,7 @@ git pull
 ./install.sh
 ```
 
-This will install golang/httpie if necessary,
-build `httpelf` and finally move the binary
-into `/usr/bin`
+**Note:** overwrites the existing binary in `/usr/bin`
 
 ## FW-specific workflow
 
