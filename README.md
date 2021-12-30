@@ -56,10 +56,7 @@ git pull
 1. Cookies are specified as a header: `Cookie:'sessionid=foo;another-cookie=bar'`
 1. Two request modes are supported presently: `JSON` & `MULTIPART`
     1. `JSON` is the default mode for elf. 
-    1. Any single line with the word `MULTIPART` will trigger the `MULTIPART` mode
-1. `MULTIPART` mode can support `file@./relative/path` syntax for file uploads
+    1. The word `MULTIPART` anywhere in the request file will trigger the `MULTIPART` mode
+1. `MULTIPART` mode supports `file@./relative/path` syntax for file uploads
     1. The paths are always *relative* to the `.http` file
-
-### WIP Commands
-
-http --multipart POST http://localhost:8000/register file@2021-12-19-183652.jpg userid=lince4
+    1. An example can be found in `sample_http/fabi_register.http`
