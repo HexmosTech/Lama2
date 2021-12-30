@@ -1,0 +1,18 @@
+# Type (GET/POST/PUT)
+POST 
+
+# URL
+https://parse.apps.flyweightgroup.com:9876/parse/functions/generate_account_number 
+
+# DATA
+MULTIPART
+userprefix="shrijith.sv" 
+prefix2="blah=2"
+field1@./helloworld.jpg
+{
+"blah1":"blah2"
+}
+
+# HEADERS
+X-Parse-Application-Id:impressionserver 
+X-Parse-REST-API-Key:impressionserver

@@ -54,3 +54,12 @@ git pull
 1. Lines starting with `#` are comments and are ignored altogether
 1. Order of directives doesn't matter (experiment putting headers before json or json before url). One can simply "dump" pieces of the query into the file as they emerge in the mind & expect `elf` to just handle it
 1. Cookies are specified as a header: `Cookie:'sessionid=foo;another-cookie=bar'`
+1. Two request modes are supported presently: `JSON` & `MULTIPART`
+    1. `JSON` is the default mode for elf. 
+    1. Any single line with the word `MULTIPART` will trigger the `MULTIPART` mode
+1. `MULTIPART` mode can support `file@./relative/path` syntax for file uploads
+    1. The paths are always *relative* to the `.http` file
+
+### WIP Commands
+
+http --multipart POST http://localhost:8000/register file@2021-12-19-183652.jpg userid=lince4

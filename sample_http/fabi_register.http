@@ -1,0 +1,5 @@
+POST
+MULTIPART
+http://localhost:8000/register
+userid=lince5
+file@./helloworld.jpg
