@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
+	"log"
 	"os"
 	"os/exec"
 	"path"
@@ -13,6 +14,7 @@ import (
 
 	"github.com/creack/pty"
 	"github.com/dlclark/regexp2"
+	"github.com/joho/godotenv"
 	"github.com/tdewolff/minify/v2"
 	"github.com/tdewolff/minify/v2/json"
 	"golang.org/x/text/language"
@@ -72,7 +74,6 @@ func SubstringIndex(str string, substr string) (int, bool) {
 
 func findNamedMatch(expr *regexp2.Regexp, content string, groupName string) string {
 	match, _ := expr.FindStringMatch(content)
-	fmt.Println("Group names", expr.GetGroupNames())
 	if match == nil {
 		return ""
 	}
@@ -90,6 +91,8 @@ func main() {
 	if err != nil {
 		fmt.Print(err)
 	}
+	content := string(b) // convert content to a 'string'
+
 	fullpath, _ := filepath.Abs(os.Args[1])
 	dir, _ := path.Split(fullpath)
 	err = os.Chdir(dir)
@@ -97,7 +100,14 @@ func main() {
 		fmt.Print(err)
 	}
 
-	content := string(b) // convert content to a 'string'
+	err = godotenv.Load("elf.env")
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
+	photo := os.Getenv("PHOTO")
+	fmt.Println(photo)
+	content = os.ExpandEnv(content)
 
 	r_json_obj := regexp.MustCompile(`(?smi)^([{\[].*[}\]])$`)
 	json_obj, json_idx := findFirst(r_json_obj, content)
@@ -105,6 +115,7 @@ func main() {
 	r_httpv := regexp.MustCompile(`(?smi)^(GET|HEAD|POST|PUT|DELETE|CONNECT|OPTIONS|TRACE|PATCH)\s*$`)
 	r_url := regexp.MustCompile(`(?smi)^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.?[a-zA-Z0-9()]{1,6}\b?([-a-zA-Z0-9()@:%_\+.~#?&\//=]*).*?$`)
 	// r_varjsonorheader := regexp2.MustCompile(`(?sm)^(?![http|#|{])[\S]+[:=](?:(?!\S+[:=])\S+)+\s*$`, 0)
+	// Regex test cases: https://regex101.com/r/KDrfDt/3
 	r_linetype := regexp2.MustCompile(`(?sm)^(?![http|#|{])^("([^"]*)"|'([^']*)'|(.*?))(?P<type>[:@=])("([^"]*)"|'([^']*)'|(.*?))\s*$`, regexp2.RE2)
 	r_multipart := regexp.MustCompile(`(?smi)^MULTIPART\s*$`)
 	// r_filefield := regexp2.MustCompile(`(?sm)^(?![http|#|{])[\S]+[@](?:(?!\S+[])\S+)+\s*$`, 0)
@@ -119,17 +130,15 @@ func main() {
 	headers := make([]string, 0)
 	filefields := make([]string, 0)
 
-	/*
-		fmt.Println("JSON IDX = ", json_idx)
-		fmt.Println("===")
-		fmt.Println(content[json_idx[0]:json_idx[1]])
-		fmt.Println("===")
-	*/
+	fmt.Println("===")
+	fmt.Println("JSON IDX = ", json_idx)
+	fmt.Println("JSON OBJ = ", json_obj)
+	fmt.Println("===")
 
 	// remove multiline json object
 	linecontent := content
 	if json_idx[0] != -1 {
-		linecontent = content[:json_idx[0]] + content[json_idx[1]+1:]
+		linecontent = content[:json_idx[0]] + content[json_idx[1]:]
 	}
 	for _, line := range strings.Split(linecontent, "\n") {
 		line = strings.TrimSpace(line)
@@ -206,7 +215,8 @@ func main() {
 	fmt.Println()
 	fmt.Println(command_str)
 
-	c := exec.Command("bash", "-c", command_str)
+	// fmt.Println("EXP", exp)
+	c := exec.Command("bash", "-c", os.ExpandEnv(command_str))
 	f, err := pty.Start(c)
 	if err != nil {
 		panic(err)

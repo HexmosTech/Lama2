@@ -1,0 +1,8 @@
+POST
+${AHOST}/aadhaarscanjson
+
+{
+	"aadhaarfileb64": "'${PHOTO}'",
+	"coords": "130,327,539,331,564,607,107,617",
+	"uemail": "shrijith.sv@gmail.com"
+}
