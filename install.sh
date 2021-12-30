@@ -9,5 +9,6 @@ cmd=go
 go get $(go list -f '{{ join .Imports "\n" }}')
 go build -o elf flyweightgroup.com/httpelf
 mv elf build
+sudo rm /usr/bin/elf
 sudo cp ./build/elf /usr/bin
 echo "Built and installed latest version of httpelf"
