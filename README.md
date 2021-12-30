@@ -19,13 +19,13 @@ Find some sample request files in the
 If you're on ubuntu, just run:
 
 ```
-git clone git@gitlab.com:flyweightgroup/apihub.git 
+git clone git@gitlab.com:flyweightgroup/httpelf.git
 ./install.sh
 ```
 
 This will install golang/httpie if necessary,
 build `httpelf` and finally move the binary
-into `/usr/bin`
+into `/usr/bin` (`/usr/local/bin` in macOS)
 
 ### Updates
 
@@ -36,7 +36,7 @@ git pull
 ./install.sh
 ```
 
-**Note:** overwrites the existing binary in `/usr/bin`
+**Note:** overwrites the existing binary in `/usr/bin` (`/usr/local/bin` in macOS)
 
 ## FW-specific workflow
 
