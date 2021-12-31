@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
-	"log"
 	"os"
 	"os/exec"
 	"path"
@@ -14,12 +13,17 @@ import (
 
 	"github.com/creack/pty"
 	"github.com/dlclark/regexp2"
+	"github.com/fatih/color"
 	"github.com/joho/godotenv"
+	"github.com/rs/zerolog"
+	"github.com/rs/zerolog/log"
 	"github.com/tdewolff/minify/v2"
 	"github.com/tdewolff/minify/v2/json"
 	"golang.org/x/text/language"
 	"golang.org/x/text/search"
 )
+
+var LOG_LEVEL = "DEBUG"
 
 func Use(vals ...interface{}) {
 	for _, val := range vals {
@@ -34,7 +38,6 @@ func findFirst(expr *regexp.Regexp, content string) (string, []int) {
 	if found == nil {
 		return "", []int{-1, -1}
 	}
-
 	exactMatch := strings.TrimSpace(string(found[0]))
 	return exactMatch, index
 }
@@ -81,32 +84,72 @@ func findNamedMatch(expr *regexp2.Regexp, content string, groupName string) stri
 	return gp.Captures[0].String()
 }
 
-func main() {
+/*
+ * Two requirements:
+ * 1. Compile time setting of log level should be possible
+ * 2. Runtime overriding of the log level should be possible
+ * For (1), pass -ldflags="-X main.LOG_LEVEL=INFO" for example,
+ * to hide DEBUG messages in production.
+ * For (2), command parsing can be used to support "-v" or
+ * "--verbose" options
+ */
+func configureZeroLog(level string) {
+	log_level_map := make(map[string]zerolog.Level)
+	log_level_map["DEBUG"] = zerolog.DebugLevel
+	log_level_map["INFO"] = zerolog.InfoLevel
+	zerolog.TimeFieldFormat = zerolog.TimeFormatUnix
+	zerolog.SetGlobalLevel(log_level_map[level])
+	log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stderr})
+
+}
+
+func validateCmdArgs() {
 	if len(os.Args) < 2 {
-		fmt.Println("\u001B[31mArgument missing\u001B[0m")
-		fmt.Println("Usage: elf <request_file>.http")
+		log.Error().Str("Type", "Preprocess").Msg(color.RedString("Argument missing"))
+		log.Error().Msg(color.GreenString("Usage: elf <request_file>.http"))
 		os.Exit(0)
 	}
-	b, err := ioutil.ReadFile(os.Args[1]) // just pass the file name
-	if err != nil {
-		fmt.Print(err)
-	}
-	content := string(b) // convert content to a 'string'
+}
 
-	fullpath, _ := filepath.Abs(os.Args[1])
-	dir, _ := path.Split(fullpath)
-	err = os.Chdir(dir)
+func getHttpFileAsString(path string) string {
+	b, err := ioutil.ReadFile(path) // just pass the file name
 	if err != nil {
-		fmt.Print(err)
+		log.Fatal().Str("Type", "Preprocess").Msg(fmt.Sprint("Couldn't read: ", path))
 	}
+	return string(b)
+}
 
-	err = godotenv.Load("elf.env")
+func getFilePathComponents(name string) (string, string, string) {
+	fullpath, _ := filepath.Abs(name)
+	dir, fname := path.Split(fullpath)
+	return fullpath, dir, fname
+}
+
+func changeWorkingDir(dir string) {
+	err := os.Chdir(dir)
 	if err != nil {
-		log.Fatal("Error loading .env file")
+		log.Fatal().
+			Str("Type", "Preprocess").
+			Str("dir", dir).
+			Msg(fmt.Sprint("Moving into dir failed"))
 	}
+}
 
-	photo := os.Getenv("PHOTO")
-	fmt.Println(photo)
+func loadElfEnv() {
+	err := godotenv.Load("elf.env")
+	if err != nil {
+		log.Fatal().Str("Type", "Preprocess").Msg("Error loading elf.env file")
+	}
+}
+
+func main() {
+	configureZeroLog(LOG_LEVEL)
+	validateCmdArgs()
+	input_f := os.Args[1]
+	content := getHttpFileAsString(input_f)
+	_, dir, _ := getFilePathComponents(input_f)
+	changeWorkingDir(dir)
+	loadElfEnv()
 	content = os.ExpandEnv(content)
 
 	r_json_obj := regexp.MustCompile(`(?smi)^([{\[].*[}\]])$`)
@@ -130,10 +173,11 @@ func main() {
 	headers := make([]string, 0)
 	filefields := make([]string, 0)
 
-	fmt.Println("===")
-	fmt.Println("JSON IDX = ", json_idx)
-	fmt.Println("JSON OBJ = ", json_obj)
-	fmt.Println("===")
+	log.Debug().
+		Str("Type", "Processing").
+		Ints("JsonIdx", json_idx).
+		Str("JsonObj", json_obj).
+		Msg("Removing JSON from content")
 
 	// remove multiline json object
 	linecontent := content
@@ -152,40 +196,19 @@ func main() {
 		}
 	}
 
-	/*
-		for _, word := range varjsonorheader {
-			colonIdx, isheader := SubstringIndex(word, ":")
-			equalIdx, isequal := SubstringIndex(word, "=")
-			if isheader && isequal {
-				if colonIdx > equalIdx {
-					// equal comes first; color comes next => varjson
-					varjson = append(varjson, word)
-				} else {
-					headers = append(headers, word)
-				}
-			} else {
-				if isheader {
-					headers = append(headers, word)
-				} else {
-					varjson = append(varjson, word)
-				}
-			}
-		}
-	*/
-
-	fmt.Println("httpv", httpv)
-	fmt.Println("url", url)
-	fmt.Println("json_obj", json_obj)
-	fmt.Println("varjson", varjson)
-	fmt.Println("headers", headers)
-	fmt.Println("multipart", multipart)
-	fmt.Println("filefields", filefields)
-
+	log.Debug().
+		Str("Type", "Postprocessing").
+		Str("httpv", httpv).
+		Str("url", url).
+		Strs("varjson", varjson).
+		Strs("headers", headers).
+		Strs("filefields", filefields).
+		Msg("Extracted fields")
 	command := make([]string, 0)
 	if len(multipart) == 0 && json_obj != "" {
 		m := minify.New()
 		m.AddFuncRegexp(regexp.MustCompile("[/+]json$"), json.Minify)
-		json_obj, err = m.String("*/json", json_obj)
+		json_obj, err := m.String("*/json", json_obj)
 		if err != nil {
 			panic(err)
 		}
@@ -212,10 +235,9 @@ func main() {
 	}
 
 	command_str := strings.Join(command[:], " ")
+	log.Info().Str("Type", "Postprocessing").Msg(command_str)
 	fmt.Println()
-	fmt.Println(command_str)
-
-	// fmt.Println("EXP", exp)
+	fmt.Println()
 	c := exec.Command("bash", "-c", os.ExpandEnv(command_str))
 	f, err := pty.Start(c)
 	if err != nil {
