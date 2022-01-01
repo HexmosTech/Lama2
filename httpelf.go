@@ -142,16 +142,7 @@ func loadElfEnv() {
 	}
 }
 
-func main() {
-	configureZeroLog(LOG_LEVEL)
-	validateCmdArgs()
-	input_f := os.Args[1]
-	content := getHttpFileAsString(input_f)
-	_, dir, _ := getFilePathComponents(input_f)
-	changeWorkingDir(dir)
-	loadElfEnv()
-	content = os.ExpandEnv(content)
-
+func getSpecPieces(content string) (string, string, string, string, []string, []string, []string) {
 	r_json_obj := regexp.MustCompile(`(?smi)^([{\[].*[}\]])$`)
 	json_obj, json_idx := findFirst(r_json_obj, content)
 
@@ -204,6 +195,12 @@ func main() {
 		Strs("headers", headers).
 		Strs("filefields", filefields).
 		Msg("Extracted fields")
+
+	return httpv, url, json_obj, multipart, varjson, headers, filefields
+}
+
+func constructCommand(httpv string, url string, json_obj string, multipart string,
+	varjson []string, headers []string, filefields []string) string {
 	command := make([]string, 0)
 	if len(multipart) == 0 && json_obj != "" {
 		m := minify.New()
@@ -238,6 +235,10 @@ func main() {
 	log.Info().Str("Type", "Postprocessing").Msg(command_str)
 	fmt.Println()
 	fmt.Println()
+	return command_str
+}
+
+func executeCommand(command_str string) {
 	c := exec.Command("bash", "-c", os.ExpandEnv(command_str))
 	f, err := pty.Start(c)
 	if err != nil {
@@ -245,6 +246,20 @@ func main() {
 	}
 
 	io.Copy(os.Stdout, f)
+}
 
-	Use(httpv, url, json_obj, varjson, headers, command)
+func main() {
+	configureZeroLog(LOG_LEVEL)
+	validateCmdArgs()
+	input_f := os.Args[1]
+	content := getHttpFileAsString(input_f)
+	_, dir, _ := getFilePathComponents(input_f)
+	changeWorkingDir(dir)
+	loadElfEnv()
+	content = os.ExpandEnv(content)
+
+	httpv, url, json_obj, multipart, varjson, headers, filefields := getSpecPieces(content)
+
+	command_str := constructCommand(httpv, url, json_obj, multipart, varjson, headers, filefields)
+	executeCommand(command_str)
 }

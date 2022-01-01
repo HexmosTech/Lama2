@@ -51,12 +51,94 @@ git pull
 
 ## `.http` format
 
-1. Lines starting with `#` are comments and are ignored altogether
-1. Order of directives doesn't matter (experiment putting headers before json or json before url). One can simply "dump" pieces of the query into the file as they emerge in the mind & expect `elf` to just handle it
-1. Cookies are specified as a header: `Cookie:'sessionid=foo;another-cookie=bar'`
-1. Two request modes are supported presently: `JSON` & `MULTIPART`
-    1. `JSON` is the default mode for elf. 
-    1. The word `MULTIPART` anywhere in the request file will trigger the `MULTIPART` mode
-1. `MULTIPART` mode supports `file@./relative/path` syntax for file uploads
-    1. The paths are always *relative* to the `.http` file
-    1. An example can be found in `sample_http/fabi_register.http`
+### Comments start with `#`
+
+Lines starting with `#` are comments and hence ignored altogether
+
+### All HTTP Verbs supported - including the common GET/POST/PUT
+
+Fully supported: `GET|HEAD|POST|PUT|DELETE|CONNECT|OPTIONS|TRACE|PATCH`
+
+### JSON is the default submission type, but MULTIPART is supported too
+
+
+#### `varjson` is a simpler syntax to specify flat JSONs
+
+`varjson` values are defined as follows:
+
+```
+hello=world
+foo=bar
+```
+
+The above results in a JSON submission of the form:
+
+```
+{
+	"hello": "world",
+	"foo": "bar"
+}
+```
+
+#### Nested JSON can simply be dumped into the document at any place
+
+Check the `sample_http` directory for numerous examples of this format.
+
+####  Cookies are sent as headers
+
+Cookies are specified in a `Cookie` header as follows:
+
+```
+Cookie:'sessionid=foo;another-cookie=bar'
+```
+
+#### MULTIPART allows both file uploads & the usual fields
+
+Example:
+
+```
+POST
+MULTIPART
+http://localhost:8000/register
+userid=lince5
+file@./helloworld.jpg
+```
+
+Note that *file path is relative to the request file.*
+
+### Environments variables/commands can be defined in `<requests_dir>/elf.env`
+
+By default, `elf` looks for a `elf.env` file in the same directory as the given
+request file directory. Example `elf.env`:
+
+```
+export PHOTO=`base64 aadhaarlarge.jpg`
+export AHOST="http://localhost:8000"
+```
+
+#### Base64 of images can be obtained through an environment command
+
+In the previous section, we defined the `PHOTO` variable as a shell command.
+The results of the command can be used in a requests file as follows:
+
+```
+POST
+${AHOST}/aadhaarscanjson
+
+{
+	"aadhaarfileb64": "'${PHOTO}'",
+	"coords": "130,327,539,331,564,607,107,617",
+	"uemail": "shrijith.sv@gmail.com"
+}
+```
+
+Note that within a nested JSON, it is **madatory* to use single quotes around
+a variable expansion. This is present limitation of the `elf` system. It is 
+ideal to avoid this syntax, however given time/energy constraints we are not 
+picking up the issue. Please use the above as a template in the interim.
+
+
+### Find examples in `sample_http` folder
+
+Please explore `sample_http` folder to see some samples, and get a feel for
+how things are defined withing `.http` files.
