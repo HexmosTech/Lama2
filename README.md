@@ -1,4 +1,4 @@
-# 🧝 `httpelf`: text-powered REST API client
+# `httpelf`: text-powered REST API client
 
 `httpelf` is a text-file based REST API client & manager. It uses
 the nascent `.http` file format to represent http(s) requests &
@@ -141,4 +141,4 @@ picking up the issue. Please use the above as a template in the interim.
 ### Find examples in `sample_http` folder
 
 Please explore `sample_http` folder to see some samples, and get a feel for
-how things are defined withing `.http` files.
+how things 

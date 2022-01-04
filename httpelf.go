@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
 	"io"
 	"io/ioutil"
@@ -138,7 +139,7 @@ func changeWorkingDir(dir string) {
 func loadElfEnv() {
 	err := godotenv.Load("elf.env")
 	if err != nil {
-		log.Fatal().Str("Type", "Preprocess").Msg("Error loading elf.env file")
+		log.Info().Str("Type", "Preprocess").Msg("Error loading elf.env file")
 	}
 }
 
@@ -238,20 +239,26 @@ func constructCommand(httpv string, url string, json_obj string, multipart strin
 	return command_str
 }
 
-func executeCommand(command_str string) {
+func executeCommand(command_str string) string {
+	// r, w := io.Pipe()
 	c := exec.Command("bash", "-c", os.ExpandEnv(command_str))
 	f, err := pty.Start(c)
 	if err != nil {
 		panic(err)
 	}
 
-	io.Copy(os.Stdout, f)
+	// Defining two buffers
+	var buffer1 bytes.Buffer
+
+	// Calling MultiWriter method with its parameters
+	writer := io.MultiWriter(&buffer1, os.Stdout)
+	io.Copy(writer, f)
+	ret, _ := io.ReadAll(&buffer1)
+	ret_str := string(ret)
+	return ret_str
 }
 
-func main() {
-	configureZeroLog(LOG_LEVEL)
-	validateCmdArgs()
-	input_f := os.Args[1]
+func processHttpFile(input_f string) string {
 	content := getHttpFileAsString(input_f)
 	_, dir, _ := getFilePathComponents(input_f)
 	changeWorkingDir(dir)
@@ -261,5 +268,12 @@ func main() {
 	httpv, url, json_obj, multipart, varjson, headers, filefields := getSpecPieces(content)
 
 	command_str := constructCommand(httpv, url, json_obj, multipart, varjson, headers, filefields)
-	executeCommand(command_str)
+	return executeCommand(command_str)
+}
+
+func main() {
+	configureZeroLog(LOG_LEVEL)
+	validateCmdArgs()
+	input_f := os.Args[1]
+	processHttpFile(input_f)
 }
