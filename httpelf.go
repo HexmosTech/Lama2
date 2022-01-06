@@ -15,6 +15,7 @@ import (
 	"github.com/creack/pty"
 	"github.com/dlclark/regexp2"
 	"github.com/fatih/color"
+	"github.com/jessevdk/go-flags"
 	"github.com/joho/godotenv"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
@@ -271,9 +272,40 @@ func processHttpFile(input_f string) string {
 	return executeCommand(command_str)
 }
 
+type Opts struct {
+	Verbose  []bool `short:"v" long:"verbose" description:"Show verbose debug information"`
+	Prettify bool   `short:"p" long:"prettify" description:"Prettify specified .http file"`
+	Sort     bool   `short:"s" long:"sort" description:"Sort specification into recommended order"`
+}
+
+func getParsedInput(arglist []string) Opts {
+	arglist = arglist[1:] // remove command name
+	o := Opts{}
+
+	args, err := flags.ParseArgs(&o, arglist)
+
+	if err != nil {
+		log.Fatal().
+			Str("Type", "Preprocess").
+			Strs("arglist", arglist).
+			Msg(fmt.Sprint("Couldn't parse argument list"))
+	}
+
+	log.Info().
+		Str("Type", "Preprocess").
+		Bools("Verbosity", o.Verbose).
+		Bool("Prettify", o.Prettify).
+		Bool("Sort", o.Sort).
+		Strs("Filenames", args).
+		Msg("Parsed inputs")
+
+	return o
+}
+
 func main() {
 	configureZeroLog(LOG_LEVEL)
+	getParsedInput(os.Args)
 	validateCmdArgs()
-	input_f := os.Args[1]
-	processHttpFile(input_f)
+	// input_f := os.Args[1]
+	// processHttpFile(input_f)
 }
