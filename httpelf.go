@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	jsonlib "encoding/json"
 	"fmt"
 	"io"
 	"io/ioutil"
@@ -26,6 +27,7 @@ import (
 )
 
 var LOG_LEVEL = "DEBUG"
+var c = Constants()
 
 func Use(vals ...interface{}) {
 	for _, val := range vals {
@@ -105,8 +107,8 @@ func configureZeroLog(level string) {
 
 }
 
-func validateCmdArgs() {
-	if len(os.Args) < 2 {
+func validateCmdArgs(args []string) {
+	if len(args) < 1 {
 		log.Error().Str("Type", "Preprocess").Msg(color.RedString("Argument missing"))
 		log.Error().Msg(color.GreenString("Usage: elf <request_file>.http"))
 		os.Exit(0)
@@ -145,22 +147,11 @@ func loadElfEnv() {
 }
 
 func getSpecPieces(content string) (string, string, string, string, []string, []string, []string) {
-	r_json_obj := regexp.MustCompile(`(?smi)^([{\[].*[}\]])$`)
-	json_obj, json_idx := findFirst(r_json_obj, content)
-
-	r_httpv := regexp.MustCompile(`(?smi)^(GET|HEAD|POST|PUT|DELETE|CONNECT|OPTIONS|TRACE|PATCH)\s*$`)
-	r_url := regexp.MustCompile(`(?smi)^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.?[a-zA-Z0-9()]{1,6}\b?([-a-zA-Z0-9()@:%_\+.~#?&\//=]*).*?$`)
-	// r_varjsonorheader := regexp2.MustCompile(`(?sm)^(?![http|#|{])[\S]+[:=](?:(?!\S+[:=])\S+)+\s*$`, 0)
-	// Regex test cases: https://regex101.com/r/KDrfDt/3
-	r_linetype := regexp2.MustCompile(`(?sm)^(?![http|#|{])^("([^"]*)"|'([^']*)'|(.*?))(?P<type>[:@=])("([^"]*)"|'([^']*)'|(.*?))\s*$`, regexp2.RE2)
-	r_multipart := regexp.MustCompile(`(?smi)^MULTIPART\s*$`)
-	// r_filefield := regexp2.MustCompile(`(?sm)^(?![http|#|{])[\S]+[@](?:(?!\S+[])\S+)+\s*$`, 0)
-	// r_headers := regexp2.MustCompile(`(?!http)(?sm)^[\S]+[:=](?:(?!\S+[:=])\S+)+\s*$`, 0)
-
-	httpv, _ := findFirst(r_httpv, content)
-	url, _ := findFirst(r_url, content)
-	// varjsonorheader := findEach2(r_varjsonorheader, content)
-	multipart, _ := findFirst(r_multipart, content)
+	json_obj, json_idx := findFirst(c.r_json_obj, content)
+	httpv, _ := findFirst(c.r_httpv, content)
+	url, _ := findFirst(c.r_url, content)
+	// varjsonorheader := findEach2(c.r_varjsonorheader, content)
+	multipart, _ := findFirst(c.r_multipart, content)
 
 	varjson := make([]string, 0)
 	headers := make([]string, 0)
@@ -179,7 +170,7 @@ func getSpecPieces(content string) (string, string, string, string, []string, []
 	}
 	for _, line := range strings.Split(linecontent, "\n") {
 		line = strings.TrimSpace(line)
-		t := findNamedMatch(r_linetype, line, "type")
+		t := findNamedMatch(c.r_linetype, line, "type")
 		if t == ":" {
 			headers = append(headers, line)
 		} else if t == "=" {
@@ -278,7 +269,7 @@ type Opts struct {
 	Sort     bool   `short:"s" long:"sort" description:"Sort specification into recommended order"`
 }
 
-func getParsedInput(arglist []string) Opts {
+func getParsedInput(arglist []string) (Opts, []string) {
 	arglist = arglist[1:] // remove command name
 	o := Opts{}
 
@@ -299,13 +290,45 @@ func getParsedInput(arglist []string) Opts {
 		Strs("Filenames", args).
 		Msg("Parsed inputs")
 
-	return o
+	return o, args
+}
+
+func prettify(o Opts, input_f string) string {
+	content := getHttpFileAsString(input_f)
+	// _, dir, _ := getFilePathComponents(input_f)
+	json_obj, json_idx := findFirst(c.r_json_obj, content)
+	// m := minify.New()
+	// m.AddFuncRegexp(regexp.MustCompile("[/+]json$"), json.Minify)
+	// json_obj, err := m.String("*/json", json_obj)
+	// if err != nil {
+	// panic(err)
+	// }
+	multipart, _ := findFirst(c.r_multipart, content)
+	if len(multipart) == 0 && json_obj != "" {
+		// linecontent = content[:json_idx[0]] + content[json_idx[1]:]
+		fmt.Println(json_idx, multipart)
+		// j, _ := jsonlib.MarshalIndent(json_obj, "", "    ")
+		// fmt.Println(j.String())
+		var prettyJSON bytes.Buffer
+		error := jsonlib.Indent(&prettyJSON, []byte(json_obj), "", "\t")
+		if error != nil {
+			fmt.Println("JSON parse error: ", error)
+			return ""
+		}
+
+		content = content[:json_idx[0]] + prettyJSON.String() + content[json_idx[1]:]
+	}
+	fmt.Println(content)
+	return content
 }
 
 func main() {
 	configureZeroLog(LOG_LEVEL)
-	getParsedInput(os.Args)
-	validateCmdArgs()
+	o, args := getParsedInput(os.Args)
+	validateCmdArgs(args)
+	if o.Prettify {
+		prettify(o, args[0])
+	}
 	// input_f := os.Args[1]
 	// processHttpFile(input_f)
 }
