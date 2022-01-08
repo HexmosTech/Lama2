@@ -110,7 +110,7 @@ func configureZeroLog(level string) {
 func validateCmdArgs(args []string) {
 	if len(args) < 1 {
 		log.Error().Str("Type", "Preprocess").Msg(color.RedString("Argument missing"))
-		log.Error().Msg(color.GreenString("Usage: elf <request_file>.http"))
+		getParsedInput([]string{"placeholder", "-h"})
 		os.Exit(0)
 	}
 }
@@ -267,12 +267,16 @@ type Opts struct {
 	Verbose  []bool `short:"v" long:"verbose" description:"Show verbose debug information"`
 	Prettify bool   `short:"p" long:"prettify" description:"Prettify specified .http file"`
 	Sort     bool   `short:"s" long:"sort" description:"Sort specification into recommended order"`
+	Help     bool   `short:"h" long:"help" group:"AddHelp" description:"Usage help for elf"`
 }
 
 func getParsedInput(arglist []string) (Opts, []string) {
 	arglist = arglist[1:] // remove command name
 	o := Opts{}
 
+	if len(arglist) == 0 {
+		arglist = append(arglist, "-h")
+	}
 	args, err := flags.ParseArgs(&o, arglist)
 
 	if err != nil {
@@ -310,7 +314,7 @@ func prettify(o Opts, input_f string) string {
 		// j, _ := jsonlib.MarshalIndent(json_obj, "", "    ")
 		// fmt.Println(j.String())
 		var prettyJSON bytes.Buffer
-		error := jsonlib.Indent(&prettyJSON, []byte(json_obj), "", "\t")
+		error := jsonlib.Indent(&prettyJSON, []byte(json_obj), "", "  ")
 		if error != nil {
 			fmt.Println("JSON parse error: ", error)
 			return ""
@@ -327,8 +331,10 @@ func main() {
 	o, args := getParsedInput(os.Args)
 	validateCmdArgs(args)
 	if o.Prettify {
-		prettify(o, args[0])
+		pretty_content := prettify(o, args[0])
+		ioutil.WriteFile(args[0], []byte(pretty_content), 0644)
+		return
 	}
-	// input_f := os.Args[1]
-	// processHttpFile(input_f)
+	input_f := os.Args[1]
+	processHttpFile(input_f)
 }

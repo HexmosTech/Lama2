@@ -8,11 +8,29 @@ is capable of making pure text-powered client requests.
 
 ## General Usage
 
+Simply type any of the following to get options (option support is in progress):
+
 ```
-$ elf <request>.http
+elf
+elf -h 
+elf --help
 ```
 
-Find some sample request files in the 
+Find some sample request files in the `sample_http` folder.
+
+### Prettification
+
+To fix messed up JSONs in place:
+
+```
+elf -p file.http
+```
+
+Prettify all files in a directory (useful for large API collections such as FW-specific
+APIHub):
+```
+find . -type f -name "*.http" -exec elf -p {} \
+```
 
 ### Installation
 
