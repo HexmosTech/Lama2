@@ -193,7 +193,7 @@ func getSpecPieces(content string) (string, string, string, string, []string, []
 }
 
 func constructCommand(httpv string, url string, json_obj string, multipart string,
-	varjson []string, headers []string, filefields []string) string {
+	varjson []string, headers []string, filefields []string, o Opts) string {
 	command := make([]string, 0)
 	if len(multipart) == 0 && json_obj != "" {
 		m := minify.New()
@@ -209,6 +209,9 @@ func constructCommand(httpv string, url string, json_obj string, multipart strin
 	}
 
 	command = append(command, "http")
+	if o.Nocolor {
+		command = append(command, "--pretty=none")
+	}
 	if len(multipart) > 0 {
 		command = append(command, "--multipart")
 	}
@@ -250,7 +253,7 @@ func executeCommand(command_str string) string {
 	return ret_str
 }
 
-func processHttpFile(input_f string) string {
+func processHttpFile(input_f string, o Opts) string {
 	content := getHttpFileAsString(input_f)
 	_, dir, _ := getFilePathComponents(input_f)
 	changeWorkingDir(dir)
@@ -259,7 +262,7 @@ func processHttpFile(input_f string) string {
 
 	httpv, url, json_obj, multipart, varjson, headers, filefields := getSpecPieces(content)
 
-	command_str := constructCommand(httpv, url, json_obj, multipart, varjson, headers, filefields)
+	command_str := constructCommand(httpv, url, json_obj, multipart, varjson, headers, filefields, o)
 	return executeCommand(command_str)
 }
 
@@ -267,6 +270,7 @@ type Opts struct {
 	Verbose  []bool `short:"v" long:"verbose" description:"Show verbose debug information"`
 	Prettify bool   `short:"p" long:"prettify" description:"Prettify specified .http file"`
 	Sort     bool   `short:"s" long:"sort" description:"Sort specification into recommended order"`
+	Nocolor  bool   `short:"n" long:"nocolor" description:"Disable color in httpie output"`
 	Help     bool   `short:"h" long:"help" group:"AddHelp" description:"Usage help for elf"`
 }
 
@@ -291,6 +295,7 @@ func getParsedInput(arglist []string) (Opts, []string) {
 		Bools("Verbosity", o.Verbose).
 		Bool("Prettify", o.Prettify).
 		Bool("Sort", o.Sort).
+		Bool("NoColor", o.Nocolor).
 		Strs("Filenames", args).
 		Msg("Parsed inputs")
 
@@ -335,6 +340,6 @@ func main() {
 		ioutil.WriteFile(args[0], []byte(pretty_content), 0644)
 		return
 	}
-	input_f := os.Args[1]
-	processHttpFile(input_f)
+	input_f := args[0]
+	processHttpFile(input_f, o)
 }
