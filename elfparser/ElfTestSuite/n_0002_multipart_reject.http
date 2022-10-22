@@ -1,0 +1,11 @@
+
+POST
+# MULTIPART
+http://google.com
+
+'X-Parse-Application-Id':impressionserver 
+X-Parse-REST-API-Key:"impressionserver"
+
+hello="world="
+'hello2='="world2="
+file@./images/image0.jpg
