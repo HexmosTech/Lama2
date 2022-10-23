@@ -17,7 +17,7 @@ class ElfParser(Parser):
     Multipart ::= "MULTIPART"
     Varjson ::= (StringType "=" StringType)+ FileRefs*
     Headers ::= (StringType ":" StringType)
-    Url ::= "http" "s"? ":://" Unquoted+
+    Url ::= "http" "s"? ":://" U>nquoted+
     Json ::= AnyType
     Start ::= AnyType
     AnyType ::= ComplexType | PrimitiveType
