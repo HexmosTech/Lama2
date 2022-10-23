@@ -2,9 +2,13 @@ from .elfparser import ElfParser
 import unittest
 import glob
 import logging
+from .utils import expand_posix_vars, get_env_of_elf_file
+import pathlib
 
 TEST_BASE = "ElfTestSuite"
+TEST_BASE2 = "/home/shrsv/bin/apihub/"
 match_jsons = sorted(glob.glob(f"{TEST_BASE}/y_*.http"))
+# match_jsons = sorted(glob.glob(f"{TEST_BASE2}/**/*.http", recursive=True))
 no_match_jsons = sorted(glob.glob(f"{TEST_BASE}/n_*.http"))
 ignore_no_match = [
 ]
@@ -21,28 +25,43 @@ class TestElfParser(unittest.TestCase):
                 continue
             with open(m) as f:
                 s = f.read()
+                s = expand_posix_vars(s, get_env_of_elf_file(m))
             parser1 = ElfParser()
             print()
             print()
+            print("=====")
             print("YesProcessing: ", m)
+            print("-----")
+            print(s)
+            print("-----")
             print(parser1.parse(s))
+            print("=====")
+            print()
+            print()
 
     def perform_parse(self, fname):
         with open(fname) as x:
             data = x.read()
-        print(data, len(data))
+            data = expand_posix_vars(data, get_env_of_elf_file(fname))
         parser = ElfParser()
+        print(data)
+        print("-----")
         print(parser.parse(data))
 
+    # @unittest.skip
     def test_no_match(self):
         for m in no_match_jsons:
             if m in ignore_no_match:
                 continue
             print()
             print()
+            print("=====")
             print("NoProcessing: ", m)
             with self.assertRaises(Exception):
                 self.perform_parse(m)
+            print("=====")
+        print()
+        print()
 
 
 if __name__ == "__main__":

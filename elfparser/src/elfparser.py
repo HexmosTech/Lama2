@@ -146,8 +146,9 @@ class ElfParser(Parser):
     
     def varjson(self):
         varjson_dict = {}
-        key, value = self.match('varjson_pair')
-        varjson_dict[key] = value
+        if (not 'multipart' in self.context) or (self.context['multipart'] == False):
+            key, value = self.match('varjson_pair')
+            varjson_dict[key] = value
         
         while True:
             res = self.maybe_match('varjson_pair')
@@ -168,7 +169,11 @@ class ElfParser(Parser):
                 
                 key, value = res
                 varjson_dict['@files'][key] = value
-            
+
+        if len(varjson_dict.keys()) == 0:
+            raise ParseError(
+                self.pos + 1, "No varjson match", self.text[self.pos + 1]
+            )
             
         return varjson_dict
         
@@ -224,10 +229,10 @@ class ElfParser(Parser):
                 comma = True
 
         self.keyword("]")
-        if comma == True:
-            raise ParseError(
-                self.pos, "Unnecessary trailing comma found", self.text[self.pos]
-            )
+        # if comma == True:
+        #     raise ParseError(
+        #         self.pos, "Unnecessary trailing comma found", self.text[self.pos]
+        #     )
         return rv
 
     def map(self):
@@ -249,10 +254,10 @@ class ElfParser(Parser):
                 comma = True
 
         self.keyword("}")
-        if comma == True:
-            raise ParseError(
-                self.pos, "Unnecessary trailing comma found", self.text[self.pos]
-            )
+        # if comma == True:
+        #     raise ParseError(
+        #         self.pos, "Unnecessary trailing comma found", self.text[self.pos]
+        #     )
 
         return rv
 
@@ -277,7 +282,7 @@ class ElfParser(Parser):
         key = self.maybe_match("quoted_string")
         if key is None:
             key = self.match('varjson_unquoted')
-
+            
         if type(key) is not str:
             raise ParseError(
                 self.pos + 1, "Expected string but got number", self.text[self.pos + 1]
@@ -287,6 +292,8 @@ class ElfParser(Parser):
         value = self.maybe_match("quoted_string")
         if value is None:
             value = self.match('varjson_unquoted')
+
+
 
         return key, value
 
@@ -446,8 +453,7 @@ class ElfParser(Parser):
         # is separated by `=` symbol
         # TODO: Avoid duplication by taking in arguments to standard
         # `unquoted` function
-        acceptable_chars = '0-9A-Za-z \t!$%&()*+./;<>?^_`|~-'
-        number_type = int
+        acceptable_chars = '@0-9A-Za-z \t!$%&()*+./;<>?^_`|~-'
 
         chars = [self.char(acceptable_chars)]
 
@@ -462,10 +468,7 @@ class ElfParser(Parser):
             chars.append(char)
 
         rv = ''.join(chars).rstrip(' \t')
-        try:
-            return number_type(rv)
-        except ValueError:
-            return rv
+        return rv
 
     def files_unquoted(self):
         # compared to the standard `unquoted`, we do not match
@@ -474,7 +477,6 @@ class ElfParser(Parser):
         # TODO: Avoid duplication by taking in arguments to standard
         # `unquoted` function
         acceptable_chars = '0-9A-Za-z \t!$%&()*+./;<=>?^_`|~-'
-        number_type = int
 
         chars = [self.char(acceptable_chars)]
 
@@ -489,14 +491,10 @@ class ElfParser(Parser):
             chars.append(char)
 
         rv = ''.join(chars).rstrip(' \t')
-        try:
-            return number_type(rv)
-        except ValueError:
-            return rv
+        return rv
 
     def unquoted(self):
         acceptable_chars = '0-9A-Za-z \t!$%&()*+./;<=>?^_`|~-'
-        number_type = int
 
         chars = [self.char(acceptable_chars)]
 
@@ -511,10 +509,7 @@ class ElfParser(Parser):
             chars.append(char)
 
         rv = ''.join(chars).rstrip(' \t')
-        try:
-            return number_type(rv)
-        except ValueError:
-            return rv
+        return rv
 
     def quoted_string(self):
         quote = self.char("\"'")
