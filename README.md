@@ -6,6 +6,44 @@ is capable of making pure text-powered client requests.
 
 [[_TOC_]]
 
+## How-to
+
+TODO
+
+## Tutorial
+
+TODO
+
+## Explanation
+
+### Syntax Guidance
+
+```mermaid
+graph TD
+	Z(Start)
+	Z --> A
+    A["HTTP Verb (get/post/put/delete)"] --> B[Multipart]
+	C["URL (http://blah.com)"]
+	A --> C
+	B --> C
+	D["Headers (header_key: header_value)"]
+	E{Payload}
+	C --> D
+	D --> E
+	F["VarJson (key=value)"]
+	G["JSON {'key': 'value'}"]
+	H["Multipart files (filename@filepath)"]
+	E --> F
+	F --> H
+	E --> G
+```
+
+
+## Reference
+
+
+TODO
+
 ## General Usage
 
 Simply type any of the following to get options (option support is in progress):
