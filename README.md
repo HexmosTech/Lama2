@@ -2,7 +2,7 @@
 
 `Lama2` is a plain-text powered REST API client & manager. *Lama2* provides the following benefits to software engineers:
 
-1. **Easy syntax:** Store your APIs in the simple, human-friendly `.http` syntax. You can learn basic syntax within  minutes!
+1. **Easy syntax:** Store your APIs in the simple, human-friendly and plain-text `.http` files. You can learn basic syntax within  minutes!
 1. **Simple CLI:** *Lama2* ships with a simple CLI tool `l2` which can be used to execute `.http` files to make REST requests.
 1. **Editor support:** Invoke *Lama2* from within your favorite text editor or IDE. Make requests right from your editor
 with *Lama2* plugins.
