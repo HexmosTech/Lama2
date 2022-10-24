@@ -5,6 +5,8 @@
 <img src="banner.png" width="80%" />
 </div>
 
+## About
+
 `Lama2` is a plain-text powered REST API client & manager built for serious engineering teams. *Lama2* implements `.lama` syntax, CLI and plays nicely with version control systems.
 
 ## Benefits 
@@ -17,6 +19,8 @@
 1. **Documentation:** Explore tutorials, how-tos, explanations, references, FAQ/RAQs, and diagrams. Documentation is a priority, so that you never have to get lost.
 1. **Extensibility:** `.lama` syntax is implemented as a recursive descent parser, based on a clearly specified grammar. Dig into details and implement new syntax (ex: to support `websockets`)
 
+
+## TOC 
 
 [[_TOC_]]
 
