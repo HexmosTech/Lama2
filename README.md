@@ -2,7 +2,7 @@
 
 <div align="center">
 
-<img src="banner.png" width="50%" />
+<img style="border-radius:5px" src="banner.png" width="50%" />
 </div>
 
 `Lama2` is a plain-text powered REST API client & manager. *Lama2* provides the following benefits to software engineers:
