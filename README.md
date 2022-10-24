@@ -13,7 +13,7 @@
 1. **Longevity & trackability:** Commit `.lama` files to `git` or other version control for long life & change tracking.
 1. **Collaboration:** Share API repo with teammates and colleagues to collaborate
 1. **Documentation:** Explore tutorials, how-tos, explanations, references, FAQ/RAQs, and diagrams. Documentation is a priority, so that you never have to get lost.
-1. **Extensibility:** `.lama` syntax is implemented as a recursive descent parser, based on a clearly specified grammar. Dig into implement new syntax (ex: to support `websockets`)
+1. **Extensibility:** `.lama` syntax is implemented as a recursive descent parser, based on a clearly specified grammar. Dig into details and implement new syntax (ex: to support `websockets`)
 
 
 [[_TOC_]]
