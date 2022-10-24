@@ -1,4 +1,4 @@
-# `Lama2`: Plain-text powered REST API client
+# `Lama2`: Plain-text Powered REST API Client
 
 <div align="center">
 
