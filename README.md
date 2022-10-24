@@ -7,14 +7,14 @@
 
 `Lama2` is a plain-text powered REST API client & manager. *Lama2* provides the following benefits to software engineers:
 
-1. **Easy syntax:** Store your APIs in the simple, human-friendly and plain-text `.http` files. You can learn basic syntax within  minutes!
-1. **Simple CLI:** *Lama2* ships with a simple CLI tool `l2` which can be used to execute `.http` files to make REST requests.
-1. **Editor support:** Invoke *Lama2* from within your favorite text editor or IDE. Make requests right from your editor
-with *Lama2* plugins.
-1. **Longevity & trackability:** Plain-text storage format that can be committed to `git` or other version control. We recommend creating repositories to host your API files.
-1. **Collaboration:** Straightforward collaboration with your team through version control, as you will do with any other software artifact.
-1. **Extensibility:** The grammar for the `.http` language is implemented using a recursive descent parser. One can implement new syntax to evolve the file format, say for supporting `websockets`, without any ambiguity.
-1. **Documentation:** *Lama2* comes with tutorials, how-tos, explanations, references, FAQ/RAQs, and diagrams. We invest significant efforts to ensure you are never lost in figuring out any aspect of *Lama2*.
+1. **Plain-text files:** Store APIs in the plain-text plain-text `.lama` files. Simple and human-friendly syntax. Learn basics within  minutes!
+1. **Simple CLI:** Launch the CLI tool `l2` on `.lama` files to make REST API requests.
+1. **Editor support:** Invoke *Lama2* from your favorite text editor or IDE. Friendly API to build editor extensions.
+1. **Longevity & trackability:** Commit `.lama` files to `git` or other version control for long life & change tracking.
+1. **Collaboration:** Share API repo with teammates and colleagues to collaborate
+1. **Documentation:** Explore tutorials, how-tos, explanations, references, FAQ/RAQs, and diagrams. Documentation is a priority, so that you never have to get lost.
+1. **Extensibility:** `.lama` syntax is implemented as a recursive descent parser, based on a clearly specified grammar. Dig into implement new syntax (ex: to support `websockets`)
+
 
 [[_TOC_]]
 
