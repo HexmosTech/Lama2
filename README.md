@@ -1,5 +1,7 @@
 # `Lama2`: Plain-text powered REST API client
 
+![](banner.png)
+
 `Lama2` is a plain-text powered REST API client & manager. *Lama2* provides the following benefits to software engineers:
 
 1. **Easy syntax:** Store your APIs in the simple, human-friendly and plain-text `.http` files. You can learn basic syntax within  minutes!
