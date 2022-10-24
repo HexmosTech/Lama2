@@ -1,8 +1,15 @@
-# `httpelf`: text-powered REST API client
+# `Lama2`: Plain-text powered REST API client
 
-`httpelf` is a text-file based REST API client & manager. It uses
-the nascent `.http` file format to represent http(s) requests &
-is capable of making pure text-powered client requests.
+`Lama2` is a plain-text powered REST API client & manager. *Lama2* provides the following benefits to software engineers:
+
+1. **Easy syntax:** Store your APIs in the simple, human-friendly `.http` syntax. You can learn basic syntax within  minutes!
+1. **Simple CLI:** *Lama2* ships with a simple CLI tool `l2` which can be used to execute `.http` files to make REST requests.
+1. **Editor support:** Invoke *Lama2* from within your favorite text editor or IDE. Make requests right from your editor
+with *Lama2* plugins.
+1. **Longevity & trackability:** Plain-text storage format that can be committed to `git` or other version control. We recommend creating repositories to host your API files.
+1. **Collaboration:** Straightforward collaboration with your team through version control, as you will do with any other software artifact.
+1. **Extensibility:** The grammar for the `.http` language is implemented using a recursive descent parser. One can implement new syntax to evolve the file format, say for supporting `websockets`, without any ambiguity.
+1. **Documentation:** *Lama2* comes with tutorials, how-tos, explanations, references, FAQ/RAQs, and diagrams. We invest significant efforts to ensure you are never lost in figuring out any aspect of *Lama2*.
 
 [[_TOC_]]
 
@@ -17,6 +24,10 @@ TODO
 ## Explanation
 
 ### Syntax Guidance
+
+The following is the *recommended* flow for an `.http` file. The grammar offers some additional flexibilities in ordering the various components, but it is preferable to
+stick to the following ordering to 
+help with understanding.
 
 ```mermaid
 graph TD
@@ -40,7 +51,6 @@ graph TD
 	H --> I
 	G --> I
 ```
-
 
 ## Reference
 
