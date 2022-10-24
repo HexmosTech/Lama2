@@ -5,7 +5,9 @@
 <img src="banner.png" width="80%" />
 </div>
 
-`Lama2` is a plain-text powered REST API client & manager. *Lama2* provides the following benefits to software engineers:
+`Lama2` is a plain-text powered REST API client & manager built for serious engineering teams. *Lama2* implements `.lama` syntax, CLI and plays nicely with version control systems.
+
+## Benefits 
 
 1. **Plain-text files:** Store APIs in the plain-text `.lama` files. Simple and human-friendly syntax. Learn basics within  minutes!
 1. **Simple CLI:** Launch the CLI tool `l2` on `.lama` files to make REST API requests.
