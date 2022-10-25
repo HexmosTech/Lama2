@@ -1,4 +1,4 @@
-module flyweightgroup.com/httpelf
+module github.com/hexmos/lama2
 
 go 1.17
 
