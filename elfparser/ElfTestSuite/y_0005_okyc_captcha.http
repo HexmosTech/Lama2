@@ -10,7 +10,7 @@ https://sandbox.veri5digital.com/okyc/api/v1.0/getNewCaptcha
         "user_handle_type": "SYSTEM",
         "user_handle_value": "SYSTEM",
         "location": "",
-        "transmission_datetime": "1571751024923",
+        "transmission_datetime": 1571751024923,
         "run_mode": "REAL",
         "client_ip": "0.0.0.0",
         "operation_mode": "SELF",
