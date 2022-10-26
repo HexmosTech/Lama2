@@ -5,12 +5,12 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python: Module",
-            "type": "python",
+            "name": "Launch Package",
+            "type": "go",
             "request": "launch",
-            "module": "src.test_elfparser",
-            "justMyCode": true,
-            "cwd": "elfparser"
+            "mode": "auto",
+            "program": "${fileDirname}",
+            "args": ["-h"]
         }
     ]
 }
