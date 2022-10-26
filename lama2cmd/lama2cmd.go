@@ -7,8 +7,13 @@ import (
 	"github.com/fatih/color"
 	"github.com/hexmos/lama2/utils"
 	"github.com/jessevdk/go-flags"
+	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 )
+
+func init() {
+	log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stderr})
+}
 
 type Opts struct {
 	Verbose  []bool `short:"v" long:"verbose" description:"Show verbose debug information"`
@@ -22,18 +27,16 @@ func getParsedInput(arglist []string) (Opts, []string) {
 	arglist = arglist[1:] // remove command name
 	o := Opts{}
 
-	fmt.Println("ArgLilst = ", arglist)
-
 	if len(arglist) == 0 {
 		arglist = append(arglist, "-h")
 	}
 	args, err := flags.ParseArgs(&o, arglist)
-	fmt.Println("args = ", args)
 	e, _ := err.(*flags.Error)
-	fmt.Println("err type = ", e.Type, e.Type == flags.ErrHelp)
+	if e.Type == flags.ErrHelp {
+		os.Exit(0)
+	}
 
 	if err != nil {
-		fmt.Println("Err object: ", err)
 		log.Fatal().
 			Str("Type", "Preprocess").
 			Strs("arglist", arglist).
@@ -61,11 +64,11 @@ func validateCmdArgs(args []string) {
 }
 
 func GetAndValidateCmd() string {
-	o, args := getParsedInput(os.Args)
-	fmt.Println("os.Args", os.Args)
-	validateCmdArgs(args)
-	fmt.Println("Printing the parsed args object")
+	o, _ := getParsedInput(os.Args)
+	// fmt.Println("os.Args", os.Args)
+	// validateCmdArgs(args)
+	// fmt.Println("Printing the parsed args object")
 	utils.PrettyPrint(o)
-	fmt.Println("Going to get and validate here")
+	// fmt.Println("Going to get and validate here")
 	return "Going to get and validate here"
 }
