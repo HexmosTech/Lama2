@@ -43,3 +43,14 @@ func TestCharFunc(t *testing.T) {
 	}
 
 }
+
+func TestCharClassFunc(t *testing.T) {
+	p := parser.NewLama2Parser()
+	r, e := p.CharClass("A-Z0-9&")
+	if e == nil {
+		fmt.Println(r)
+		fmt.Println("===")
+	} else {
+		fmt.Println(e)
+	}
+}
