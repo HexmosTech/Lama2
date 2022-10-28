@@ -1,3 +1,14 @@
+/*
+The `parser` package provides primitives that
+help with writing recursive descent parsers.
+This version is a golang port of the original
+Python implementation from https://tinyurl.com/rdescent
+
+The `Parser` struct is supposed to be extended
+to support parsing a new language. Take a look
+at `lama2parser.go` for an example. Essentially
+the actual parsing begins from the `Start()` method.
+*/
 package parser
 
 import (
@@ -39,7 +50,18 @@ func (p *Parser) Parse(text string) string {
 		fmt.Println(fmt.Errorf(err.Error()))
 		os.Exit(1)
 	}
-	return "blah2"
+	return ""
+}
+
+func (p *Parser) eatWhitespace() {
+	for p.pos < p.tlen {
+		spaces := []rune{' ', '\f', '\v', '\r', '\t', '\n'}
+		if utils.ContainsRune(spaces, p.text[p.pos+1]) {
+			p.pos += 1
+		} else {
+			break
+		}
+	}
 }
 
 func (p *Parser) SetText(text string) {

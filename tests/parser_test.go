@@ -1,6 +1,7 @@
 package tests
 
 import (
+	"reflect"
 	"testing"
 
 	"fmt"
@@ -32,6 +33,57 @@ func TestCharFunc(t *testing.T) {
 		}
 	}
 
+}
+
+func TestKeywordMatch(t *testing.T) {
+	p := parser.NewLama2Parser()
+	p.SetText("GET http://google.com")
+	got, e := p.Keyword("GET", false, false, false)
+	want := []rune("GET")
+	if e == nil {
+		if !reflect.DeepEqual(got, want) {
+			t.Errorf("got %q, wanted %q", got, want)
+		}
+		fmt.Printf("%c\n", got)
+		fmt.Println("===")
+	} else {
+		t.Errorf("Error not expected")
+		fmt.Println(e)
+	}
+}
+
+func TestKeywordWhiteSpaceMatch(t *testing.T) {
+	p := parser.NewLama2Parser()
+	p.SetText("    GET      http://google.com")
+	got, e := p.Keyword("GET", true, true, false)
+	want := []rune("GET")
+	if e == nil {
+		if !reflect.DeepEqual(got, want) {
+			t.Errorf("got %q, wanted %q", got, want)
+		}
+		fmt.Printf("%c\n", got)
+		fmt.Println("===")
+	} else {
+		t.Errorf("Error not expected")
+		fmt.Println(e)
+	}
+}
+
+func TestKeywordCaseInsensitiveMatch(t *testing.T) {
+	p := parser.NewLama2Parser()
+	p.SetText("    GET      http://google.com")
+	got, e := p.Keyword("GET", true, true, true)
+	want := []rune("GET")
+	if e == nil {
+		if !reflect.DeepEqual(got, want) {
+			t.Errorf("got %q, wanted %q", got, want)
+		}
+		fmt.Printf("%c\n", got)
+		fmt.Println("===")
+	} else {
+		t.Errorf("Error not expected")
+		fmt.Println(e)
+	}
 }
 
 func TestCharClassFunc(t *testing.T) {
