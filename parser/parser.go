@@ -90,6 +90,11 @@ func (p *Parser) CharClass(charClass string) (rune, error) {
 		}
 	}
 
+	return rune(0),
+		utils.NewParseError(
+			p.pos,
+			"Expected from character class but no match",
+			[]string{})
 }
 
 func (p *Parser) SplitCharRanges(charClass string) ([]string, error) {

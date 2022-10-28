@@ -46,11 +46,23 @@ func TestCharFunc(t *testing.T) {
 
 func TestCharClassFunc(t *testing.T) {
 	p := parser.NewLama2Parser()
-	r, e := p.CharClass("A-Z0-9&")
+	p.SetText("GET http://google.com")
+	got, e := p.CharClass("A-Z0-9&")
+	want := 'G'
 	if e == nil {
-		fmt.Println(r)
+		if got != want {
+			t.Errorf("got %q, wanted %q", got, want)
+		}
+		fmt.Printf("%c\n", got)
 		fmt.Println("===")
 	} else {
+		t.Errorf("Error not expected")
 		fmt.Println(e)
+	}
+	got, e = p.CharClass("x")
+	if e == nil {
+		t.Errorf("Expected an error")
+	} else {
+		fmt.Printf("Got the error: %s", e)
 	}
 }
