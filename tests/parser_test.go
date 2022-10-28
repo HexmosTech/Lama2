@@ -65,4 +65,5 @@ func TestCharClassFunc(t *testing.T) {
 	} else {
 		fmt.Printf("Got the error: %s", e)
 	}
+	got, e = p.CharClass("A-Z0-9&")
 }

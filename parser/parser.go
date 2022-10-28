@@ -17,7 +17,7 @@ type Parser struct {
 	text  []rune
 	pos   int
 	tlen  int
-	cache *gabs.Container
+	cache map[string][]string
 	pm    ParserMinimalType
 }
 
@@ -27,13 +27,13 @@ func (p *Parser) Start() *gabs.Container {
 }
 
 func (p *Parser) Init() {
-	p.cache = gabs.New()
 }
 
 func (p *Parser) Parse(text string) string {
 	p.text = []rune(text)
 	p.pos = -1
 	p.tlen = len(text) - 1
+	p.cache = make(map[string][]string)
 	p.pm.Start()
 	_, err := p.assertEnd()
 	if err != nil {
@@ -47,6 +47,7 @@ func (p *Parser) SetText(text string) {
 	p.text = []rune(text)
 	p.pos = -1
 	p.tlen = len(p.text) - 1
+	p.cache = make(map[string][]string)
 }
 
 func (p *Parser) Char() (rune, error) {
@@ -98,6 +99,11 @@ func (p *Parser) CharClass(charClass string) (rune, error) {
 }
 
 func (p *Parser) SplitCharRanges(charClass string) ([]string, error) {
+	val, prs := p.cache[charClass]
+	if prs {
+		return val, nil
+	}
+
 	runeCharClass := []rune(charClass)
 	rv := make([]string, 0)
 	index := 0
@@ -116,6 +122,7 @@ func (p *Parser) SplitCharRanges(charClass string) ([]string, error) {
 		}
 	}
 
+	p.cache[charClass] = rv
 	return rv, nil
 }
 
