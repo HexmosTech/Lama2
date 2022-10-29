@@ -1,6 +1,10 @@
 package parser
 
-import "github.com/Jeffail/gabs/v2"
+import (
+	"fmt"
+
+	"github.com/Jeffail/gabs/v2"
+)
 
 type Lama2Parser struct {
 	*Parser
@@ -8,17 +12,19 @@ type Lama2Parser struct {
 
 func NewLama2Parser() *Lama2Parser {
 	p := &Lama2Parser{&Parser{}}
-	p.pm = p
+	p.Pm = p
 	return p
 }
 
 func (p *Lama2Parser) Start() *gabs.Container {
+	fmt.Println("Within the Start function!")
 	temp := gabs.New()
-	p.httpFile()
+	p.HttpFile()
 	return temp
 }
 
-func (p *Lama2Parser) httpFile() *gabs.Container {
+func (p *Lama2Parser) HttpFile() *gabs.Container {
+	fmt.Println("Within HttpFile")
 	temp := gabs.New()
 	return temp
 }

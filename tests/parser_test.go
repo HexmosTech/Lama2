@@ -72,7 +72,7 @@ func TestKeywordWhiteSpaceMatch(t *testing.T) {
 func TestKeywordCaseInsensitiveMatch(t *testing.T) {
 	p := parser.NewLama2Parser()
 	p.SetText("    GET      http://google.com")
-	got, e := p.Keyword("GET", true, true, true)
+	got, e := p.Keyword("get", true, true, true)
 	want := []rune("GET")
 	if e == nil {
 		if !reflect.DeepEqual(got, want) {
@@ -108,4 +108,21 @@ func TestCharClassFunc(t *testing.T) {
 		fmt.Printf("Got the error: %s", e)
 	}
 	got, e = p.CharClass("A-Z0-9&")
+}
+
+func TestMatch(t *testing.T) {
+	p := parser.NewLama2Parser()
+	p.SetText("GET http://google.com")
+	got, e := p.Match([]string{"httpFile"})
+	want := 'G'
+	if e == nil {
+		if got != want {
+			t.Errorf("got %q, wanted %q", got, want)
+		}
+		fmt.Printf("%c\n", got)
+		fmt.Println("===")
+	} else {
+		t.Errorf("Error not expected")
+		fmt.Println(e)
+	}
 }

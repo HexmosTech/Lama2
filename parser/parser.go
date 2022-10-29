@@ -28,7 +28,7 @@ type Parser struct {
 	pos   int
 	tlen  int
 	cache map[string][]string
-	pm    ParserMinimalType
+	Pm    ParserMinimalType
 }
 
 func (p *Parser) Start() *gabs.Container {
@@ -44,7 +44,7 @@ func (p *Parser) Parse(text string) string {
 	p.pos = -1
 	p.tlen = len(text) - 1
 	p.cache = make(map[string][]string)
-	p.pm.Start()
+	p.Pm.Start()
 	_, err := p.assertEnd()
 	if err != nil {
 		fmt.Println(fmt.Errorf(err.Error()))
