@@ -127,3 +127,23 @@ func TestMatch(t *testing.T) {
 		fmt.Println(e)
 	}
 }
+
+func TestLama2Start(t *testing.T) {
+	p := parser.NewLama2Parser()
+	p.Init()
+	p.SetText("GET http://google.com")
+	got, e := p.Start()
+	fmt.Println("got ", got)
+	fmt.Println("e ", e)
+	// want := 'G'
+	// if e == nil {
+	// 	if got != want {
+	// 		t.Errorf("got %q, wanted %q", got, want)
+	// 	}
+	// 	fmt.Printf("%c\n", got)
+	// 	fmt.Println("===")
+	// } else {
+	// 	t.Errorf("Error not expected")
+	// 	fmt.Println(e)
+	// }
+}

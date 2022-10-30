@@ -21,7 +21,7 @@ import (
 )
 
 type ParserMinimalType interface {
-	Start() *gabs.Container
+	Start() (*gabs.Container, error)
 }
 
 type Parser struct {
