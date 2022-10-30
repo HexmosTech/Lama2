@@ -25,9 +25,9 @@ type ParserMinimalType interface {
 }
 
 type Parser struct {
-	text          []rune
-	pos           int
-	tlen          int
+	Text          []rune
+	Pos           int
+	TotalLen      int
 	cache         map[string][]string
 	Pm            ParserMinimalType
 	ruleMethodMap map[string]reflect.Value
@@ -52,9 +52,9 @@ func (p *Parser) Init() {
 }
 
 func (p *Parser) Parse(text string) string {
-	p.text = []rune(text)
-	p.pos = -1
-	p.tlen = len(text) - 1
+	p.Text = []rune(text)
+	p.Pos = -1
+	p.TotalLen = len(text) - 1
 	p.cache = make(map[string][]string)
 	p.Pm.Start()
 	_, err := p.assertEnd()
@@ -66,10 +66,10 @@ func (p *Parser) Parse(text string) string {
 }
 
 func (p *Parser) eatWhitespace() {
-	for p.pos < p.tlen {
+	for p.Pos < p.TotalLen {
 		spaces := []rune{' ', '\f', '\v', '\r', '\t', '\n'}
-		if utils.ContainsRune(spaces, p.text[p.pos+1]) {
-			p.pos += 1
+		if utils.ContainsRune(spaces, p.Text[p.Pos+1]) {
+			p.Pos += 1
 		} else {
 			break
 		}
@@ -77,19 +77,19 @@ func (p *Parser) eatWhitespace() {
 }
 
 func (p *Parser) SetText(text string) {
-	p.text = []rune(text)
-	p.pos = -1
-	p.tlen = len(p.text) - 1
+	p.Text = []rune(text)
+	p.Pos = -1
+	p.TotalLen = len(p.Text) - 1
 	p.cache = make(map[string][]string)
 }
 
 func (p *Parser) assertEnd() (bool, error) {
-	if p.pos < p.tlen {
+	if p.Pos < p.TotalLen {
 		return false,
 			utils.NewParseError(
-				p.pos+1,
+				p.Pos+1,
 				"Expected end of string but got %s",
-				[]string{string(p.text[p.pos+1])})
+				[]string{string(p.Text[p.Pos+1])})
 	} else {
 		return true, nil
 	}

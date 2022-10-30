@@ -9,27 +9,27 @@ import (
 )
 
 func (p *Parser) Char() (rune, error) {
-	if p.pos >= p.tlen {
+	if p.Pos >= p.TotalLen {
 		return rune(0),
 			utils.NewParseError(
-				p.pos,
+				p.Pos,
 				"Expected %s but got end of string",
 				[]string{"character"})
 	}
-	next_char := p.text[p.pos+1]
-	p.pos += 1
+	next_char := p.Text[p.Pos+1]
+	p.Pos += 1
 	return next_char, nil
 }
 
 func (p *Parser) CharClass(charClass string) (rune, error) {
-	if p.pos >= p.tlen {
+	if p.Pos >= p.TotalLen {
 		return rune(0),
 			utils.NewParseError(
-				p.pos,
+				p.Pos,
 				"Expected %s but got end of string",
 				[]string{"character"})
 	}
-	nextChar := p.text[p.pos+1]
+	nextChar := p.Text[p.Pos+1]
 	charRangeList, e := p.SplitCharRanges(charClass)
 	if e != nil {
 		fmt.Errorf("%s", e)
@@ -40,18 +40,18 @@ func (p *Parser) CharClass(charClass string) (rune, error) {
 		runeCharRange := []rune(charRange)
 		if len(runeCharRange) == 1 {
 			if nextChar == runeCharRange[0] {
-				p.pos += 1
+				p.Pos += 1
 				return nextChar, nil
 			}
 		} else if runeCharRange[0] <= nextChar && nextChar <= runeCharRange[2] {
-			p.pos += 1
+			p.Pos += 1
 			return nextChar, nil
 		}
 	}
 
 	return rune(0),
 		utils.NewParseError(
-			p.pos,
+			p.Pos,
 			"Expected from character class but no match",
 			[]string{})
 }

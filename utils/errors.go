@@ -3,7 +3,7 @@ package utils
 import "fmt"
 
 type ParseError struct {
-	pos  int
+	Pos  int
 	msg  string
 	args []string
 }
@@ -13,5 +13,5 @@ func NewParseError(pos int, msg string, args []string) *ParseError {
 }
 
 func (p ParseError) Error() string {
-	return fmt.Sprintf("%s at position %d", fmt.Sprintf(p.msg, p.args), p.pos)
+	return fmt.Sprintf("%s at position %d", fmt.Sprintf(p.msg, p.args), p.Pos)
 }
