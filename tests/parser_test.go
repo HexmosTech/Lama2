@@ -115,12 +115,22 @@ func TestMatch(t *testing.T) {
 	p.Init()
 	p.SetText("GET http://google.com")
 	got, e := p.Match([]string{"HttpFile"})
-	want := 'G'
 	if e == nil {
-		if got != want {
-			t.Errorf("got %q, wanted %q", got, want)
-		}
-		fmt.Printf("%c\n", got)
+		fmt.Println(got)
+		fmt.Println("===")
+	} else {
+		t.Errorf("Error not expected")
+		fmt.Println(e)
+	}
+}
+
+func TestFailMatch(t *testing.T) {
+	p := parser.NewLama2Parser()
+	p.Init()
+	p.SetText("BLAH http://google.com")
+	got, e := p.Match([]string{"HttpFile"})
+	if e == nil {
+		fmt.Println(got)
 		fmt.Println("===")
 	} else {
 		t.Errorf("Error not expected")

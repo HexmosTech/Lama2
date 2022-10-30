@@ -3,6 +3,7 @@ package parser
 import (
 	"errors"
 	"fmt"
+	"os"
 	"reflect"
 
 	"strings"
@@ -28,7 +29,7 @@ func (p *Parser) Match(rules []string) (interface{}, error) {
 			p.eatWhitespace()
 			return op, nil
 		} else {
-			pe := e.Interface().(utils.ParseError)
+			pe := e.Interface().(*utils.ParseError)
 			fmt.Println(fmt.Errorf("%s", pe.Error()))
 			if pe.Pos > lastErrorPos {
 				lastError = pe
@@ -51,4 +52,15 @@ func (p *Parser) Match(rules []string) (interface{}, error) {
 	}
 
 	return "", errors.New("Match failed")
+}
+
+func (p *Parser) MustMatch(rules []string) (interface{}, error) {
+	res, e := p.Match(rules)
+	if e == nil {
+		return res, e
+	} else {
+		fmt.Println(fmt.Errorf("%s", e.Error()))
+		os.Exit(1)
+	}
+	return "", nil
 }

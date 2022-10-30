@@ -65,6 +65,7 @@ func (p *Parser) Parse(text string) string {
 	return ""
 }
 
+/*
 func (p *Parser) eatWhitespace() {
 	for p.Pos < p.TotalLen {
 		spaces := []rune{' ', '\f', '\v', '\r', '\t', '\n'}
@@ -73,6 +74,27 @@ func (p *Parser) eatWhitespace() {
 		} else {
 			break
 		}
+	}
+}
+*/
+
+func (p *Parser) eatWhitespace() {
+	spaces := []rune{' ', '\f', '\v', '\r', '\t', '\n'}
+	isProcessingComment := false
+	for p.Pos < p.TotalLen {
+		c := p.Text[p.Pos+1]
+		if isProcessingComment {
+			if c == '\n' {
+				isProcessingComment = false
+			}
+		} else {
+			if c == '#' {
+				isProcessingComment = true
+			} else if !utils.ContainsRune(spaces, c) {
+				break
+			}
+		}
+		p.Pos += 1
 	}
 }
 
