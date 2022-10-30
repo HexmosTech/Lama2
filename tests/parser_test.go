@@ -112,8 +112,9 @@ func TestCharClassFunc(t *testing.T) {
 
 func TestMatch(t *testing.T) {
 	p := parser.NewLama2Parser()
+	p.Init()
 	p.SetText("GET http://google.com")
-	got, e := p.Match([]string{"httpFile"})
+	got, e := p.Match([]string{"HttpFile"})
 	want := 'G'
 	if e == nil {
 		if got != want {

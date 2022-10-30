@@ -14,6 +14,7 @@ package parser
 import (
 	"fmt"
 	"os"
+	"reflect"
 
 	"github.com/Jeffail/gabs/v2"
 	"github.com/hexmos/lama2/utils"
@@ -24,11 +25,12 @@ type ParserMinimalType interface {
 }
 
 type Parser struct {
-	text  []rune
-	pos   int
-	tlen  int
-	cache map[string][]string
-	Pm    ParserMinimalType
+	text          []rune
+	pos           int
+	tlen          int
+	cache         map[string][]string
+	Pm            ParserMinimalType
+	ruleMethodMap map[string]reflect.Value
 }
 
 func (p *Parser) Start() *gabs.Container {
@@ -37,6 +39,16 @@ func (p *Parser) Start() *gabs.Container {
 }
 
 func (p *Parser) Init() {
+	p.ruleMethodMap = make(map[string]reflect.Value, 0)
+	pVal := reflect.ValueOf(p)
+	pmVal := reflect.Indirect(pVal).FieldByName("Pm").Elem()
+	tLamaVal := reflect.TypeOf(p.Pm)
+	for i := 0; i < pmVal.NumMethod(); i++ {
+		m := tLamaVal.Method(i)
+		methodVal := pmVal.Method(i)
+		p.ruleMethodMap[m.Name] = methodVal
+	}
+	fmt.Println(p.ruleMethodMap)
 }
 
 func (p *Parser) Parse(text string) string {
