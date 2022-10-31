@@ -51,18 +51,18 @@ func (p *Parser) Init() {
 	fmt.Println(p.ruleMethodMap)
 }
 
-func (p *Parser) Parse(text string) string {
+func (p *Parser) Parse(text string) (*gabs.Container, error) {
 	p.Text = []rune(text)
 	p.Pos = -1
 	p.TotalLen = len(text) - 1
 	p.cache = make(map[string][]string)
-	p.Pm.Start()
+	res, _ := p.Pm.Start()
 	_, err := p.assertEnd()
 	if err != nil {
 		fmt.Println(fmt.Errorf(err.Error()))
 		os.Exit(1)
 	}
-	return ""
+	return res, nil
 }
 
 /*
