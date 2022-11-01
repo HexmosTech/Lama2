@@ -72,3 +72,25 @@ func (p *Lama2Parser) QuotedString() (*gabs.Container, error) {
 	temp.Set(res, "value")
 	return temp, nil
 }
+
+func (p *Lama2Parser) Unquoted() (*gabs.Container, error) {
+	acceptableChars := "0-9A-Za-z \t!$%&()*+./;<=>?^_`|~-"
+	chars := make([]string, 0)
+	c, e := p.CharClass(acceptableChars)
+	if e != nil {
+		return nil, utils.NewParseError(p.Pos+1,
+			"No match for Unquoted string", []string{})
+	}
+	chars = append(chars, string(c))
+	for {
+		c, e = p.CharClass(acceptableChars)
+		if e != nil {
+			break
+		}
+		chars = append(chars, string(c))
+	}
+	s := strings.TrimSpace(strings.Join(chars, ""))
+	temp := gabs.New()
+	temp.Set(s, "value")
+	return temp, nil
+}
