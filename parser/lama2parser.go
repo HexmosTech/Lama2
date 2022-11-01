@@ -34,7 +34,7 @@ func (p *Lama2Parser) Start() (*gabs.Container, error) {
 
 func (p *Lama2Parser) HttpFile() (*gabs.Container, error) {
 	fmt.Println("Within HttpFile")
-	res, e := p.MustMatch([]string{"HttpVerb"})
+	res, e := p.Match([]string{"HttpVerb"})
 	temp := gabs.New()
 	if e == nil {
 		temp.Set(res, "verb")
@@ -47,11 +47,16 @@ func (p *Lama2Parser) HttpFile() (*gabs.Container, error) {
 		temp.Set(res, "multipart")
 	}
 
-	res, e = p.MustMatch([]string{"TheUrl"})
+	res, e = p.Match([]string{"TheUrl"})
 	if e == nil {
 		temp.Set(res, "url")
 	} else {
 		return nil, e
+	}
+
+	res, e = p.Match([]string{"Details"})
+	if e == nil {
+		temp.Set(res, "details")
 	}
 	return temp, nil
 }
@@ -121,4 +126,16 @@ func (p *Lama2Parser) Multipart() (*gabs.Container, error) {
 	}
 	return nil, utils.NewParseError(p.Pos+1,
 		"Expected 'multipart', but couldn't find", []string{})
+}
+
+func (p *Lama2Parser) Details() (*gabs.Container, error) {
+	temp := gabs.New()
+	res, e := p.Match([]string{"HeaderData"})
+	if e == nil {
+		temp.Set(res, "headers")
+		return temp, nil
+	}
+
+	return temp, utils.NewParseError(p.Pos+1,
+		"No details packet found", []string{})
 }

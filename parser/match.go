@@ -12,7 +12,7 @@ import (
 	"github.com/hexmos/lama2/utils"
 )
 
-func (p *Parser) Match(rules []string) (interface{}, error) {
+func (p *Parser) Match(rules []string) (*gabs.Container, error) {
 	p.eatWhitespace()
 	lastErrorPos := -1
 	lastErrorRules := []string{}
@@ -51,7 +51,7 @@ func (p *Parser) Match(rules []string) (interface{}, error) {
 		}
 	}
 
-	return "", errors.New("Match failed")
+	return nil, errors.New("Match failed")
 }
 
 func (p *Parser) MustMatch(rules []string) (interface{}, error) {

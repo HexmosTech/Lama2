@@ -2,6 +2,7 @@ package utils
 
 import (
 	"encoding/json"
+	"unicode"
 )
 
 func PrettyPrint(i interface{}) string {
@@ -25,4 +26,14 @@ func ContainsString(s []string, e string) bool {
 		}
 	}
 	return false
+}
+
+// UnicodeCategory returns the Unicode Character Category of the given rune.
+func UnicodeCategory(r rune) string {
+	for name, table := range unicode.Categories {
+		if len(name) == 2 && unicode.Is(table, r) {
+			return name
+		}
+	}
+	return "Cn"
 }

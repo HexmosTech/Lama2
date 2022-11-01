@@ -42,7 +42,8 @@ func PerformValidMatch(text string) {
 }
 
 func TestValidFiles(t *testing.T) {
-	matchFiles, _ := getDataFiles("../elfparser/ElfTestSuite", "y_*")
+	// matchFiles, _ := getDataFiles("../elfparser/ElfTestSuite", "y_*")
+	matchFiles, _ := getDataFiles("../elfparser/ElfTestSuite", "y_0008_reverse_header_data.http")
 	for _, m := range matchFiles {
 		b, err := os.ReadFile(m) // just pass the file name
 		if err != nil {
