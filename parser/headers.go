@@ -21,10 +21,21 @@ func (p *Lama2Parser) Headers() (*gabs.Container, error) {
 		for k, v := range res.ChildrenMap() {
 			temp.Set(v, k)
 		}
-		return temp, nil
 	} else {
 		return nil, utils.NewParseError(p.Pos+1, "Couldn't match headers", []string{})
 	}
+	for {
+		res, e = p.Match([]string{"HeaderPair"})
+		if e == nil {
+			for k, v := range res.ChildrenMap() {
+				temp.Set(v, k)
+			}
+		} else {
+			break
+		}
+
+	}
+	return temp, nil
 }
 
 func (p *Lama2Parser) HeaderPair() (*gabs.Container, error) {
@@ -32,6 +43,9 @@ func (p *Lama2Parser) HeaderPair() (*gabs.Container, error) {
 	key, e := p.Match([]string{"QuotedString"})
 	if e != nil {
 		key, e = p.Match([]string{"Unquoted"})
+		if e != nil {
+			return nil, utils.NewParseError(p.Pos+1, "Couldn't match either quoted or unquoted string", []string{})
+		}
 	}
 
 	p.Keyword(":", true, true, true)
@@ -39,6 +53,9 @@ func (p *Lama2Parser) HeaderPair() (*gabs.Container, error) {
 	value, err := p.Match([]string{"QuotedString"})
 	if err != nil {
 		value, err = p.Match([]string{"Unquoted"})
+		if err != nil {
+			return nil, utils.NewParseError(p.Pos+1, "In header value, couldn't get string", []string{})
+		}
 	}
 	valueStr, _ := value.Search("value").Data().(string)
 	keyStr, _ := key.Search("value").Data().(string)
