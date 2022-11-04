@@ -8,9 +8,19 @@ import (
 )
 
 func (p *Lama2Parser) HeaderData() (*gabs.Container, error) {
-	headers, _ := p.Match([]string{"Headers"})
+	headers, e := p.Match([]string{"Headers"})
+	if e != nil {
+		return nil, e
+	}
 	fmt.Println("headers", headers)
-	return headers, nil
+
+	jsond, _ := p.Match([]string{"AnyType"})
+	fmt.Println("json", jsond)
+	temp := gabs.New()
+	temp = utils.SetJson(temp, headers, "headers")
+	temp = utils.SetJson(temp, jsond, "jsond")
+
+	return temp, nil
 }
 
 func (p *Lama2Parser) Headers() (*gabs.Container, error) {
@@ -57,8 +67,8 @@ func (p *Lama2Parser) HeaderPair() (*gabs.Container, error) {
 			return nil, utils.NewParseError(p.Pos+1, "In header value, couldn't get string", []string{})
 		}
 	}
-	valueStr, _ := value.Search("value").Data().(string)
-	keyStr, _ := key.Search("value").Data().(string)
+	valueStr, _ := value.Data().(string)
+	keyStr, _ := key.Data().(string)
 	temp.Set(valueStr, keyStr)
 
 	return temp, nil

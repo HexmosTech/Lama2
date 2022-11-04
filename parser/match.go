@@ -20,15 +20,18 @@ func (p *Parser) Match(rules []string) (*gabs.Container, error) {
 	fmt.Printf("%d %s %s\n", lastErrorPos, lastErrorRules, lastError)
 
 	for _, rule := range rules {
+		fmt.Println("Trying rule: ", rule, "rules = ", rules)
 		res := p.ruleMethodMap[rule].Call([]reflect.Value{})
 		fmt.Println("Res = ", res)
 		op := res[0].Interface().(*gabs.Container)
 		e := res[1]
+		fmt.Println("e = ", e)
 		if e.IsNil() {
 			fmt.Println(op.StringIndent("", "  "))
 			p.eatWhitespace()
 			return op, nil
 		} else {
+			fmt.Println("Rule error: ", rule)
 			pe := e.Interface().(*utils.ParseError)
 			fmt.Println(fmt.Errorf("%s", pe.Error()))
 			if pe.Pos > lastErrorPos {
@@ -39,16 +42,17 @@ func (p *Parser) Match(rules []string) (*gabs.Container, error) {
 			} else if pe.Pos == lastErrorPos {
 				lastErrorRules = append(lastErrorRules, rule)
 			}
+			fmt.Println("After the else stuff")
 		}
+	}
 
-		if len(lastErrorRules) == 1 {
-			return nil, lastError
-		} else {
-			if lastErrorPos >= p.TotalLen {
-				lastErrorPos = p.TotalLen - 1
-			}
-			return nil, utils.NewParseError(lastErrorPos, "Expected %s but got %s", []string{strings.Join(lastErrorRules, ","), string(p.Text[lastErrorPos])})
+	if len(lastErrorRules) == 1 {
+		return nil, lastError
+	} else {
+		if lastErrorPos >= p.TotalLen {
+			lastErrorPos = p.TotalLen - 1
 		}
+		return nil, utils.NewParseError(lastErrorPos, "Expected %s but got %s", []string{strings.Join(lastErrorRules, ","), string(p.Text[lastErrorPos])})
 	}
 
 	return nil, errors.New("Match failed")

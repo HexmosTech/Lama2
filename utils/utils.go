@@ -3,7 +3,17 @@ package utils
 import (
 	"encoding/json"
 	"unicode"
+
+	"github.com/Jeffail/gabs/v2"
 )
+
+func SetJson(parentObj *gabs.Container, childObj *gabs.Container, key string) *gabs.Container {
+	// parentObj.Object(key)
+	temp := gabs.New()
+	temp.Set(childObj, key)
+	parentObj.Merge(temp)
+	return parentObj
+}
 
 func PrettyPrint(i interface{}) string {
 	s, _ := json.MarshalIndent(i, "", "\t")
