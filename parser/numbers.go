@@ -18,6 +18,10 @@ func (p *Lama2Parser) Number() (*gabs.Container, error) {
 		return nil, e1
 	}
 	i := intPart.Data().(int)
+	multiplier := 1
+	if i < 0 {
+		multiplier = -1
+	}
 	f := float64(0)
 	e := float64(0)
 
@@ -33,9 +37,11 @@ func (p *Lama2Parser) Number() (*gabs.Container, error) {
 	if f == 0 && e == 0 {
 		temp.Set(i)
 	} else if e == 0 {
-		temp.Set(float64(i) + f)
+		temp.Set(float64(i) + (float64(multiplier) * f))
 	} else {
-		temp.Set((float64(i) + f) * math.Pow(10, e))
+		temp.Set(
+			(float64(i) +
+				(float64(multiplier) * f)) * math.Pow(10, e))
 	}
 	return temp, nil
 }
@@ -249,7 +255,7 @@ func (p *Lama2Parser) OneNine() (*gabs.Container, error) {
 }
 
 func (p *Lama2Parser) Sign() (*gabs.Container, error) {
-	s, e := p.CharClass("+-")
+	s, e := p.CharClass("-")
 	temp := gabs.New()
 	if e == nil {
 		temp.Set(string(s), "value")

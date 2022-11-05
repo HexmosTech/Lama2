@@ -129,13 +129,13 @@ func (p *Lama2Parser) Multipart() (*gabs.Container, error) {
 }
 
 func (p *Lama2Parser) Details() (*gabs.Container, error) {
-	temp := gabs.New()
-	res, e := p.Match([]string{"HeaderData"})
+	// temp := gabs.New()
+	res, e := p.Match([]string{"HeaderData", "DataHeader"})
 	if e == nil {
-		temp.Set(res, "headers")
-		return temp, nil
+		// temp = utils.SetJson(temp, res, "contents")
+		return res, nil
 	}
 
-	return temp, utils.NewParseError(p.Pos+1,
+	return nil, utils.NewParseError(p.Pos+1,
 		"No details packet found", []string{})
 }

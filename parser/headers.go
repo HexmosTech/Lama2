@@ -10,14 +10,33 @@ import (
 func (p *Lama2Parser) HeaderData() (*gabs.Container, error) {
 	headers, e := p.Match([]string{"Headers"})
 	fmt.Println("headers", headers)
+	if e != nil {
+		return nil, e
+	}
 
-	jsond, _ := p.Match([]string{"AnyType"})
+	jsond, e2 := p.Match([]string{"AnyType"})
 	fmt.Println("json", jsond)
 	temp := gabs.New()
-	if e == nil {
+	temp = utils.SetJson(temp, headers, "headers")
+	if e2 == nil {
+		temp = utils.SetJson(temp, jsond, "ip_data")
+	}
+	return temp, nil
+}
+
+func (p *Lama2Parser) DataHeader() (*gabs.Container, error) {
+	jsond, e := p.Match([]string{"AnyType"})
+	if e != nil {
+		return nil, e
+	}
+
+	headers, e2 := p.Match([]string{"Headers"})
+	fmt.Println("json", jsond)
+	temp := gabs.New()
+	temp = utils.SetJson(temp, jsond, "ip_data")
+	if e2 == nil {
 		temp = utils.SetJson(temp, headers, "headers")
 	}
-	temp = utils.SetJson(temp, jsond, "jsond")
 
 	return temp, nil
 }
