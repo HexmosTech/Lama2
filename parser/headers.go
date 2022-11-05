@@ -14,7 +14,7 @@ func (p *Lama2Parser) HeaderData() (*gabs.Container, error) {
 		return nil, e
 	}
 
-	jsond, e2 := p.Match([]string{"AnyType"})
+	jsond, e2 := p.Match([]string{"DataInput"})
 	fmt.Println("json", jsond)
 	temp := gabs.New()
 	temp = utils.SetJson(temp, headers, "headers")
@@ -25,7 +25,7 @@ func (p *Lama2Parser) HeaderData() (*gabs.Container, error) {
 }
 
 func (p *Lama2Parser) DataHeader() (*gabs.Container, error) {
-	jsond, e := p.Match([]string{"AnyType"})
+	jsond, e := p.Match([]string{"DataInput"})
 	if e != nil {
 		return nil, e
 	}
@@ -39,6 +39,14 @@ func (p *Lama2Parser) DataHeader() (*gabs.Container, error) {
 	}
 
 	return temp, nil
+}
+
+func (p *Lama2Parser) DataInput() (*gabs.Container, error) {
+	s, e1 := p.Match([]string{"VarJson"})
+	if e1 != nil {
+		s, e1 = p.Match([]string{"AnyType"})
+	}
+	return s, e1
 }
 
 func (p *Lama2Parser) Headers() (*gabs.Container, error) {
@@ -76,7 +84,10 @@ func (p *Lama2Parser) HeaderPair() (*gabs.Container, error) {
 		}
 	}
 
-	p.Keyword(":", true, true, true)
+	_, e2 := p.Keyword(":", true, true, true)
+	if e2 != nil {
+		return nil, e2
+	}
 
 	value, err := p.Match([]string{"QuotedString"})
 	if err != nil {
@@ -88,6 +99,8 @@ func (p *Lama2Parser) HeaderPair() (*gabs.Container, error) {
 	valueStr, _ := value.Data().(string)
 	keyStr, _ := key.Data().(string)
 	temp.Set(valueStr, keyStr)
+
+	fmt.Println("header pair", temp)
 
 	return temp, nil
 }

@@ -20,6 +20,7 @@ func (p *Parser) Match(rules []string) (*gabs.Container, error) {
 	fmt.Printf("%d %s %s\n", lastErrorPos, lastErrorRules, lastError)
 
 	for _, rule := range rules {
+		initialPos := p.Pos
 		fmt.Println("Trying rule: ", rule, "rules = ", rules)
 		res := p.ruleMethodMap[rule].Call([]reflect.Value{})
 		fmt.Println("Res = ", res)
@@ -27,10 +28,12 @@ func (p *Parser) Match(rules []string) (*gabs.Container, error) {
 		e := res[1]
 		fmt.Println("e = ", e)
 		if e.IsNil() {
+			fmt.Println("here", rule)
 			fmt.Println(op.StringIndent("", "  "))
 			p.eatWhitespace()
 			return op, nil
 		} else {
+			p.Pos = initialPos
 			fmt.Println("Rule error: ", rule)
 			pe := e.Interface().(*utils.ParseError)
 			fmt.Println(fmt.Errorf("%s", pe.Error()))

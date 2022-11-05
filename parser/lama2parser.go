@@ -10,10 +10,11 @@ import (
 
 type Lama2Parser struct {
 	*Parser
+	Context map[string]bool
 }
 
 func NewLama2Parser() *Lama2Parser {
-	p := &Lama2Parser{&Parser{}}
+	p := &Lama2Parser{&Parser{}, make(map[string]bool)}
 	p.Pm = p
 	p.Init()
 	return p
@@ -122,6 +123,7 @@ func (p *Lama2Parser) Multipart() (*gabs.Container, error) {
 		temp := gabs.New()
 		temp.Set(true, "value")
 		temp.Set("Multipart", "type")
+		p.Context["multipart"] = true
 		return temp, nil
 	}
 	return nil, utils.NewParseError(p.Pos+1,
