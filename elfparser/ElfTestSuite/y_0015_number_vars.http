@@ -1,0 +1,11 @@
+POST
+http://google.com
+
+{
+    "num1": -3,
+    "num2": 5e5,
+    "num3": 2.55,
+    "num4": 2.55E2,
+    "num5": 1000
+}
+

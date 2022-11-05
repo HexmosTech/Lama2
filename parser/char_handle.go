@@ -52,8 +52,8 @@ func (p *Parser) CharClass(charClass string) (rune, error) {
 	return rune(0),
 		utils.NewParseError(
 			p.Pos,
-			"Expected from character class but no match",
-			[]string{})
+			"Expected %s from character class but no match",
+			[]string{charClass})
 }
 
 func (p *Parser) SplitCharRanges(charClass string) ([]string, error) {

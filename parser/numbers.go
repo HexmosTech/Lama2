@@ -1,6 +1,7 @@
 package parser
 
 import (
+	"math"
 	"strconv"
 	"strings"
 
@@ -9,8 +10,93 @@ import (
 )
 
 func (p *Lama2Parser) Number() (*gabs.Container, error) {
-	intPart, e := p.Match([]string{"Integer"})
-	return intPart, e
+	intPart, e1 := p.Match([]string{"Integer"})
+	fracPart, e2 := p.Match([]string{"Fraction"})
+	expPart, e3 := p.Match([]string{"Exponent"})
+
+	if e1 != nil {
+		return nil, e1
+	}
+	i := intPart.Data().(int)
+	f := float64(0)
+	e := float64(0)
+
+	if e2 == nil {
+		f = fracPart.Data().(float64)
+	}
+
+	if e3 == nil {
+		e = expPart.Data().(float64)
+	}
+
+	temp := gabs.New()
+	if f == 0 && e == 0 {
+		temp.Set(i)
+	} else if e == 0 {
+		temp.Set(float64(i) + f)
+	} else {
+		temp.Set((float64(i) + f) * math.Pow(10, e))
+	}
+	return temp, nil
+}
+
+func (p *Lama2Parser) Exponent() (*gabs.Container, error) {
+	_, e := p.CharClass("eE")
+	if e != nil {
+		return nil, e
+	}
+
+	sign, e2 := p.Match([]string{"Sign"})
+	multiplier := 1
+	if e2 == nil && sign.S("value").Data().(string) == "-" {
+		multiplier = -1
+	}
+
+	d, e3 := p.Match([]string{"Digits"})
+	if e3 != nil {
+		return nil, e
+	}
+	dVal := d.S("value").Data().(string)
+	dInt, _ := strconv.Atoi(dVal)
+
+	res := float64(multiplier) * float64(dInt)
+	temp := gabs.New()
+	temp.Set(res)
+	return temp, nil
+}
+
+func (p *Lama2Parser) Fraction() (*gabs.Container, error) {
+	s, e := p.Match([]string{"FractionRule1"})
+	if e != nil {
+		return nil, e
+	}
+	f, err := strconv.ParseFloat(s.Data().(string), 64)
+	if err != nil {
+		return nil, e
+	}
+	temp := gabs.New()
+	temp.Set(f)
+	return temp, nil
+}
+
+func (p *Lama2Parser) FractionRule1() (*gabs.Container, error) {
+	s := make([]string, 0)
+	r, e := p.CharClass(".")
+	if e != nil {
+		return nil, e
+	}
+	s = append(s, string(r))
+	r2, e2 := p.Match([]string{"Digits"})
+	if e2 != nil {
+		return nil, e
+	}
+	digs := r2.Search("value").Data().(string)
+	s = append(s, digs)
+
+	temp := gabs.New()
+	temp.Set(strings.Join(s, ""))
+	return temp, nil
+
 }
 
 func (p *Lama2Parser) Integer() (*gabs.Container, error) {
@@ -18,7 +104,7 @@ func (p *Lama2Parser) Integer() (*gabs.Container, error) {
 		"IntegerRule3", "IntegerRule2", "IntegerRule1"})
 	temp := gabs.New()
 	if e == nil {
-		i, err := strconv.Atoi(s.Search("value").Data().(string))
+		i, err := strconv.Atoi(s.Data().(string))
 		if err == nil {
 			temp.Set(i)
 			return temp, nil
@@ -30,8 +116,16 @@ func (p *Lama2Parser) Integer() (*gabs.Container, error) {
 }
 
 func (p *Lama2Parser) IntegerRule1() (*gabs.Container, error) {
-	s, e := p.Match([]string{"Digit"})
-	return s, e
+	s := make([]string, 0)
+	r, e := p.Match([]string{"Digit"})
+	if e == nil {
+		s = append(s, r.Search("value").Data().(string))
+	} else {
+		return nil, e
+	}
+	temp := gabs.New()
+	temp.Set(strings.Join(s, ""))
+	return temp, e
 }
 
 func (p *Lama2Parser) IntegerRule2() (*gabs.Container, error) {
@@ -70,7 +164,7 @@ func (p *Lama2Parser) IntegerRule3() (*gabs.Container, error) {
 
 	r, e = p.Match([]string{"IntegerRule1"})
 	if e == nil {
-		rVal := r.Search("value").Data().(string)
+		rVal := r.Data().(string)
 		s = append(s, rVal)
 
 	} else {
@@ -99,7 +193,7 @@ func (p *Lama2Parser) IntegerRule4() (*gabs.Container, error) {
 
 	r, e = p.Match([]string{"IntegerRule2"})
 	if e == nil {
-		rVal := r.Search("value").Data().(string)
+		rVal := r.Data().(string)
 		s = append(s, rVal)
 	} else {
 		return nil, e

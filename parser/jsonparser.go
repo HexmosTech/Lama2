@@ -17,7 +17,7 @@ func (p *Lama2Parser) ComplexType() (*gabs.Container, error) {
 }
 
 func (p *Lama2Parser) PrimitiveType() (*gabs.Container, error) {
-	r, e := p.Match([]string{"QuotedString"})
+	r, e := p.Match([]string{"QuotedString", "Number"})
 	return r, e
 }
 

@@ -9,15 +9,14 @@ import (
 
 func (p *Lama2Parser) HeaderData() (*gabs.Container, error) {
 	headers, e := p.Match([]string{"Headers"})
-	if e != nil {
-		return nil, e
-	}
 	fmt.Println("headers", headers)
 
 	jsond, _ := p.Match([]string{"AnyType"})
 	fmt.Println("json", jsond)
 	temp := gabs.New()
-	temp = utils.SetJson(temp, headers, "headers")
+	if e == nil {
+		temp = utils.SetJson(temp, headers, "headers")
+	}
 	temp = utils.SetJson(temp, jsond, "jsond")
 
 	return temp, nil
