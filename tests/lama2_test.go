@@ -1,10 +1,12 @@
 package tests
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"os"
 	"path/filepath"
+	"reflect"
 	"sort"
 	"testing"
 
@@ -129,8 +131,18 @@ func TestJsonParserExhaustive(t *testing.T) {
 		fmt.Println("gj = ", gj)
 		jp := jj.S("value", "details", "ip_data")
 		fmt.Println("jj = ", jp)
+
+		var v1, v2 interface{}
+		json.Unmarshal([]byte(gj.String()), &v1)
+		json.Unmarshal([]byte(jp.String()), &v2)
+		if reflect.DeepEqual(v1, v2) {
+			fmt.Println("The two JSON structures are equal")
+		} else {
+			// They are different
+			fmt.Println("The two JSON structures are different")
+			break
+		}
 		fmt.Println("*** === === === === ===")
-		break
 	}
 
 }
