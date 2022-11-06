@@ -61,7 +61,7 @@ func (p *Lama2Parser) List() (*gabs.Container, error) {
 	// comma := false
 	for {
 		item, e2 := p.Match([]string{"AnyType"})
-		fmt.Println("In List: got = ", item, string(p.Text[p.Pos:p.Pos+10]))
+		fmt.Println("In List: got = ", item)
 		if e2 != nil {
 			break
 		}

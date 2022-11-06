@@ -10,7 +10,7 @@ import (
 )
 
 func (p *Parser) Keyword(kw string, eat_ws_start bool, eat_ws_end bool, case_insensitive bool) ([]rune, error) {
-	if p.Pos >= p.TotalLen {
+	if p.Pos >= p.TotalLen || p.Pos+len(kw) > p.TotalLen {
 		return []rune{rune(0)},
 			utils.NewParseError(
 				p.Pos,

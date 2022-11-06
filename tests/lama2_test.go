@@ -8,8 +8,33 @@ import (
 	"sort"
 	"testing"
 
+	"github.com/Jeffail/gabs/v2"
 	"github.com/hexmos/lama2/parser"
 )
+
+func fileToString(filePath string) (string, error) {
+	b, err := os.ReadFile(filePath)
+	if err != nil {
+		fmt.Print(err)
+		return "", err
+	}
+
+	str := string(b) // convert content to a 'string'
+	return str, nil
+}
+
+func jsonFileToGabs(jsonPath string) (*gabs.Container, error) {
+	jsonContent, e1 := fileToString(jsonPath)
+	if e1 != nil {
+		return nil, e1
+	}
+
+	j, e2 := gabs.ParseJSON([]byte(jsonContent))
+	if e2 != nil {
+		return nil, e2
+	}
+	return j, nil
+}
 
 func getDataFiles(relativeAppend string, globPattern string) ([]string, error) {
 	pwd, err := os.Getwd()
@@ -29,7 +54,7 @@ func getDataFiles(relativeAppend string, globPattern string) ([]string, error) {
 	}
 }
 
-func PerformValidMatch(text string) {
+func PerformValidMatch(text string) (*gabs.Container, error) {
 	p := parser.NewLama2Parser()
 	got, e := p.Parse(text)
 	if e == nil {
@@ -39,6 +64,7 @@ func PerformValidMatch(text string) {
 		// t.Errorf("Error not expected")
 		fmt.Println(e)
 	}
+	return got, e
 }
 
 func TestValidFiles(t *testing.T) {
@@ -46,7 +72,8 @@ func TestValidFiles(t *testing.T) {
 	// matchFiles, _ := getDataFiles("../elfparser/ElfTestSuite", "y_0009_varjson_basic.http")
 	// matchFiles, _ := getDataFiles("../elfparser/ElfTestSuite", "y_0012_varjson_multipart.http")
 	// matchFiles, _ := getDataFiles("../elfparser/ElfTestSuite", "y_0014_at_equal_ambiguity.http")
-	matchFiles, _ := getDataFiles("../elfparser/ElfTestSuite", "y_0015_number_vars.http")
+	// matchFiles, _ := getDataFiles("../elfparser/ElfTestSuite", "y_0015_number_vars.http")
+	matchFiles, _ := getDataFiles("../elfparser/ElfTestSuite", "y_0016_simple_array.http")
 	for _, m := range matchFiles {
 		b, err := os.ReadFile(m) // just pass the file name
 		if err != nil {
@@ -55,7 +82,9 @@ func TestValidFiles(t *testing.T) {
 
 		str := string(b) // convert content to a 'string'
 		fmt.Println(str)
-		PerformValidMatch(str)
+		myOp, _ := PerformValidMatch(str)
+
+		fmt.Println(myOp)
 	}
 }
 
@@ -70,4 +99,38 @@ func TestInvalidFiles(t *testing.T) {
 		str := string(b) // convert content to a 'string'
 		fmt.Println(str)
 	}
+}
+
+func TestJsonParserExhaustive(t *testing.T) {
+	matchFiles, _ := getDataFiles("../elfparser/JSONTestSuite/test_parsing", "y_*")
+	for _, m := range matchFiles {
+		fmt.Println("### === === === === ===")
+		fmt.Println(m)
+		jsonText, e := fileToString(m)
+		fmt.Println(jsonText)
+		if e != nil {
+			fmt.Println("fileToString failed")
+			return
+		}
+
+		gj, e2 := jsonFileToGabs(m)
+		if e2 != nil {
+			fmt.Println("jsonFileToGabs failed")
+			return
+		}
+		preamble := "POST\nhttp://google.com\n"
+		lamaText := preamble + jsonText
+		fmt.Println(lamaText)
+		jj, e3 := PerformValidMatch(lamaText)
+		if e3 != nil {
+			fmt.Println("performvalidMatch failed")
+			return
+		}
+		fmt.Println("gj = ", gj)
+		jp := jj.S("value", "details")
+		fmt.Println("jj = ", jp)
+		fmt.Println("*** === === === === ===")
+		break
+	}
+
 }
