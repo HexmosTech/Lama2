@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/Jeffail/gabs/v2"
+	"github.com/hexmos/lama2/utils"
 )
 
 func (p *Lama2Parser) AnyType() (*gabs.Container, error) {
@@ -17,7 +18,7 @@ func (p *Lama2Parser) ComplexType() (*gabs.Container, error) {
 }
 
 func (p *Lama2Parser) PrimitiveType() (*gabs.Container, error) {
-	r, e := p.Match([]string{"QuotedString", "Number"})
+	r, e := p.Match([]string{"Null", "Boolean", "QuotedString", "Number"})
 	return r, e
 }
 
@@ -107,5 +108,32 @@ func (p *Lama2Parser) Pair() (*gabs.Container, error) {
 	temp := gabs.New()
 	temp.Set(value, key.Data().(string))
 
+	return temp, nil
+}
+
+func (p *Lama2Parser) Boolean() (*gabs.Container, error) {
+	temp := gabs.New()
+	_, e1 := p.Keyword("true", true, true, false)
+	if e1 != nil {
+		_, e2 := p.Keyword("false", true, true, false)
+		if e2 != nil {
+			return nil, utils.NewParseError(p.Pos+1, "Couldn't find boolean", []string{})
+		} else {
+			temp.Set(false)
+		}
+	} else {
+		temp.Set(true)
+	}
+
+	return temp, nil
+}
+
+func (p *Lama2Parser) Null() (*gabs.Container, error) {
+	temp := gabs.New()
+	_, e1 := p.Keyword("null", true, true, false)
+	if e1 != nil {
+		return nil, utils.NewParseError(p.Pos+1, "Couldn't find null", []string{})
+	}
+	temp.Set(nil)
 	return temp, nil
 }

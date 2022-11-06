@@ -9,6 +9,8 @@ http://google.com
     "num5": 1000,
     "l": [1,2,3],
     "l2": [-3, -2E4, -5.55e8, 5e-1],
+    "n": null,
+    "b": false
 }
 
 blah1: blah2
