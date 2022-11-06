@@ -8,8 +8,8 @@ import (
 	"sort"
 	"testing"
 
-	"github.com/Jeffail/gabs/v2"
-	"github.com/hexmos/lama2/parser"
+	"github.com/HexmosTech/gabs/v2"
+	"github.com/HexmosTech/lama2/parser"
 )
 
 func fileToString(filePath string) (string, error) {
@@ -127,7 +127,7 @@ func TestJsonParserExhaustive(t *testing.T) {
 			return
 		}
 		fmt.Println("gj = ", gj)
-		jp := jj.S("value", "details")
+		jp := jj.S("value", "details", "ip_data")
 		fmt.Println("jj = ", jp)
 		fmt.Println("*** === === === === ===")
 		break

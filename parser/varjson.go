@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/Jeffail/gabs/v2"
-	"github.com/hexmos/lama2/utils"
+	"github.com/HexmosTech/gabs/v2"
+	"github.com/HexmosTech/lama2/utils"
 )
 
 func (p *Lama2Parser) VarJson() (*gabs.Container, error) {

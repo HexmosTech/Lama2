@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"unicode"
 
-	"github.com/Jeffail/gabs/v2"
+	"github.com/HexmosTech/gabs/v2"
 )
 
 func SetJson(parentObj *gabs.Container, childObj *gabs.Container, key string) *gabs.Container {

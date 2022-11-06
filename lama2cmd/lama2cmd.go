@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/HexmosTech/lama2/utils"
 	"github.com/fatih/color"
-	"github.com/hexmos/lama2/utils"
 	"github.com/jessevdk/go-flags"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"

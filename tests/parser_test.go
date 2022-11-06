@@ -6,7 +6,7 @@ import (
 
 	"fmt"
 
-	"github.com/hexmos/lama2/parser"
+	"github.com/HexmosTech/lama2/parser"
 )
 
 func TestLama2Parser(t *testing.T) {

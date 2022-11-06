@@ -8,8 +8,8 @@ import (
 
 	"strings"
 
-	"github.com/Jeffail/gabs/v2"
-	"github.com/hexmos/lama2/utils"
+	"github.com/HexmosTech/gabs/v2"
+	"github.com/HexmosTech/lama2/utils"
 )
 
 func (p *Parser) Match(rules []string) (*gabs.Container, error) {

@@ -6,7 +6,7 @@ import (
 	"reflect"
 	"strings"
 
-	"github.com/hexmos/lama2/utils"
+	"github.com/HexmosTech/lama2/utils"
 )
 
 func (p *Parser) Keyword(kw string, eat_ws_start bool, eat_ws_end bool, case_insensitive bool) ([]rune, error) {

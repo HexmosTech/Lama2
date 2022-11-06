@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/hexmos/lama2/utils"
+	"github.com/HexmosTech/lama2/utils"
 )
 
 func (p *Parser) Char() (rune, error) {

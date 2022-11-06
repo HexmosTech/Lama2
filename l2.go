@@ -1,7 +1,7 @@
 package main
 
 import (
-	contoller "github.com/hexmos/lama2/controller"
+	contoller "github.com/HexmosTech/lama2/controller"
 )
 
 func main() {
