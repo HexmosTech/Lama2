@@ -22,6 +22,10 @@ func (p *Lama2Parser) PrimitiveType() (*gabs.Container, error) {
 	return r, e
 }
 
+func CustomPairMerge(destination, source interface{}) interface{} {
+	return source
+}
+
 func (p *Lama2Parser) Map() (*gabs.Container, error) {
 	temp := gabs.New()
 	_, e := p.Keyword("{", true, true, true)
@@ -34,7 +38,7 @@ func (p *Lama2Parser) Map() (*gabs.Container, error) {
 			break
 		}
 		fmt.Println("PairResult", item)
-		temp.Merge(item)
+		temp.MergeFn(item, CustomPairMerge)
 
 		_, e = p.Keyword(",", true, true, true)
 		if e != nil {

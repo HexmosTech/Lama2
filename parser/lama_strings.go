@@ -3,6 +3,7 @@ package parser
 import (
 	"fmt"
 	"math/big"
+	"strconv"
 	"strings"
 
 	"github.com/HexmosTech/gabs/v2"
@@ -46,12 +47,13 @@ func (p *Lama2Parser) QuotedString() (*gabs.Container, error) {
 					} else {
 						return nil, utils.NewParseError(p.Pos+1, "Invalid code point", []string{})
 					}
-					hex := strings.Join(codePoint, "")
-					n := new(big.Int)
-					n.SetString(hex, 16)
-					s := fmt.Sprintf("%s", n)
-					chars = append(chars, s)
 				}
+				hex := strings.Join(codePoint, "")
+				n := new(big.Int)
+				n.SetString(hex, 16)
+				r2 := strconv.FormatInt(n.Int64(), 16)
+				r3 := fmt.Sprintf("\\u%04s", r2)
+				chars = append(chars, r3)
 			} else {
 				if val, ok := escapeSequences[string(escape)]; ok {
 					chars = append(chars, val)

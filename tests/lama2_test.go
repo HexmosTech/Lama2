@@ -137,9 +137,11 @@ func TestJsonParserExhaustive(t *testing.T) {
 		json.Unmarshal([]byte(jp.String()), &v2)
 		if reflect.DeepEqual(v1, v2) {
 			fmt.Println("The two JSON structures are equal")
+			fmt.Println(m)
 		} else {
 			// They are different
 			fmt.Println("The two JSON structures are different")
+			fmt.Println(m)
 			break
 		}
 		fmt.Println("*** === === === === ===")
