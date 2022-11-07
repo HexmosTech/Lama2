@@ -2,6 +2,7 @@ package utils
 
 import (
 	"encoding/json"
+	"strings"
 	"unicode"
 
 	"github.com/HexmosTech/gabs/v2"
@@ -32,6 +33,15 @@ func ContainsRune(s []rune, e rune) bool {
 func ContainsString(s []string, e string) bool {
 	for _, a := range s {
 		if a == e {
+			return true
+		}
+	}
+	return false
+}
+
+func ContainsStringPartial(s []string, e string) bool {
+	for _, a := range s {
+		if strings.Contains(e, a) {
 			return true
 		}
 	}

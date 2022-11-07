@@ -30,7 +30,7 @@ func (p *Lama2Parser) QuotedString() (*gabs.Container, error) {
 
 	// TODO: The following is slightly different from
 	// the original; may require rework
-	escapeSequences[string(quote)] = fmt.Sprintf("\\%s", quote)
+	escapeSequences[string(quote)] = string(quote)
 
 	for {
 		c, _ := p.Char()
