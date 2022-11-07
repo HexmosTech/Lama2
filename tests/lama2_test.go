@@ -111,6 +111,7 @@ func TestJsonParserExhaustive(t *testing.T) {
 		"y_string_accepted_surrogate_pair.json",
 		"y_string_accepted_surrogate_pairs.json",
 		"y_string_last_surrogates_1_and_2.json",
+		"y_string_surrogates_U+1D11E_MUSICAL_SYMBOL_G_CLEF.json",
 	}
 	for _, m := range matchFiles {
 		fmt.Println("### === === === === ===")
