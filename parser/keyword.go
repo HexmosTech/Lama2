@@ -10,7 +10,7 @@ import (
 )
 
 func (p *Parser) Keyword(kw string, eat_ws_start bool, eat_ws_end bool, case_insensitive bool) ([]rune, error) {
-	if p.Pos >= p.TotalLen || p.Pos+len(kw) > p.TotalLen {
+	if p.Pos >= p.TotalLen {
 		return []rune{rune(0)},
 			utils.NewParseError(
 				p.Pos,
@@ -25,6 +25,15 @@ func (p *Parser) Keyword(kw string, eat_ws_start bool, eat_ws_end bool, case_ins
 	kwRune := []rune(kw)
 	low := p.Pos + 1
 	high := low + len(kwRune)
+
+	if high > p.TotalLen+1 {
+		return []rune{rune(0)},
+			utils.NewParseError(
+				p.Pos,
+				"Expected %s; but EOF",
+				[]string{kw})
+
+	}
 
 	if case_insensitive {
 		ipText := strings.ToLower(string(p.Text[low:high]))
