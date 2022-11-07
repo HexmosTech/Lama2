@@ -53,7 +53,9 @@ func (p *Lama2Parser) QuotedString() (*gabs.Container, error) {
 				n.SetString(hex, 16)
 				r2 := strconv.FormatInt(n.Int64(), 16)
 				r3 := fmt.Sprintf("\\u%04s", r2)
-				chars = append(chars, r3)
+				r4, _ := strconv.Unquote(`"` + r3 + `"`)
+				fmt.Println("r3 = ", r4)
+				chars = append(chars, r4)
 			} else {
 				if val, ok := escapeSequences[string(escape)]; ok {
 					chars = append(chars, val)
@@ -71,6 +73,7 @@ func (p *Lama2Parser) QuotedString() (*gabs.Container, error) {
 	}
 
 	res := strings.Join(chars, "")
+	fmt.Println("string res", res)
 	temp.Set(res)
 	return temp, nil
 }
