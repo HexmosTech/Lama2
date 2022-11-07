@@ -54,7 +54,7 @@ func (p *Parser) Init() {
 func (p *Parser) Parse(text string) (*gabs.Container, error) {
 	p.Text = []rune(text)
 	p.Pos = -1
-	p.TotalLen = len(text) - 1
+	p.TotalLen = len(p.Text) - 1
 	p.cache = make(map[string][]string)
 	res, _ := p.Pm.Start()
 	_, err := p.assertEnd()
