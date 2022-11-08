@@ -76,7 +76,7 @@ func TestKeywordCaseInsensitiveMatch(t *testing.T) {
 	p := parser.NewLama2Parser()
 	p.SetText("    GET      http://google.com")
 	got, e := p.Keyword("get", true, true, true)
-	want := []rune("GET")
+	want := []rune("get")
 	if e == nil {
 		if !reflect.DeepEqual(got, want) {
 			t.Errorf("got %q, wanted %q", got, want)
@@ -132,11 +132,9 @@ func TestFailMatch(t *testing.T) {
 	got, e := p.Match([]string{"HttpFile"})
 	if e == nil {
 		fmt.Println(got)
-		fmt.Println("===")
-	} else {
-		t.Errorf("Error not expected")
-		fmt.Println(e)
+		t.Errorf("Expected an error!")
 	}
+	fmt.Println("===")
 }
 
 func TestLama2Start(t *testing.T) {
