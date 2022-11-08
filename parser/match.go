@@ -3,7 +3,6 @@ package parser
 import (
 	"errors"
 	"fmt"
-	"os"
 	"reflect"
 
 	"strings"
@@ -32,42 +31,30 @@ func (p *Parser) Match(rules []string) (*gabs.Container, error) {
 			fmt.Println(op.StringIndent("", "  "))
 			p.eatWhitespace()
 			return op, nil
-		} else {
-			p.Pos = initialPos
-			fmt.Println("Rule error: ", rule)
-			pe := e.Interface().(*utils.ParseError)
-			fmt.Println(fmt.Errorf("%s", pe.Error()))
-			if pe.Pos > lastErrorPos {
-				lastError = pe
-				lastErrorPos = pe.Pos
-				lastErrorRules = nil
-				lastErrorRules = append(lastErrorRules, rule)
-			} else if pe.Pos == lastErrorPos {
-				lastErrorRules = append(lastErrorRules, rule)
-			}
-			fmt.Println("After the else stuff")
 		}
+
+		p.Pos = initialPos
+		fmt.Println("Rule error: ", rule)
+		pe := e.Interface().(*utils.ParseError)
+		fmt.Println(fmt.Errorf("%s", pe.Error()))
+		if pe.Pos > lastErrorPos {
+			lastError = pe
+			lastErrorPos = pe.Pos
+			lastErrorRules = nil
+			lastErrorRules = append(lastErrorRules, rule)
+		} else if pe.Pos == lastErrorPos {
+			lastErrorRules = append(lastErrorRules, rule)
+		}
+		fmt.Println("After the else stuff")
 	}
 
 	if len(lastErrorRules) == 1 {
 		return nil, lastError
-	} else {
-		if lastErrorPos >= p.TotalLen {
-			lastErrorPos = p.TotalLen - 1
-		}
-		return nil, utils.NewParseError(lastErrorPos, "Expected %s but got %s", []string{strings.Join(lastErrorRules, ","), string(p.Text[lastErrorPos])})
 	}
 
-	return nil, errors.New("Match failed")
-}
-
-func (p *Parser) MustMatch(rules []string) (interface{}, error) {
-	res, e := p.Match(rules)
-	if e == nil {
-		return res, e
-	} else {
-		fmt.Println(fmt.Errorf("%s", e.Error()))
-		os.Exit(1)
+	if lastErrorPos >= p.TotalLen {
+		lastErrorPos = p.TotalLen - 1
 	}
-	return "", nil
+	return nil, utils.NewParseError(lastErrorPos, "Expected %s but got %s", []string{strings.Join(lastErrorRules, ","), string(p.Text[lastErrorPos])})
+
 }

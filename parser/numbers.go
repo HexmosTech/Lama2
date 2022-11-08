@@ -128,9 +128,8 @@ func (p *Lama2Parser) Integer() (*gabs.Container, error) {
 		// 	return temp, nil
 		// }
 		// return nil, utils.NewParseError(p.Pos+1, "Not able to convert to integer as expected", []string{})
-	} else {
-		return s, e
 	}
+	return s, e
 }
 
 func (p *Lama2Parser) IntegerRule1() (*gabs.Container, error) {
@@ -261,9 +260,8 @@ func (p *Lama2Parser) OneNine() (*gabs.Container, error) {
 	if e == nil {
 		temp.Set(string(s), "value")
 		return temp, nil
-	} else {
-		return nil, e
 	}
+	return nil, e
 }
 
 func (p *Lama2Parser) Sign() (*gabs.Container, error) {
@@ -272,7 +270,6 @@ func (p *Lama2Parser) Sign() (*gabs.Container, error) {
 	if e == nil {
 		temp.Set(string(s), "value")
 		return temp, e
-	} else {
-		return nil, e
 	}
+	return nil, e
 }

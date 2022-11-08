@@ -122,9 +122,8 @@ func (p *Lama2Parser) Boolean() (*gabs.Container, error) {
 		_, e2 := p.Keyword("false", true, true, false)
 		if e2 != nil {
 			return nil, utils.NewParseError(p.Pos+1, "Couldn't find boolean", []string{})
-		} else {
-			temp.Set(false)
 		}
+		temp.Set(false)
 	} else {
 		temp.Set(true)
 	}

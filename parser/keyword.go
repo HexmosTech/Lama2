@@ -1,15 +1,13 @@
 package parser
 
 import (
-	"fmt"
-	"os"
 	"reflect"
 	"strings"
 
 	"github.com/HexmosTech/lama2/utils"
 )
 
-func (p *Parser) Keyword(kw string, eat_ws_start bool, eat_ws_end bool, case_insensitive bool) ([]rune, error) {
+func (p *Parser) Keyword(kw string, eatWsStart bool, eatWsEnd bool, caseInsensitive bool) ([]rune, error) {
 	if p.Pos >= p.TotalLen {
 		return []rune{rune(0)},
 			utils.NewParseError(
@@ -18,7 +16,7 @@ func (p *Parser) Keyword(kw string, eat_ws_start bool, eat_ws_end bool, case_ins
 				[]string{kw})
 	}
 
-	if eat_ws_start {
+	if eatWsStart {
 		p.eatWhitespace()
 	}
 
@@ -35,13 +33,13 @@ func (p *Parser) Keyword(kw string, eat_ws_start bool, eat_ws_end bool, case_ins
 
 	}
 
-	if case_insensitive {
+	if caseInsensitive {
 		ipText := strings.ToLower(string(p.Text[low:high]))
 		kwLower := strings.ToLower(kw)
 
 		if reflect.DeepEqual(ipText, kwLower) {
 			p.Pos += len(kwRune)
-			if eat_ws_end {
+			if eatWsEnd {
 				p.eatWhitespace()
 			}
 			return []rune(kw), nil
@@ -49,7 +47,7 @@ func (p *Parser) Keyword(kw string, eat_ws_start bool, eat_ws_end bool, case_ins
 	} else {
 		if reflect.DeepEqual(p.Text[low:high], kwRune) {
 			p.Pos += len(kwRune)
-			if eat_ws_end {
+			if eatWsEnd {
 				p.eatWhitespace()
 			}
 			return []rune(kw), nil
@@ -60,15 +58,4 @@ func (p *Parser) Keyword(kw string, eat_ws_start bool, eat_ws_end bool, case_ins
 		p.Pos,
 		"Expected %s; but no such keyword found",
 		[]string{kw})
-}
-
-func (p *Parser) MustKeyword(kw string, eat_ws_start bool, eat_ws_end bool, case_insensitive bool) ([]rune, error) {
-	res, e := p.Keyword(kw, eat_ws_start, eat_ws_end, case_insensitive)
-	if e == nil {
-		return res, e
-	} else {
-		fmt.Println(fmt.Errorf("%s", e.Error()))
-		os.Exit(1)
-	}
-	return []rune{' '}, nil
 }

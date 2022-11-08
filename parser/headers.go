@@ -42,7 +42,7 @@ func (p *Lama2Parser) DataHeader() (*gabs.Container, error) {
 }
 
 func (p *Lama2Parser) DataInput() (*gabs.Container, error) {
-	s, e1 := p.Match([]string{"VarJson"})
+	s, e1 := p.Match([]string{"VarJSON"})
 	if e1 != nil {
 		s, e1 = p.Match([]string{"AnyType"})
 	}

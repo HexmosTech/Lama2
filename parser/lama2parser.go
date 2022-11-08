@@ -23,23 +23,22 @@ func NewLama2Parser() *Lama2Parser {
 func (p *Lama2Parser) Start() (*gabs.Container, error) {
 	fmt.Println("Within the Start function!")
 	temp := gabs.New()
-	res, e := p.Match([]string{"HttpFile"})
+	res, e := p.Match([]string{"HTTPFile"})
 	if e == nil {
 		temp.Set(res, "value")
 		temp.Set("Lama2Parser", "type")
 		return temp, nil
-	} else {
-		return nil, e
 	}
+	return nil, e
 }
 
-func (p *Lama2Parser) HttpFile() (*gabs.Container, error) {
-	fmt.Println("Within HttpFile")
-	res, e := p.Match([]string{"HttpVerb"})
+func (p *Lama2Parser) HTTPFile() (*gabs.Container, error) {
+	fmt.Println("Within HTTPFile")
+	res, e := p.Match([]string{"HTTPVerb"})
 	temp := gabs.New()
 	if e == nil {
 		temp.Set(res, "verb")
-		temp.Set("HttpFile", "type")
+		temp.Set("HTTPFile", "type")
 	} else {
 		return nil, e
 	}
@@ -48,7 +47,7 @@ func (p *Lama2Parser) HttpFile() (*gabs.Container, error) {
 		temp.Set(res, "multipart")
 	}
 
-	res, e = p.Match([]string{"TheUrl"})
+	res, e = p.Match([]string{"TheURL"})
 	if e == nil {
 		temp.Set(res, "url")
 	} else {
@@ -62,7 +61,7 @@ func (p *Lama2Parser) HttpFile() (*gabs.Container, error) {
 	return temp, nil
 }
 
-func (p *Lama2Parser) TheUrl() (*gabs.Container, error) {
+func (p *Lama2Parser) TheURL() (*gabs.Container, error) {
 	res := []string{}
 	kw, e := p.Keyword("http", true, false, true)
 	if e == nil {
@@ -95,12 +94,12 @@ func (p *Lama2Parser) TheUrl() (*gabs.Container, error) {
 	val := strings.Join(res, "")
 	temp := gabs.New()
 	temp.Set(val, "value")
-	temp.Set("TheUrl", "type")
+	temp.Set("TheURL", "type")
 	return temp, nil
 }
 
-func (p *Lama2Parser) HttpVerb() (*gabs.Container, error) {
-	fmt.Println("Withint HttpVerb")
+func (p *Lama2Parser) HTTPVerb() (*gabs.Container, error) {
+	fmt.Println("Withint HTTPVerb")
 	verbList := []string{"get", "head", "post", "put",
 		"delete", "connect", "trace", "patch"}
 
@@ -109,7 +108,7 @@ func (p *Lama2Parser) HttpVerb() (*gabs.Container, error) {
 		if e == nil {
 			temp := gabs.New()
 			temp.Set(string(r), "value")
-			temp.Set("HttpVerb", "type")
+			temp.Set("HTTPVerb", "type")
 			return temp, nil
 		}
 	}

@@ -8,14 +8,14 @@ import (
 	"github.com/HexmosTech/lama2/utils"
 )
 
-func (p *Lama2Parser) VarJson() (*gabs.Container, error) {
+func (p *Lama2Parser) VarJSON() (*gabs.Container, error) {
 	temp := gabs.New()
 	hasMultipart := false
 	if val, ok := p.Context["multipart"]; ok {
 		hasMultipart = val
 	}
 
-	pair, e1 := p.Match([]string{"VarJsonPair"})
+	pair, e1 := p.Match([]string{"VarJSONPair"})
 	if e1 != nil {
 		return nil, e1
 	}
@@ -24,7 +24,7 @@ func (p *Lama2Parser) VarJson() (*gabs.Container, error) {
 	temp.Merge(pair)
 
 	for {
-		pair, e1 = p.Match([]string{"VarJsonPair"})
+		pair, e1 = p.Match([]string{"VarJSONPair"})
 		if e1 != nil {
 			break
 		}
@@ -55,13 +55,13 @@ func (p *Lama2Parser) VarJson() (*gabs.Container, error) {
 	return temp, nil
 }
 
-func (p *Lama2Parser) VarJsonPair() (*gabs.Container, error) {
+func (p *Lama2Parser) VarJSONPair() (*gabs.Container, error) {
 	temp := gabs.New()
 	key, e := p.Match([]string{"QuotedString"})
 	if e != nil {
-		key, e = p.Match([]string{"VarJsonUnquoted"})
+		key, e = p.Match([]string{"VarJSONUnquoted"})
 		if e != nil {
-			return nil, utils.NewParseError(p.Pos+1, "Couldn't match either quoted or unquoted VarJson string", []string{})
+			return nil, utils.NewParseError(p.Pos+1, "Couldn't match either quoted or unquoted VarJSON string", []string{})
 		}
 	}
 
@@ -72,7 +72,7 @@ func (p *Lama2Parser) VarJsonPair() (*gabs.Container, error) {
 
 	value, err := p.Match([]string{"QuotedString"})
 	if err != nil {
-		value, err = p.Match([]string{"VarJsonUnquoted"})
+		value, err = p.Match([]string{"VarJSONUnquoted"})
 		if err != nil {
 			return nil, utils.NewParseError(p.Pos+1, "In header value, couldn't get string", []string{})
 		}
@@ -113,7 +113,7 @@ func (p *Lama2Parser) FilesPair() (*gabs.Container, error) {
 	return temp, nil
 }
 
-func (p *Lama2Parser) VarJsonUnquoted() (*gabs.Container, error) {
+func (p *Lama2Parser) VarJSONUnquoted() (*gabs.Container, error) {
 	acceptableChars := "@0-9A-Za-z \t!$%&()*+./;<>?^_`|~-"
 	chars := make([]string, 0)
 	c, e := p.CharClass(acceptableChars)

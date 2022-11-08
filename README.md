@@ -52,7 +52,7 @@ graph TD
 	E{Payload}
 	C --> D
 	D --> E
-	F["VarJson (key=value)"]
+	F["VarJSON (key=value)"]
 	G["JSON {'key': 'value'}"]
 	H["Multipart files (filename@filepath)"]
 	E --> F

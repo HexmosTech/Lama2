@@ -115,7 +115,7 @@
 // 	}
 // }
 //
-// func getHttpFileAsString(path string) string {
+// func getHTTPFileAsString(path string) string {
 // 	b, err := ioutil.ReadFile(path) // just pass the file name
 // 	if err != nil {
 // 		log.Fatal().Str("Type", "Preprocess").Msg(fmt.Sprint("Couldn't read: ", path))
@@ -253,8 +253,8 @@
 // 	return ret_str
 // }
 //
-// func processHttpFile(input_f string, o Opts) string {
-// 	content := getHttpFileAsString(input_f)
+// func processHTTPFile(input_f string, o Opts) string {
+// 	content := getHTTPFileAsString(input_f)
 // 	_, dir, _ := getFilePathComponents(input_f)
 // 	changeWorkingDir(dir)
 // 	loadElfEnv()
@@ -303,7 +303,7 @@
 // }
 //
 // func prettify(o Opts, input_f string) string {
-// 	content := getHttpFileAsString(input_f)
+// 	content := getHTTPFileAsString(input_f)
 // 	// _, dir, _ := getFilePathComponents(input_f)
 // 	json_obj, json_idx := findFirst(c.r_json_obj, content)
 // 	// m := minify.New()
@@ -341,6 +341,6 @@
 // 		return
 // 	}
 // 	input_f := args[0]
-// 	processHttpFile(input_f, o)
+// 	processHTTPFile(input_f, o)
 // }
 // 

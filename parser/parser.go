@@ -20,7 +20,7 @@ import (
 	"github.com/HexmosTech/lama2/utils"
 )
 
-type ParserMinimalType interface {
+type MinimalParser interface {
 	Start() (*gabs.Container, error)
 }
 
@@ -29,7 +29,7 @@ type Parser struct {
 	Pos           int
 	TotalLen      int
 	cache         map[string][]string
-	Pm            ParserMinimalType
+	Pm            MinimalParser
 	ruleMethodMap map[string]reflect.Value
 }
 
@@ -70,7 +70,7 @@ func (p *Parser) eatWhitespace() {
 	for p.Pos < p.TotalLen {
 		spaces := []rune{' ', '\f', '\v', '\r', '\t', '\n'}
 		if utils.ContainsRune(spaces, p.Text[p.Pos+1]) {
-			p.Pos += 1
+			p.Pos++
 		} else {
 			break
 		}
@@ -94,7 +94,7 @@ func (p *Parser) eatWhitespace() {
 				break
 			}
 		}
-		p.Pos += 1
+		p.Pos++
 	}
 }
 
@@ -112,7 +112,6 @@ func (p *Parser) assertEnd() (bool, error) {
 				p.Pos+1,
 				"Expected end of string but got %s",
 				[]string{string(p.Text[p.Pos+1])})
-	} else {
-		return true, nil
 	}
+	return true, nil
 }

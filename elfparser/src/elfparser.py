@@ -10,10 +10,10 @@ import math
 
 class ElfParser(Parser):
     """
-    HttpFile ::= HttpVerb Multipart? Url Details?
+    HTTPFile ::= HTTPVerb Multipart? Url Details?
     Details ::= ( (DataInput Headers?) | (Headers DataInput?) )
     DataInput ::= (Json | Varjson) FileRefs?
-    HttpVerb ::= "GET" | "HEAD" | "POST" | "PUT" | "DELETE" | "CONNECT" | "OPTIONS" | "TRACE" | "PATCH"
+    HTTPVerb ::= "GET" | "HEAD" | "POST" | "PUT" | "DELETE" | "CONNECT" | "OPTIONS" | "TRACE" | "PATCH"
     Multipart ::= "MULTIPART"
     Varjson ::= (StringType "=" StringType)+ FileRefs*
     Headers ::= (StringType ":" StringType)

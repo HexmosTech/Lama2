@@ -1,0 +1,3 @@
+#!/bin/bash
+
+golangci-lint run --disable-all -E revive ./parser/...

@@ -16,9 +16,9 @@ func (p *Parser) Char() (rune, error) {
 				"Expected %s but got end of string",
 				[]string{"character"})
 	}
-	next_char := p.Text[p.Pos+1]
-	p.Pos += 1
-	return next_char, nil
+	nextChar := p.Text[p.Pos+1]
+	p.Pos++
+	return nextChar, nil
 }
 
 func (p *Parser) CharClass(charClass string) (rune, error) {
@@ -32,7 +32,7 @@ func (p *Parser) CharClass(charClass string) (rune, error) {
 	nextChar := p.Text[p.Pos+1]
 	charRangeList, e := p.SplitCharRanges(charClass)
 	if e != nil {
-		fmt.Errorf("%s", e)
+		fmt.Println(fmt.Errorf("%s", e))
 		os.Exit(1)
 	}
 
@@ -40,11 +40,11 @@ func (p *Parser) CharClass(charClass string) (rune, error) {
 		runeCharRange := []rune(charRange)
 		if len(runeCharRange) == 1 {
 			if nextChar == runeCharRange[0] {
-				p.Pos += 1
+				p.Pos++
 				return nextChar, nil
 			}
 		} else if runeCharRange[0] <= nextChar && nextChar <= runeCharRange[2] {
-			p.Pos += 1
+			p.Pos++
 			return nextChar, nil
 		}
 	}
@@ -76,7 +76,7 @@ func (p *Parser) SplitCharRanges(charClass string) ([]string, error) {
 			index += 3
 		} else {
 			rv = append(rv, string(runeCharClass[index]))
-			index += 1
+			index++
 		}
 	}
 
