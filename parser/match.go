@@ -27,7 +27,7 @@ func (p *Parser) Match(rules []string) (*gabs.Container, error) {
 		fmt.Println("e = ", e)
 		if e.IsNil() {
 			fmt.Println("here", rule)
-			fmt.Println(op.StringIndent("", "  "))
+			// fmt.Println(op.StringIndent("", "  "))
 			p.eatWhitespace()
 			return op, nil
 		}

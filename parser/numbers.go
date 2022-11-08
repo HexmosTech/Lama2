@@ -68,7 +68,7 @@ func (p *Lama2Parser) Exponent() (*gabs.Container, error) {
 
 	d, e3 := p.Match([]string{"Digits"})
 	if e3 != nil {
-		return nil, e
+		return nil, e3
 	}
 	dVal := d.S("value").Data().(string)
 	// dInt, _ := strconv.Atoi(dVal)
@@ -104,7 +104,7 @@ func (p *Lama2Parser) FractionRule1() (*gabs.Container, error) {
 	s = append(s, string(r))
 	r2, e2 := p.Match([]string{"Digits"})
 	if e2 != nil {
-		return nil, e
+		return nil, e2
 	}
 	digs := r2.Search("value").Data().(string)
 	s = append(s, digs)

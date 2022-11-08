@@ -13,7 +13,6 @@ package parser
 
 import (
 	"fmt"
-	"os"
 	"reflect"
 
 	"github.com/HexmosTech/gabs/v2"
@@ -60,7 +59,7 @@ func (p *Parser) Parse(text string) (*gabs.Container, error) {
 	_, err := p.assertEnd()
 	if err != nil {
 		fmt.Println(fmt.Errorf(err.Error()))
-		os.Exit(1)
+		return nil, err
 	}
 	return res, nil
 }
