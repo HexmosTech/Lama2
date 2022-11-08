@@ -3,6 +3,7 @@ package tests
 import (
 	"fmt"
 	"reflect"
+	"strings"
 	"testing"
 
 	"github.com/HexmosTech/lama2/parser"
@@ -102,13 +103,10 @@ func TestCharClassFunc(t *testing.T) {
 		t.Errorf("Error not expected")
 		fmt.Println(e)
 	}
-	got, e = p.CharClass("x")
-	if e == nil {
-		t.Errorf("Expected an error")
-	} else {
-		fmt.Printf("Got the error: %s", e)
+	_, e = p.CharClass("x")
+	if e == nil || !strings.Contains(e.Error(), "no match") {
+		t.Fatalf("Expected a no match error")
 	}
-	got, e = p.CharClass("A-Z0-9&")
 }
 
 func TestMatch(t *testing.T) {
