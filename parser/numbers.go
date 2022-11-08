@@ -43,7 +43,7 @@ func (p *Lama2Parser) Number() (*gabs.Container, error) {
 		fStr := fracPart.Data().(string)
 		temp.Set(json.Number(iStr + fStr))
 	} else {
-		//temp.Set( (float64(i) + (float64(multiplier) * f)) * math.Pow(10, e))
+		// temp.Set( (float64(i) + (float64(multiplier) * f)) * math.Pow(10, e))
 		iStr := intPart.Data().(string)
 		temp.Set(json.Number(iStr + f + e))
 	}
@@ -112,12 +112,13 @@ func (p *Lama2Parser) FractionRule1() (*gabs.Container, error) {
 	temp := gabs.New()
 	temp.Set(strings.Join(s, ""))
 	return temp, nil
-
 }
 
 func (p *Lama2Parser) Integer() (*gabs.Container, error) {
-	s, e := p.Match([]string{"IntegerRule4",
-		"IntegerRule3", "IntegerRule2", "IntegerRule1"})
+	s, e := p.Match([]string{
+		"IntegerRule4",
+		"IntegerRule3", "IntegerRule2", "IntegerRule1",
+	})
 	temp := gabs.New()
 	if e == nil {
 		temp.Set(s.Data().(string))

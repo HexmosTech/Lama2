@@ -30,7 +30,6 @@ func (p *Parser) Keyword(kw string, eatWsStart bool, eatWsEnd bool, caseInsensit
 				p.Pos,
 				"Expected %s; but EOF",
 				[]string{kw})
-
 	}
 
 	if caseInsensitive {

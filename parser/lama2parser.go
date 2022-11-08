@@ -100,8 +100,10 @@ func (p *Lama2Parser) TheURL() (*gabs.Container, error) {
 
 func (p *Lama2Parser) HTTPVerb() (*gabs.Container, error) {
 	fmt.Println("Withint HTTPVerb")
-	verbList := []string{"get", "head", "post", "put",
-		"delete", "connect", "trace", "patch"}
+	verbList := []string{
+		"get", "head", "post", "put",
+		"delete", "connect", "trace", "patch",
+	}
 
 	for _, k := range verbList {
 		r, e := p.Keyword(k, true, true, true)

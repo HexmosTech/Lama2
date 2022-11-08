@@ -1,10 +1,9 @@
 package tests
 
 import (
+	"fmt"
 	"reflect"
 	"testing"
-
-	"fmt"
 
 	"github.com/HexmosTech/lama2/parser"
 )
@@ -35,7 +34,6 @@ func TestCharFunc(t *testing.T) {
 			break
 		}
 	}
-
 }
 
 func TestKeywordMatch(t *testing.T) {

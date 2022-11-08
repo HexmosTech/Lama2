@@ -4,7 +4,6 @@ import (
 	"errors"
 	"fmt"
 	"reflect"
-
 	"strings"
 
 	"github.com/HexmosTech/gabs/v2"
@@ -56,5 +55,4 @@ func (p *Parser) Match(rules []string) (*gabs.Container, error) {
 		lastErrorPos = p.TotalLen - 1
 	}
 	return nil, utils.NewParseError(lastErrorPos, "Expected %s but got %s", []string{strings.Join(lastErrorRules, ","), string(p.Text[lastErrorPos])})
-
 }

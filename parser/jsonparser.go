@@ -52,7 +52,6 @@ func (p *Lama2Parser) Map() (*gabs.Container, error) {
 	}
 
 	return temp, nil
-
 }
 
 func (p *Lama2Parser) List() (*gabs.Container, error) {
