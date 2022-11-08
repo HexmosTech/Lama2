@@ -26,7 +26,7 @@ func TestCharFunc(t *testing.T) {
 	p := parser.NewLama2Parser()
 	p.SetText("GET http://google.com")
 
-	for true {
+	for {
 		r, e := p.Char()
 		if e == nil {
 			fmt.Printf("%c", r)
