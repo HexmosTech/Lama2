@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/HexmosTech/lama2/utils"
 	"github.com/fatih/color"
 	"github.com/jessevdk/go-flags"
 	"github.com/rs/zerolog"
@@ -21,6 +20,10 @@ type Opts struct {
 	Sort     bool   `short:"s" long:"sort" description:"Sort specification into recommended order"`
 	Nocolor  bool   `short:"n" long:"nocolor" description:"Disable color in httpie output"`
 	Help     bool   `short:"h" long:"help" group:"AddHelp" description:"Usage help for Lama2"`
+
+	Positional struct {
+		LamaAPIFile string `required:"yes"`
+	} `positional-args:"yes"`
 }
 
 func getParsedInput(arglist []string) (Opts, []string) {
@@ -31,12 +34,12 @@ func getParsedInput(arglist []string) (Opts, []string) {
 		arglist = append(arglist, "-h")
 	}
 	args, err := flags.ParseArgs(&o, arglist)
-	e, _ := err.(*flags.Error)
-	if e.Type == flags.ErrHelp {
-		os.Exit(0)
-	}
-
 	if err != nil {
+		e, _ := err.(*flags.Error)
+		if e.Type == flags.ErrHelp {
+			os.Exit(0)
+		}
+
 		log.Fatal().
 			Str("Type", "Preprocess").
 			Strs("arglist", arglist).
@@ -49,7 +52,7 @@ func getParsedInput(arglist []string) (Opts, []string) {
 		Bool("Prettify", o.Prettify).
 		Bool("Sort", o.Sort).
 		Bool("NoColor", o.Nocolor).
-		Strs("Filenames", args).
+		Str("Lama API File", o.Positional.LamaAPIFile).
 		Msg("Parsed inputs")
 
 	return o, args
@@ -63,12 +66,7 @@ func validateCmdArgs(args []string) {
 	}
 }
 
-func GetAndValidateCmd() string {
-	o, _ := getParsedInput(os.Args)
-	// fmt.Println("os.Args", os.Args)
-	// validateCmdArgs(args)
-	// fmt.Println("Printing the parsed args object")
-	utils.PrettyPrint(o)
-	// fmt.Println("Going to get and validate here")
-	return "Going to get and validate here"
+func GetAndValidateCmd(ipArgs []string) *Opts {
+	o, _ := getParsedInput(ipArgs)
+	return &o
 }
