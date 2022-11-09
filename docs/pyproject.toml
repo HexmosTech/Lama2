@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "lama2docs"
+version = "0.1.0"
+description = ""
+authors = ["Shrijith Venkatramana <shrijith@hexmos.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+mkdocs = "^1.4.2"
+mkdocs-material = "^8.5.9"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

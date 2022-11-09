@@ -1,0 +1,7 @@
+site_name: Hexmos Lama2
+site_url: https://hexmos.com/lama2
+nav:
+    - Home: index.md
+    - About: about.md
+    - API: api.md
+theme: material
