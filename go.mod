@@ -7,6 +7,7 @@ require (
 	github.com/dlclark/regexp2 v1.4.0
 	github.com/fatih/color v1.13.0
 	github.com/jessevdk/go-flags v1.5.0
+	github.com/joho/godotenv v1.4.0
 	github.com/rs/zerolog v1.26.1
 )
 
