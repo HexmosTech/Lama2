@@ -14,6 +14,7 @@ package parser
 import (
 	"fmt"
 	"reflect"
+	"strings"
 
 	"github.com/HexmosTech/gabs/v2"
 	"github.com/HexmosTech/lama2/utils"
@@ -30,6 +31,7 @@ type Parser struct {
 	cache         map[string][]string
 	Pm            MinimalParser
 	ruleMethodMap map[string]reflect.Value
+	LineNum       int
 }
 
 func (p *Parser) Start() *gabs.Container {
@@ -51,10 +53,12 @@ func (p *Parser) Init() {
 }
 
 func (p *Parser) Parse(text string) (*gabs.Container, error) {
+	text = strings.ReplaceAll(text, "\r\n", "\n")
 	p.Text = []rune(text)
 	p.Pos = -1
 	p.TotalLen = len(p.Text) - 1
 	p.cache = make(map[string][]string)
+	p.LineNum = 0
 	res, _ := p.Pm.Start()
 	_, err := p.assertEnd()
 	if err != nil {
@@ -82,6 +86,9 @@ func (p *Parser) eatWhitespace() {
 	isProcessingComment := false
 	for p.Pos < p.TotalLen {
 		c := p.Text[p.Pos+1]
+		if c == '\n' {
+			p.LineNum += 1
+		}
 		if isProcessingComment {
 			if c == '\n' {
 				isProcessingComment = false
@@ -109,6 +116,7 @@ func (p *Parser) assertEnd() (bool, error) {
 		return false,
 			utils.NewParseError(
 				p.Pos+1,
+				p.LineNum+1,
 				"Expected end of string but got %s",
 				[]string{string(p.Text[p.Pos+1])})
 	}

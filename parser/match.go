@@ -13,6 +13,7 @@ import (
 func (p *Parser) Match(rules []string) (*gabs.Container, error) {
 	p.eatWhitespace()
 	lastErrorPos := -1
+	lastErrorLine := 0
 	lastErrorRules := []string{}
 	lastError := errors.New("")
 	fmt.Printf("%d %s %s\n", lastErrorPos, lastErrorRules, lastError)
@@ -39,6 +40,7 @@ func (p *Parser) Match(rules []string) (*gabs.Container, error) {
 		if pe.Pos > lastErrorPos {
 			lastError = pe
 			lastErrorPos = pe.Pos
+			lastErrorLine = pe.LineNum
 			lastErrorRules = nil
 			lastErrorRules = append(lastErrorRules, rule)
 		} else if pe.Pos == lastErrorPos {
@@ -54,5 +56,5 @@ func (p *Parser) Match(rules []string) (*gabs.Container, error) {
 	if lastErrorPos >= p.TotalLen {
 		lastErrorPos = p.TotalLen - 1
 	}
-	return nil, utils.NewParseError(lastErrorPos, "Expected %s but got %s", []string{strings.Join(lastErrorRules, ","), string(p.Text[lastErrorPos])})
+	return nil, utils.NewParseError(lastErrorPos, lastErrorLine, "Expected %s but got %s", []string{strings.Join(lastErrorRules, ","), string(p.Text[lastErrorPos])})
 }

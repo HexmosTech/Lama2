@@ -49,7 +49,7 @@ func (p *Lama2Parser) VarJSON() (*gabs.Container, error) {
 	}
 
 	if len(temp.ChildrenMap()) == 0 {
-		return nil, utils.NewParseError(p.Pos+1, "No varjson match", []string{})
+		return nil, utils.NewParseError(p.Pos+1, p.LineNum+1, "No varjson match", []string{})
 	}
 
 	return temp, nil
@@ -61,7 +61,7 @@ func (p *Lama2Parser) VarJSONPair() (*gabs.Container, error) {
 	if e != nil {
 		key, e = p.Match([]string{"VarJSONUnquoted"})
 		if e != nil {
-			return nil, utils.NewParseError(p.Pos+1, "Couldn't match either quoted or unquoted VarJSON string", []string{})
+			return nil, utils.NewParseError(p.Pos+1, p.LineNum+1, "Couldn't match either quoted or unquoted VarJSON string", []string{})
 		}
 	}
 
@@ -74,7 +74,7 @@ func (p *Lama2Parser) VarJSONPair() (*gabs.Container, error) {
 	if err != nil {
 		value, err = p.Match([]string{"VarJSONUnquoted"})
 		if err != nil {
-			return nil, utils.NewParseError(p.Pos+1, "In header value, couldn't get string", []string{})
+			return nil, utils.NewParseError(p.Pos+1, p.LineNum+1, "In header value, couldn't get string", []string{})
 		}
 	}
 	valueStr, _ := value.Data().(string)
@@ -90,7 +90,7 @@ func (p *Lama2Parser) FilesPair() (*gabs.Container, error) {
 	if e != nil {
 		key, e = p.Match([]string{"FilesUnquoted"})
 		if e != nil {
-			return nil, utils.NewParseError(p.Pos+1, "Couldn't match either quoted or unquoted Files string", []string{})
+			return nil, utils.NewParseError(p.Pos+1, p.LineNum+1, "Couldn't match either quoted or unquoted Files string", []string{})
 		}
 	}
 
@@ -103,7 +103,7 @@ func (p *Lama2Parser) FilesPair() (*gabs.Container, error) {
 	if err != nil {
 		value, err = p.Match([]string{"FilesUnquoted"})
 		if err != nil {
-			return nil, utils.NewParseError(p.Pos+1, "In File value, couldn't get string", []string{})
+			return nil, utils.NewParseError(p.Pos+1, p.LineNum+1, "In File value, couldn't get string", []string{})
 		}
 	}
 	valueStr, _ := value.Data().(string)
@@ -118,7 +118,7 @@ func (p *Lama2Parser) VarJSONUnquoted() (*gabs.Container, error) {
 	chars := make([]string, 0)
 	c, e := p.CharClass(acceptableChars)
 	if e != nil {
-		return nil, utils.NewParseError(p.Pos+1,
+		return nil, utils.NewParseError(p.Pos+1, p.LineNum+1,
 			"No match for Unquoted Varjson string", []string{})
 	}
 	chars = append(chars, string(c))
@@ -140,7 +140,7 @@ func (p *Lama2Parser) FilesUnquoted() (*gabs.Container, error) {
 	chars := make([]string, 0)
 	c, e := p.CharClass(acceptableChars)
 	if e != nil {
-		return nil, utils.NewParseError(p.Pos+1,
+		return nil, utils.NewParseError(p.Pos+1, p.LineNum+1,
 			"No match for Unquoted Files string", []string{})
 	}
 	chars = append(chars, string(c))

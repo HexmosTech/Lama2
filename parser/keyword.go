@@ -12,6 +12,7 @@ func (p *Parser) Keyword(kw string, eatWsStart bool, eatWsEnd bool, caseInsensit
 		return []rune{rune(0)},
 			utils.NewParseError(
 				p.Pos,
+				p.LineNum+1,
 				"Expected %s; but no such keyword found",
 				[]string{kw})
 	}
@@ -28,6 +29,7 @@ func (p *Parser) Keyword(kw string, eatWsStart bool, eatWsEnd bool, caseInsensit
 		return []rune{rune(0)},
 			utils.NewParseError(
 				p.Pos,
+				p.LineNum+1,
 				"Expected %s; but EOF",
 				[]string{kw})
 	}
@@ -54,7 +56,7 @@ func (p *Parser) Keyword(kw string, eatWsStart bool, eatWsEnd bool, caseInsensit
 	}
 
 	return []rune{rune(0)}, utils.NewParseError(
-		p.Pos,
+		p.Pos, p.LineNum+1,
 		"Expected %s; but no such keyword found",
 		[]string{kw})
 }

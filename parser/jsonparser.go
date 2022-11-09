@@ -120,7 +120,7 @@ func (p *Lama2Parser) Boolean() (*gabs.Container, error) {
 	if e1 != nil {
 		_, e2 := p.Keyword("false", true, true, false)
 		if e2 != nil {
-			return nil, utils.NewParseError(p.Pos+1, "Couldn't find boolean", []string{})
+			return nil, utils.NewParseError(p.Pos+1, p.LineNum+1, "Couldn't find boolean", []string{})
 		}
 		temp.Set(false)
 	} else {
@@ -134,7 +134,7 @@ func (p *Lama2Parser) Null() (*gabs.Container, error) {
 	temp := gabs.New()
 	_, e1 := p.Keyword("null", true, true, false)
 	if e1 != nil {
-		return nil, utils.NewParseError(p.Pos+1, "Couldn't find null", []string{})
+		return nil, utils.NewParseError(p.Pos+1, p.LineNum+1, "Couldn't find null", []string{})
 	}
 	temp.Set(nil)
 	return temp, nil

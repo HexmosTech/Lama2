@@ -128,7 +128,7 @@ func (p *Lama2Parser) Integer() (*gabs.Container, error) {
 		// 	temp.Set(s.Data().(string))
 		// 	return temp, nil
 		// }
-		// return nil, utils.NewParseError(p.Pos+1, "Not able to convert to integer as expected", []string{})
+		// return nil, utils.NewParseError(p.Pos+1, p.LineNum+1, "Not able to convert to integer as expected", []string{})
 	}
 	return s, e
 }
@@ -173,7 +173,7 @@ func (p *Lama2Parser) IntegerRule3() (*gabs.Container, error) {
 		if rVal == "-" {
 			s = append(s, rVal)
 		} else {
-			return nil, utils.NewParseError(p.Pos+1, "Expected negative sign",
+			return nil, utils.NewParseError(p.Pos+1, p.LineNum+1, "Expected negative sign",
 				[]string{})
 		}
 	} else {
@@ -202,7 +202,7 @@ func (p *Lama2Parser) IntegerRule4() (*gabs.Container, error) {
 		if rVal == "-" {
 			s = append(s, rVal)
 		} else {
-			return nil, utils.NewParseError(p.Pos+1, "Expected negative sign",
+			return nil, utils.NewParseError(p.Pos+1, p.LineNum+1, "Expected negative sign",
 				[]string{})
 		}
 	} else {

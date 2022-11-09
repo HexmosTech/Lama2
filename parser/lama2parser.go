@@ -67,7 +67,7 @@ func (p *Lama2Parser) TheURL() (*gabs.Container, error) {
 	if e == nil {
 		res = append(res, string(kw))
 	} else {
-		return nil, utils.NewParseError(p.Pos+1, "Couldn't find URL (starting with http(s)", []string{})
+		return nil, utils.NewParseError(p.Pos+1, p.LineNum+1, "Couldn't find URL (starting with http(s)", []string{})
 	}
 
 	_, e = p.CharClass("s")
@@ -79,7 +79,7 @@ func (p *Lama2Parser) TheURL() (*gabs.Container, error) {
 	if e == nil {
 		res = append(res, "://")
 	} else {
-		return nil, utils.NewParseError(p.Pos+1, "Couldn't find URL (starting with http(s)://", []string{})
+		return nil, utils.NewParseError(p.Pos+1, p.LineNum+1, "Couldn't find URL (starting with http(s)://", []string{})
 	}
 
 	for {
@@ -114,7 +114,7 @@ func (p *Lama2Parser) HTTPVerb() (*gabs.Container, error) {
 			return temp, nil
 		}
 	}
-	return nil, utils.NewParseError(p.Pos+1,
+	return nil, utils.NewParseError(p.Pos+1, p.LineNum+1,
 		"Couldn't find the http verb (get/post/put/delete/connect/options/trace/patch/head", []string{})
 }
 
@@ -127,7 +127,7 @@ func (p *Lama2Parser) Multipart() (*gabs.Container, error) {
 		p.Context["multipart"] = true
 		return temp, nil
 	}
-	return nil, utils.NewParseError(p.Pos+1,
+	return nil, utils.NewParseError(p.Pos+1, p.LineNum+1,
 		"Expected 'multipart', but couldn't find", []string{})
 }
 
@@ -139,6 +139,6 @@ func (p *Lama2Parser) Details() (*gabs.Container, error) {
 		return res, nil
 	}
 
-	return nil, utils.NewParseError(p.Pos+1,
+	return nil, utils.NewParseError(p.Pos+1, p.LineNum+1,
 		"No details packet found", []string{})
 }

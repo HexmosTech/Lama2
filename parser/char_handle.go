@@ -12,7 +12,7 @@ func (p *Parser) Char() (rune, error) {
 	if p.Pos >= p.TotalLen {
 		return rune(0),
 			utils.NewParseError(
-				p.Pos,
+				p.Pos, p.LineNum+1,
 				"Expected %s but got end of string",
 				[]string{"character"})
 	}
@@ -25,7 +25,7 @@ func (p *Parser) CharClass(charClass string) (rune, error) {
 	if p.Pos >= p.TotalLen {
 		return rune(0),
 			utils.NewParseError(
-				p.Pos,
+				p.Pos, p.LineNum+1,
 				"Expected %s but got end of string",
 				[]string{"character"})
 	}
@@ -51,7 +51,7 @@ func (p *Parser) CharClass(charClass string) (rune, error) {
 
 	return rune(0),
 		utils.NewParseError(
-			p.Pos,
+			p.Pos, p.LineNum+1,
 			"Expected %s from character class but no match",
 			[]string{charClass})
 }
