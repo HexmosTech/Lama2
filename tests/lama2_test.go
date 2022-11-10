@@ -15,7 +15,7 @@ import (
 	"github.com/HexmosTech/lama2/utils"
 )
 
-func fileToString(filePath string) (string, error) {
+func FileToString(filePath string) (string, error) {
 	b, err := os.ReadFile(filePath)
 	if err != nil {
 		fmt.Print(err)
@@ -27,7 +27,7 @@ func fileToString(filePath string) (string, error) {
 }
 
 func jsonFileToGabs(jsonPath string) (*gabs.Container, error) {
-	jsonContent, e1 := fileToString(jsonPath)
+	jsonContent, e1 := FileToString(jsonPath)
 	if e1 != nil {
 		return nil, e1
 	}
@@ -123,7 +123,7 @@ func TestJsonParserExhaustive(t *testing.T) {
 			continue
 		}
 		fmt.Println(m)
-		jsonText, e := fileToString(m)
+		jsonText, e := FileToString(m)
 		fmt.Println(jsonText)
 		if e != nil {
 			fmt.Println("fileToString failed")
@@ -191,7 +191,7 @@ func TestNegativeJsonParserExhaustive(t *testing.T) {
 			continue
 		}
 		fmt.Println(m)
-		jsonText, e := fileToString(m)
+		jsonText, e := FileToString(m)
 		fmt.Println(jsonText)
 		if e != nil {
 			fmt.Println("fileToString failed")
