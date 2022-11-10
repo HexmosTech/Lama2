@@ -72,11 +72,11 @@ func PerformParserMatch(text string) (*gabs.Container, error) {
 
 func TestValidFiles(t *testing.T) {
 	matchFiles, _ := getDataFiles("../elfparser/ElfTestSuite", "y_*")
-	// matchFiles, _ := getDataFiles("../elfparser/ElfTestSuite", "y_0009_varjson_basic.http")
-	// matchFiles, _ := getDataFiles("../elfparser/ElfTestSuite", "y_0012_varjson_multipart.http")
-	// matchFiles, _ := getDataFiles("../elfparser/ElfTestSuite", "y_0014_at_equal_ambiguity.http")
-	// matchFiles, _ := getDataFiles("../elfparser/ElfTestSuite", "y_0015_number_vars.http")
-	// matchFiles, _ := getDataFiles("../elfparser/ElfTestSuite", "y_0016_simple_array.http")
+	// matchFiles, _ := getDataFiles("../elfparser/ElfTestSuite", "y_0009_varjson_basic.l2")
+	// matchFiles, _ := getDataFiles("../elfparser/ElfTestSuite", "y_0012_varjson_multipart.l2")
+	// matchFiles, _ := getDataFiles("../elfparser/ElfTestSuite", "y_0014_at_equal_ambiguity.l2")
+	// matchFiles, _ := getDataFiles("../elfparser/ElfTestSuite", "y_0015_number_vars.l2")
+	// matchFiles, _ := getDataFiles("../elfparser/ElfTestSuite", "y_0016_simple_array.l2")
 	for _, m := range matchFiles {
 		b, err := os.ReadFile(m) // just pass the file name
 		if err != nil {

@@ -7,15 +7,15 @@ import pathlib
 
 TEST_BASE = "ElfTestSuite"
 TEST_BASE2 = "/home/shrsv/bin/apihub/"
-match_jsons = sorted(glob.glob(f"{TEST_BASE}/y_*.http"))
-# match_jsons = sorted(glob.glob(f"{TEST_BASE2}/**/*.http", recursive=True))
-no_match_jsons = sorted(glob.glob(f"{TEST_BASE}/n_*.http"))
+match_jsons = sorted(glob.glob(f"{TEST_BASE}/y_*.l2"))
+# match_jsons = sorted(glob.glob(f"{TEST_BASE2}/**/*.l2", recursive=True))
+no_match_jsons = sorted(glob.glob(f"{TEST_BASE}/n_*.l2"))
 ignore_no_match = [
 ]
 
 ignore_match = [
-    # "ElfTestSuite/y_0003_post_simple_json.http"
-    # "ElfTestSuite/y_0008_reverse_header_data.http"
+    # "ElfTestSuite/y_0003_post_simple_json.l2"
+    # "ElfTestSuite/y_0008_reverse_header_data.l2"
 ]
 
 class TestElfParser(unittest.TestCase):

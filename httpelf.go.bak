@@ -268,7 +268,7 @@
 //
 // type Opts struct {
 // 	Verbose  []bool `short:"v" long:"verbose" description:"Show verbose debug information"`
-// 	Prettify bool   `short:"p" long:"prettify" description:"Prettify specified .http file"`
+// 	Prettify bool   `short:"p" long:"prettify" description:"Prettify specified .l2 file"`
 // 	Sort     bool   `short:"s" long:"sort" description:"Sort specification into recommended order"`
 // 	Nocolor  bool   `short:"n" long:"nocolor" description:"Disable color in httpie output"`
 // 	Help     bool   `short:"h" long:"help" group:"AddHelp" description:"Usage help for elf"`

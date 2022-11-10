@@ -36,7 +36,7 @@ TODO
 
 ### Syntax Guidance
 
-The following is the *recommended* flow for an `.http` file. The grammar offers some additional flexibilities in ordering the various components, but it is preferable to
+The following is the *recommended* flow for an `.l2` file. The grammar offers some additional flexibilities in ordering the various components, but it is preferable to
 stick to the following ordering to 
 help with understanding.
 
@@ -107,13 +107,13 @@ Find some sample request files in the `sample_http` folder.
 To fix messed up JSONs in place:
 
 ```
-elf -p file.http
+elf -p file.l2
 ```
 
 Prettify all files in a directory (useful for large API collections such as FW-specific
 APIHub):
 ```
-find . -type f -name "*.http" -exec elf -p {} \
+find . -type f -name "*.l2" -exec elf -p {} \
 ```
 
 ### Installation
@@ -147,11 +147,11 @@ git pull
 
 1. Clone [APIHub](https://gitlab.com/flyweightgroup/apihub) repo. 
 1. Create a folder for your service (ex: `impression_collector`)
-1. Start defining `*.http` files for each service specific API. 
-1. Use `elf file.http` to test the newly defined APIs. 
+1. Start defining `*.l2` files for each service specific API. 
+1. Use `elf file.l2` to test the newly defined APIs. 
 1. Push the API files once ready into APIHub repo
 
-## `.http` format
+## `.l2` format
 
 ### Comments start with `#`
 
@@ -243,7 +243,7 @@ picking up the issue. Please use the above as a template in the interim.
 ### Find examples in `sample_http` folder
 
 Please explore `sample_http` folder to see some samples, and get a feel for
-how things are defined within `.http` files.
+how things are defined within `.l2` files.
 
 ## Development
 

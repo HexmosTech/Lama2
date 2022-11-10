@@ -8,7 +8,7 @@ import (
 func TestBasicGet(t *testing.T) {
 	o := Opts{}
 	o.Nocolor = false
-	res := processHTTPFile("./sample_http/httpbin/get.http", o)
+	res := processHTTPFile("./sample_http/httpbin/get.l2", o)
 	if !(strings.Contains(res, "world") && strings.Contains(res, "hello")) {
 		t.Errorf("Expected the result arguments to contain \"hello\" : \"world\"")
 	}
