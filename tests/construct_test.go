@@ -12,6 +12,7 @@ import (
 
 func TestConstruct(t *testing.T) {
 	s, _ := FileToString("../elfparser/ElfTestSuite/y_0012_varjson_multipart.http")
+	// s, _ := FileToString("../elfparser/ElfTestSuite/y_0014_at_equal_ambiguity.http")
 	lp := parser.NewLama2Parser()
 	res, e := lp.Parse(s)
 	if e != nil {
@@ -19,5 +20,4 @@ func TestConstruct(t *testing.T) {
 	}
 	r2 := cmdgen.ConstructCommand(res)
 	fmt.Println(r2)
-
 }
