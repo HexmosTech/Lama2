@@ -11,7 +11,6 @@ import (
 )
 
 func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, headers *gabs.Container, multipart bool) string {
-
 	command := make([]string, 0)
 	log.Info().
 		Str("Type", "Construct Command").
@@ -34,7 +33,7 @@ func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, header
 	}
 
 	jsonStr := ""
-	if jsonObj != nil {
+	if jsonObj != nil && !multipart {
 		dst := &bytes.Buffer{}
 		if err := json.Compact(dst, []byte(jsonObj.String())); err != nil {
 			log.Fatal().
@@ -45,19 +44,27 @@ func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, header
 		fmt.Println("##", jsonStr)
 	}
 
-	command = append(command, "echo '")
-	command = append(command, jsonStr)
-	command = append(command, "' | http ")
+	if !multipart && jsonStr != "" {
+		command = append(command, "echo '")
+		command = append(command, jsonStr)
+		command = append(command, "' |")
+	}
+
+	command = append(command, "http ")
+	if multipart {
+		command = append(command, "--multipart ")
+	}
 
 	command = append(command, httpv+" ")
 	command = append(command, url+" ")
 
 	if multipart {
-		command = append(command, "--multipart ")
-
 		fmt.Println("key123 = ", files)
+		for key, val := range jsonObj.Data().(*gabs.Container).ChildrenMap() {
+			command = append(command, "'"+key+"'='"+val.Data().(string)+"'  ")
+		}
 		for key, val := range files.Data().(*gabs.Container).ChildrenMap() {
-			command = append(command, key+"@"+val.Data().(string)+"  ")
+			command = append(command, "'"+key+"'@'"+val.Data().(string)+"'  ")
 		}
 	}
 

@@ -4,6 +4,7 @@ go 1.17
 
 require (
 	github.com/HexmosTech/gabs/v2 v2.6.2
+	github.com/creack/pty v1.1.18
 	github.com/dlclark/regexp2 v1.4.0
 	github.com/fatih/color v1.13.0
 	github.com/jessevdk/go-flags v1.5.0

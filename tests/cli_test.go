@@ -19,7 +19,8 @@ func TestCmdBasic(t *testing.T) {
 	expected := lama2cmd.Opts{
 		Verbose: []bool{true}, Sort: false, Prettify: false, Nocolor: false, Positional: struct {
 			LamaAPIFile string "required:\"yes\""
-		}{LamaAPIFile: "../elfparser/ElfTestSuite/y_0000_basic_get.l2"}}
+		}{LamaAPIFile: "../elfparser/ElfTestSuite/y_0000_basic_get.l2"},
+	}
 
 	if !reflect.DeepEqual(o, expected) {
 		fmt.Println(reflect.DeepEqual(o.Verbose, expected.Verbose))

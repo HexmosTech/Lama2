@@ -51,7 +51,7 @@ func formatAtom(v reflect.Value) string {
 	}
 }
 
-//!+display
+// !+display
 func display(path string, v reflect.Value) {
 	switch v.Kind() {
 	case reflect.Invalid:

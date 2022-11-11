@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/HexmosTech/lama2/cmdexec"
+	"github.com/HexmosTech/lama2/cmdgen"
 	"github.com/HexmosTech/lama2/lama2cmd"
 	"github.com/HexmosTech/lama2/parser"
 	"github.com/HexmosTech/lama2/preprocess"
@@ -23,4 +25,7 @@ func Process() {
 			Msg(fmt.Sprint("Parse Error"))
 	}
 	fmt.Println(parsedAPI)
+	cmdStr := cmdgen.ConstructCommand(parsedAPI)
+	res := cmdexec.ExecCommand(cmdStr)
+	fmt.Println(res)
 }
