@@ -2,7 +2,6 @@ package parser
 
 import (
 	"errors"
-	"fmt"
 	"reflect"
 	"strings"
 
@@ -16,27 +15,27 @@ func (p *Parser) Match(rules []string) (*gabs.Container, error) {
 	lastErrorLine := 0
 	lastErrorRules := []string{}
 	lastError := errors.New("")
-	fmt.Printf("%d %s %s\n", lastErrorPos, lastErrorRules, lastError)
+	// fmt.Printf("%d %s %s\n", lastErrorPos, lastErrorRules, lastError)
 
 	for _, rule := range rules {
 		initialPos := p.Pos
-		fmt.Println("Trying rule: ", rule, "rules = ", rules)
+		// fmt.Println("Trying rule: ", rule, "rules = ", rules)
 		res := p.ruleMethodMap[rule].Call([]reflect.Value{})
-		fmt.Println("Res = ", res)
+		// fmt.Println("Res = ", res)
 		op := res[0].Interface().(*gabs.Container)
 		e := res[1]
-		fmt.Println("e = ", e)
+		// fmt.Println("e = ", e)
 		if e.IsNil() {
-			fmt.Println("here", rule)
-			// fmt.Println(op.StringIndent("", "  "))
+			// fmt.Println("here", rule)
+			// // fmt.Println(op.StringIndent("", "  "))
 			p.eatWhitespace()
 			return op, nil
 		}
 
 		p.Pos = initialPos
-		fmt.Println("Rule error: ", rule)
+		// fmt.Println("Rule error: ", rule)
 		pe := e.Interface().(*utils.ParseError)
-		fmt.Println(fmt.Errorf("%s", pe.Error()))
+		// fmt.Println(fmt.Errorf("%s", pe.Error()))
 		if pe.Pos > lastErrorPos {
 			lastError = pe
 			lastErrorPos = pe.Pos
@@ -46,7 +45,7 @@ func (p *Parser) Match(rules []string) (*gabs.Container, error) {
 		} else if pe.Pos == lastErrorPos {
 			lastErrorRules = append(lastErrorRules, rule)
 		}
-		fmt.Println("After the else stuff")
+		// fmt.Println("After the else stuff")
 	}
 
 	if len(lastErrorRules) == 1 {

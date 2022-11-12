@@ -9,14 +9,13 @@ package utils
 import (
 	"fmt"
 	"reflect"
-	"runtime"
 	"strconv"
 )
 
 //!+Display
 
 func Display(name string, x interface{}) {
-	fmt.Printf("Display %s (%T):\n", name, x)
+	// fmt.Printf("Display %s (%T):\n", name, x)
 	display(name, reflect.ValueOf(x))
 }
 
@@ -55,7 +54,7 @@ func formatAtom(v reflect.Value) string {
 func display(path string, v reflect.Value) {
 	switch v.Kind() {
 	case reflect.Invalid:
-		fmt.Printf("%s = invalid\n", path)
+		// fmt.Printf("%s = invalid\n", path)
 	case reflect.Slice, reflect.Array:
 		for i := 0; i < v.Len(); i++ {
 			display(fmt.Sprintf("%s[%d]", path, i), v.Index(i))
@@ -72,20 +71,20 @@ func display(path string, v reflect.Value) {
 		}
 	case reflect.Ptr:
 		if v.IsNil() {
-			fmt.Printf("%s = nil\n", path)
+			// fmt.Printf("%s = nil\n", path)
 		} else {
 			display(fmt.Sprintf("(*%s)", path), v.Elem())
 		}
 	case reflect.Interface:
 		if v.IsNil() {
-			fmt.Printf("%s = nil\n", path)
+			// fmt.Printf("%s = nil\n", path)
 		} else {
-			fmt.Printf("%s.type = %s\n", path, v.Elem().Type())
-			fmt.Println(runtime.FuncForPC(v.Elem().Method(5).Pointer()).Name())
+			// fmt.Printf("%s.type = %s\n", path, v.Elem().Type())
+			// fmt.Println(runtime.FuncForPC(v.Elem().Method(5).Pointer()).Name())
 			display(path+".value", v.Elem())
 		}
 	default: // basic types, channels, funcs
-		fmt.Printf("%s = %s\n", path, formatAtom(v))
+		// fmt.Printf("%s = %s\n", path, formatAtom(v))
 	}
 }
 

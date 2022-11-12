@@ -2,7 +2,6 @@ package parser
 
 import (
 	"errors"
-	"fmt"
 	"os"
 
 	"github.com/HexmosTech/lama2/utils"
@@ -32,7 +31,7 @@ func (p *Parser) CharClass(charClass string) (rune, error) {
 	nextChar := p.Text[p.Pos+1]
 	charRangeList, e := p.SplitCharRanges(charClass)
 	if e != nil {
-		fmt.Println(fmt.Errorf("%s", e))
+		// fmt.Println(fmt.Errorf("%s", e))
 		os.Exit(1)
 	}
 

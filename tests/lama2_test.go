@@ -3,7 +3,6 @@ package tests
 import (
 	"encoding/json"
 	"errors"
-	"fmt"
 	"os"
 	"path/filepath"
 	"reflect"
@@ -18,7 +17,7 @@ import (
 func FileToString(filePath string) (string, error) {
 	b, err := os.ReadFile(filePath)
 	if err != nil {
-		fmt.Print(err)
+		// fmt.Print(err)
 		return "", err
 	}
 
@@ -42,17 +41,17 @@ func jsonFileToGabs(jsonPath string) (*gabs.Container, error) {
 func getDataFiles(relativeAppend string, globPattern string) ([]string, error) {
 	pwd, err := os.Getwd()
 	if err != nil {
-		fmt.Println(err)
+		// fmt.Println(err)
 		os.Exit(1)
 	}
 	res := filepath.Join(pwd, relativeAppend, globPattern)
 	matches, err := filepath.Glob(res)
-	fmt.Println(matches)
+	// fmt.Println(matches)
 	if err == nil {
 		sort.Strings(matches)
 		return matches, nil
 	} else {
-		fmt.Println("Couldn't get data file matches")
+		// fmt.Println("Couldn't get data file matches")
 		return nil, errors.New("Couldn't get data file matches")
 	}
 }
@@ -61,11 +60,11 @@ func PerformParserMatch(text string) (*gabs.Container, error) {
 	p := parser.NewLama2Parser()
 	got, e := p.Parse(text)
 	if e == nil {
-		fmt.Println(got)
-		fmt.Println("===")
+		// fmt.Println(got)
+		// fmt.Println("===")
 	} else {
 		// t.Errorf("Error not expected")
-		fmt.Println(e)
+		// fmt.Println(e)
 	}
 	return got, e
 }
@@ -80,14 +79,14 @@ func TestValidFiles(t *testing.T) {
 	for _, m := range matchFiles {
 		b, err := os.ReadFile(m) // just pass the file name
 		if err != nil {
-			fmt.Print(err)
+			// fmt.Print(err)
 		}
 
 		str := string(b) // convert content to a 'string'
-		fmt.Println(str)
+		// fmt.Println(str)
 		myOp, _ := PerformParserMatch(str)
 
-		fmt.Println(myOp)
+		// fmt.Println(myOp)
 	}
 }
 
@@ -96,11 +95,11 @@ func TestInvalidFiles(t *testing.T) {
 	for _, m := range matchFiles {
 		b, err := os.ReadFile(m) // just pass the file name
 		if err != nil {
-			fmt.Print(err)
+			// fmt.Print(err)
 		}
 
 		str := string(b) // convert content to a 'string'
-		fmt.Println(str)
+		// fmt.Println(str)
 	}
 }
 
@@ -118,50 +117,50 @@ func TestJsonParserExhaustive(t *testing.T) {
 		"y_string_unicode_U+1FFFE_nonchar.json",
 	}
 	for _, m := range matchFiles {
-		fmt.Println("### === === === === ===")
+		// fmt.Println("### === === === === ===")
 		if utils.ContainsStringPartial(ignoreNames, m) {
 			continue
 		}
-		fmt.Println(m)
+		// fmt.Println(m)
 		jsonText, e := FileToString(m)
-		fmt.Println(jsonText)
+		// fmt.Println(jsonText)
 		if e != nil {
-			fmt.Println("fileToString failed")
+			// fmt.Println("fileToString failed")
 			return
 		}
 
 		gj, e2 := jsonFileToGabs(m)
 		if e2 != nil {
-			fmt.Println("jsonFileToGabs failed")
+			// fmt.Println("jsonFileToGabs failed")
 			return
 		}
 		preamble := "POST\nhttp://google.com\n"
 		lamaText := preamble + jsonText
-		fmt.Println(lamaText)
+		// fmt.Println(lamaText)
 		jj, e3 := PerformParserMatch(lamaText)
 		if e3 != nil {
-			fmt.Println("performvalidMatch failed")
+			// fmt.Println("performvalidMatch failed")
 			return
 		}
-		fmt.Println("gj = ", gj)
+		// fmt.Println("gj = ", gj)
 		jp := jj.S("value", "details", "ip_data")
-		fmt.Println("jj = ", jp)
+		// fmt.Println("jj = ", jp)
 
 		var v1, v2 interface{}
 		json.Unmarshal([]byte(gj.String()), &v1)
 		jpStr := jp.String()
-		fmt.Println("### jpStr", jpStr)
+		// fmt.Println("### jpStr", jpStr)
 		json.Unmarshal([]byte(jpStr), &v2)
 		if reflect.DeepEqual(v1, v2) {
-			fmt.Println("The two JSON structures are equal")
-			fmt.Println(m)
+			// fmt.Println("The two JSON structures are equal")
+			// fmt.Println(m)
 		} else {
 			// They are different
-			fmt.Println("The two JSON structures are different")
-			fmt.Println(m)
+			// fmt.Println("The two JSON structures are different")
+			// fmt.Println(m)
 			break
 		}
-		fmt.Println("*** === === === === ===")
+		// fmt.Println("*** === === === === ===")
 	}
 }
 
@@ -186,25 +185,25 @@ func TestNegativeJsonParserExhaustive(t *testing.T) {
 		"n_structure_whitespace_formfeed.json",
 	}
 	for _, m := range matchFiles {
-		fmt.Println("### === === === === ===")
+		// fmt.Println("### === === === === ===")
 		if utils.ContainsStringPartial(ignoreNames, m) {
 			continue
 		}
-		fmt.Println(m)
+		// fmt.Println(m)
 		jsonText, e := FileToString(m)
-		fmt.Println(jsonText)
+		// fmt.Println(jsonText)
 		if e != nil {
-			fmt.Println("fileToString failed")
+			// fmt.Println("fileToString failed")
 			return
 		}
 
 		preamble := "POST\nhttp://google.com\n"
 		lamaText := preamble + jsonText
-		fmt.Println(lamaText)
+		// fmt.Println(lamaText)
 		_, e3 := PerformParserMatch(lamaText)
 		if e3 == nil {
 			t.Fatalf("Expected parser to fail for %s", m)
 		}
-		fmt.Println("*** === === === === ===")
+		// fmt.Println("*** === === === === ===")
 	}
 }

@@ -1,7 +1,6 @@
 package parser
 
 import (
-	"fmt"
 	"strings"
 
 	"github.com/HexmosTech/gabs/v2"
@@ -21,7 +20,7 @@ func NewLama2Parser() *Lama2Parser {
 }
 
 func (p *Lama2Parser) Start() (*gabs.Container, error) {
-	fmt.Println("Within the Start function!")
+	// fmt.Println("Within the Start function!")
 	temp := gabs.New()
 	res, e := p.Match([]string{"HTTPFile"})
 	if e == nil {
@@ -33,7 +32,7 @@ func (p *Lama2Parser) Start() (*gabs.Container, error) {
 }
 
 func (p *Lama2Parser) HTTPFile() (*gabs.Container, error) {
-	fmt.Println("Within HTTPFile")
+	// fmt.Println("Within HTTPFile")
 	res, e := p.Match([]string{"HTTPVerb"})
 	temp := gabs.New()
 	if e == nil {
@@ -99,7 +98,7 @@ func (p *Lama2Parser) TheURL() (*gabs.Container, error) {
 }
 
 func (p *Lama2Parser) HTTPVerb() (*gabs.Container, error) {
-	fmt.Println("Withint HTTPVerb")
+	// fmt.Println("Withint HTTPVerb")
 	verbList := []string{
 		"get", "head", "post", "put",
 		"delete", "connect", "trace", "patch",

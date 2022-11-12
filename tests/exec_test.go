@@ -1,7 +1,6 @@
 package tests
 
 import (
-	"fmt"
 	"testing"
 
 	"github.com/HexmosTech/lama2/cmdexec"
@@ -22,7 +21,7 @@ func TestExec(t *testing.T) {
 		t.Fatalf("Error on parsing")
 	}
 	r2 := cmdgen.ConstructCommand(res)
-	fmt.Println("####", r2)
+	// fmt.Println("####", r2)
 	r3 := cmdexec.ExecCommand(r2)
-	fmt.Println(r3)
+	// fmt.Println(r3)
 }

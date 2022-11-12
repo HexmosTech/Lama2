@@ -229,8 +229,8 @@
 //
 // 	command_str := strings.Join(command[:], " ")
 // 	log.Info().Str("Type", "Postprocessing").Msg(command_str)
-// 	fmt.Println()
-// 	fmt.Println()
+// 	// fmt.Println()
+// 	// fmt.Println()
 // 	return command_str
 // }
 //
@@ -315,19 +315,19 @@
 // 	multipart, _ := findFirst(c.r_multipart, content)
 // 	if len(multipart) == 0 && json_obj != "" {
 // 		// linecontent = content[:json_idx[0]] + content[json_idx[1]:]
-// 		fmt.Println(json_idx, multipart)
+// 		// fmt.Println(json_idx, multipart)
 // 		// j, _ := jsonlib.MarshalIndent(json_obj, "", "    ")
-// 		// fmt.Println(j.String())
+// 		// // fmt.Println(j.String())
 // 		var prettyJSON bytes.Buffer
 // 		error := jsonlib.Indent(&prettyJSON, []byte(json_obj), "", "  ")
 // 		if error != nil {
-// 			fmt.Println("JSON parse error: ", error)
+// 			// fmt.Println("JSON parse error: ", error)
 // 			return ""
 // 		}
 //
 // 		content = content[:json_idx[0]] + prettyJSON.String() + content[json_idx[1]:]
 // 	}
-// 	fmt.Println(content)
+// 	// fmt.Println(content)
 // 	return content
 // }
 //

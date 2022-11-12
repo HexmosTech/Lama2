@@ -1,7 +1,6 @@
 package tests
 
 import (
-	"fmt"
 	"testing"
 
 	"github.com/HexmosTech/lama2/cmdgen"
@@ -19,5 +18,5 @@ func TestConstruct(t *testing.T) {
 		t.Fatalf("Error on parsing")
 	}
 	r2 := cmdgen.ConstructCommand(res)
-	fmt.Println(r2)
+	// fmt.Println(r2)
 }

@@ -24,8 +24,8 @@ func Process() {
 			Str("Error", e.Error()).
 			Msg(fmt.Sprint("Parse Error"))
 	}
-	fmt.Println(parsedAPI)
+	// fmt.Println(parsedAPI)
 	cmdStr := cmdgen.ConstructCommand(parsedAPI, o)
-	res := cmdexec.ExecCommand(cmdStr)
-	fmt.Println(res)
+	cmdexec.ExecCommand(cmdStr)
+	// fmt.Println(res)
 }

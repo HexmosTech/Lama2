@@ -1,7 +1,6 @@
 package tests
 
 import (
-	"fmt"
 	"testing"
 
 	"github.com/HexmosTech/lama2/preprocess"
@@ -9,5 +8,5 @@ import (
 
 func TestPreprocessBasic(t *testing.T) {
 	op := preprocess.PreprocessLamaFile("../elfparser/ElfTestSuite/env1/sample.l2")
-	fmt.Println(op)
+	// fmt.Println(op)
 }

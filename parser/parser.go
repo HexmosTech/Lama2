@@ -12,7 +12,6 @@ the actual parsing begins from the `Start()` method.
 package parser
 
 import (
-	"fmt"
 	"reflect"
 	"strings"
 
@@ -49,7 +48,7 @@ func (p *Parser) Init() {
 		methodVal := pmVal.Method(i)
 		p.ruleMethodMap[m.Name] = methodVal
 	}
-	fmt.Println(p.ruleMethodMap)
+	// fmt.Println(p.ruleMethodMap)
 }
 
 func (p *Parser) Parse(text string) (*gabs.Container, error) {
@@ -62,7 +61,7 @@ func (p *Parser) Parse(text string) (*gabs.Container, error) {
 	res, _ := p.Pm.Start()
 	_, err := p.assertEnd()
 	if err != nil {
-		fmt.Println(fmt.Errorf(err.Error()))
+		// fmt.Println(fmt.Errorf(err.Error()))
 		return nil, err
 	}
 	return res, nil

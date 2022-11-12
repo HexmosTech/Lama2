@@ -1,8 +1,6 @@
 package parser
 
 import (
-	"fmt"
-
 	"github.com/HexmosTech/gabs/v2"
 	"github.com/HexmosTech/lama2/utils"
 )
@@ -37,7 +35,7 @@ func (p *Lama2Parser) Map() (*gabs.Container, error) {
 		if err != nil {
 			break
 		}
-		fmt.Println("PairResult", item)
+		// fmt.Println("PairResult", item)
 		temp.MergeFn(item, CustomPairMerge)
 
 		_, e = p.Keyword(",", true, true, true)
@@ -64,7 +62,7 @@ func (p *Lama2Parser) List() (*gabs.Container, error) {
 	// comma := false
 	for {
 		item, e2 := p.Match([]string{"AnyType"})
-		fmt.Println("In List: got = ", item)
+		// fmt.Println("In List: got = ", item)
 		if e2 != nil {
 			break
 		}
@@ -92,7 +90,7 @@ func (p *Lama2Parser) List() (*gabs.Container, error) {
 }
 
 func (p *Lama2Parser) Pair() (*gabs.Container, error) {
-	fmt.Println("Within Pair")
+	// fmt.Println("Within Pair")
 	key, e := p.Match([]string{"QuotedString"})
 	if e != nil {
 		return nil, e
@@ -102,7 +100,7 @@ func (p *Lama2Parser) Pair() (*gabs.Container, error) {
 		return nil, e
 	}
 
-	fmt.Println("Trying to match AnyType")
+	// fmt.Println("Trying to match AnyType")
 	value, err := p.Match([]string{"AnyType"})
 	if err != nil {
 		return nil, e

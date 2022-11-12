@@ -1,21 +1,19 @@
 package parser
 
 import (
-	"fmt"
-
 	"github.com/HexmosTech/gabs/v2"
 	"github.com/HexmosTech/lama2/utils"
 )
 
 func (p *Lama2Parser) HeaderData() (*gabs.Container, error) {
 	headers, e := p.Match([]string{"Headers"})
-	fmt.Println("headers", headers)
+	// fmt.Println("headers", headers)
 	if e != nil {
 		return nil, e
 	}
 
 	jsond, e2 := p.Match([]string{"DataInput"})
-	fmt.Println("json", jsond)
+	// fmt.Println("json", jsond)
 	temp := gabs.New()
 	temp = utils.SetJson(temp, headers, "headers")
 	if e2 == nil {
@@ -31,7 +29,7 @@ func (p *Lama2Parser) DataHeader() (*gabs.Container, error) {
 	}
 
 	headers, e2 := p.Match([]string{"Headers"})
-	fmt.Println("json", jsond)
+	// fmt.Println("json", jsond)
 	temp := gabs.New()
 	temp = utils.SetJson(temp, jsond, "ip_data")
 	if e2 == nil {
@@ -100,7 +98,7 @@ func (p *Lama2Parser) HeaderPair() (*gabs.Container, error) {
 	keyStr, _ := key.Data().(string)
 	temp.Set(valueStr, keyStr)
 
-	fmt.Println("header pair", temp)
+	// fmt.Println("header pair", temp)
 
 	return temp, nil
 }

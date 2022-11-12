@@ -20,16 +20,16 @@ func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, header
 		Bool("multipart", multipart).
 		Msg(fmt.Sprint("Construct parameters"))
 
-	fmt.Println("jsonObj", jsonObj)
-	fmt.Println("headers", headers)
+	// fmt.Println("jsonObj", jsonObj)
+	// fmt.Println("headers", headers)
 
 	var files *gabs.Container
 	if multipart {
 		if jsonObj.ExistsP("@files") {
 			files = jsonObj.S("@files")
-			fmt.Println("files", files)
+			// fmt.Println("files", files)
 			jsonObj.Delete("@files")
-			fmt.Println(jsonObj)
+			// fmt.Println(jsonObj)
 		}
 	}
 
@@ -42,7 +42,7 @@ func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, header
 				Msg("Couldn't minify JSON")
 		}
 		jsonStr = dst.String()
-		fmt.Println("##", jsonStr)
+		// fmt.Println("##", jsonStr)
 	}
 
 	if !multipart && jsonStr != "" {
@@ -63,7 +63,7 @@ func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, header
 	command = append(command, url+" ")
 
 	if multipart {
-		fmt.Println("key123 = ", files)
+		// fmt.Println("key123 = ", files)
 		for key, val := range jsonObj.Data().(*gabs.Container).ChildrenMap() {
 			command = append(command, "'"+key+"'='"+val.Data().(string)+"'  ")
 		}
@@ -73,7 +73,7 @@ func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, header
 	}
 
 	if headers != nil {
-		fmt.Println("header = ", headers)
+		// fmt.Println("header = ", headers)
 		for key, val := range headers.Data().(*gabs.Container).ChildrenMap() {
 			command = append(command, key+":"+val.Data().(*gabs.Container).Data().(string)+"  ")
 		}
@@ -81,14 +81,14 @@ func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, header
 	}
 
 	commandStr := strings.Join(command, "")
-	fmt.Println(commandStr)
+	// fmt.Println(commandStr)
 	return commandStr
 }
 
 func ConstructCommand(parsedInput *gabs.Container, o *lama2cmd.Opts) string {
-	fmt.Println("==", parsedInput.S("value", "details", "headers"))
+	// fmt.Println("==", parsedInput.S("value", "details", "headers"))
 
-	fmt.Println(parsedInput)
+	// fmt.Println(parsedInput)
 	httpv := parsedInput.S("value", "verb", "value")
 	url := parsedInput.S("value", "url", "value")
 	jsonObj := parsedInput.S("value", "details", "ip_data")
