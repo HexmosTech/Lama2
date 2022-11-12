@@ -2,6 +2,20 @@ site_name: Hexmos Lama2
 site_url: https://hexmos.com/lama2
 nav:
     - Home: index.md
+    - How-tos: howto.md
+    - Explanation: explanation.md
     - About: about.md
-    - API: api.md
-theme: material
+    - API Reference: api.md
+markdown_extensions:
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+theme:
+  name: material
+  features:
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.tabs.sticky
+  logo: logo.png

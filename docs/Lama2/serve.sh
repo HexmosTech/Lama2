@@ -1,2 +1,2 @@
 #!/bin/bash
-mkdocs serve
+poetry run mkdocs serve
