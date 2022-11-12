@@ -24,6 +24,5 @@ jobs:
         goos: ${{ matrix.goos }}
         goarch: ${{ matrix.goarch }}
         goversion: "https://dl.google.com/go/go1.19.3.linux-amd64.tar.gz"
-        project_path: "./cmd/test-binary"
         binary_name: "l2"
         extra_files: LICENSE README.md
