@@ -41,6 +41,7 @@ stick to the following ordering to
 help with understanding.
 
 ```mermaid
+%%{init: {'theme': 'forest'}%%
 graph TD
 	Z(Start)
 	Z --> A
@@ -69,6 +70,7 @@ graph TD
 ### Architecture
 
 ```mermaid
+%%{init: {'theme': 'forest'}%%
 graph TD
 	A[CLI]
 	B[Parser]	
