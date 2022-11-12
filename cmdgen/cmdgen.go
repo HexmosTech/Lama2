@@ -7,10 +7,11 @@ import (
 	"strings"
 
 	"github.com/HexmosTech/gabs/v2"
+	"github.com/HexmosTech/lama2/lama2cmd"
 	"github.com/rs/zerolog/log"
 )
 
-func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, headers *gabs.Container, multipart bool) string {
+func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, headers *gabs.Container, multipart bool, o *lama2cmd.Opts) string {
 	command := make([]string, 0)
 	log.Info().
 		Str("Type", "Construct Command").
@@ -51,6 +52,9 @@ func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, header
 	}
 
 	command = append(command, "http ")
+	if o.Nocolor {
+		command = append(command, "--pretty=none ")
+	}
 	if multipart {
 		command = append(command, "--multipart ")
 	}
@@ -81,7 +85,7 @@ func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, header
 	return commandStr
 }
 
-func ConstructCommand(parsedInput *gabs.Container) string {
+func ConstructCommand(parsedInput *gabs.Container, o *lama2cmd.Opts) string {
 	fmt.Println("==", parsedInput.S("value", "details", "headers"))
 
 	fmt.Println(parsedInput)
@@ -94,6 +98,6 @@ func ConstructCommand(parsedInput *gabs.Container) string {
 	if multipart != nil {
 		multipartBool = true
 	}
-	res := assembleCmdString(httpv.Data().(string), url.Data().(string), jsonObj, headers, multipartBool)
+	res := assembleCmdString(httpv.Data().(string), url.Data().(string), jsonObj, headers, multipartBool, o)
 	return res
 }
