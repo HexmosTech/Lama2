@@ -6,9 +6,9 @@ cmd=http
 cmd=go
 [[ $(type -P "$cmd") ]] || 
     { echo "$cmd is NOT in PATH" 1>&2; sudo snap install go --classic; }
-go get $(go list -f '{{ join .Imports "\n" }}')
-go build -o elf flyweightgroup.com/httpelf
-mv elf build
-sudo rm /usr/bin/elf
-sudo cp ./build/elf /usr/bin
-echo "Built and installed latest version of httpelf"
+go mod tidy
+go build -o l2 github.com/HexmosTech/lama2
+mv l2 build
+sudo rm /usr/bin/l2
+sudo cp ./build/l2 /usr/bin
+echo "Built and installed latest version of Lama2"
