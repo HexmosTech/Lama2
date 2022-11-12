@@ -41,7 +41,7 @@ stick to the following ordering to
 help with understanding.
 
 ```mermaid
-%%{init: {'securityLevel': 'loose', 'theme':'forest'}}%%
+%%{init: {'securityLevel': 'loose', 'theme':'base'}}%%
 graph TD
 	Z(Start)
 	Z --> A
@@ -70,7 +70,7 @@ graph TD
 ### Architecture
 
 ```mermaid
-%%{init: {'securityLevel': 'loose', 'theme':'forest'}}%%
+%%{init: {'securityLevel': 'loose', 'theme':'base'}}%%
 graph TD
 	A[CLI]
 	B[Parser]	
