@@ -2,6 +2,7 @@ site_name: Hexmos Lama2
 site_url: https://hexmos.com/lama2
 nav:
     - Home: index.md
+    - Get Started: tutorials/getstarted.md
     - How-tos: howto.md
     - Explanation: explanation.md
     - About: about.md
