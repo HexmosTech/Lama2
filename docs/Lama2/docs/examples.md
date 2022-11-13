@@ -114,3 +114,18 @@ a="b"  # double-quoted string
 'c'=d  # single-quoted & unquoted strings
 ```
 Get [Source File](https://github.com/HexmosTech/Lama2/tree/main/examples/0005_headers_simple.l2)
+
+## Send cookies in header
+
+Headers represent cookies in *Lama2*. Just specify cookie key value pairs separated by
+`=` within the header value as shown.
+```
+POST 
+https://httpbin.org/post
+
+# HEADERS
+Cookie:"sessionid=foo;another-cookie=bar"
+
+# DATA
+hello=world
+```
