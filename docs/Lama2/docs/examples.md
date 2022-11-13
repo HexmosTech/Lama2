@@ -189,3 +189,4 @@ http://httpbin.org/post
 	"imageb64_field": "'${PHOTO}'",
 }
 ```
+Get [Source Files](https://github.com/HexmosTech/Lama2/tree/main/examples/0008_base64_image)
