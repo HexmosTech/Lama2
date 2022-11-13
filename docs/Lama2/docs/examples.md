@@ -72,14 +72,14 @@ Get [Source File](https://github.com/HexmosTech/Lama2/tree/main/examples/0003_co
 Specify variables in `l2.env` and then load
 them up in the API files. Presently, **the `l2.env` file should reside in the same directory as the `.l2` API file.**
 
-#### l2.env
+**l2.env**
 
 ```
 export LOCAL="http://localhost:8000"
 export REMOTE="http://httpbin.org"
 ```
 
-#### env_example.l2
+**env_example.l2**
 ```
 POST
 ${REMOTE}/post
@@ -167,7 +167,7 @@ base64 strings in JSON using *Lama2*.
 First, we define a `PHOTO` variable, loaded
 up with the results of the `base64` command.
 
-### l2.env
+**l2.env**
 
 ```
 export PHOTO=`base64 image.jpeg`
@@ -179,7 +179,7 @@ quoting mechanism `"'{PHOTO}'"`. **The quoting
 must look exactly as shown in the following
 template for the request to work correctly.**
 
-### base64_embed.l2
+**base64_embed.l2**
 
 ```
 POST

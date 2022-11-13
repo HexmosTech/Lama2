@@ -9,6 +9,8 @@ nav:
     - About: about.md
     - API Reference: api.md
 markdown_extensions:
+  - toc:
+      permalink: true
   - pymdownx.superfences:
       custom_fences:
         - name: mermaid
