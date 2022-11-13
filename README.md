@@ -19,6 +19,12 @@
 1. **Documentation:** Explore tutorials, how-tos, explanations, references, FAQ/RAQs, and diagrams. Documentation is a priority, so that you never have to get lost.
 1. **Extensibility:** `.lama` syntax is implemented as a recursive descent parser, based on a clearly specified grammar. Dig into details and implement new syntax (ex: to support `websockets`)
 
+## Installation
+
+```
+curl -s https://raw.githubusercontent.com/HexmosTech/Lama2/main/install.sh | bash -s
+```
+
 
 ## TOC 
 
