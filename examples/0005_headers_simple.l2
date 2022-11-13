@@ -1,0 +1,10 @@
+POST 
+https://httpbin.org/post
+
+# HEADERS
+X-Parse-Application-Id:'helloworld'
+X-Parse-REST-API-Key:"byeworld"
+
+# DATA
+a="b"  # double-quoted string
+'c'=d  # single-quoted & unquoted strings

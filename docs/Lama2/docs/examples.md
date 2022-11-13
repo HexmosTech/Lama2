@@ -18,7 +18,7 @@ requests from there.
 GET
 https://httpbin.org/get
 ```
-Get [Source File](https://github.com/HexmosTech/Lama2/examples/0000_sample_get.l2)
+Get [Source File](https://github.com/HexmosTech/Lama2/tree/main/examples/0000_sample_get.l2)
 
 ## JSON POST request
 
@@ -33,7 +33,7 @@ https://httpbin.org/post
     "c": "d"
 }
 ```
-Get [Source File](https://github.com/HexmosTech/Lama2/examples/0002_sample_post.l2)
+Get [Source File](https://github.com/HexmosTech/Lama2/tree/main/examples/0002_sample_post.l2)
 
 ## JSON POST in VarJSON format
 
@@ -48,7 +48,7 @@ https://httpbin.org/post
 a=b
 c=d
 ```
-Get [Source File](https://github.com/HexmosTech/Lama2/examples/0001_sample_post_varjson.l2)
+Get [Source File](https://github.com/HexmosTech/Lama2/tree/main/examples/0001_sample_post_varjson.l2)
 
 ## Comments
 
@@ -65,12 +65,12 @@ c=d
 
 # Comments work even after the payload
 ```
-Get [Source File](https://github.com/HexmosTech/Lama2/examples/0003_comment.l2)
+Get [Source File](https://github.com/HexmosTech/Lama2/tree/main/examples/0003_comment.l2)
 
-## Environment vars: Switch base URL
+## Environment Variables: Switch base URL
 
 Specify variables in `l2.env` and then load
-them up in the API files:
+them up in the API files. Presently, **the `l2.env` file should reside in the same directory as the `.l2` API file.**
 
 #### l2.env
 
@@ -79,6 +79,7 @@ export LOCAL="http://localhost:8000"
 export REMOTE="http://httpbin.org"
 ```
 
+#### env_example.l2
 ```
 POST
 ${REMOTE}/post
@@ -87,3 +88,29 @@ ${REMOTE}/post
     "lorem": "ipsum"
 }
 ```
+
+Get [Source Files](https://github.com/HexmosTech/Lama2/tree/main/examples/0004_env_switch_root)
+
+## Headers
+
+Use `key:value` format to specify headers. **Headers must come before the data section**. 
+
+Specify strings for key/value in three ways:
+
+1. Double quoted (`"hello"`)
+1. Single quoted (`'hello'`)
+1. Unquoted (`hello`)
+
+```
+POST 
+https://httpbin.org/post
+
+# HEADERS
+X-Parse-Application-Id:'helloworld'
+X-Parse-REST-API-Key:"byeworld"
+
+# DATA
+a="b"  # double-quoted string
+'c'=d  # single-quoted & unquoted strings
+```
+Get [Source File](https://github.com/HexmosTech/Lama2/tree/main/examples/0005_headers_simple.l2)
