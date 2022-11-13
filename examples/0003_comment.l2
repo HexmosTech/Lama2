@@ -1,0 +1,8 @@
+# Pound symbol signifies a comment
+POST
+https://httpbin.org/post
+
+a=b # Comments may start at the end of lines as well
+c=d
+
+# Comments work even after the payload

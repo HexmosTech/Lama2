@@ -12,9 +12,9 @@ curl -s https://raw.githubusercontent.com/HexmosTech/Lama2/main/install.sh | bas
 
 ### Manual install
 
-#### Step 1: Install Httpie
+#### Step 1: Install HTTPie
 
-*Lama2* depends on [Httpie for Terminal](https://httpie.io/cli). Use
+*Lama2* depends on [HTTPie for Terminal](https://httpie.io/cli). Use
 their official instructions to get the `http` command functional in
 your local system. 
 

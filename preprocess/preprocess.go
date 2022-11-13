@@ -12,7 +12,7 @@ import (
 )
 
 func loadElfEnv() {
-	err := godotenv.Load("elf.env")
+	err := godotenv.Load("l2.env")
 	if err != nil {
 		log.Info().Str("Type", "Preprocess").Msg("Error loading elf.env file")
 	}

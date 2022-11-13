@@ -1,0 +1,5 @@
+POST
+https://httpbin.org/post
+
+a=b
+c=d
