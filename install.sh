@@ -47,6 +47,7 @@ get_os() {
     else
         # Unknown.
         echo "Error: Unknown OS"
+        exit
     fi
 }
 
