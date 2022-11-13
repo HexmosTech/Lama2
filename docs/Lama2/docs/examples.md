@@ -158,3 +158,34 @@ first=second
 myfile@./image.jpeg
 ```
 Get [Source Files](https://github.com/HexmosTech/Lama2/tree/main/examples/0007_multipart_file)
+
+## Image as Base64 encoded JSON field
+
+We can embed images (or other files) as 
+base64 strings in JSON using *Lama2*.
+
+First, we define a `PHOTO` variable, loaded
+up with the results of the `base64` command.
+
+### l2.env
+
+```
+export PHOTO=`base64 image.jpeg`
+```
+
+Next, we refer to the `PHOTO` variable in
+the API file. Pay special attention to the
+quoting mechanism `"'{PHOTO}'"`. **The quoting
+must look exactly as shown in the following
+template for the request to work correctly.**
+
+### base64_embed.l2
+
+```
+POST
+http://httpbin.org/post
+
+{
+	"imageb64_field": "'${PHOTO}'",
+}
+```

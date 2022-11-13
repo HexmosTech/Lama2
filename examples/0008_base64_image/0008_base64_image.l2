@@ -1,0 +1,6 @@
+POST
+http://httpbin.org/post
+
+{
+	"imageb64_field": "'${PHOTO}'",
+}
