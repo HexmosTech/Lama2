@@ -1,5 +1,9 @@
 #!/bin/bash
 
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+NC='\033[0m' # No Color
+
 get_file() {
     dl_url="https://api.github.com/repos/HexmosTech/Lama2/releases/latest"
     api_resp=$(wget -nv -O - $dl_url)
@@ -12,6 +16,7 @@ get_platform() {
     i686) architecture="386" ;;
     x86_64) architecture="amd64" ;;
     arm) dpkg --print-architecture | grep -q "arm64" && architecture="arm64" || architecture="arm" ;;
+    *) exit 1
     esac
 }
 
@@ -53,11 +58,13 @@ get_os() {
 
 ensure_http() {
     if python3 --version; then 
+        python3 -m keyring --disable 2>/dev/null
         python3 -m pip install httpie
         return
     fi
 
     if python --version; then
+        python -m keyring --disable 2>/dev/null
         python -m pip install httpie
         return
     fi
@@ -95,3 +102,10 @@ wget -O /tmp/l2_latest.tar.gz "${archive}"
 tar --overwrite -xvzf /tmp/l2_latest.tar.gz -C /tmp
 sudo rm -f /usr/local/bin/l2 /usr/bin/l2
 sudo mv /tmp/l2 /usr/local/bin
+
+
+if l2 > /dev/null 2>&1; then 
+    echo -e $"${GREEN}Successfully installed Lama2; Type 'l2 <api_file>' to invoke Lama2${NC}"
+else 
+    echo -e $"${RED}Failure in installation; please report issue at github.com/HexmosTech/Lama2${NC}"
+fi
