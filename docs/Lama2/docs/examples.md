@@ -129,3 +129,32 @@ Cookie:"sessionid=foo;another-cookie=bar"
 # DATA
 hello=world
 ```
+Get [Source File](https://github.com/HexmosTech/Lama2/tree/main/examples/0006_cookies.l2)
+
+## Fill forms & attach files with MULTIPART
+
+Use the `MULTIPART` keyword after the HTTP
+verb to enable forms and file attachments.
+
+The data section may contain any number of 
+form inputs using the `key=value` syntax.
+
+Following the data section, one can specify
+any number of files in the form of `<field_name>@<file_path>`. The file path is
+relative to the API file.
+
+```
+POST
+MULTIPART
+http://httpbin.org/post
+
+'X-Parse-Application-Id':hello 
+X-Parse-REST-API-Key:"world"
+
+# DATA
+first=second
+
+# FILES
+myfile@./image.jpeg
+```
+Get [Source Files](https://github.com/HexmosTech/Lama2/tree/main/examples/0007_multipart_file)

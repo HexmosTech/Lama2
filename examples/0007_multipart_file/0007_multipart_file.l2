@@ -1,0 +1,12 @@
+POST
+MULTIPART
+http://httpbin.org/post
+
+'X-Parse-Application-Id':impressionserver 
+X-Parse-REST-API-Key:"impressionserver"
+
+# DATA
+first=second
+
+# FILES
+myfile@./image.jpeg
