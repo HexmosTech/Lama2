@@ -47,7 +47,7 @@ func getParsedInput(argList []string) (Opts, []string) {
 	}
 
 	if o.Nocolor {
-		utils.ConfigureZeroLog("ERROR")
+		utils.ConfigureZeroLog("DEBUG")
 	} else {
 		switch len(o.Verbose) {
 		case 0:
