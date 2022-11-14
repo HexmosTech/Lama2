@@ -12,17 +12,27 @@
 
 ## About
 
-`Lama2` is a plain-text powered REST API client & manager built for serious engineering teams. *Lama2* implements the `.l2` syntax for specifying APIs, and a CLI to execute *.l2* files. The system plays nicely with version control systems and editors/IDEs. One can think of Lama2 as *markdown for APIs*.
+*Lama2* is a plain-text powered REST API client & manager built for serious engineering teams.
+*Lama2* specifies the .l2 syntax for describing APIs, and implements a CLI to execute .l2 files. Engineers can collaborate on `.l2` files using version control. *Lama2* integrates nicely with
+IDEs and text-editors as well. Think of *Lama2* as **markdown for APIs.**
 
 ## Benefits 
 
-1. **Plain-text files:** Store APIs in the plain-text `.lama` files. Simple and human-friendly syntax. Learn basics within  minutes!
-1. **Simple CLI:** Launch the CLI tool `l2` on `.lama` files to make REST API requests.
-1. **Editor support:** Invoke *Lama2* from your favorite text editor or IDE. Friendly API to build editor extensions.
-1. **Longevity & trackability:** Commit `.lama` files to `git` or other version control for long life & change tracking.
+1. **Plain-text files:** Store APIs in the plain-text `.l2` API files. Simple and human-friendly syntax. Learn basics within  minutes!
+1. **Simple CLI:** Launch the CLI tool `l2` on API files to make REST API requests.
+1. **Editor support:** Invoke *Lama2* from your favorite text editor or IDE. Helpful documentation and tool support to build editor extensions included.
+1. **Longevity & track-ability:** Commit `.l2` files to `git` or other version control for long life & change tracking.
 1. **Collaboration:** Share API repo with teammates and colleagues to collaborate
 1. **Documentation:** Explore tutorials, how-tos, explanations, references, FAQ/RAQs, and diagrams. Documentation is a priority, so that you never have to get lost.
-1. **Extensibility:** `.lama` syntax is implemented as a recursive descent parser, based on a clearly specified grammar. Dig into details and implement new syntax (ex: to support `websockets`)
+1. **Extensibility:** `.l2` syntax is implemented as a *recursive descent parser*, based on a clearly specified grammar. Dig into details and implement new syntax (ex: to support `websockets`)
+
+## Terminal Demo: A POST request
+
+![](docs/Lama2/docs/demo.gif)
+
+## VSCode Demo: The same POST request
+
+![](docs/Lama2/docs/demo2.gif)
 
 ## Installation
 
@@ -30,52 +40,9 @@
 curl -s https://raw.githubusercontent.com/HexmosTech/Lama2/main/install.sh | bash -s
 ```
 
+Learn more about other installation methods
+from our docs.
 
-## TOC 
-
-[[_TOC_]]
-
-## How-to
-
-TODO
-
-## Tutorial
-
-TODO
-
-## Explanation
-
-### Syntax Guidance
-
-The following is the *recommended* flow for an `.l2` file. The grammar offers some additional flexibilities in ordering the various components, but it is preferable to
-stick to the following ordering to 
-help with understanding.
-
-```mermaid
-%%{init: {'securityLevel': 'loose', 'theme':'base'}}%%
-graph TD
-	Z(Start)
-	Z --> A
-    A["HTTP Verb (get/post/put/delete)"] --> B[Multipart]
-	C["URL (http://blah.com)"]
-	A --> C
-	B --> C
-	D["Headers (header_key: header_value)"]
-	E{Payload}
-	C --> D
-	D --> E
-	F["VarJSON (key=value)"]
-	G["JSON {'key': 'value'}"]
-	H["Multipart files (filename@filepath)"]
-	E --> F
-	F --> H
-	E --> G
-	I("End")
-	H --> I
-	G --> I
-```
-
-## Reference
 
 
 ### Architecture
