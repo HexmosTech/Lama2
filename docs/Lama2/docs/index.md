@@ -2,6 +2,11 @@
 
 ![](./banner.png)
 
+
+![Build](https://github.com/HexmosTech/Lama2/actions/workflows/release.yml/badge.svg)
+![Test](https://github.com/HexmosTech/Lama2/actions/workflows/testapp.yml/badge.svg)
+[![Go Report Card](https://goreportcard.com/badge/github.com/HexmosTech/lama2)](https://goreportcard.com/report/github.com/HexmosTech/lama2)
+
 Quick links: [How-tos](./howto.md) | [Explanations](./explanation.md)
 
 ## About
@@ -25,7 +30,7 @@ IDEs and text-editors as well. Think of *Lama2* as **markdown for APIs.**
 
 ![](demo.gif)
 
-#### `basic_post.l2`:
+**`basic_post.l2`:**
 
 ```bash
 POST
@@ -35,7 +40,7 @@ https://httpbin.org/post
 }
 ```
 
-#### Execution:
+**Execute:**
 
 ```
 l2 basic_post.l2

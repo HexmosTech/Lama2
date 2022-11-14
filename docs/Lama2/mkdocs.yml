@@ -3,11 +3,20 @@ site_url: https://hexmos.com/lama2
 nav:
     - Home: index.md
     - Get Started: 
-      - Installation: tutorials/getstarted.md
-    - Examples: examples.md
-    - Explanation: explanation.md
-    - About: about.md
-    - API Reference: api.md
+      - Installation: tutorials/installation.md
+      - Examples: tutorials/examples.md
+    - Understand:
+      - Syntax Guidance: explanation/syntax.md
+      - FAQ/RAQ: explanation/faq.md
+    - Develop:
+      - Architecture: reference/architecture.md
+      - IDE/Editor Support: tutorials/editor.md
+      - Formal Grammar: reference/grammar.md
+      - API Reference: reference/api.md
+    - About: 
+      - Lama2 History: about/history.md
+      - Hexmos: about/hexmos.md
+      - Talk to us: about/contact.md
 markdown_extensions:
   - toc:
       permalink: true
