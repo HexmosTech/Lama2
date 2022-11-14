@@ -25,6 +25,7 @@ func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, header
 		Str("Headers", headers.String())
 
 	var files *gabs.Container
+	fmt.Println("Trying to process files; multipart = ", multipart)
 	if multipart {
 		fmt.Println("Within multipart")
 		if jsonObj.ExistsP("@files") {
@@ -100,6 +101,7 @@ func ConstructCommand(parsedInput *gabs.Container, o *lama2cmd.Opts) string {
 	multipartBool := false
 	if multipart != nil {
 		multipartBool = true
+		fmt.Println("SAetting multipart bool = true")
 	}
 	fmt.Println("httpv", httpv, httpv.Data().(string))
 	fmt.Println("url", url, url.Data().(string))
