@@ -1,9 +1,12 @@
 # `Lama2`: Plain-text Powered REST API Client
 
-<div align="center">
 
+<div align="center">
 <img src="banner.png" width="80%" />
+
+[![Go Report Card](https://goreportcard.com/badge/github.com/HexmosTech/lama2)](https://goreportcard.com/report/github.com/HexmosTech/lama2)
 </div>
+
 
 ## About
 
