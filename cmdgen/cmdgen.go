@@ -96,8 +96,8 @@ func ConstructCommand(parsedInput *gabs.Container, o *lama2cmd.Opts) string {
 	if multipart != nil {
 		multipartBool = true
 	}
-	fmt.Println("httpv", httpv)
-	fmt.Println("url", url)
+	fmt.Println("httpv", httpv, httpv.Data().(string))
+	fmt.Println("url", url, url.Data().(string))
 
 	res := assembleCmdString(httpv.Data().(string), url.Data().(string), jsonObj, headers, multipartBool, o)
 	return res
