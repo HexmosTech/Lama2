@@ -22,7 +22,6 @@ func TestCmdBasic(t *testing.T) {
 	}
 
 	if !reflect.DeepEqual(o, expected) {
-		// fmt.Println(reflect.DeepEqual(o.Verbose, expected.Verbose))
 		t.Errorf("Unsuccessful parsing basic CLI options")
 	}
 }

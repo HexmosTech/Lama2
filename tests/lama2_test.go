@@ -18,7 +18,7 @@ import (
 func FileToString(filePath string) (string, error) {
 	b, err := os.ReadFile(filePath)
 	if err != nil {
-		// fmt.Print(err)
+		log.Debug().Str("Error", err.Error())
 		return "", err
 	}
 
@@ -42,17 +42,17 @@ func jsonFileToGabs(jsonPath string) (*gabs.Container, error) {
 func getDataFiles(relativeAppend string, globPattern string) ([]string, error) {
 	pwd, err := os.Getwd()
 	if err != nil {
-		// fmt.Println(err)
+		log.Debug().Str("Error", err.Error())
 		os.Exit(1)
 	}
 	res := filepath.Join(pwd, relativeAppend, globPattern)
 	matches, err := filepath.Glob(res)
-	// fmt.Println(matches)
+	log.Debug().Strs("Matches", matches)
 	if err == nil {
 		sort.Strings(matches)
 		return matches, nil
 	} else {
-		// fmt.Println("Couldn't get data file matches")
+		log.Debug().Msg("Couldn't get data file matches")
 		return nil, errors.New("Couldn't get data file matches")
 	}
 }
@@ -61,8 +61,7 @@ func PerformParserMatch(text string) (*gabs.Container, error) {
 	p := parser.NewLama2Parser()
 	got, e := p.Parse(text)
 	if e == nil {
-		// fmt.Println(got)
-		// fmt.Println("===")
+		log.Debug().Str("Got", got.String())
 	} else {
 		// t.Errorf("Error not expected")
 		// fmt.Println(e)
@@ -183,25 +182,25 @@ func TestNegativeJsonParserExhaustive(t *testing.T) {
 		"n_structure_whitespace_formfeed.json",
 	}
 	for _, m := range matchFiles {
-		// fmt.Println("### === === === === ===")
+		log.Trace().Msg("### === === === === ===")
 		if utils.ContainsStringPartial(ignoreNames, m) {
 			continue
 		}
-		// fmt.Println(m)
+		log.Trace().Str("m", m)
 		jsonText, e := FileToString(m)
-		// fmt.Println(jsonText)
+		log.Trace().Str("JSONText", jsonText)
 		if e != nil {
-			// fmt.Println("fileToString failed")
+			log.Trace().Msg("fileToString failed")
 			return
 		}
 
 		preamble := "POST\nhttp://google.com\n"
 		lamaText := preamble + jsonText
-		// fmt.Println(lamaText)
+		log.Trace().Str("LamaText", lamaText)
 		_, e3 := PerformParserMatch(lamaText)
 		if e3 == nil {
 			t.Fatalf("Expected parser to fail for %s", m)
 		}
-		// fmt.Println("*** === === === === ===")
+		log.Trace().Msg("*** === === === === ===")
 	}
 }

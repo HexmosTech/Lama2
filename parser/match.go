@@ -7,6 +7,7 @@ import (
 
 	"github.com/HexmosTech/gabs/v2"
 	"github.com/HexmosTech/lama2/utils"
+	"github.com/rs/zerolog/log"
 )
 
 func (p *Parser) Match(rules []string) (*gabs.Container, error) {
@@ -15,27 +16,22 @@ func (p *Parser) Match(rules []string) (*gabs.Container, error) {
 	lastErrorLine := 0
 	lastErrorRules := []string{}
 	lastError := errors.New("")
-	// fmt.Printf("%d %s %s\n", lastErrorPos, lastErrorRules, lastError)
 
 	for _, rule := range rules {
 		initialPos := p.Pos
-		// fmt.Println("Trying rule: ", rule, "rules = ", rules)
+		log.Trace().Str("Rule", rule).Strs("Rules", rules)
 		res := p.ruleMethodMap[rule].Call([]reflect.Value{})
-		// fmt.Println("Res = ", res)
 		op := res[0].Interface().(*gabs.Container)
+		log.Trace().Str("Rule res", op.String())
 		e := res[1]
-		// fmt.Println("e = ", e)
+		log.Trace().Str("Rule error", e.String())
 		if e.IsNil() {
-			// fmt.Println("here", rule)
-			// // fmt.Println(op.StringIndent("", "  "))
 			p.eatWhitespace()
 			return op, nil
 		}
 
 		p.Pos = initialPos
-		// fmt.Println("Rule error: ", rule)
 		pe := e.Interface().(*utils.ParseError)
-		// fmt.Println(fmt.Errorf("%s", pe.Error()))
 		if pe.Pos > lastErrorPos {
 			lastError = pe
 			lastErrorPos = pe.Pos
@@ -45,7 +41,6 @@ func (p *Parser) Match(rules []string) (*gabs.Container, error) {
 		} else if pe.Pos == lastErrorPos {
 			lastErrorRules = append(lastErrorRules, rule)
 		}
-		// fmt.Println("After the else stuff")
 	}
 
 	if len(lastErrorRules) == 1 {

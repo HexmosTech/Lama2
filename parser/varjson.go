@@ -31,18 +31,14 @@ func (p *Lama2Parser) VarJSON() (*gabs.Container, error) {
 		temp.Merge(pair)
 	}
 
-	// fmt.Println("Before temp files", temp)
 	if hasMultipart {
 		filesObj := gabs.New()
 		for {
 			pair, e1 = p.Match([]string{"FilesPair"})
-			// fmt.Println("Files pair", pair)
 			if e1 != nil {
 				break
 			}
 			filesObj.Merge(pair)
-			// utils.SetJson(temp, pair, "@files")
-			// fmt.Println("Files temp", temp)
 		}
 		temp.Set(filesObj, "@files")
 	}

@@ -48,7 +48,6 @@ func (p *Parser) Init() {
 		methodVal := pmVal.Method(i)
 		p.ruleMethodMap[m.Name] = methodVal
 	}
-	// fmt.Println(p.ruleMethodMap)
 }
 
 func (p *Parser) Parse(text string) (*gabs.Container, error) {
@@ -61,7 +60,6 @@ func (p *Parser) Parse(text string) (*gabs.Container, error) {
 	res, _ := p.Pm.Start()
 	_, err := p.assertEnd()
 	if err != nil {
-		// fmt.Println(fmt.Errorf(err.Error()))
 		return nil, err
 	}
 	return res, nil

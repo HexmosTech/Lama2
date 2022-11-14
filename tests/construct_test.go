@@ -22,5 +22,4 @@ func TestConstruct(t *testing.T) {
 	}
 	r2 := cmdgen.ConstructCommand(res, &opts)
 	log.Debug().Str("Constructed command", r2)
-	// fmt.Println(r2)
 }

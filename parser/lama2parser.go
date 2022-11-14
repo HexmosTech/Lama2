@@ -5,6 +5,7 @@ import (
 
 	"github.com/HexmosTech/gabs/v2"
 	"github.com/HexmosTech/lama2/utils"
+	"github.com/rs/zerolog/log"
 )
 
 type Lama2Parser struct {
@@ -20,7 +21,7 @@ func NewLama2Parser() *Lama2Parser {
 }
 
 func (p *Lama2Parser) Start() (*gabs.Container, error) {
-	// fmt.Println("Within the Start function!")
+	log.Trace().Msg("Within the Start function")
 	temp := gabs.New()
 	res, e := p.Match([]string{"HTTPFile"})
 	if e == nil {
@@ -32,7 +33,7 @@ func (p *Lama2Parser) Start() (*gabs.Container, error) {
 }
 
 func (p *Lama2Parser) HTTPFile() (*gabs.Container, error) {
-	// fmt.Println("Within HTTPFile")
+	log.Trace().Msg("Within HTTPFile")
 	res, e := p.Match([]string{"HTTPVerb"})
 	temp := gabs.New()
 	if e == nil {
@@ -98,7 +99,7 @@ func (p *Lama2Parser) TheURL() (*gabs.Container, error) {
 }
 
 func (p *Lama2Parser) HTTPVerb() (*gabs.Container, error) {
-	// fmt.Println("Withint HTTPVerb")
+	log.Trace().Msg("Within HTTPVerb")
 	verbList := []string{
 		"get", "head", "post", "put",
 		"delete", "connect", "trace", "patch",
@@ -131,10 +132,8 @@ func (p *Lama2Parser) Multipart() (*gabs.Container, error) {
 }
 
 func (p *Lama2Parser) Details() (*gabs.Container, error) {
-	// temp := gabs.New()
 	res, e := p.Match([]string{"HeaderData", "DataHeader"})
 	if e == nil {
-		// temp = utils.SetJson(temp, res, "contents")
 		return res, nil
 	}
 

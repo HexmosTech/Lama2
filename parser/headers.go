@@ -3,17 +3,18 @@ package parser
 import (
 	"github.com/HexmosTech/gabs/v2"
 	"github.com/HexmosTech/lama2/utils"
+	"github.com/rs/zerolog/log"
 )
 
 func (p *Lama2Parser) HeaderData() (*gabs.Container, error) {
 	headers, e := p.Match([]string{"Headers"})
-	// fmt.Println("headers", headers)
+	log.Trace().Str("Headers", headers.String())
 	if e != nil {
 		return nil, e
 	}
 
 	jsond, e2 := p.Match([]string{"DataInput"})
-	// fmt.Println("json", jsond)
+	log.Trace().Str("JSONd", jsond.String())
 	temp := gabs.New()
 	temp = utils.SetJson(temp, headers, "headers")
 	if e2 == nil {
@@ -29,7 +30,6 @@ func (p *Lama2Parser) DataHeader() (*gabs.Container, error) {
 	}
 
 	headers, e2 := p.Match([]string{"Headers"})
-	// fmt.Println("json", jsond)
 	temp := gabs.New()
 	temp = utils.SetJson(temp, jsond, "ip_data")
 	if e2 == nil {
@@ -48,7 +48,6 @@ func (p *Lama2Parser) DataInput() (*gabs.Container, error) {
 }
 
 func (p *Lama2Parser) Headers() (*gabs.Container, error) {
-	// headMap := make(map[string]string)
 	temp := gabs.New()
 	res, e := p.Match([]string{"HeaderPair"})
 	if e == nil {
@@ -98,7 +97,7 @@ func (p *Lama2Parser) HeaderPair() (*gabs.Container, error) {
 	keyStr, _ := key.Data().(string)
 	temp.Set(valueStr, keyStr)
 
-	// fmt.Println("header pair", temp)
+	log.Trace().Str("Header pair", temp.String())
 
 	return temp, nil
 }

@@ -20,16 +20,17 @@ func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, header
 		Bool("multipart", multipart).
 		Msg(fmt.Sprint("Construct parameters"))
 
-	// fmt.Println("jsonObj", jsonObj)
-	// fmt.Println("headers", headers)
+	log.Debug().
+		Str("JSONObj", jsonObj.String()).
+		Str("Headers", headers.String())
 
 	var files *gabs.Container
 	if multipart {
 		if jsonObj.ExistsP("@files") {
 			files = jsonObj.S("@files")
-			// fmt.Println("files", files)
+			log.Debug().Str("Files", files.String())
 			jsonObj.Delete("@files")
-			// fmt.Println(jsonObj)
+			log.Trace().Str("Shortened JsonObj", jsonObj.String())
 		}
 	}
 
@@ -42,7 +43,6 @@ func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, header
 				Msg("Couldn't minify JSON")
 		}
 		jsonStr = dst.String()
-		// fmt.Println("##", jsonStr)
 	}
 
 	if !multipart && jsonStr != "" {
@@ -81,7 +81,7 @@ func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, header
 	}
 
 	commandStr := strings.Join(command, "")
-	// fmt.Println(commandStr)
+	log.Info().Str("Generated command", commandStr)
 	return commandStr
 }
 
