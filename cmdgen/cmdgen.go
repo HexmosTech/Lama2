@@ -65,6 +65,7 @@ func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, header
 	if multipart {
 		// fmt.Println("key123 = ", files)
 		for key, val := range jsonObj.Data().(*gabs.Container).ChildrenMap() {
+			log.Info().Str("Process now", val.String())
 			command = append(command, "'"+key+"'='"+val.Data().(string)+"'  ")
 		}
 		for key, val := range files.Data().(*gabs.Container).ChildrenMap() {
