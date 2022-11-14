@@ -4,6 +4,8 @@
 <div align="center">
 <img src="banner.png" width="80%" />
 
+![Build](https://github.com/HexmosTech/Lama2/actions/workflows/release.yml/badge.svg)
+![Test](https://github.com/HexmosTech/Lama2/actions/workflows/testapp.yml/badge.svg)
 [![Go Report Card](https://goreportcard.com/badge/github.com/HexmosTech/lama2)](https://goreportcard.com/report/github.com/HexmosTech/lama2)
 </div>
 

@@ -1,4 +1,4 @@
-name: TestLama2
+name: Lama2 Tests
 on: [push]
 
 jobs:

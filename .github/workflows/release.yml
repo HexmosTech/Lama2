@@ -1,3 +1,4 @@
+name: Lama2 Release
 on:
   release:
     types: [created]
