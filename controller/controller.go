@@ -14,7 +14,7 @@ import (
 
 func Process() {
 	o := lama2cmd.GetAndValidateCmd(os.Args)
-	apiContent := preprocess.PreprocessLamaFile(o.Positional.LamaAPIFile)
+	apiContent, apiDir := preprocess.PreprocessLamaFile(o.Positional.LamaAPIFile)
 	p := parser.NewLama2Parser()
 	parsedAPI, e := p.Parse(apiContent)
 	if e != nil {
@@ -26,5 +26,5 @@ func Process() {
 	}
 	log.Debug().Str("Parsed API", parsedAPI.String())
 	cmdStr := cmdgen.ConstructCommand(parsedAPI, o)
-	cmdexec.ExecCommand(cmdStr)
+	cmdexec.ExecCommand(cmdStr, apiDir)
 }

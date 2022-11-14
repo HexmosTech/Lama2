@@ -6,10 +6,13 @@ import (
 	"os"
 	"os/exec"
 
+	"github.com/HexmosTech/lama2/utils"
 	"github.com/creack/pty"
 )
 
-func ExecCommand(cmdStr string) string {
+func ExecCommand(cmdStr string, apiDir string) string {
+	oldDir, _ := os.Getwd()
+	utils.ChangeWorkingDir(apiDir)
 	c := exec.Command("bash", "-c", cmdStr)
 	f, err := pty.Start(c)
 	if err != nil {
@@ -24,5 +27,6 @@ func ExecCommand(cmdStr string) string {
 	io.Copy(writer, f)
 	ret, _ := io.ReadAll(&buffer1)
 	retStr := string(ret)
+	utils.ChangeWorkingDir(oldDir)
 	return retStr
 }

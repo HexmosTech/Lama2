@@ -8,6 +8,6 @@ import (
 )
 
 func TestPreprocessBasic(t *testing.T) {
-	op := preprocess.PreprocessLamaFile("../elfparser/ElfTestSuite/env1/sample.l2")
+	op, _ := preprocess.PreprocessLamaFile("../elfparser/ElfTestSuite/env1/sample.l2")
 	log.Debug().Str("Preprocessed string", op)
 }

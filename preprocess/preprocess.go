@@ -4,9 +4,8 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
-	"path"
-	"path/filepath"
 
+	"github.com/HexmosTech/lama2/utils"
 	"github.com/joho/godotenv"
 	"github.com/rs/zerolog/log"
 )
@@ -26,27 +25,15 @@ func getLamaFileAsString(path string) string {
 	return string(b)
 }
 
-func getFilePathComponents(name string) (string, string, string) {
-	fullpath, _ := filepath.Abs(name)
-	dir, fname := path.Split(fullpath)
-	return fullpath, dir, fname
-}
-
-func changeWorkingDir(dir string) {
-	err := os.Chdir(dir)
-	if err != nil {
-		log.Fatal().
-			Str("Type", "Preprocess").
-			Str("dir", dir).
-			Msg(fmt.Sprint("Moving into dir failed"))
-	}
-}
-
-func PreprocessLamaFile(input_f string) string {
+func PreprocessLamaFile(input_f string) (string, string) {
 	content := getLamaFileAsString(input_f)
-	_, dir, _ := getFilePathComponents(input_f)
-	changeWorkingDir(dir)
+	_, dir, _ := utils.GetFilePathComponents(input_f)
+	oldDir, _ := os.Getwd()
+
+	utils.ChangeWorkingDir(dir)
 	loadElfEnv()
 	content = os.ExpandEnv(content)
-	return content
+	utils.ChangeWorkingDir(oldDir)
+
+	return content, dir
 }

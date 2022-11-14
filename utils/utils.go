@@ -2,11 +2,16 @@ package utils
 
 import (
 	"encoding/json"
+	"fmt"
+	"os"
+	"path"
+	"path/filepath"
 	"strings"
 	"unicode"
 
 	"github.com/HexmosTech/gabs/v2"
 	"github.com/rs/zerolog"
+	"github.com/rs/zerolog/log"
 )
 
 func SetJson(parentObj *gabs.Container, childObj *gabs.Container, key string) *gabs.Container {
@@ -67,4 +72,20 @@ func ConfigureZeroLog(level string) {
 	log_level_map["TRACE"] = zerolog.TraceLevel // maximum information
 	zerolog.TimeFieldFormat = zerolog.TimeFormatUnix
 	zerolog.SetGlobalLevel(log_level_map[level])
+}
+
+func GetFilePathComponents(name string) (string, string, string) {
+	fullpath, _ := filepath.Abs(name)
+	dir, fname := path.Split(fullpath)
+	return fullpath, dir, fname
+}
+
+func ChangeWorkingDir(dir string) {
+	err := os.Chdir(dir)
+	if err != nil {
+		log.Fatal().
+			Str("Type", "Preprocess").
+			Str("dir", dir).
+			Msg(fmt.Sprint("Moving into dir failed"))
+	}
 }
