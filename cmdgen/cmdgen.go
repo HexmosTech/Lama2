@@ -26,11 +26,15 @@ func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, header
 
 	var files *gabs.Container
 	if multipart {
+		fmt.Println("Within multipart")
 		if jsonObj.ExistsP("@files") {
+			fmt.Println("Within @files processing")
 			files = jsonObj.S("@files")
 			log.Debug().Str("Files", files.String())
+			fmt.Printf("Files", files.String())
 			jsonObj.Delete("@files")
 			log.Trace().Str("Shortened JsonObj", jsonObj.String())
+			fmt.Println("Shortened jsonObj")
 		}
 	}
 
