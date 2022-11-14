@@ -12,6 +12,7 @@ import (
 	"github.com/HexmosTech/gabs/v2"
 	"github.com/HexmosTech/lama2/parser"
 	"github.com/HexmosTech/lama2/utils"
+	"github.com/rs/zerolog/log"
 )
 
 func FileToString(filePath string) (string, error) {
@@ -79,14 +80,12 @@ func TestValidFiles(t *testing.T) {
 	for _, m := range matchFiles {
 		b, err := os.ReadFile(m) // just pass the file name
 		if err != nil {
-			// fmt.Print(err)
+			log.Fatal().Str("Error:", err.Error())
 		}
 
 		str := string(b) // convert content to a 'string'
-		// fmt.Println(str)
 		myOp, _ := PerformParserMatch(str)
-
-		// fmt.Println(myOp)
+		log.Debug().Str("Execution result myOp", myOp.String())
 	}
 }
 
@@ -95,11 +94,11 @@ func TestInvalidFiles(t *testing.T) {
 	for _, m := range matchFiles {
 		b, err := os.ReadFile(m) // just pass the file name
 		if err != nil {
-			// fmt.Print(err)
+			log.Fatal().Str("Error:", err.Error())
 		}
 
 		str := string(b) // convert content to a 'string'
-		// fmt.Println(str)
+		log.Debug().Str("str", str)
 	}
 }
 
@@ -125,8 +124,7 @@ func TestJsonParserExhaustive(t *testing.T) {
 		jsonText, e := FileToString(m)
 		// fmt.Println(jsonText)
 		if e != nil {
-			// fmt.Println("fileToString failed")
-			return
+			log.Fatal().Str("Error:", e.Error())
 		}
 
 		gj, e2 := jsonFileToGabs(m)

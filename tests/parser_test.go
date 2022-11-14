@@ -6,19 +6,13 @@ import (
 	"testing"
 
 	"github.com/HexmosTech/lama2/parser"
+	"github.com/rs/zerolog/log"
 )
 
 func TestLama2Parser(t *testing.T) {
 	p := parser.NewLama2Parser()
 	got, _ := p.Parse("GET http://google.com")
-	// fmt.Println(got)
-	/*
-		want := "blah"
-
-		if got != want {
-			t.Errorf("got %q, wanted %q", got, want)
-		}
-	*/
+	log.Debug().Str("Received", got.String())
 }
 
 func TestCharFunc(t *testing.T) {
@@ -28,9 +22,9 @@ func TestCharFunc(t *testing.T) {
 	for {
 		r, e := p.Char()
 		if e == nil {
-			// fmt.Printf("%c", r)
+			log.Debug().Str("Char", string(r))
 		} else {
-			// fmt.Println("End of input")
+			log.Debug().Msg("End of input")
 			break
 		}
 	}
@@ -113,6 +107,7 @@ func TestMatch(t *testing.T) {
 	p.SetText("GET http://google.com")
 	got, e := p.Match([]string{"HTTPFile"})
 	if e == nil {
+		log.Debug().Str("Got", got.String())
 		// fmt.Println(got)
 		// fmt.Println("===")
 	} else {
@@ -126,7 +121,7 @@ func TestFailMatch(t *testing.T) {
 	p.SetText("BLAH http://google.com")
 	got, e := p.Match([]string{"HTTPFile"})
 	if e == nil {
-		// fmt.Println(got)
+		log.Debug().Str("Got", got.String())
 		t.Errorf("Expected an error!")
 	}
 	// fmt.Println("===")
@@ -135,18 +130,6 @@ func TestFailMatch(t *testing.T) {
 func TestLama2Start(t *testing.T) {
 	p := parser.NewLama2Parser()
 	p.SetText("GET http://google.com")
-	got, e := p.Start()
-	// fmt.Println("got ", got)
-	// fmt.Println("e ", e)
-	// want := 'G'
-	// if e == nil {
-	// 	if got != want {
-	// 		t.Errorf("got %q, wanted %q", got, want)
-	// 	}
-	// 	// fmt.Printf("%c\n", got)
-	// 	// fmt.Println("===")
-	// } else {
-	// 	t.Errorf("Error not expected")
-	// 	// fmt.Println(e)
-	// }
+	got, _ := p.Start()
+	log.Debug().Str("Got", got.String())
 }

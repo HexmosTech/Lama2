@@ -6,6 +6,7 @@ import (
 	"unicode"
 
 	"github.com/HexmosTech/gabs/v2"
+	"github.com/rs/zerolog"
 )
 
 func SetJson(parentObj *gabs.Container, childObj *gabs.Container, key string) *gabs.Container {
@@ -56,4 +57,14 @@ func UnicodeCategory(r rune) string {
 		}
 	}
 	return "Cn"
+}
+
+func ConfigureZeroLog(level string) {
+	log_level_map := make(map[string]zerolog.Level)
+	log_level_map["ERROR"] = zerolog.ErrorLevel // less information
+	log_level_map["INFO"] = zerolog.InfoLevel
+	log_level_map["DEBUG"] = zerolog.DebugLevel
+	log_level_map["TRACE"] = zerolog.TraceLevel // maximum information
+	zerolog.TimeFieldFormat = zerolog.TimeFormatUnix
+	zerolog.SetGlobalLevel(log_level_map[level])
 }

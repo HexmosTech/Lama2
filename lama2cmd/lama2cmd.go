@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/fatih/color"
+	"github.com/HexmosTech/lama2/utils"
 	"github.com/jessevdk/go-flags"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
@@ -26,14 +26,14 @@ type Opts struct {
 	} `positional-args:"yes"`
 }
 
-func getParsedInput(arglist []string) (Opts, []string) {
-	arglist = arglist[1:] // remove command name
+func getParsedInput(argList []string) (Opts, []string) {
+	argList = argList[1:] // remove command name
 	o := Opts{}
 
-	if len(arglist) == 0 {
-		arglist = append(arglist, "-h")
+	if len(argList) == 0 {
+		argList = append(argList, "-h")
 	}
-	args, err := flags.ParseArgs(&o, arglist)
+	args, err := flags.ParseArgs(&o, argList)
 	if err != nil {
 		e, _ := err.(*flags.Error)
 		if e.Type == flags.ErrHelp {
@@ -42,11 +42,26 @@ func getParsedInput(arglist []string) (Opts, []string) {
 
 		log.Fatal().
 			Str("Type", "Preprocess").
-			Strs("arglist", arglist).
+			Strs("arglist", argList).
 			Msg(fmt.Sprint("Couldn't parse argument list"))
 	}
 
-	log.Info().
+	if o.Nocolor {
+		utils.ConfigureZeroLog("ERROR")
+	} else {
+		switch len(o.Verbose) {
+		case 0:
+			utils.ConfigureZeroLog("INFO")
+		case 1:
+			utils.ConfigureZeroLog("DEBUG")
+		case 2:
+			utils.ConfigureZeroLog("TRACE")
+		default:
+			utils.ConfigureZeroLog("TRACE")
+		}
+	}
+
+	log.Debug().
 		Str("Type", "Preprocess").
 		Bools("Verbosity", o.Verbose).
 		Bool("Prettify", o.Prettify).
@@ -56,14 +71,6 @@ func getParsedInput(arglist []string) (Opts, []string) {
 		Msg("Parsed inputs")
 
 	return o, args
-}
-
-func validateCmdArgs(args []string) {
-	if len(args) < 1 {
-		log.Error().Str("Type", "Preprocess").Msg(color.RedString("Argument missing"))
-		getParsedInput([]string{"placeholder", "-h"})
-		os.Exit(0)
-	}
 }
 
 func GetAndValidateCmd(ipArgs []string) *Opts {
