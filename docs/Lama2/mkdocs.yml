@@ -1,5 +1,5 @@
 site_name: Hexmos Lama2
-site_url: https://hexmos.com/lama2
+site_url: http://hexmos.com/lama2/
 nav:
     - Home: index.md
     - Get Started: 
@@ -35,3 +35,4 @@ theme:
     - toc.follow
     - navigation.top 
   logo: logo.png
+use_directory_urls: false
