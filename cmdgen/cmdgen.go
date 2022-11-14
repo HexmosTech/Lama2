@@ -86,9 +86,7 @@ func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, header
 }
 
 func ConstructCommand(parsedInput *gabs.Container, o *lama2cmd.Opts) string {
-	// fmt.Println("==", parsedInput.S("value", "details", "headers"))
-
-	// fmt.Println(parsedInput)
+	log.Info().Str("ParsedInput", parsedInput.String())
 	httpv := parsedInput.S("value", "verb", "value")
 	url := parsedInput.S("value", "url", "value")
 	jsonObj := parsedInput.S("value", "details", "ip_data")
@@ -98,6 +96,9 @@ func ConstructCommand(parsedInput *gabs.Container, o *lama2cmd.Opts) string {
 	if multipart != nil {
 		multipartBool = true
 	}
+	fmt.Println("httpv", httpv)
+	fmt.Println("url", url)
+
 	res := assembleCmdString(httpv.Data().(string), url.Data().(string), jsonObj, headers, multipartBool, o)
 	return res
 }
