@@ -35,7 +35,7 @@ func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, header
 			fmt.Printf("Files", files.String())
 			jsonObj.Delete("@files")
 			log.Trace().Str("Shortened JsonObj", jsonObj.String())
-			fmt.Println("Shortened jsonObj")
+			fmt.Println("Shortened jsonObj", jsonObj)
 		}
 	}
 
