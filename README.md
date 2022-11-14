@@ -42,8 +42,11 @@ IDEs and text-editors as well. Think of *Lama2* as **markdown for APIs.**
 curl -s https://raw.githubusercontent.com/HexmosTech/Lama2/main/install.sh | bash -s
 ```
 
-Learn more about other installation methods
-from our docs.
+Learn more about other installation methods from our docs.
+
+### VSCode Extension
+
+Find *Lama2 for VSCode* at the [VSCode Marketplace](https://marketplace.visualstudio.com/items?itemName=hexmos.Lama2). The extension requires the *l2* command available (usually at `/usr/local/bin/l2`).
 
 
 

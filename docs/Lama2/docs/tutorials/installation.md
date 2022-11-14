@@ -53,4 +53,4 @@ Help Options:
 
 ### From VS Code
 
-TODO
+Find *Lama2 for VSCode* at the [VSCode Marketplace](https://marketplace.visualstudio.com/items?itemName=hexmos.Lama2). The extension requires the *l2* command available (usually at `/usr/local/bin/l2`).
