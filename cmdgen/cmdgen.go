@@ -25,17 +25,12 @@ func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, header
 		Str("Headers", headers.String())
 
 	var files *gabs.Container
-	fmt.Println("Trying to process files; multipart = ", multipart)
 	if multipart {
-		fmt.Println("Within multipart")
 		if jsonObj.ExistsP("@files") {
-			fmt.Println("Within @files processing")
 			files = jsonObj.S("@files")
 			log.Debug().Str("Files", files.String())
-			fmt.Printf("Files", files.String())
 			jsonObj.Delete("@files")
 			log.Trace().Str("Shortened JsonObj", jsonObj.String())
-			fmt.Println("Shortened jsonObj", jsonObj)
 		}
 	}
 
@@ -68,9 +63,7 @@ func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, header
 	command = append(command, url+" ")
 
 	if multipart {
-		// fmt.Println("key123 = ", files)
 		for key, val := range jsonObj.Data().(*gabs.Container).ChildrenMap() {
-			fmt.Println("processing now", val)
 			command = append(command, "'"+key+"'='"+val.Data().(string)+"'  ")
 		}
 		for key, val := range files.Data().(*gabs.Container).ChildrenMap() {
@@ -79,7 +72,6 @@ func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, header
 	}
 
 	if headers != nil {
-		// fmt.Println("header = ", headers)
 		for key, val := range headers.Data().(*gabs.Container).ChildrenMap() {
 			command = append(command, "'"+key+":"+val.Data().(*gabs.Container).Data().(string)+"'  ")
 		}
@@ -101,10 +93,7 @@ func ConstructCommand(parsedInput *gabs.Container, o *lama2cmd.Opts) string {
 	multipartBool := false
 	if multipart != nil {
 		multipartBool = true
-		fmt.Println("SAetting multipart bool = true")
 	}
-	fmt.Println("httpv", httpv, httpv.Data().(string))
-	fmt.Println("url", url, url.Data().(string))
 
 	res := assembleCmdString(httpv.Data().(string), url.Data().(string), jsonObj, headers, multipartBool, o)
 	return res
