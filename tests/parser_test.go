@@ -12,7 +12,7 @@ import (
 func TestLama2Parser(t *testing.T) {
 	p := parser.NewLama2Parser()
 	got, _ := p.Parse("GET http://google.com")
-	log.Debug().Str("Received", got.String())
+	log.Debug().Str("Received", got.String()).Msg("")
 }
 
 func TestCharFunc(t *testing.T) {
@@ -22,7 +22,7 @@ func TestCharFunc(t *testing.T) {
 	for {
 		r, e := p.Char()
 		if e == nil {
-			log.Debug().Str("Char", string(r))
+			log.Debug().Str("Char", string(r)).Msg("")
 		} else {
 			log.Debug().Msg("End of input")
 			break
@@ -107,7 +107,7 @@ func TestMatch(t *testing.T) {
 	p.SetText("GET http://google.com")
 	got, e := p.Match([]string{"Lama2File"})
 	if e == nil {
-		log.Debug().Str("Got", got.String())
+		log.Debug().Str("Got", got.String()).Msg("")
 		// fmt.Println(got)
 		// fmt.Println("===")
 	} else {
@@ -121,7 +121,7 @@ func TestFailMatch(t *testing.T) {
 	p.SetText("BLAH http://google.com")
 	got, e := p.Match([]string{"Lama2File"})
 	if e == nil {
-		log.Debug().Str("Got", got.String())
+		log.Debug().Str("Got", got.String()).Msg("")
 		t.Errorf("Expected an error!")
 	}
 	// fmt.Println("===")
@@ -131,5 +131,5 @@ func TestLama2Start(t *testing.T) {
 	p := parser.NewLama2Parser()
 	p.SetText("GET http://google.com")
 	got, _ := p.Start()
-	log.Debug().Str("Got", got.String())
+	log.Debug().Str("Got", got.String()).Msg("")
 }

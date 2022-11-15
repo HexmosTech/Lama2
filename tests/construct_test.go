@@ -21,5 +21,5 @@ func TestConstruct(t *testing.T) {
 		t.Fatalf("Error on parsing")
 	}
 	r2 := cmdgen.ConstructCommand(res, &opts)
-	log.Debug().Str("Constructed command", r2)
+	log.Debug().Str("Constructed command", r2).Msg("")
 }

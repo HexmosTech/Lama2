@@ -18,7 +18,7 @@ import (
 func FileToString(filePath string) (string, error) {
 	b, err := os.ReadFile(filePath)
 	if err != nil {
-		log.Debug().Str("Error", err.Error())
+		log.Debug().Str("Error", err.Error()).Msg("")
 		return "", err
 	}
 
@@ -42,12 +42,12 @@ func jsonFileToGabs(jsonPath string) (*gabs.Container, error) {
 func getDataFiles(relativeAppend string, globPattern string) ([]string, error) {
 	pwd, err := os.Getwd()
 	if err != nil {
-		log.Debug().Str("Error", err.Error())
+		log.Debug().Str("Error", err.Error()).Msg("")
 		os.Exit(1)
 	}
 	res := filepath.Join(pwd, relativeAppend, globPattern)
 	matches, err := filepath.Glob(res)
-	log.Debug().Strs("Matches", matches)
+	log.Debug().Strs("Matches", matches).Msg("")
 	if err == nil {
 		sort.Strings(matches)
 		return matches, nil
@@ -61,7 +61,7 @@ func PerformParserMatch(text string) (*gabs.Container, error) {
 	p := parser.NewLama2Parser()
 	got, e := p.Parse(text)
 	if e == nil {
-		log.Debug().Str("Got", got.String())
+		log.Debug().Str("Got", got.String()).Msg("")
 	} else {
 		// t.Errorf("Error not expected")
 		// fmt.Println(e)
@@ -79,12 +79,12 @@ func TestValidFiles(t *testing.T) {
 	for _, m := range matchFiles {
 		b, err := os.ReadFile(m) // just pass the file name
 		if err != nil {
-			log.Fatal().Str("Error:", err.Error())
+			log.Fatal().Str("Error:", err.Error()).Msg("")
 		}
 
 		str := string(b) // convert content to a 'string'
 		myOp, _ := PerformParserMatch(str)
-		log.Debug().Str("Execution result myOp", myOp.String())
+		log.Debug().Str("Execution result myOp", myOp.String()).Msg("")
 	}
 }
 
@@ -93,11 +93,11 @@ func TestInvalidFiles(t *testing.T) {
 	for _, m := range matchFiles {
 		b, err := os.ReadFile(m) // just pass the file name
 		if err != nil {
-			log.Fatal().Str("Error:", err.Error())
+			log.Fatal().Str("Error:", err.Error()).Msg("")
 		}
 
 		str := string(b) // convert content to a 'string'
-		log.Debug().Str("str", str)
+		log.Debug().Str("str", str).Msg("")
 	}
 }
 
@@ -123,7 +123,7 @@ func TestJsonParserExhaustive(t *testing.T) {
 		jsonText, e := FileToString(m)
 		// fmt.Println(jsonText)
 		if e != nil {
-			log.Fatal().Str("Error:", e.Error())
+			log.Fatal().Str("Error:", e.Error()).Msg("")
 		}
 
 		gj, e2 := jsonFileToGabs(m)
@@ -186,9 +186,9 @@ func TestNegativeJsonParserExhaustive(t *testing.T) {
 		if utils.ContainsStringPartial(ignoreNames, m) {
 			continue
 		}
-		log.Trace().Str("m", m)
+		log.Trace().Str("m", m).Msg("")
 		jsonText, e := FileToString(m)
-		log.Trace().Str("JSONText", jsonText)
+		log.Trace().Str("JSONText", jsonText).Msg("")
 		if e != nil {
 			log.Trace().Msg("fileToString failed")
 			return
@@ -196,7 +196,7 @@ func TestNegativeJsonParserExhaustive(t *testing.T) {
 
 		preamble := "POST\nhttp://google.com\n"
 		lamaText := preamble + jsonText
-		log.Trace().Str("LamaText", lamaText)
+		log.Trace().Str("LamaText", lamaText).Msg("")
 		_, e3 := PerformParserMatch(lamaText)
 		if e3 == nil {
 			t.Fatalf("Expected parser to fail for %s", m)

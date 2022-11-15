@@ -22,15 +22,15 @@ func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, header
 
 	log.Debug().
 		Str("JSONObj", jsonObj.String()).
-		Str("Headers", headers.String())
+		Str("Headers", headers.String()).Msg("")
 
 	var files *gabs.Container
 	if multipart {
 		if jsonObj.ExistsP("@files") {
 			files = jsonObj.S("@files")
-			log.Debug().Str("Files", files.String())
+			log.Debug().Str("Files", files.String()).Msg("")
 			jsonObj.Delete("@files")
-			log.Trace().Str("Shortened JsonObj", jsonObj.String())
+			log.Trace().Str("Shortened JsonObj", jsonObj.String()).Msg("")
 		}
 	}
 
@@ -84,7 +84,7 @@ func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, header
 }
 
 func ConstructCommand(parsedInput *gabs.Container, o *lama2cmd.Opts) string {
-	log.Info().Str("ParsedInput", parsedInput.String())
+	log.Info().Str("ParsedInput", parsedInput.String()).Msg("")
 	httpv := parsedInput.S("value", "verb", "value")
 	url := parsedInput.S("value", "url", "value")
 	jsonObj := parsedInput.S("value", "details", "ip_data")

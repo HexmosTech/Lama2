@@ -1,15 +1,15 @@
 ```mermaid
 %%{init: {'securityLevel': 'loose', 'theme':'base'}}%%
 graph TD
-	A[CLI]
-	B[Parser]	
+	A["CLI <br/>(lama2cmd)"]
+	B["Parser <br/>(parser)"]	
 	C[Extension API]
-	D[Httpie Executor]
-	E[Output Format Manager]
-	F[Error Reporting]
-	G[Env Replacement]
-	H[Httpie Command Generator]
-	I[lama Prettifier]
+	D["Request Executor <br/>(cmdexec)"]
+	E["Output Format Manager"]
+	F["Error Reporting"]
+	G["Environment Var Expansion <br/>(preprocess)"]
+	H["Request Command Generator <br/>(cmdgen)"]
+	I["Lama2 Prettifier"]
 	A --> G
 	C --> G
 	G --> B

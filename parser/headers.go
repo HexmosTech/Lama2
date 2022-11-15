@@ -8,13 +8,13 @@ import (
 
 func (p *Lama2Parser) HeaderData() (*gabs.Container, error) {
 	headers, e := p.Match([]string{"Headers"})
-	log.Trace().Str("Headers", headers.String())
+	log.Trace().Str("Headers", headers.String()).Msg("")
 	if e != nil {
 		return nil, e
 	}
 
 	jsond, e2 := p.Match([]string{"DataInput"})
-	log.Trace().Str("JSONd", jsond.String())
+	log.Trace().Str("JSONd", jsond.String()).Msg("")
 	temp := gabs.New()
 	temp = utils.SetJson(temp, headers, "headers")
 	if e2 == nil {
@@ -97,7 +97,7 @@ func (p *Lama2Parser) HeaderPair() (*gabs.Container, error) {
 	keyStr, _ := key.Data().(string)
 	temp.Set(valueStr, keyStr)
 
-	log.Trace().Str("Header pair", temp.String())
+	log.Trace().Str("Header pair", temp.String()).Msg("")
 
 	return temp, nil
 }

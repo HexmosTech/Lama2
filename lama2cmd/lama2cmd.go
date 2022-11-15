@@ -11,7 +11,13 @@ import (
 )
 
 func init() {
-	log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stderr})
+
+	consoleWriter := zerolog.ConsoleWriter{Out: os.Stdout}
+	// multi := zerolog.MultiLevelWriter(consoleWriter, os.Stdout)
+	multi := zerolog.MultiLevelWriter(consoleWriter)
+	logger := zerolog.New(multi).With().Timestamp().Logger()
+	log.Logger = logger
+	// log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stderr})
 }
 
 type Opts struct {
@@ -46,19 +52,15 @@ func getParsedInput(argList []string) (Opts, []string) {
 			Msg(fmt.Sprint("Couldn't parse argument list"))
 	}
 
-	if o.Nocolor {
+	switch len(o.Verbose) {
+	case 0:
+		utils.ConfigureZeroLog("INFO")
+	case 1:
 		utils.ConfigureZeroLog("DEBUG")
-	} else {
-		switch len(o.Verbose) {
-		case 0:
-			utils.ConfigureZeroLog("INFO")
-		case 1:
-			utils.ConfigureZeroLog("DEBUG")
-		case 2:
-			utils.ConfigureZeroLog("TRACE")
-		default:
-			utils.ConfigureZeroLog("TRACE")
-		}
+	case 2:
+		utils.ConfigureZeroLog("TRACE")
+	default:
+		utils.ConfigureZeroLog("DEBUG")
 	}
 
 	log.Debug().

@@ -36,7 +36,7 @@ func (p *Lama2Parser) Map() (*gabs.Container, error) {
 		if err != nil {
 			break
 		}
-		log.Trace().Str("Pair result", item.String())
+		log.Trace().Str("Pair result", item.String()).Msg("")
 		temp.MergeFn(item, CustomPairMerge)
 
 		_, e = p.Keyword(",", true, true, true)
