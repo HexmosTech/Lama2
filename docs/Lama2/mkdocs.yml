@@ -5,8 +5,10 @@ nav:
     - Get Started: 
       - Installation: tutorials/installation.md
       - Examples: tutorials/examples.md
+      - Collaboration: tutorials/collaboration.md
     - Understand:
       - Syntax Guidance: explanation/syntax.md
+      - The l2 Format: explanation/l2format.md
       - FAQ/RAQ: explanation/faq.md
     - Develop:
       - Architecture: reference/architecture.md
