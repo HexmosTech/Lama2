@@ -11,6 +11,7 @@ nav:
       - The l2 Format: explanation/l2format.md
       - FAQ/RAQ: explanation/faq.md
     - Develop:
+      - Design Philosophy: reference/philosophy.md
       - Architecture: reference/architecture.md
       - IDE/Editor Support: tutorials/editor.md
       - Formal Grammar: reference/grammar.md

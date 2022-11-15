@@ -51,6 +51,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>http://hexmos.com/lama2/reference/philosophy.html</loc>
+         <lastmod>2022-11-15</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>http://hexmos.com/lama2/tutorials/collaboration.html</loc>
          <lastmod>2022-11-15</lastmod>
          <changefreq>daily</changefreq>

@@ -48,6 +48,18 @@ Learn more about other installation methods from [our docs](https://hexmos.com/l
 
 Find *Lama2 for VSCode* at the [VSCode Marketplace](https://marketplace.visualstudio.com/items?itemName=hexmos.Lama2). The extension requires the *l2* command available (usually at `/usr/local/bin/l2`).
 
+## Design Philosophy
+
+1. Delegate subtasks to open and mature tools:
+    1. API Collaboration - git
+    1. API Organization - OS file system
+    1. API Editing - VSCode/IDEs
+    1. API Requests - HTTPie
+1. Start a language formalization effort from the beginning (learning from Markdown history)
+1. Keep language syntax simple
+1. Invest into good documentation
+1. Strive to keep components decoupled
+
 
 
 
