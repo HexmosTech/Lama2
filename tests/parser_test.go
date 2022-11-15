@@ -105,7 +105,7 @@ func TestCharClassFunc(t *testing.T) {
 func TestMatch(t *testing.T) {
 	p := parser.NewLama2Parser()
 	p.SetText("GET http://google.com")
-	got, e := p.Match([]string{"HTTPFile"})
+	got, e := p.Match([]string{"Lama2File"})
 	if e == nil {
 		log.Debug().Str("Got", got.String())
 		// fmt.Println(got)
@@ -119,7 +119,7 @@ func TestMatch(t *testing.T) {
 func TestFailMatch(t *testing.T) {
 	p := parser.NewLama2Parser()
 	p.SetText("BLAH http://google.com")
-	got, e := p.Match([]string{"HTTPFile"})
+	got, e := p.Match([]string{"Lama2File"})
 	if e == nil {
 		log.Debug().Str("Got", got.String())
 		t.Errorf("Expected an error!")

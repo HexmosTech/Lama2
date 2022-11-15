@@ -23,7 +23,7 @@ func NewLama2Parser() *Lama2Parser {
 func (p *Lama2Parser) Start() (*gabs.Container, error) {
 	log.Trace().Msg("Within the Start function")
 	temp := gabs.New()
-	res, e := p.Match([]string{"HTTPFile"})
+	res, e := p.Match([]string{"Lama2File"})
 	if e == nil {
 		temp.Set(res, "value")
 		temp.Set("Lama2Parser", "type")
@@ -32,13 +32,13 @@ func (p *Lama2Parser) Start() (*gabs.Container, error) {
 	return nil, e
 }
 
-func (p *Lama2Parser) HTTPFile() (*gabs.Container, error) {
-	log.Trace().Msg("Within HTTPFile")
+func (p *Lama2Parser) Lama2File() (*gabs.Container, error) {
+	log.Trace().Msg("Within Lama2File")
 	res, e := p.Match([]string{"HTTPVerb"})
 	temp := gabs.New()
 	if e == nil {
 		temp.Set(res, "verb")
-		temp.Set("HTTPFile", "type")
+		temp.Set("Lama2File", "type")
 	} else {
 		return nil, e
 	}
