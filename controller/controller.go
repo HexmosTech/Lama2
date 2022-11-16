@@ -7,6 +7,7 @@ import (
 	"github.com/HexmosTech/lama2/cmdexec"
 	"github.com/HexmosTech/lama2/cmdgen"
 	"github.com/HexmosTech/lama2/lama2cmd"
+	outputmanager "github.com/HexmosTech/lama2/outputManager"
 	"github.com/HexmosTech/lama2/parser"
 	"github.com/HexmosTech/lama2/preprocess"
 	"github.com/rs/zerolog/log"
@@ -27,5 +28,6 @@ func Process() {
 	log.Debug().Str("Parsed API", parsedAPI.String()).Msg("")
 	cmdStr := cmdgen.ConstructCommand(parsedAPI, o)
 	log.Info().Msg("COMMAND:\n" + cmdStr)
-	cmdexec.ExecCommand(cmdStr, apiDir)
+	op := cmdexec.ExecCommand(cmdStr, apiDir)
+	outputmanager.WriteJSONOutput(op, "/tmp/lama2run.json")
 }

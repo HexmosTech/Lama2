@@ -4,21 +4,10 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/HexmosTech/lama2/utils"
+	outputmanager "github.com/HexmosTech/lama2/outputManager"
 	"github.com/jessevdk/go-flags"
-	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 )
-
-func init() {
-
-	consoleWriter := zerolog.ConsoleWriter{Out: os.Stdout}
-	// multi := zerolog.MultiLevelWriter(consoleWriter, os.Stdout)
-	multi := zerolog.MultiLevelWriter(consoleWriter)
-	logger := zerolog.New(multi).With().Timestamp().Logger()
-	log.Logger = logger
-	// log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stderr})
-}
 
 type Opts struct {
 	Verbose  []bool `short:"v" long:"verbose" description:"Show verbose debug information"`
@@ -54,13 +43,13 @@ func getParsedInput(argList []string) (Opts, []string) {
 
 	switch len(o.Verbose) {
 	case 0:
-		utils.ConfigureZeroLog("INFO")
+		outputmanager.ConfigureZeroLog("INFO")
 	case 1:
-		utils.ConfigureZeroLog("DEBUG")
+		outputmanager.ConfigureZeroLog("DEBUG")
 	case 2:
-		utils.ConfigureZeroLog("TRACE")
+		outputmanager.ConfigureZeroLog("TRACE")
 	default:
-		utils.ConfigureZeroLog("DEBUG")
+		outputmanager.ConfigureZeroLog("DEBUG")
 	}
 
 	log.Debug().
