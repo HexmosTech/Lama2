@@ -1,3 +1,7 @@
+// Package `cmdgen` provides an API to generate
+// API request commands (by default based on HTTPie)
+// based on the parsed API file contents and the `l2`
+// command invocation parameters
 package cmdgen
 
 import (
@@ -83,6 +87,10 @@ func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, header
 	return commandStr
 }
 
+// ConstructCommand extracts the HTTP verb, url and other
+// API file inputs, figures out the type of target command
+// and finally generates a string representing the generated
+// command
 func ConstructCommand(parsedInput *gabs.Container, o *lama2cmd.Opts) string {
 	log.Info().Str("ParsedInput", parsedInput.String()).Msg("")
 	httpv := parsedInput.S("value", "verb", "value")

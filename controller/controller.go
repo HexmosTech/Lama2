@@ -1,3 +1,7 @@
+// Package controller coordinates all the other
+// components in the `Lama2` project. The high
+// level overview of command execution is easily
+// understood from this package
 package contoller
 
 import (
@@ -13,6 +17,14 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
+// Process initiates the following tasks in the given order:
+// 1. Parse command line arguments
+// 2. Read API file contents
+// 3. Expand environment variables in API file
+// 4. Parse the API contents
+// 5. Generate API request command
+// 6. Execute command & retrieve results
+// 7. Optionally, post-process and write results to a JSON file
 func Process() {
 	o := lama2cmd.GetAndValidateCmd(os.Args)
 	apiContent, apiDir := preprocess.PreprocessLamaFile(o.Positional.LamaAPIFile)

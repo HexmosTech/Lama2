@@ -1,3 +1,6 @@
+// Package `outputmanager` provides facilities for controlling
+// the logging library as well as capabilities to post-process
+// API execution results (such as store results as a JSON file)
 package outputmanager
 
 import (
@@ -11,6 +14,9 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
+// LogBuff is used to append various log statements into memory.
+// If the user toggles the `Output (-o)` option, then the contents
+// of LogBuff is pushed into a JSON file
 var LogBuff bytes.Buffer
 
 func init() {
@@ -21,6 +27,9 @@ func init() {
 	log.Logger = logger
 }
 
+// ConfigureZeroLog provides global log level setting. By default,
+// ZeroLog uses the DEBUG level; however, the function makes the
+// desired level more explicit
 func ConfigureZeroLog(level string) {
 	log_level_map := make(map[string]zerolog.Level)
 	log_level_map["ERROR"] = zerolog.ErrorLevel // less information
@@ -31,6 +40,11 @@ func ConfigureZeroLog(level string) {
 	zerolog.SetGlobalLevel(log_level_map[level])
 }
 
+// WriteJSONOutput is primarily built for helping with
+// Extension/Integration building with external tools.
+// Extension writers may simply call `l2 -n -o /tmp/lama2.json ...`
+// to invoke WriteJSONOutput; the generated json file contains
+// three keys: `logs`, `headers`, `body`
 func WriteJSONOutput(requestLog string, targetPath string) {
 	var re = regexp.MustCompile(`(?m)^\s*[{\[<]`)
 

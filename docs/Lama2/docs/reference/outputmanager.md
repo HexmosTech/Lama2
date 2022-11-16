@@ -6,6 +6,8 @@
 import "github.com/HexmosTech/lama2/outputManager"
 ```
 
+Package \`outputmanager\` provides facilities for controlling the logging library as well as capabilities to post\-process API execution results \(such as store results as a JSON file\)
+
 ## Index
 
 - [Variables](<#variables>)
@@ -15,21 +17,27 @@ import "github.com/HexmosTech/lama2/outputManager"
 
 ## Variables
 
+LogBuff is used to append various log statements into memory. If the user toggles the \`Output \(\-o\)\` option, then the contents of LogBuff is pushed into a JSON file
+
 ```go
 var LogBuff bytes.Buffer
 ```
 
-## func [ConfigureZeroLog](<https://github.com/HexmosTech/Lama2/blob/master/outputManager/output_manager.go#L24>)
+## func [ConfigureZeroLog](<https://github.com/HexmosTech/Lama2/blob/master/outputManager/output_manager.go#L33>)
 
 ```go
 func ConfigureZeroLog(level string)
 ```
 
-## func [WriteJSONOutput](<https://github.com/HexmosTech/Lama2/blob/master/outputManager/output_manager.go#L34>)
+ConfigureZeroLog provides global log level setting. By default, ZeroLog uses the DEBUG level; however, the function makes the desired level more explicit
+
+## func [WriteJSONOutput](<https://github.com/HexmosTech/Lama2/blob/master/outputManager/output_manager.go#L48>)
 
 ```go
 func WriteJSONOutput(requestLog string, targetPath string)
 ```
+
+WriteJSONOutput is primarily built for helping with Extension/Integration building with external tools. Extension writers may simply call \`l2 \-n \-o /tmp/lama2.json ...\` to invoke WriteJSONOutput; the generated json file contains three keys: \`logs\`, \`headers\`, \`body\`
 
 
 

@@ -1,3 +1,5 @@
+// Package `lama2cmd` provides CLI argument parsing facilities.
+// It hosts the `Opts` structure to record user intentions
 package lama2cmd
 
 import (
@@ -9,6 +11,8 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
+// The Opts structure stores user preferences, and is used throughout
+// the module to make various decisions.
 type Opts struct {
 	Output   string `short:"o" long:"output" description:"Path to output JSON file to store logs, headers and result"`
 	Verbose  []bool `short:"v" long:"verbose" description:"Show verbose debug information"`
@@ -65,6 +69,11 @@ func getParsedInput(argList []string) (Opts, []string) {
 	return o, args
 }
 
+// GetAndValidateCmd takes in the user's CLI input, and checks
+// for validity. If not OK, displays a help message in stdout.
+// Otherwise, fills hte Opts structure and returns it
+// Moreover, based on user input, the outputManager gets configured
+// (whether user prefers trace/debug/info level)
 func GetAndValidateCmd(ipArgs []string) *Opts {
 	o, _ := getParsedInput(ipArgs)
 	return &o

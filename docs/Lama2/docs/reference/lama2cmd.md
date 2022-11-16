@@ -6,13 +6,17 @@
 import "github.com/HexmosTech/lama2/lama2cmd"
 ```
 
+Package \`lama2cmd\` provides CLI argument parsing facilities. It hosts the \`Opts\` structure to record user intentions
+
 ## Index
 
 - [type Opts](<#type-opts>)
   - [func GetAndValidateCmd(ipArgs []string) *Opts](<#func-getandvalidatecmd>)
 
 
-## type [Opts](<https://github.com/HexmosTech/Lama2/blob/master/lama2cmd/lama2cmd.go#L12-L23>)
+## type [Opts](<https://github.com/HexmosTech/Lama2/blob/master/lama2cmd/lama2cmd.go#L16-L27>)
+
+The Opts structure stores user preferences, and is used throughout the module to make various decisions.
 
 ```go
 type Opts struct {
@@ -29,11 +33,13 @@ type Opts struct {
 }
 ```
 
-### func [GetAndValidateCmd](<https://github.com/HexmosTech/Lama2/blob/master/lama2cmd/lama2cmd.go#L68>)
+### func [GetAndValidateCmd](<https://github.com/HexmosTech/Lama2/blob/master/lama2cmd/lama2cmd.go#L77>)
 
 ```go
 func GetAndValidateCmd(ipArgs []string) *Opts
 ```
+
+GetAndValidateCmd takes in the user's CLI input, and checks for validity. If not OK, displays a help message in stdout. Otherwise, fills hte Opts structure and returns it Moreover, based on user input, the outputManager gets configured \(whether user prefers trace/debug/info level\)
 
 
 

@@ -6,6 +6,8 @@
 import "github.com/HexmosTech/lama2/utils"
 ```
 
+Package \`utils\` provides useful functions for simplifying various programming tasks
+
 ## Index
 
 - [func ChangeWorkingDir(dir string)](<#func-changeworkingdir>)
@@ -21,49 +23,63 @@ import "github.com/HexmosTech/lama2/utils"
   - [func (p ParseError) Error() string](<#func-parseerror-error>)
 
 
-## func [ChangeWorkingDir](<https://github.com/HexmosTech/Lama2/blob/master/utils/utils.go#L72>)
+## func [ChangeWorkingDir](<https://github.com/HexmosTech/Lama2/blob/master/utils/utils.go#L90>)
 
 ```go
 func ChangeWorkingDir(dir string)
 ```
 
-## func [ContainsRune](<https://github.com/HexmosTech/Lama2/blob/master/utils/utils.go#L29>)
+ChangeWorkingDirectory tries to set the CWD; on failure it exits with a log error message
+
+## func [ContainsRune](<https://github.com/HexmosTech/Lama2/blob/master/utils/utils.go#L39>)
 
 ```go
 func ContainsRune(s []rune, e rune) bool
 ```
 
-## func [ContainsString](<https://github.com/HexmosTech/Lama2/blob/master/utils/utils.go#L38>)
+ContainsRune searches for rune \`e\` in a slice of runes \`s\`; returns a boolean
+
+## func [ContainsString](<https://github.com/HexmosTech/Lama2/blob/master/utils/utils.go#L50>)
 
 ```go
 func ContainsString(s []string, e string) bool
 ```
 
-## func [ContainsStringPartial](<https://github.com/HexmosTech/Lama2/blob/master/utils/utils.go#L47>)
+ContainsString searches for string \`e\` in a slice of strings \`s\`; returns a boolean
+
+## func [ContainsStringPartial](<https://github.com/HexmosTech/Lama2/blob/master/utils/utils.go#L61>)
 
 ```go
 func ContainsStringPartial(s []string, e string) bool
 ```
 
-## func [GetFilePathComponents](<https://github.com/HexmosTech/Lama2/blob/master/utils/utils.go#L66>)
+ContainsStringPartial substring\-searches for string \`e\` in a slice of strings \`s\`; returns a boolean
+
+## func [GetFilePathComponents](<https://github.com/HexmosTech/Lama2/blob/master/utils/utils.go#L82>)
 
 ```go
 func GetFilePathComponents(name string) (string, string, string)
 ```
 
-## func [PrettyPrint](<https://github.com/HexmosTech/Lama2/blob/master/utils/utils.go#L24>)
+GetFilePathComponent returns absolute path, directory, and filename given a filepath
+
+## func [PrettyPrint](<https://github.com/HexmosTech/Lama2/blob/master/utils/utils.go#L32>)
 
 ```go
 func PrettyPrint(i interface{}) string
 ```
 
-## func [SetJson](<https://github.com/HexmosTech/Lama2/blob/master/utils/utils.go#L16>)
+PrettyPrint takes in a generic interface\{\} objects and uses standard JSON capabilities to try to print with indentation
+
+## func [SetJson](<https://github.com/HexmosTech/Lama2/blob/master/utils/utils.go#L22>)
 
 ```go
 func SetJson(parentObj *gabs.Container, childObj *gabs.Container, key string) *gabs.Container
 ```
 
-## func [UnicodeCategory](<https://github.com/HexmosTech/Lama2/blob/master/utils/utils.go#L57>)
+SetJson is a helper function to work with the \`gabs\` library, which in turn is an API on top of the standard JSON library The function helps us create \`parentObj.key = childObj\` through using the \`Merge\` primitive available in \`gabs\`
+
+## func [UnicodeCategory](<https://github.com/HexmosTech/Lama2/blob/master/utils/utils.go#L71>)
 
 ```go
 func UnicodeCategory(r rune) string

@@ -6,16 +6,20 @@
 import "github.com/HexmosTech/lama2/cmdgen"
 ```
 
+Package \`cmdgen\` provides an API to generate API request commands \(by default based on HTTPie\) based on the parsed API file contents and the \`l2\` command invocation parameters
+
 ## Index
 
 - [func ConstructCommand(parsedInput *gabs.Container, o *lama2cmd.Opts) string](<#func-constructcommand>)
 
 
-## func [ConstructCommand](<https://github.com/HexmosTech/Lama2/blob/master/cmdgen/cmdgen.go#L86>)
+## func [ConstructCommand](<https://github.com/HexmosTech/Lama2/blob/master/cmdgen/cmdgen.go#L94>)
 
 ```go
 func ConstructCommand(parsedInput *gabs.Container, o *lama2cmd.Opts) string
 ```
+
+ConstructCommand extracts the HTTP verb, url and other API file inputs, figures out the type of target command and finally generates a string representing the generated command
 
 
 
