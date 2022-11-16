@@ -10,6 +10,7 @@ import (
 )
 
 type Opts struct {
+	Output   string `short:"o" long:"output" description:"Path to output JSON file to store logs, headers and result"`
 	Verbose  []bool `short:"v" long:"verbose" description:"Show verbose debug information"`
 	Prettify bool   `short:"p" long:"prettify" description:"Prettify specified .lama file"`
 	Sort     bool   `short:"s" long:"sort" description:"Sort specification into recommended order"`

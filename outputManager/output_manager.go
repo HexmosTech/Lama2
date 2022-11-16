@@ -32,8 +32,6 @@ func ConfigureZeroLog(level string) {
 }
 
 func WriteJSONOutput(requestLog string, targetPath string) {
-	fmt.Println("## Log output\n", LogBuff.String())
-	fmt.Println("## HTTPie output\n", requestLog)
 	var re = regexp.MustCompile(`(?m)^\s*[{\[<]`)
 
 	idx := re.FindStringIndex(requestLog)
@@ -45,6 +43,8 @@ func WriteJSONOutput(requestLog string, targetPath string) {
 	temp.Set(body, "body")
 	temp.Set(LogBuff.String(), "logs")
 
-	fmt.Println(temp)
-
+	err := os.WriteFile(targetPath, []byte(temp.String()), 0644)
+	if err != nil {
+		log.Fatal().Msg(fmt.Sprintf("Couldn't write JSON output to: %s", targetPath))
+	}
 }

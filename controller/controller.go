@@ -29,5 +29,7 @@ func Process() {
 	cmdStr := cmdgen.ConstructCommand(parsedAPI, o)
 	log.Info().Msg("COMMAND:\n" + cmdStr)
 	op := cmdexec.ExecCommand(cmdStr, apiDir)
-	outputmanager.WriteJSONOutput(op, "/tmp/lama2run.json")
+	if o.Output != "" {
+		outputmanager.WriteJSONOutput(op, o.Output)
+	}
 }
