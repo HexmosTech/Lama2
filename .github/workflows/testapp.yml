@@ -1,6 +1,8 @@
 name: Lama2 Tests
 on: [push]
 
+
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -17,3 +19,5 @@ jobs:
         run: go build -v ./...
       - name: Test with the Go CLI
         run: go test -v ./tests/
+      - name: Deploy hexmos doc
+        run: curl -X POST --fail -F token=${{ secrets.TRIGGER_TOKEN }} -F ref=main https://git.apps.hexmos.com/api/v4/projects/85/trigger/pipeline
