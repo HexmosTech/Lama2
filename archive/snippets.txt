@@ -1,0 +1,14 @@
+
+### Prettification
+
+To fix messed up JSONs in place:
+
+```
+elf -p file.l2
+```
+
+Prettify all files in a directory (useful for large API collections such as FW-specific
+APIHub):
+```
+find . -type f -name "*.l2" -exec elf -p {} \
+```

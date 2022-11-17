@@ -7,22 +7,21 @@
 ![Test](https://github.com/HexmosTech/Lama2/actions/workflows/testapp.yml/badge.svg)
 [![Go Report Card](https://goreportcard.com/badge/github.com/HexmosTech/lama2)](https://goreportcard.com/report/github.com/HexmosTech/lama2)
 
-Quick links: [How-tos](./howto.md) | [Explanations](./explanation.md)
 
 ## About
 
 *Lama2* is a plain-text powered REST API client & manager built for serious engineering teams.
-*Lama2* specifies the [`.l2` syntax](tutorials/examples.html) for describing APIs, and implements a [CLI](tutorials/installation.html) to execute `.l2` files. Engineers can [collaborate](tutorials/collaboration.html) on `.l2` files using version control. *Lama2* [integrates](tutorials/editor.html) nicely with
-IDEs and text-editors as well. Think of *Lama2* as [**markdown for APIs.**](reference/philosophy.html)
+*Lama2* specifies the [`.l2` syntax](tutorials/examples.md) for describing APIs, and implements a [CLI](tutorials/installation.md) to execute `.l2` files. Engineers can [collaborate](tutorials/collaboration.md) on `.l2` files using version control. *Lama2* [integrates](tutorials/editor.md) nicely with
+IDEs and text-editors as well. Think of *Lama2* as [**markdown for APIs.**](reference/philosophy.md)
 ## Benefits
 
-1. **Plain-text files:** Store APIs in the plain-text `.l2` API files. [Simple](explanation/l2format.html) and [human-friendly](explanation/syntax.html) syntax. Learn [basics](tutorials/examples.html) within  minutes!
-1. **Simple CLI:** Launch the [CLI](tutorials/installation.html) tool `l2` on API files to make REST API requests.
-1. **Editor support:** Invoke *Lama2* from your [favorite text editor](tutorials/installation.html#from-vs-code) or IDE. Helpful documentation and tool support to build editor extensions included.
+1. **Plain-text files:** Store APIs in the plain-text `.l2` API files. [Simple](explanation/l2format.md) and [human-friendly](explanation/syntax.md) syntax. Learn [basics](tutorials/examples.md) within  minutes!
+1. **Simple CLI:** Launch the [CLI](tutorials/installation.md) tool `l2` on API files to make REST API requests.
+1. **Editor support:** Invoke *Lama2* from your [favorite text editor](tutorials/installation.md#from-vs-code) or IDE. Helpful documentation and tool support to build editor extensions included.
 1. **Longevity & track-ability:** Commit `.l2` files to `git` or other version control for long life & change tracking.
-1. **Collaboration:** Share [API repo](tutorials/collaboration.html) with teammates and colleagues to collaborate
-1. **Documentation:** [Explore](index.html) examples, how-tos, explanations, references, FAQ/RAQs, and diagrams. Documentation is a priority, so that you never have to get lost.
-1. **Extensibility:** `.l2` syntax is implemented as a *recursive descent parser*, based on a [formal grammar](reference/grammar.html). [Dig into details](reference/parser.html) and [implement](https://github.com/HexmosTech/Lama2/tree/main/parser) new syntax (ex: to support `websockets`)
+1. **Collaboration:** Share [API repo](tutorials/collaboration.md) with teammates and colleagues to collaborate
+1. **Documentation:** [Explore](index.md) examples, how-tos, explanations, references, FAQ/RAQs, and diagrams. Documentation is a priority, so that you never have to get lost.
+1. **Extensibility:** `.l2` syntax is implemented as a *recursive descent parser*, based on a [formal grammar](reference/grammar.md). [Dig into details](reference/parser.md) and [implement](https://github.com/HexmosTech/Lama2/tree/main/parser) new syntax (ex: to support `websockets`)
 
 
 ## Terminal Demo: A POST request
