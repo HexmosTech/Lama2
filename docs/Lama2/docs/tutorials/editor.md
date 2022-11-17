@@ -3,7 +3,6 @@ The `l2` command provides some helpful options for
 extension developers. The options are:
 
 1. `--nocolor` or `-n` disables colored output in HTTPie;
-IDE/Editor plugin.
 1. `--output=<target.json` or `-o` writes a structured JSON
 output to the target file. The following is the content
 structure:
@@ -16,7 +15,7 @@ structure:
 ```
 Right now, all the three values are strings. In the future, we may transform the values further to provide a more parse-friendly structure.
 
-## The command
+## The Command
 Combining the above two options, we get:
 
 ```bash

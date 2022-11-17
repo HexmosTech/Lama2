@@ -93,7 +93,7 @@ Get [Source Files](https://github.com/HexmosTech/Lama2/tree/main/examples/0004_e
 
 ## Headers
 
-Use `key:value` format to specify headers. **Headers must come before the data section**. 
+Use `key:value` format to specify headers.
 
 Specify strings for key/value in three ways:
 
@@ -113,7 +113,25 @@ X-Parse-REST-API-Key:"byeworld"
 a="b"  # double-quoted string
 'c'=d  # single-quoted & unquoted strings
 ```
+
 Get [Source File](https://github.com/HexmosTech/Lama2/tree/main/examples/0005_headers_simple.l2)
+
+Note: the data may appear *before* headers as well:
+
+```
+POST 
+https://httpbin.org/post
+
+
+# DATA
+a="b"  # double-quoted string
+'c'=d  # single-quoted & unquoted strings
+
+# HEADERS
+X-Parse-Application-Id:'helloworld'
+X-Parse-REST-API-Key:"byeworld"
+```
+
 
 ## Send cookies in header
 

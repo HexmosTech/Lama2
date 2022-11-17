@@ -17,7 +17,7 @@ import (
 // ExecCommand changes directory to the given `apiDir`
 // and then executes the command specified in `cmdStr`
 // During command execution, ExecCommand streams output
-// to standard output.
+// to stdout.
 // Once execution finishes, previous CWD is restored,
 // and the command output is returned as a string
 func ExecCommand(cmdStr string, apiDir string) string {

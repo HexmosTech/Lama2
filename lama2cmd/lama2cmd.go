@@ -71,7 +71,7 @@ func getParsedInput(argList []string) (Opts, []string) {
 
 // GetAndValidateCmd takes in the user's CLI input, and checks
 // for validity. If not OK, displays a help message in stdout.
-// Otherwise, fills hte Opts structure and returns it
+// Otherwise, fills the Opts structure and returns it
 // Moreover, based on user input, the outputManager gets configured
 // (whether user prefers trace/debug/info level)
 func GetAndValidateCmd(ipArgs []string) *Opts {
