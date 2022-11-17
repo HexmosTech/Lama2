@@ -20,6 +20,11 @@ func (p *Parser) Char() (rune, error) {
 	return nextChar, nil
 }
 
+// CharClass implements the familiar regex syntax for
+// specifying ranges of characters that are deemed
+// acceptable. A good description of CharClass is available
+// here: Read the section "Processing Character Ranges"
+// at https://www.booleanworld.com/building-recursive-descent-parsers-definitive-guide/
 func (p *Parser) CharClass(charClass string) (rune, error) {
 	if p.Pos >= p.TotalLen {
 		return rune(0),

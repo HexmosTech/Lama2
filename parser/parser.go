@@ -19,10 +19,30 @@ import (
 	"github.com/HexmosTech/lama2/utils"
 )
 
+// MinimalParser enforces concrete Types
+// to have a Start() method, from which
+// parsing process begins. In the present
+// case, `Lama2Parser` adds up dozens of
+// of methods to implement `.l2` syntax
 type MinimalParser interface {
 	Start() (*gabs.Container, error)
 }
 
+// Struct Parser stores information about
+// the parsing process throughout.
+// 1. Text: Incoming text is stored as an array
+// of runes, to correctly handle unicode characters
+// 2. Pos: Indicates the index position in Text which
+// has already been scanned; starts with -1
+// 3. TotalLen: Number of runes in the input
+// 4. Pm: Composing an external MinimalParser (such as
+// Lama2Parser) which builds upon Parser to provide
+// the new language recognition capabilities
+// 5. ruleMethodMap: Scans through Pm, and creates a
+// mapping from method name to method value through
+// reflection
+// 6. LineNum: Number of normalized newlines found till
+// now. Used in providing useful context in error messages
 type Parser struct {
 	Text          []rune
 	Pos           int
@@ -33,11 +53,18 @@ type Parser struct {
 	LineNum       int
 }
 
+// Start() in Parser provides a dummy default
+// implementation; the expectation is that the
+// higher level Struct (Pm) will implement its
+// own version
 func (p *Parser) Start() *gabs.Container {
 	temp := gabs.New()
 	return temp
 }
 
+// Method Init creates the most important data stucture
+// for parsing: ruleMethodMap. We use reflection to create
+// a mapping of each Pm.<method_name> to <method_value>
 func (p *Parser) Init() {
 	p.ruleMethodMap = make(map[string]reflect.Value, 0)
 	pVal := reflect.ValueOf(p)
@@ -50,6 +77,9 @@ func (p *Parser) Init() {
 	}
 }
 
+// Method Parse normalizes newlines and then creates
+// a rune version of the input data. The Start() method
+// proceeds to process the rune version of data
 func (p *Parser) Parse(text string) (*gabs.Container, error) {
 	text = strings.ReplaceAll(text, "\r\n", "\n")
 	p.Text = []rune(text)
@@ -64,19 +94,6 @@ func (p *Parser) Parse(text string) (*gabs.Container, error) {
 	}
 	return res, nil
 }
-
-/*
-func (p *Parser) eatWhitespace() {
-	for p.Pos < p.TotalLen {
-		spaces := []rune{' ', '\f', '\v', '\r', '\t', '\n'}
-		if utils.ContainsRune(spaces, p.Text[p.Pos+1]) {
-			p.Pos++
-		} else {
-			break
-		}
-	}
-}
-*/
 
 func (p *Parser) eatWhitespace() {
 	spaces := []rune{' ', '\f', '\v', '\r', '\t', '\n'}
@@ -101,6 +118,10 @@ func (p *Parser) eatWhitespace() {
 	}
 }
 
+// Method SetText is a utility used
+// primarily in testing, when we don't
+// want to call Start() automatically
+// as in Parse
 func (p *Parser) SetText(text string) {
 	p.Text = []rune(text)
 	p.Pos = -1

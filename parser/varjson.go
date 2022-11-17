@@ -7,6 +7,15 @@ import (
 	"github.com/HexmosTech/lama2/utils"
 )
 
+// Method VarJSON behaves in two ways depending
+// on whether `multipart` is true or not.
+// If there is no multipart, then VarJSON tries
+// to match one or more VarJSONPairs
+// However, if there is multipart, we try to match
+// zero or more VarJSON, followed by zero or more
+// file fields (separated by `@`). If there is no match
+// at all, we return a ParseError; otherwise the
+// we return the parsed data.
 func (p *Lama2Parser) VarJSON() (*gabs.Container, error) {
 	temp := gabs.New()
 	hasMultipart := false
@@ -15,11 +24,9 @@ func (p *Lama2Parser) VarJSON() (*gabs.Container, error) {
 	}
 
 	pair, e1 := p.Match([]string{"VarJSONPair"})
-	if e1 != nil {
+	if e1 != nil && !hasMultipart {
 		return nil, e1
 	}
-	// pairVal := pair.S("value").Data().(string)
-	// pairKey := pair.S("key").Data().(string)
 	temp.Merge(pair)
 
 	for {
@@ -50,6 +57,10 @@ func (p *Lama2Parser) VarJSON() (*gabs.Container, error) {
 	return temp, nil
 }
 
+// VarJSONPair tries to match key and value separated
+// by `=`. The key and value can either be a quoted
+// string, or an unquoted VarJSON unquoted string. If there is no
+// match for either, a ParseError is returned.
 func (p *Lama2Parser) VarJSONPair() (*gabs.Container, error) {
 	temp := gabs.New()
 	key, e := p.Match([]string{"QuotedString"})
@@ -79,6 +90,10 @@ func (p *Lama2Parser) VarJSONPair() (*gabs.Container, error) {
 	return temp, nil
 }
 
+// FilesPair tries to match key and value separated
+// by `@`. The key and value can either be a quoted
+// string, or an unquoted Files Unquoted String. If there is no
+// match for either, a ParseError is returned.
 func (p *Lama2Parser) FilesPair() (*gabs.Container, error) {
 	temp := gabs.New()
 	key, e := p.Match([]string{"QuotedString"})
@@ -108,6 +123,8 @@ func (p *Lama2Parser) FilesPair() (*gabs.Container, error) {
 	return temp, nil
 }
 
+// VarJSONUnquoted matches a string of characters other than `=`
+// and returns them as a String
 func (p *Lama2Parser) VarJSONUnquoted() (*gabs.Container, error) {
 	acceptableChars := "@0-9A-Za-z \t!$%&()*+./;<>?^_`|~-"
 	chars := make([]string, 0)
@@ -130,6 +147,8 @@ func (p *Lama2Parser) VarJSONUnquoted() (*gabs.Container, error) {
 	return temp, nil
 }
 
+// FilesUnquoted matches a string of characters other than `@`
+// and returns them as a String
 func (p *Lama2Parser) FilesUnquoted() (*gabs.Container, error) {
 	acceptableChars := "0-9A-Za-z \t!$%&()*+./;<>?^_`|~-"
 	chars := make([]string, 0)

@@ -7,6 +7,9 @@ import (
 	"github.com/HexmosTech/lama2/utils"
 )
 
+// Method Keyword is a versatile; it can eat whitespace before/after
+// the expected string, and it can do an optionally case insensitive
+// match for the keyword
 func (p *Parser) Keyword(kw string, eatWsStart bool, eatWsEnd bool, caseInsensitive bool) ([]rune, error) {
 	if p.Pos >= p.TotalLen {
 		return []rune{rune(0)},

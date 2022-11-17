@@ -47,6 +47,8 @@ func (p *Lama2Parser) DataInput() (*gabs.Container, error) {
 	return s, e1
 }
 
+// Headers detects HTTP headers; essentially strings separated
+// by ":" character
 func (p *Lama2Parser) Headers() (*gabs.Container, error) {
 	temp := gabs.New()
 	res, e := p.Match([]string{"HeaderPair"})

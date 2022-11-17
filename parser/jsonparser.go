@@ -6,6 +6,8 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
+// AnyType is the top-most element of a JSON structure
+// It consists of Complex and Primitive Types
 func (p *Lama2Parser) AnyType() (*gabs.Container, error) {
 	r, e := p.Match([]string{"ComplexType", "PrimitiveType"})
 	return r, e
@@ -21,10 +23,16 @@ func (p *Lama2Parser) PrimitiveType() (*gabs.Container, error) {
 	return r, e
 }
 
+// CustomPairMerge uses a gabs feature to deal with merge conflicts.
+// More here: https://github.com/HexmosTech/gabs/blob/master/gabs.go#L511
 func CustomPairMerge(destination, source interface{}) interface{} {
 	return source
 }
 
+// Map is a slightly lenient version of standard JSON
+// map. In Lama2 Map, it is OK to have a trailing
+// comma after the last element (whereas in strict JSON,
+// it is not OK to have trailing comma)
 func (p *Lama2Parser) Map() (*gabs.Container, error) {
 	temp := gabs.New()
 	_, e := p.Keyword("{", true, true, true)
@@ -53,6 +61,10 @@ func (p *Lama2Parser) Map() (*gabs.Container, error) {
 	return temp, nil
 }
 
+// List is a slightly lenient version of standard JSON
+// list. In Lama2 List, it is OK to have a trailing
+// comma after the last element (whereas in strict JSON,
+// it is not OK to have trailing comma)
 func (p *Lama2Parser) List() (*gabs.Container, error) {
 	temp := gabs.New()
 	temp.Set([]interface{}{})

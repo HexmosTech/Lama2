@@ -13,6 +13,8 @@ type Lama2Parser struct {
 	Context map[string]bool
 }
 
+// NewLama2Parser creates a new Lama2Parser
+// and initializes it properly
 func NewLama2Parser() *Lama2Parser {
 	p := &Lama2Parser{&Parser{}, make(map[string]bool)}
 	p.Pm = p
@@ -20,6 +22,7 @@ func NewLama2Parser() *Lama2Parser {
 	return p
 }
 
+// Start primarily calls the Lama2File method
 func (p *Lama2Parser) Start() (*gabs.Container, error) {
 	log.Trace().Msg("Within the Start function")
 	temp := gabs.New()
@@ -32,6 +35,8 @@ func (p *Lama2Parser) Start() (*gabs.Container, error) {
 	return nil, e
 }
 
+// Lama2File applies the rule:
+// HTTPVerb Multipart? TheURL Details?
 func (p *Lama2Parser) Lama2File() (*gabs.Container, error) {
 	log.Trace().Msg("Within Lama2File")
 	res, e := p.Match([]string{"HTTPVerb"})

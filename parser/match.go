@@ -10,6 +10,18 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
+// Method Match is the most important of all in the
+// parser package. Match takes in a slice of rules
+// (essentially method names), and then executes
+// them one by one. On successful match, we return
+// a gabs Container with `error` set to `nil`
+// When a rule fails to match, we reset the scan
+// position to initial position; moreover, we keep
+// a continuous track of the farthest/longest match
+// till present. The farthest match error is potentially
+// the most useful error message to the user; thus,
+// for error report, Match returns the farthest matching
+// error
 func (p *Parser) Match(rules []string) (*gabs.Container, error) {
 	p.eatWhitespace()
 	lastErrorPos := -1

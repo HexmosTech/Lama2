@@ -10,6 +10,10 @@ import (
 	"github.com/HexmosTech/lama2/utils"
 )
 
+// QuotedString accepts both single-quoted and double-quoted
+// types of strings. Moreover, it can deal with unicode
+// escape characters, control characters appropriately
+// Ultimately, we get a string wrapped in a gabs container
 func (p *Lama2Parser) QuotedString() (*gabs.Container, error) {
 	temp := gabs.New()
 	chars := []string{}

@@ -8,6 +8,11 @@ import (
 	"github.com/HexmosTech/lama2/utils"
 )
 
+// A Number consists of a mandatory integer part,
+// and optional Fraction and Exponent parts. The Number
+// method "collects" these three elements, converts them
+// into a json.Number() type, and finally returns the
+// Number wrapped within a gabs Container
 func (p *Lama2Parser) Number() (*gabs.Container, error) {
 	intPart, e1 := p.Match([]string{"Integer"})
 	fracPart, e2 := p.Match([]string{"Fraction"})
@@ -16,11 +21,6 @@ func (p *Lama2Parser) Number() (*gabs.Container, error) {
 	if e1 != nil {
 		return nil, e1
 	}
-	// i := intPart.Data().(int)
-	// multiplier := 1
-	// if i < 0 {
-	// multiplier = -1
-	// }
 	f := ""
 	e := ""
 
@@ -34,22 +34,21 @@ func (p *Lama2Parser) Number() (*gabs.Container, error) {
 
 	temp := gabs.New()
 	if f == "" && e == "" {
-		// temp.Set(i)
 		num := json.Number(intPart.Data().(string))
 		temp.Set(num)
 	} else if e == "" {
-		// temp.Set(float64(i) + (float64(multiplier) * f))
 		iStr := intPart.Data().(string)
 		fStr := fracPart.Data().(string)
 		temp.Set(json.Number(iStr + fStr))
 	} else {
-		// temp.Set( (float64(i) + (float64(multiplier) * f)) * math.Pow(10, e))
 		iStr := intPart.Data().(string)
 		temp.Set(json.Number(iStr + f + e))
 	}
 	return temp, nil
 }
 
+// An Exponent consists of mandatory 'e' or 'E',
+// optional Sign, followed by Digits
 func (p *Lama2Parser) Exponent() (*gabs.Container, error) {
 	pows, e := p.CharClass("eE")
 	if e != nil {
@@ -61,19 +60,13 @@ func (p *Lama2Parser) Exponent() (*gabs.Container, error) {
 		sign = gabs.New()
 		sign.Set("", "value")
 	}
-	// multiplier := 1
-	// if e2 == nil && sign.S("value").Data().(string) == "-" {
-	// multiplier = -1
-	// }
 
 	d, e3 := p.Match([]string{"Digits"})
 	if e3 != nil {
 		return nil, e3
 	}
 	dVal := d.S("value").Data().(string)
-	// dInt, _ := strconv.Atoi(dVal)
 
-	// res := float64(multiplier) * float64(dInt)
 	temp := gabs.New()
 	temp.Set(string(pows) + sign.S("value").Data().(string) + dVal)
 	return temp, nil
@@ -84,17 +77,13 @@ func (p *Lama2Parser) Fraction() (*gabs.Container, error) {
 	if e != nil {
 		return nil, e
 	}
-	/*
-		f, err := strconv.ParseFloat(s.Data().(string), 64)
-		if err != nil {
-			return nil, e
-		}
-	*/
 	temp := gabs.New()
 	temp.Set(s.Data().(string))
 	return temp, nil
 }
 
+// A Fraction consists of mandatory "." (dot),
+// followed by Digits.
 func (p *Lama2Parser) FractionRule1() (*gabs.Container, error) {
 	s := make([]string, 0)
 	r, e := p.CharClass(".")
@@ -123,16 +112,11 @@ func (p *Lama2Parser) Integer() (*gabs.Container, error) {
 	if e == nil {
 		temp.Set(s.Data().(string))
 		return temp, nil
-		// i, err := strconv.Atoi(s.Data().(string))
-		// if err == nil {
-		// 	temp.Set(s.Data().(string))
-		// 	return temp, nil
-		// }
-		// return nil, utils.NewParseError(p.Pos+1, p.LineNum+1, "Not able to convert to integer as expected", []string{})
 	}
 	return s, e
 }
 
+// InterRule1 matches a Digit
 func (p *Lama2Parser) IntegerRule1() (*gabs.Container, error) {
 	s := make([]string, 0)
 	r, e := p.Match([]string{"Digit"})
@@ -146,6 +130,8 @@ func (p *Lama2Parser) IntegerRule1() (*gabs.Container, error) {
 	return temp, e
 }
 
+// IntegerRule2 matches 1-9 mandatorily, and then
+// tries to follow it with Digits
 func (p *Lama2Parser) IntegerRule2() (*gabs.Container, error) {
 	s := make([]string, 0)
 	iOneNine, e := p.Match([]string{"OneNine"})
@@ -165,6 +151,8 @@ func (p *Lama2Parser) IntegerRule2() (*gabs.Container, error) {
 	return temp, nil
 }
 
+// IntegerRule3 starts with a mandatory Sign, and
+// follows with IntegerRule1 (Digit)
 func (p *Lama2Parser) IntegerRule3() (*gabs.Container, error) {
 	s := make([]string, 0)
 	r, e := p.Match([]string{"Sign"})
@@ -194,6 +182,8 @@ func (p *Lama2Parser) IntegerRule3() (*gabs.Container, error) {
 	return temp, nil
 }
 
+// IntegerRule4 starts with a mandatory Sign, and
+// follows with IntegerRule2
 func (p *Lama2Parser) IntegerRule4() (*gabs.Container, error) {
 	s := make([]string, 0)
 	r, e := p.Match([]string{"Sign"})
