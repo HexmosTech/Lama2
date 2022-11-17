@@ -599,15 +599,13 @@
 graph TD
     A["CLI &lt;br/&gt;(lama2cmd)"]
     B["Parser &lt;br/&gt;(parser)"]   
-    C[Extension API]
     D["Request Executor &lt;br/&gt;(cmdexec)"]
-    E["Output Format Manager"]
-    F["Error Reporting"]
-    G["Environment Var Expansion &lt;br/&gt;(preprocess)"]
+    E["Output Format Manager &lt;br/&gt;(outputmanager)"]
+    F["Error Reporting (TODO)"]
+    G["Environment Vars Expansion &lt;br/&gt;(preprocess)"]
     H["Request Command Generator &lt;br/&gt;(cmdgen)"]
-    I["Lama2 Prettifier"]
+    I["Lama2 Prettifier (TODO)"]
     A --&gt; G
-    C --&gt; G
     G --&gt; B
     B --&gt; F
     B --&gt; H
