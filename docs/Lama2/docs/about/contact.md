@@ -1,5 +1,11 @@
-# Discord
+## :fontawesome-brands-discord: Discord
 
-# Email
+Join [Hexmos Lama2](https://discord.gg/zTmxXA6F) discord server to discuss with the community
 
-# Github Issues
+## :material-email: Email
+
+Drop an email to `shrijith` `'at'` `hexmos.com` 
+
+## :material-bug: Github Issues
+
+Report issues and propose improvements at [Github Issues](https://github.com/HexmosTech/Lama2/issues)

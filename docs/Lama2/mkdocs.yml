@@ -17,7 +17,6 @@ nav:
       - Formal Grammar: reference/grammar.md
       - API Reference: reference/api.md
     - About: 
-      - Lama2 History: about/history.md
       - Hexmos: about/hexmos.md
       - Talk to us: about/contact.md
 markdown_extensions:
@@ -28,6 +27,12 @@ markdown_extensions:
         - name: mermaid
           class: mermaid
           format: !!python/name:pymdownx.superfences.fence_code_format
+  - attr_list
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+  - admonition
+  - pymdownx.details
 theme:
   name: material
   features:

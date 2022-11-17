@@ -71,7 +71,9 @@ userid=lince5
 file@./helloworld.jpg
 ```
 
-Note that *file path is relative to the request file.*
+!!! Note
+
+    The *file path is relative to the request file.*
 
 ###  Cookies are sent as headers
 

@@ -36,7 +36,9 @@ IDEs and text-editors as well. Think of *Lama2* as [**markdown for APIs.**](http
 
 ![](docs/Lama2/docs/demo2.gif)
 
-## Installation
+## Installation/Update
+
+For **Linux/MacOS** systems, run the following command to either install or update *Lama2*:
 
 ```
 curl -s https://raw.githubusercontent.com/HexmosTech/Lama2/main/install.sh | bash -s

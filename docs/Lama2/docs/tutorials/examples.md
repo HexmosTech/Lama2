@@ -116,8 +116,9 @@ a="b"  # double-quoted string
 
 Get [Source File](https://github.com/HexmosTech/Lama2/tree/main/examples/0005_headers_simple.l2)
 
-Note: the data may appear *before* headers as well:
+!!! Note
 
+    The data section may appear *before* headers as well (see below)
 ```
 POST 
 https://httpbin.org/post
@@ -193,9 +194,14 @@ export PHOTO=`base64 image.jpeg`
 
 Next, we refer to the `PHOTO` variable in
 the API file. Pay special attention to the
-quoting mechanism `"'{PHOTO}'"`. **The quoting
-must look exactly as shown in the following
-template for the request to work correctly.**
+quoting mechanism `"'{PHOTO}'"`. 
+
+
+!!! warning
+
+    **The quoting
+    must look exactly as shown in the following
+    template for the request to work correctly.**
 
 **base64_embed.l2**
 

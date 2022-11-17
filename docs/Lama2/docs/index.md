@@ -1,4 +1,4 @@
-# **`Lama2`**: Plain-text Powered REST API Client for Teams
+# **`Lama2`**: Plain-text Powered REST API Client for Teams :llama:
 
 ![](./banner.png)
 

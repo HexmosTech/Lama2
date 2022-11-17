@@ -1,10 +1,10 @@
 # Getting Started
 
-## Installation
+## Installation/Update
 
-### One-line install (Recommended in Linux/MacOS)
+### One-line install/update (Recommended in Linux/MacOS)
 
-To install *Lama2* and its dependencies automatically, run the following:
+To install/update *Lama2* and its dependencies automatically, run the following:
 
 ```
 curl -s https://raw.githubusercontent.com/HexmosTech/Lama2/main/install.sh | bash -s

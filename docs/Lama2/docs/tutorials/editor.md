@@ -13,7 +13,14 @@ structure:
     "body": ...
 }
 ```
-Right now, all the three values are strings. In the future, we may transform the values further to provide a more parse-friendly structure.
+
+- `logs`: String value. Contains ASCII-color-coded log output. Control the logging level through `-v` option
+- `headers`: A string consisting of `HTTP header: Value` pairs separated by newline.
+- `body`: A string containing the HTTP response. Usually a JSON or HTML response.
+
+!!! note
+
+    Right now, all the three values in the JSON are strings. In the future, we may transform the values further to provide a more parse-friendly structure.
 
 ## The Command
 Combining the above two options, we get:

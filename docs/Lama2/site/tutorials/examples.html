@@ -609,20 +609,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../about/history.html" class="md-nav__link">
-        Lama2 History
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../about/hexmos.html" class="md-nav__link">
         Hexmos
       </a>
@@ -845,7 +831,10 @@ a=&quot;b&quot;  # double-quoted string
 &#39;c&#39;=d  # single-quoted &amp; unquoted strings
 </code></pre></div>
 <p>Get <a href="https://github.com/HexmosTech/Lama2/tree/main/examples/0005_headers_simple.l2">Source File</a></p>
-<p>Note: the data may appear <em>before</em> headers as well:</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The data section may appear <em>before</em> headers as well (see below)</p>
+</div>
 <div class="highlight"><pre><span></span><code>POST 
 https://httpbin.org/post
 
@@ -903,9 +892,13 @@ up with the results of the <code>base64</code> command.</p>
 </code></pre></div>
 <p>Next, we refer to the <code>PHOTO</code> variable in
 the API file. Pay special attention to the
-quoting mechanism <code>"'{PHOTO}'"</code>. <strong>The quoting
+quoting mechanism <code>"'{PHOTO}'"</code>. </p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><strong>The quoting
 must look exactly as shown in the following
 template for the request to work correctly.</strong></p>
+</div>
 <p><strong>base64_embed.l2</strong></p>
 <p><div class="highlight"><pre><span></span><code>POST
 http://httpbin.org/post
