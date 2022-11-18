@@ -25,8 +25,12 @@ import (
 // 5. Generate API request command
 // 6. Execute command & retrieve results
 // 7. Optionally, post-process and write results to a JSON file
-func Process() {
+func Process(version string) {
 	o := lama2cmd.GetAndValidateCmd(os.Args)
+	if o.Version {
+		fmt.Println(version)
+		return
+	}
 	apiContent, apiDir := preprocess.PreprocessLamaFile(o.Positional.LamaAPIFile)
 	p := parser.NewLama2Parser()
 	parsedAPI, e := p.Parse(apiContent)

@@ -4,6 +4,11 @@ import (
 	contoller "github.com/HexmosTech/lama2/controller"
 )
 
+var version string
+
 func main() {
-	contoller.Process()
+	if len(version) == 0 {
+		version = "vUnset"
+	}
+	contoller.Process(version)
 }
