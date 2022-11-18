@@ -15,11 +15,11 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-// SetJson is a helper function to work with the `gabs` library, which
+// SetJSON is a helper function to work with the `gabs` library, which
 // in turn is an API on top of the standard JSON library
 // The function helps us create `parentObj.key = childObj` through
 // using the `Merge` primitive available in `gabs`
-func SetJson(parentObj *gabs.Container, childObj *gabs.Container, key string) *gabs.Container {
+func SetJSON(parentObj *gabs.Container, childObj *gabs.Container, key string) *gabs.Container {
 	temp := gabs.New()
 	temp.Set(childObj, key)
 	parentObj.Merge(temp)

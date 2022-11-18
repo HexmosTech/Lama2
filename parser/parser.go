@@ -101,7 +101,7 @@ func (p *Parser) eatWhitespace() {
 	for p.Pos < p.TotalLen {
 		c := p.Text[p.Pos+1]
 		if c == '\n' {
-			p.LineNum += 1
+			p.LineNum++
 		}
 		if isProcessingComment {
 			if c == '\n' {

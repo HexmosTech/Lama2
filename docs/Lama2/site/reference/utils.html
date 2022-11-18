@@ -643,7 +643,7 @@
       
         <li class="md-nav__item">
   <a href="#func-setjson" class="md-nav__link">
-    func SetJson
+    func SetJSON
   </a>
   
 </li>
@@ -716,7 +716,7 @@
 <li><a href="#func-containsstringpartial">func ContainsStringPartial(s []string, e string) bool</a></li>
 <li><a href="#func-getfilepathcomponents">func GetFilePathComponents(name string) (string, string, string)</a></li>
 <li><a href="#func-prettyprint">func PrettyPrint(i interface{}) string</a></li>
-<li><a href="#func-setjson">func SetJson(parentObj <em>gabs.Container, childObj </em>gabs.Container, key string) *gabs.Container</a></li>
+<li><a href="#func-setjson">func SetJSON(parentObj <em>gabs.Container, childObj </em>gabs.Container, key string) *gabs.Container</a></li>
 <li><a href="#func-unicodecategory">func UnicodeCategory(r rune) string</a></li>
 <li><a href="#type-parseerror">type ParseError</a></li>
 <li><a href="#func-newparseerror">func NewParseError(pos int, line int, msg string, args []string) *ParseError</a></li>
@@ -746,10 +746,10 @@
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">PrettyPrint</span><span class="p">(</span><span class="nx">i</span><span class="w"> </span><span class="kd">interface</span><span class="p">{})</span><span class="w"> </span><span class="kt">string</span><span class="w"></span>
 </code></pre></div>
 <p>PrettyPrint takes in a generic interface{} objects and uses standard JSON capabilities to try to print with indentation</p>
-<h2 id="func-setjson">func <a href="https://github.com/HexmosTech/Lama2/blob/master/utils/utils.go#L22">SetJson</a><a class="headerlink" href="#func-setjson" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">SetJson</span><span class="p">(</span><span class="nx">parentObj</span><span class="w"> </span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="nx">childObj</span><span class="w"> </span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="nx">key</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="w"></span>
+<h2 id="func-setjson">func <a href="https://github.com/HexmosTech/Lama2/blob/master/utils/utils.go#L22">SetJSON</a><a class="headerlink" href="#func-setjson" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">SetJSON</span><span class="p">(</span><span class="nx">parentObj</span><span class="w"> </span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="nx">childObj</span><span class="w"> </span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="nx">key</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="w"></span>
 </code></pre></div>
-<p>SetJson is a helper function to work with the `gabs` library, which in turn is an API on top of the standard JSON library The function helps us create `parentObj.key = childObj` through using the `Merge` primitive available in `gabs`</p>
+<p>SetJSON is a helper function to work with the `gabs` library, which in turn is an API on top of the standard JSON library The function helps us create `parentObj.key = childObj` through using the `Merge` primitive available in `gabs`</p>
 <h2 id="func-unicodecategory">func <a href="https://github.com/HexmosTech/Lama2/blob/master/utils/utils.go#L71">UnicodeCategory</a><a class="headerlink" href="#func-unicodecategory" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">UnicodeCategory</span><span class="p">(</span><span class="nx">r</span><span class="w"> </span><span class="kt">rune</span><span class="p">)</span><span class="w"> </span><span class="kt">string</span><span class="w"></span>
 </code></pre></div>

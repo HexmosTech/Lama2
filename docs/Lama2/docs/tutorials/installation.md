@@ -29,6 +29,25 @@ tar --overwrite -xvzf <download>.tar.gz
 mv l2 /usr/local/bin
 ```
 
+### Build from source
+
+Run `make` in the project root. You'll need to have the following tools in your `PATH`:
+
+1. `go` (v1.17+)
+1. `golangcli-lint`
+1. `gofumpt`
+
+Also, you'll need to install `mkdocs` the first time; for that run these:
+
+```
+cd docs/Lama2
+poetry install # get poetry from https://python-poetry.org/
+```
+
+Once `make` finishes, find the binary at `./build/l2`. Moreover,
+you can launch the documentation locally through `make serve`.
+
+Read `makefile` to find other useful helper commands.
 
 ## How to use
 
@@ -41,11 +60,11 @@ Usage:
   l2 [OPTIONS] [LamaAPIFile]
 
 Application Options:
+  -o, --output=      Path to output JSON file to store logs, headers and result
   -v, --verbose      Show verbose debug information
-  -p, --prettify     Prettify specified .lama file
-  -s, --sort         Sort specification into recommended order
   -n, --nocolor      Disable color in httpie output
   -h, --help         Usage help for Lama2
+      --version      Print Lama2 binary version
 
 Help Options:
   -h, --help         Show this help message

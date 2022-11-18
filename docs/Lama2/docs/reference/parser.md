@@ -306,7 +306,7 @@ func (p *Lama2Parser) Pair() (*gabs.Container, error)
 func (p *Lama2Parser) PrimitiveType() (*gabs.Container, error)
 ```
 
-### func \(\*Lama2Parser\) [QuotedString](<https://github.com/HexmosTech/Lama2/blob/master/parser/lama_strings.go#L17>)
+### func \(\*Lama2Parser\) [QuotedString](<https://github.com/HexmosTech/Lama2/blob/master/parser/lama_strings.go#L31>)
 
 ```go
 func (p *Lama2Parser) QuotedString() (*gabs.Container, error)
@@ -334,7 +334,7 @@ Start primarily calls the Lama2File method
 func (p *Lama2Parser) TheURL() (*gabs.Container, error)
 ```
 
-### func \(\*Lama2Parser\) [Unquoted](<https://github.com/HexmosTech/Lama2/blob/master/parser/lama_strings.go#L83>)
+### func \(\*Lama2Parser\) [Unquoted](<https://github.com/HexmosTech/Lama2/blob/master/parser/lama_strings.go#L113>)
 
 ```go
 func (p *Lama2Parser) Unquoted() (*gabs.Container, error)

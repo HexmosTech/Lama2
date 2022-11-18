@@ -14,26 +14,27 @@ Package \`lama2cmd\` provides CLI argument parsing facilities. It hosts the \`Op
   - [func GetAndValidateCmd(ipArgs []string) *Opts](<#func-getandvalidatecmd>)
 
 
-## type [Opts](<https://github.com/HexmosTech/Lama2/blob/master/lama2cmd/lama2cmd.go#L16-L27>)
+## type [Opts](<https://github.com/HexmosTech/Lama2/blob/master/lama2cmd/lama2cmd.go#L16-L28>)
 
 The Opts structure stores user preferences, and is used throughout the module to make various decisions.
 
 ```go
 type Opts struct {
-    Output   string `short:"o" long:"output" description:"Path to output JSON file to store logs, headers and result"`
-    Verbose  []bool `short:"v" long:"verbose" description:"Show verbose debug information"`
-    Prettify bool   `short:"p" long:"prettify" description:"Prettify specified .lama file"`
-    Sort     bool   `short:"s" long:"sort" description:"Sort specification into recommended order"`
-    Nocolor  bool   `short:"n" long:"nocolor" description:"Disable color in httpie output"`
-    Help     bool   `short:"h" long:"help" group:"AddHelp" description:"Usage help for Lama2"`
+    Output  string `short:"o" long:"output" description:"Path to output JSON file to store logs, headers and result"`
+    Verbose []bool `short:"v" long:"verbose" description:"Show verbose debug information"`
+    // Prettify bool   `short:"p" long:"prettify" description:"Prettify specified .lama file"`
+    // Sort     bool   `short:"s" long:"sort" description:"Sort specification into recommended order"`
+    Nocolor bool `short:"n" long:"nocolor" description:"Disable color in httpie output"`
+    Help    bool `short:"h" long:"help" group:"AddHelp" description:"Usage help for Lama2"`
+    Version bool `long:"version" description:"Print Lama2 binary version"`
 
     Positional struct {
-        LamaAPIFile string `required:"yes"`
+        LamaAPIFile string
     }   `positional-args:"yes"`
 }
 ```
 
-### func [GetAndValidateCmd](<https://github.com/HexmosTech/Lama2/blob/master/lama2cmd/lama2cmd.go#L77>)
+### func [GetAndValidateCmd](<https://github.com/HexmosTech/Lama2/blob/master/lama2cmd/lama2cmd.go#L78>)
 
 ```go
 func GetAndValidateCmd(ipArgs []string) *Opts

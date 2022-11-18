@@ -52,10 +52,9 @@ func getDataFiles(relativeAppend string, globPattern string) ([]string, error) {
 	if err == nil {
 		sort.Strings(matches)
 		return matches, nil
-	} else {
-		log.Debug().Msg("Couldn't get data file matches")
-		return nil, errors.New("Couldn't get data file matches")
 	}
+	log.Debug().Msg("Couldn't get data file matches")
+	return nil, errors.New("Couldn't get data file matches")
 }
 
 func PerformParserMatch(text string) (*gabs.Container, error) {

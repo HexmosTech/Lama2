@@ -31,13 +31,13 @@ func init() {
 // ZeroLog uses the DEBUG level; however, the function makes the
 // desired level more explicit
 func ConfigureZeroLog(level string) {
-	log_level_map := make(map[string]zerolog.Level)
-	log_level_map["ERROR"] = zerolog.ErrorLevel // less information
-	log_level_map["INFO"] = zerolog.InfoLevel
-	log_level_map["DEBUG"] = zerolog.DebugLevel
-	log_level_map["TRACE"] = zerolog.TraceLevel // maximum information
+	logLevelMap := make(map[string]zerolog.Level)
+	logLevelMap["ERROR"] = zerolog.ErrorLevel // less information
+	logLevelMap["INFO"] = zerolog.InfoLevel
+	logLevelMap["DEBUG"] = zerolog.DebugLevel
+	logLevelMap["TRACE"] = zerolog.TraceLevel // maximum information
 	zerolog.TimeFieldFormat = zerolog.TimeFormatUnix
-	zerolog.SetGlobalLevel(log_level_map[level])
+	zerolog.SetGlobalLevel(logLevelMap[level])
 }
 
 // WriteJSONOutput is primarily built for helping with

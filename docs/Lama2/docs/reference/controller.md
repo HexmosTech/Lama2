@@ -10,13 +10,13 @@ Package controller coordinates all the other components in the \`Lama2\` project
 
 ## Index
 
-- [func Process()](<#func-process>)
+- [func Process(version string)](<#func-process>)
 
 
 ## func [Process](<https://github.com/HexmosTech/Lama2/blob/master/controller/controller.go#L28>)
 
 ```go
-func Process()
+func Process(version string)
 ```
 
 Process initiates the following tasks in the given order: 1. Parse command line arguments 2. Read API file contents 3. Expand environment variables in API file 4. Parse the API contents 5. Generate API request command 6. Execute command & retrieve results 7. Optionally, post\-process and write results to a JSON file

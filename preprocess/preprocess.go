@@ -28,15 +28,15 @@ func getLamaFileAsString(path string) string {
 	return string(b)
 }
 
-// PreprocessLamaFile takes in a path to an API file.
+// LamaFile takes in a path to an API file.
 // It moves into the API file directory, reads the
 // API contents, loads the `l2.env` file if available,
 // and finally substitutes environment vars in the API contents
 // Once done, it reverts back to the original directory,
 // and returns the processed l2 file.
-func PreprocessLamaFile(input_f string) (string, string) {
-	content := getLamaFileAsString(input_f)
-	_, dir, _ := utils.GetFilePathComponents(input_f)
+func LamaFile(inputFile string) (string, string) {
+	content := getLamaFileAsString(inputFile)
+	_, dir, _ := utils.GetFilePathComponents(inputFile)
 	oldDir, _ := os.Getwd()
 
 	utils.ChangeWorkingDir(dir)

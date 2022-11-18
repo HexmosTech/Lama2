@@ -16,7 +16,7 @@ Package \`utils\` provides useful functions for simplifying various programming 
 - [func ContainsStringPartial(s []string, e string) bool](<#func-containsstringpartial>)
 - [func GetFilePathComponents(name string) (string, string, string)](<#func-getfilepathcomponents>)
 - [func PrettyPrint(i interface{}) string](<#func-prettyprint>)
-- [func SetJson(parentObj *gabs.Container, childObj *gabs.Container, key string) *gabs.Container](<#func-setjson>)
+- [func SetJSON(parentObj *gabs.Container, childObj *gabs.Container, key string) *gabs.Container](<#func-setjson>)
 - [func UnicodeCategory(r rune) string](<#func-unicodecategory>)
 - [type ParseError](<#type-parseerror>)
   - [func NewParseError(pos int, line int, msg string, args []string) *ParseError](<#func-newparseerror>)
@@ -71,13 +71,13 @@ func PrettyPrint(i interface{}) string
 
 PrettyPrint takes in a generic interface\{\} objects and uses standard JSON capabilities to try to print with indentation
 
-## func [SetJson](<https://github.com/HexmosTech/Lama2/blob/master/utils/utils.go#L22>)
+## func [SetJSON](<https://github.com/HexmosTech/Lama2/blob/master/utils/utils.go#L22>)
 
 ```go
-func SetJson(parentObj *gabs.Container, childObj *gabs.Container, key string) *gabs.Container
+func SetJSON(parentObj *gabs.Container, childObj *gabs.Container, key string) *gabs.Container
 ```
 
-SetJson is a helper function to work with the \`gabs\` library, which in turn is an API on top of the standard JSON library The function helps us create \`parentObj.key = childObj\` through using the \`Merge\` primitive available in \`gabs\`
+SetJSON is a helper function to work with the \`gabs\` library, which in turn is an API on top of the standard JSON library The function helps us create \`parentObj.key = childObj\` through using the \`Merge\` primitive available in \`gabs\`
 
 ## func [UnicodeCategory](<https://github.com/HexmosTech/Lama2/blob/master/utils/utils.go#L71>)
 

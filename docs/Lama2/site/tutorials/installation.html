@@ -353,6 +353,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#build-from-source" class="md-nav__link">
+    Build from source
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -744,6 +751,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#build-from-source" class="md-nav__link">
+    Build from source
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -814,6 +828,20 @@ operating system and CPU architecture. Once you have the package, run the follow
 <div class="highlight"><pre><span></span><code>tar --overwrite -xvzf &lt;download&gt;.tar.gz
 mv l2 /usr/local/bin
 </code></pre></div>
+<h3 id="build-from-source">Build from source<a class="headerlink" href="#build-from-source" title="Permanent link">&para;</a></h3>
+<p>Run <code>make</code> in the project root. You'll need to have the following tools in your <code>PATH</code>:</p>
+<ol>
+<li><code>go</code> (v1.17+)</li>
+<li><code>golangcli-lint</code></li>
+<li><code>gofumpt</code></li>
+</ol>
+<p>Also, you'll need to install <code>mkdocs</code> the first time; for that run these:</p>
+<div class="highlight"><pre><span></span><code>cd docs/Lama2
+poetry install # get poetry from https://python-poetry.org/
+</code></pre></div>
+<p>Once <code>make</code> finishes, find the binary at <code>./build/l2</code>. Moreover,
+you can launch the documentation locally through <code>make serve</code>.</p>
+<p>Read <code>makefile</code> to find other useful helper commands.</p>
 <h2 id="how-to-use">How to use<a class="headerlink" href="#how-to-use" title="Permanent link">&para;</a></h2>
 <h3 id="from-the-terminal">From the terminal<a class="headerlink" href="#from-the-terminal" title="Permanent link">&para;</a></h3>
 <p>Type <code>l2</code> into the terminal. You should get something like:</p>
@@ -821,11 +849,11 @@ mv l2 /usr/local/bin
   l2 [OPTIONS] [LamaAPIFile]
 
 Application Options:
+  -o, --output=      Path to output JSON file to store logs, headers and result
   -v, --verbose      Show verbose debug information
-  -p, --prettify     Prettify specified .lama file
-  -s, --sort         Sort specification into recommended order
   -n, --nocolor      Disable color in httpie output
   -h, --help         Usage help for Lama2
+      --version      Print Lama2 binary version
 
 Help Options:
   -h, --help         Show this help message

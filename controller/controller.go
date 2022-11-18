@@ -31,7 +31,7 @@ func Process(version string) {
 		fmt.Println(version)
 		return
 	}
-	apiContent, apiDir := preprocess.PreprocessLamaFile(o.Positional.LamaAPIFile)
+	apiContent, apiDir := preprocess.LamaFile(o.Positional.LamaAPIFile)
 	p := parser.NewLama2Parser()
 	parsedAPI, e := p.Parse(apiContent)
 	if e != nil {
