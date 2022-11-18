@@ -79,7 +79,6 @@ func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, header
 		for key, val := range headers.Data().(*gabs.Container).ChildrenMap() {
 			command = append(command, "'"+key+":"+val.Data().(*gabs.Container).Data().(string)+"'  ")
 		}
-
 	}
 
 	commandStr := strings.Join(command, "")

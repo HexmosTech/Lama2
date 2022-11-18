@@ -3,6 +3,7 @@ package tests
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"os"
 	"path/filepath"
 	"reflect"
@@ -105,56 +106,50 @@ func TestJsonParserExhaustive(t *testing.T) {
 	rootPath := "../elfparser/JSONTestSuite/test_parsing"
 	matchFiles, _ := getDataFiles(rootPath, "y_*")
 	ignoreNames := []string{
-		"y_string_accepted_surrogate_pair.json",
-		"y_string_accepted_surrogate_pairs.json",
-		"y_string_last_surrogates_1_and_2.json",
-		"y_string_surrogates_U+1D11E_MUSICAL_SYMBOL_G_CLEF.json",
-		"y_string_unescaped_char_delete.json",
-		"y_string_with_del_character.json",
-		"y_string_unicode_U+10FFFE_nonchar.json",
-		"y_string_unicode_U+1FFFE_nonchar.json",
+		// Enable these files to ignore failing test cases
+		// for some complicated Unicode cases:
+
+		// "y_string_accepted_surrogate_pair.json",
+		// "y_string_accepted_surrogate_pairs.json",
+		// "y_string_last_surrogates_1_and_2.json",
+		// "y_string_surrogates_U+1D11E_MUSICAL_SYMBOL_G_CLEF.json",
+		// "y_string_unescaped_char_delete.json",
+		// "y_string_with_del_character.json",
+		// "y_string_unicode_U+10FFFE_nonchar.json",
+		// "y_string_unicode_U+1FFFE_nonchar.json",
 	}
 	for _, m := range matchFiles {
 		// fmt.Println("### === === === === ===")
 		if utils.ContainsStringPartial(ignoreNames, m) {
 			continue
 		}
-		// fmt.Println(m)
 		jsonText, e := FileToString(m)
-		// fmt.Println(jsonText)
 		if e != nil {
 			log.Fatal().Str("Error:", e.Error()).Msg("")
 		}
 
 		gj, e2 := jsonFileToGabs(m)
 		if e2 != nil {
-			// fmt.Println("jsonFileToGabs failed")
 			return
 		}
 		preamble := "POST\nhttp://google.com\n"
 		lamaText := preamble + jsonText
-		// fmt.Println(lamaText)
 		jj, e3 := PerformParserMatch(lamaText)
 		if e3 != nil {
-			// fmt.Println("performvalidMatch failed")
 			return
 		}
-		// fmt.Println("gj = ", gj)
 		jp := jj.S("value", "details", "ip_data")
-		// fmt.Println("jj = ", jp)
 
 		var v1, v2 interface{}
 		json.Unmarshal([]byte(gj.String()), &v1)
 		jpStr := jp.String()
-		// fmt.Println("### jpStr", jpStr)
 		json.Unmarshal([]byte(jpStr), &v2)
 		if reflect.DeepEqual(v1, v2) {
-			// fmt.Println("The two JSON structures are equal")
-			// fmt.Println(m)
+			fmt.Println("The two JSON structures are equal")
+			fmt.Println(m)
 		} else {
-			// They are different
-			// fmt.Println("The two JSON structures are different")
-			// fmt.Println(m)
+			t.Errorf("The two JSON structures are different")
+			fmt.Println(m)
 			break
 		}
 		// fmt.Println("*** === === === === ===")

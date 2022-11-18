@@ -46,7 +46,7 @@ func ConfigureZeroLog(level string) {
 // to invoke WriteJSONOutput; the generated json file contains
 // three keys: `logs`, `headers`, `body`
 func WriteJSONOutput(requestLog string, targetPath string) {
-	var re = regexp.MustCompile(`(?m)^\s*[{\[<]`)
+	re := regexp.MustCompile(`(?m)^\s*[{\[<]`)
 
 	idx := re.FindStringIndex(requestLog)
 	headers := string(requestLog[:idx[0]])
@@ -57,7 +57,7 @@ func WriteJSONOutput(requestLog string, targetPath string) {
 	temp.Set(body, "body")
 	temp.Set(LogBuff.String(), "logs")
 
-	err := os.WriteFile(targetPath, []byte(temp.String()), 0644)
+	err := os.WriteFile(targetPath, []byte(temp.String()), 0o644)
 	if err != nil {
 		log.Fatal().Msg(fmt.Sprintf("Couldn't write JSON output to: %s", targetPath))
 	}
