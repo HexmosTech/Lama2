@@ -16,8 +16,8 @@ func TestCmdBasic(t *testing.T) {
 	o := *lama2cmd.GetAndValidateCmd(ipArgs)
 
 	expected := lama2cmd.Opts{
-		Verbose: []bool{true}, Sort: false, Prettify: false, Nocolor: false, Positional: struct {
-			LamaAPIFile string "required:\"yes\""
+		Verbose: []bool{true}, Nocolor: false, Positional: struct {
+			LamaAPIFile string
 		}{LamaAPIFile: "../elfparser/ElfTestSuite/y_0000_basic_get.l2"},
 	}
 
