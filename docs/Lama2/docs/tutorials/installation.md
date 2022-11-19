@@ -10,6 +10,13 @@ To install/update *Lama2* and its dependencies automatically, run the following:
 curl -s https://raw.githubusercontent.com/HexmosTech/Lama2/main/install.sh | bash -s
 ```
 
+#### Self update
+
+An easier way to update the binary to latest release is through:
+
+```
+l2 -u
+```
 ### Manual install
 
 #### Step 1: Install HTTPie

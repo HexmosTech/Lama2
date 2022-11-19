@@ -46,6 +46,15 @@ curl -s https://raw.githubusercontent.com/HexmosTech/Lama2/main/install.sh | bas
 
 Learn more about other installation methods from [our docs](https://hexmos.com/lama2/tutorials/installation.html).
 
+### Self update
+
+An easier way to update the binary to latest release is through:
+
+```
+l2 -u
+```
+
+
 ### VSCode Extension
 
 Find *Lama2 for VSCode* at the [VSCode Marketplace](https://marketplace.visualstudio.com/items?itemName=hexmos.Lama2). The extension requires the *l2* command available (usually at `/usr/local/bin/l2`).
