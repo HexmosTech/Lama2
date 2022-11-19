@@ -5,7 +5,10 @@ package utils
 import (
 	"encoding/json"
 	"fmt"
+	"io"
+	"net/http"
 	"os"
+	"os/exec"
 	"path"
 	"path/filepath"
 	"strings"
@@ -95,4 +98,43 @@ func ChangeWorkingDir(dir string) {
 			Str("dir", dir).
 			Msg(fmt.Sprint("Moving into dir failed"))
 	}
+}
+
+func downloadFile(filepath string, url string) (err error) {
+	// Create the file
+	out, err := os.Create(filepath)
+	if err != nil {
+		return err
+	}
+	defer out.Close()
+
+	// Get the data
+	resp, err := http.Get(url)
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+
+	// Writer the body to file
+	_, err = io.Copy(out, resp.Body)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// UpdateSelf downloads the installation script from
+// the official repository, and executes it to update
+// the l2 binary to the latest version
+func UpdateSelf() {
+	fmt.Println("Trying to update lama2")
+	downloadFile("/tmp/lama2install.sh", "https://raw.githubusercontent.com/HexmosTech/Lama2/main/install.sh")
+	cmd := exec.Command("sh", "-c", "chmod +x /tmp/lama2install.sh")
+	cmd.Run()
+	cmd = exec.Command("bash", "-c", "/tmp/lama2install.sh")
+	cmd.Stdin = os.Stdin
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	_ = cmd.Run()
 }

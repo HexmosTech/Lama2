@@ -19,6 +19,7 @@ type Opts struct {
 	// Prettify bool   `short:"p" long:"prettify" description:"Prettify specified .lama file"`
 	// Sort     bool   `short:"s" long:"sort" description:"Sort specification into recommended order"`
 	Nocolor bool `short:"n" long:"nocolor" description:"Disable color in httpie output"`
+	Update  bool `short:"u" long:"update" description:"Update l2 binary to the latest released version (Linux/MacOS only)"`
 	Help    bool `short:"h" long:"help" group:"AddHelp" description:"Usage help for Lama2"`
 	Version bool `long:"version" description:"Print Lama2 binary version"`
 

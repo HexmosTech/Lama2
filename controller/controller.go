@@ -14,6 +14,7 @@ import (
 	outputmanager "github.com/HexmosTech/lama2/outputManager"
 	"github.com/HexmosTech/lama2/parser"
 	"github.com/HexmosTech/lama2/preprocess"
+	"github.com/HexmosTech/lama2/utils"
 	"github.com/rs/zerolog/log"
 )
 
@@ -29,6 +30,10 @@ func Process(version string) {
 	o := lama2cmd.GetAndValidateCmd(os.Args)
 	if o.Version {
 		fmt.Println(version)
+		return
+	}
+	if o.Update {
+		utils.UpdateSelf()
 		return
 	}
 	apiContent, apiDir := preprocess.LamaFile(o.Positional.LamaAPIFile)
