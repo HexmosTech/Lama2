@@ -13,6 +13,9 @@ gofumpt:
 test:
 	go test ./tests/ -count=1
 
+benchmark:
+	go test -bench=. -count 1 -run=^# -benchmem ./tests/
+
 mkdocs:
 	cd docs/Lama2; ./build.sh
 

@@ -1,4 +1,4 @@
-# **`Lama2`**: Plain-text Powered REST API Client for Teams :llama:
+# **`Lama2`**: Plain-Text Powered REST API Client for Teams :llama:
 
 ![](./banner.png)
 
@@ -10,12 +10,12 @@
 
 ## About
 
-*Lama2* is a plain-text powered REST API client & manager built for serious engineering teams.
+*Lama2* is a Plain-Text powered REST API client & manager built for serious engineering teams.
 *Lama2* specifies the [`.l2` syntax](tutorials/examples.md) for describing APIs, and implements a [CLI](tutorials/installation.md) to execute `.l2` files. Engineers can [collaborate](tutorials/collaboration.md) on `.l2` files using version control. *Lama2* [integrates](tutorials/editor.md) nicely with
 IDEs and text-editors as well. Think of *Lama2* as [**markdown for APIs.**](reference/philosophy.md)
 ## Benefits
 
-1. **Plain-text files:** Store APIs in the plain-text `.l2` API files. [Simple](explanation/l2format.md) and [human-friendly](explanation/syntax.md) syntax. Learn [basics](tutorials/examples.md) within  minutes!
+1. **Plain-Text files:** Store APIs in the Plain-Text `.l2` API files. [Simple](explanation/l2format.md) and [human-friendly](explanation/syntax.md) syntax. Learn [basics](tutorials/examples.md) within  minutes!
 1. **Simple CLI:** Launch the [CLI](tutorials/installation.md) tool `l2` on API files to make REST API requests.
 1. **Editor support:** Invoke *Lama2* from your [favorite text editor](tutorials/installation.md#from-vs-code) or IDE. Helpful documentation and tool support to [build editor extensions](tutorials/editor.md) included.
 1. **Longevity & track-ability:** Commit `.l2` files to `git` or other version control for long life & change tracking.

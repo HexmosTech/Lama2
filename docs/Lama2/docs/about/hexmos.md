@@ -1,6 +1,6 @@
 We at [Hexmos](https://hexmos.com) are deeply concerned about the state of organizations all across the world. 
 
-We possess firm convictions and aspiration towards **improving organizational health across organizations**. 
+We possess firm convictions and aspiration towards **improving organizational health across the world**. 
 
 Through *deep R&D, good software, relevant tools and techniques,* we work to improve organizational health. 
 
