@@ -9,7 +9,9 @@ graph TD
 	G["Environment Vars Expansion <br/>(preprocess)"]
 	H["Request Command Generator <br/>(cmdgen)"]
 	I["Lama2 Prettifier (TODO)"]
+	J["Data Importer (importer)"]
 	A --> G
+	A --> J
 	G --> B
 	B --> F
 	B --> H

@@ -9,17 +9,75 @@
 			"auth": null,
 			"events": null,
 			"variables": [],
-			"order": [
-				"f77f2988-5c84-442f-964a-d055b97c832c",
-				"3cb9e9ef-eec3-4e03-a69f-f72e22622e32",
-				"14a58e03-a44c-41a1-8ea3-d6d7e6adbd3b",
-				"5125461d-2862-4fed-ad26-39024930b350",
-				"4b43c46a-1c1d-49e0-b0e6-6f98a673d25a"
+			"order": [],
+			"folders_order": [
+				"abf4859c-ce7c-4dde-9262-6cee51e3344a",
+				"b1105a33-d4db-4264-990c-7d039feccea8"
 			],
-			"folders_order": [],
 			"protocolProfileBehavior": {},
 			"createdAt": "2022-11-24T04:52:24.270Z",
-			"folders": [],
+			"folders": [
+				{
+					"id": "cfbe1e15-0eef-4093-a848-65abd35c9ecb",
+					"uid": "0-cfbe1e15-0eef-4093-a848-65abd35c9ecb",
+					"name": "emptydir",
+					"description": null,
+					"auth": null,
+					"events": null,
+					"collection": "4be7b6be-88bd-4a93-9eef-d31d3a954826",
+					"folder": "abf4859c-ce7c-4dde-9262-6cee51e3344a",
+					"order": [],
+					"folders_order": [],
+					"owner": "0",
+					"protocolProfileBehavior": {},
+					"createdAt": "2022-11-24T05:56:56.133Z",
+					"collectionId": "4be7b6be-88bd-4a93-9eef-d31d3a954826",
+					"folderId": "cfbe1e15-0eef-4093-a848-65abd35c9ecb"
+				},
+				{
+					"id": "b1105a33-d4db-4264-990c-7d039feccea8",
+					"uid": "0-b1105a33-d4db-4264-990c-7d039feccea8",
+					"name": "getdir",
+					"description": null,
+					"auth": null,
+					"events": null,
+					"collection": "4be7b6be-88bd-4a93-9eef-d31d3a954826",
+					"folder": null,
+					"order": [
+						"f77f2988-5c84-442f-964a-d055b97c832c"
+					],
+					"folders_order": [],
+					"owner": "0",
+					"protocolProfileBehavior": {},
+					"createdAt": "2022-11-24T05:38:31.427Z",
+					"collectionId": "4be7b6be-88bd-4a93-9eef-d31d3a954826",
+					"folderId": "b1105a33-d4db-4264-990c-7d039feccea8"
+				},
+				{
+					"id": "abf4859c-ce7c-4dde-9262-6cee51e3344a",
+					"uid": "0-abf4859c-ce7c-4dde-9262-6cee51e3344a",
+					"name": "postdir",
+					"description": null,
+					"auth": null,
+					"events": null,
+					"collection": "4be7b6be-88bd-4a93-9eef-d31d3a954826",
+					"folder": null,
+					"order": [
+						"3cb9e9ef-eec3-4e03-a69f-f72e22622e32",
+						"14a58e03-a44c-41a1-8ea3-d6d7e6adbd3b",
+						"5125461d-2862-4fed-ad26-39024930b350",
+						"4b43c46a-1c1d-49e0-b0e6-6f98a673d25a"
+					],
+					"folders_order": [
+						"cfbe1e15-0eef-4093-a848-65abd35c9ecb"
+					],
+					"owner": "0",
+					"protocolProfileBehavior": {},
+					"createdAt": "2022-11-24T05:38:15.962Z",
+					"collectionId": "4be7b6be-88bd-4a93-9eef-d31d3a954826",
+					"folderId": "abf4859c-ce7c-4dde-9262-6cee51e3344a"
+				}
+			],
 			"requests": [
 				{
 					"id": "14a58e03-a44c-41a1-8ea3-d6d7e6adbd3b",
@@ -40,7 +98,7 @@
 					"queryParams": [],
 					"auth": null,
 					"events": null,
-					"folder": null,
+					"folder": "abf4859c-ce7c-4dde-9262-6cee51e3344a",
 					"responses_order": [],
 					"currentHelper": null,
 					"helperAttributes": null,
@@ -67,7 +125,7 @@
 					"queryParams": [],
 					"auth": null,
 					"events": null,
-					"folder": null,
+					"folder": "abf4859c-ce7c-4dde-9262-6cee51e3344a",
 					"responses_order": [],
 					"currentHelper": null,
 					"helperAttributes": null,
@@ -84,7 +142,7 @@
 					"data": [
 						{
 							"key": "hello",
-							"value": "/home/shrsv/bin/Lama2/tests/data/image.jpeg",
+							"value": "/home/shrsv/Pictures/Selection_938.png",
 							"description": "",
 							"type": "file",
 							"enabled": true
@@ -102,7 +160,7 @@
 					"queryParams": [],
 					"auth": null,
 					"events": null,
-					"folder": null,
+					"folder": "abf4859c-ce7c-4dde-9262-6cee51e3344a",
 					"responses_order": [],
 					"currentHelper": null,
 					"helperAttributes": null,
@@ -143,7 +201,7 @@
 					"queryParams": [],
 					"auth": null,
 					"events": null,
-					"folder": null,
+					"folder": "abf4859c-ce7c-4dde-9262-6cee51e3344a",
 					"responses_order": [],
 					"currentHelper": null,
 					"helperAttributes": null,
@@ -167,7 +225,7 @@
 					"queryParams": [],
 					"auth": null,
 					"events": null,
-					"folder": null,
+					"folder": "b1105a33-d4db-4264-990c-7d039feccea8",
 					"responses_order": [],
 					"currentHelper": null,
 					"helperAttributes": null,
@@ -197,7 +255,7 @@
 			]
 		},
 		{
-			"id": "7f6b2adb-1edb-4ada-874f-ed1eccbbfe41",
+			"id": "67a77a1d-7a04-40fa-a74c-57ed01ba0360",
 			"name": "My Workspace - globals",
 			"values": []
 		}
