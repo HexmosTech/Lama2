@@ -1,0 +1,207 @@
+{
+	"version": 1,
+	"collections": [
+		{
+			"id": "4be7b6be-88bd-4a93-9eef-d31d3a954826",
+			"uid": "0-4be7b6be-88bd-4a93-9eef-d31d3a954826",
+			"name": "APIFirst",
+			"description": null,
+			"auth": null,
+			"events": null,
+			"variables": [],
+			"order": [
+				"f77f2988-5c84-442f-964a-d055b97c832c",
+				"3cb9e9ef-eec3-4e03-a69f-f72e22622e32",
+				"14a58e03-a44c-41a1-8ea3-d6d7e6adbd3b",
+				"5125461d-2862-4fed-ad26-39024930b350",
+				"4b43c46a-1c1d-49e0-b0e6-6f98a673d25a"
+			],
+			"folders_order": [],
+			"protocolProfileBehavior": {},
+			"createdAt": "2022-11-24T04:52:24.270Z",
+			"folders": [],
+			"requests": [
+				{
+					"id": "14a58e03-a44c-41a1-8ea3-d6d7e6adbd3b",
+					"uid": "0-14a58e03-a44c-41a1-8ea3-d6d7e6adbd3b",
+					"name": "Environ",
+					"url": "{{REMOTE}}/post",
+					"description": null,
+					"data": [],
+					"dataOptions": {
+						"raw": {
+							"language": "json"
+						}
+					},
+					"dataMode": "raw",
+					"headerData": null,
+					"method": "POST",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": null,
+					"folder": null,
+					"responses_order": [],
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "4be7b6be-88bd-4a93-9eef-d31d3a954826",
+					"rawModeData": "{\n    \"lorem\": \"ipsum\"\n}",
+					"pathVariables": {}
+				},
+				{
+					"id": "3cb9e9ef-eec3-4e03-a69f-f72e22622e32",
+					"uid": "0-3cb9e9ef-eec3-4e03-a69f-f72e22622e32",
+					"name": "POST",
+					"url": "https://httpbin.org/post",
+					"description": null,
+					"data": [],
+					"dataOptions": {
+						"raw": {
+							"language": "json"
+						}
+					},
+					"dataMode": "raw",
+					"headerData": null,
+					"method": "POST",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": null,
+					"folder": null,
+					"responses_order": [],
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "4be7b6be-88bd-4a93-9eef-d31d3a954826",
+					"rawModeData": "{\n    \"a\": \"b\",\n    \"c\": \"d\"\n}",
+					"pathVariables": {}
+				},
+				{
+					"id": "4b43c46a-1c1d-49e0-b0e6-6f98a673d25a",
+					"uid": "0-4b43c46a-1c1d-49e0-b0e6-6f98a673d25a",
+					"name": "MultiPartFile",
+					"url": "http://httpbin.org/post",
+					"description": null,
+					"data": [
+						{
+							"key": "hello",
+							"value": "/home/shrsv/bin/Lama2/tests/data/image.jpeg",
+							"description": "",
+							"type": "file",
+							"enabled": true
+						}
+					],
+					"dataOptions": {
+						"raw": {
+							"language": "json"
+						}
+					},
+					"dataMode": "params",
+					"headerData": null,
+					"method": "POST",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": null,
+					"folder": null,
+					"responses_order": [],
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "4be7b6be-88bd-4a93-9eef-d31d3a954826",
+					"pathVariables": {}
+				},
+				{
+					"id": "5125461d-2862-4fed-ad26-39024930b350",
+					"uid": "0-5125461d-2862-4fed-ad26-39024930b350",
+					"name": "Headers",
+					"url": "https://httpbin.org/post",
+					"description": null,
+					"data": [],
+					"dataOptions": {
+						"raw": {
+							"language": "json"
+						}
+					},
+					"dataMode": "raw",
+					"headerData": [
+						{
+							"key": "X-Parse-Application-Id",
+							"value": "helloworld",
+							"description": "",
+							"type": "default",
+							"enabled": true
+						},
+						{
+							"key": "X-Parse-REST-API-Key",
+							"value": "byeworld",
+							"description": "",
+							"type": "default",
+							"enabled": true
+						}
+					],
+					"method": "POST",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": null,
+					"folder": null,
+					"responses_order": [],
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "4be7b6be-88bd-4a93-9eef-d31d3a954826",
+					"rawModeData": "{\n    \"a\": \"b\",\n    \"c\": \"d\"\n}",
+					"headers": "X-Parse-Application-Id: helloworld\nX-Parse-REST-API-Key: byeworld\n",
+					"pathVariables": {}
+				},
+				{
+					"id": "f77f2988-5c84-442f-964a-d055b97c832c",
+					"uid": "0-f77f2988-5c84-442f-964a-d055b97c832c",
+					"name": "GET",
+					"url": "https://httpbin.org/get",
+					"description": null,
+					"data": null,
+					"dataOptions": null,
+					"dataMode": null,
+					"headerData": null,
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": null,
+					"folder": null,
+					"responses_order": [],
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "4be7b6be-88bd-4a93-9eef-d31d3a954826",
+					"pathVariables": {}
+				}
+			]
+		}
+	],
+	"environments": [
+		{
+			"id": "916fd217-d9fb-45a5-8fd2-bd6cb1de42a0",
+			"name": "APiEnvironment",
+			"values": [
+				{
+					"key": "LOCAL",
+					"value": "https://localhost:8000",
+					"type": "default",
+					"enabled": true
+				},
+				{
+					"key": "REMOTE",
+					"value": "https://httpbin.org",
+					"type": "default",
+					"enabled": true
+				}
+			]
+		},
+		{
+			"id": "7f6b2adb-1edb-4ada-874f-ed1eccbbfe41",
+			"name": "My Workspace - globals",
+			"values": []
+		}
+	],
+	"headerPresets": [],
+	"globals": []
+}

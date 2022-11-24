@@ -61,7 +61,11 @@ Find *Lama2 for VSCode* at the [VSCode Marketplace](https://marketplace.visualst
 
 ## Design Philosophy
 
-1. Delegate subtasks to open and mature tools:
+Lama2 takes inspiration from Markdown. Think of our approach as Markdown for APIs.
+
+In particular, we strive to:
+
+1. Delegate subtasks to mature and preferably open tools:
     1. API Collaboration - git
     1. API Organization - OS file system + IDEs
     1. API Editing - VSCode/IDEs
