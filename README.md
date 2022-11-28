@@ -8,7 +8,7 @@
 ![Test](https://github.com/HexmosTech/Lama2/actions/workflows/testapp.yml/badge.svg)
 [![Go Report Card](https://goreportcard.com/badge/github.com/HexmosTech/lama2)](https://goreportcard.com/report/github.com/HexmosTech/lama2)
 
-*Quick Links: [Installation](#installation) | [Demo](#terminal-demo-a-post-request) | [Full Documentation](https://hexmos.com/lama2)*
+*Quick Links: [Installation](##installationupdate) | [Demo](#terminal-demo-a-post-request) | [Full Documentation](https://hexmos.com/lama2)*
 </div>
 
 
