@@ -11,7 +11,7 @@
 ## About
 
 *Lama2* is a Plain-Text powered REST API client & manager built for serious engineering teams.
-*Lama2* specifies the [`.l2` syntax](tutorials/examples.md) for describing APIs, and implements a [CLI](tutorials/installation.md) to execute `.l2` files. Engineers can [collaborate](tutorials/collaboration.md) on `.l2` files using version control. *Lama2* [integrates](tutorials/editor.md) nicely with
+*Lama2* specifies the [`.l2` syntax](tutorials/examples.md) for describing APIs, and implements a [CLI](tutorials/installation.md) to execute `.l2` files. Engineers [collaborate](tutorials/collaboration.md) on `.l2` files using version control. *Lama2* [integrates](tutorials/editor.md) nicely with
 IDEs and text-editors as well. Think of *Lama2* as [**markdown for APIs.**](reference/philosophy.md)
 ## Benefits
 

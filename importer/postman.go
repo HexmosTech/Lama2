@@ -59,6 +59,7 @@ func init() {
 }
 
 func generateFolderMap(foldersList *gabs.Container) {
+	fmt.Println("The folder", foldersList)
 }
 
 // PostmanConvert takes in a Postman data file
