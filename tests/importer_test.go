@@ -12,5 +12,5 @@ import (
 func TestPostman(t *testing.T) {
 	path, _ := os.Getwd()
 	fmt.Println(path)
-	importer.PostmanConvert(filepath.Join(".", "data", "Backup.postman_dump.json"), "blah")
+	importer.PostmanConvert(filepath.Join(".", "data", "Backup.postman_dump.json"), "l2output")
 }

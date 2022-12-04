@@ -9,7 +9,9 @@
 			"auth": null,
 			"events": null,
 			"variables": [],
-			"order": [],
+			"order": [
+				"11c3fb6a-231c-4f8e-a174-1f703e2352bb"
+			],
 			"folders_order": [
 				"abf4859c-ce7c-4dde-9262-6cee51e3344a",
 				"b1105a33-d4db-4264-990c-7d039feccea8"
@@ -79,6 +81,28 @@
 				}
 			],
 			"requests": [
+				{
+					"id": "11c3fb6a-231c-4f8e-a174-1f703e2352bb",
+					"uid": "0-11c3fb6a-231c-4f8e-a174-1f703e2352bb",
+					"name": "TopLevel",
+					"url": "https://httpbin.org/get",
+					"description": null,
+					"data": null,
+					"dataOptions": null,
+					"dataMode": null,
+					"headerData": null,
+					"method": "GET",
+					"pathVariableData": [],
+					"queryParams": [],
+					"auth": null,
+					"events": null,
+					"folder": null,
+					"responses_order": [],
+					"currentHelper": null,
+					"helperAttributes": null,
+					"collectionId": "4be7b6be-88bd-4a93-9eef-d31d3a954826",
+					"pathVariables": {}
+				},
 				{
 					"id": "14a58e03-a44c-41a1-8ea3-d6d7e6adbd3b",
 					"uid": "0-14a58e03-a44c-41a1-8ea3-d6d7e6adbd3b",
@@ -255,7 +279,7 @@
 			]
 		},
 		{
-			"id": "67a77a1d-7a04-40fa-a74c-57ed01ba0360",
+			"id": "fe15dcf5-6541-4613-bd1b-dd04c13d4ddc",
 			"name": "My Workspace - globals",
 			"values": []
 		}

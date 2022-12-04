@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/HexmosTech/gabs/v2"
 	"github.com/rs/zerolog/log"
@@ -33,7 +34,7 @@ type Folder struct {
 type Request struct {
 	TheURL       string
 	Name         string
-	Method       string
+	IsMultipart  string
 	Auth         string
 	RequestType  string
 	RawModeData  string
@@ -50,13 +51,13 @@ type Environ struct {
 }
 
 var (
-	folderMap  map[string]Folder
+	folderMap  map[string]*Folder
 	requestMap map[string]Request
 	environMap map[string]Environ
 )
 
 func init() {
-	folderMap = make(map[string]Folder)
+	folderMap = make(map[string]*Folder)
 	requestMap = make(map[string]Request)
 	environMap = make(map[string]Environ)
 }
@@ -67,6 +68,7 @@ func createFolderTree(folderIDOrder []string, parentPath string) {
 
 		targetPath := filepath.Join(parentPath, folder.Name)
 		folder.FullPath = targetPath
+		fmt.Println("@@P1", folder.FullPath, targetPath)
 		err := os.MkdirAll(targetPath, os.ModePerm)
 		if err != nil {
 			log.Fatal().Msg(err.Error())
@@ -86,11 +88,66 @@ func generateFolderMap(foldersList *gabs.Container) {
 		for _, e := range folder.S("folders_order").Children() {
 			fOrder = append(fOrder, e.Data().(string))
 		}
-		folderMap[fID] = Folder{fName, fID, fOrder, ""}
+		folderMap[fID] = &Folder{fName, fID, fOrder, ""}
 		fmt.Println("===")
 	}
 	fmt.Println("*****")
 	fmt.Println(folderMap)
+}
+
+func createRequestFiles(collectionPath string) {
+	for rID, rObj := range requestMap {
+		op := make([]string, 0)
+		if rObj.RequestType == "GET" {
+			fmt.Println(">>rObj", rID)
+			op = append(op, "GET")
+			op = append(op, rObj.TheURL)
+			res := strings.Join(op, "\n")
+			fmt.Println(res)
+			targetPath := ""
+			if len(rObj.ParentFolder) == 0 {
+				targetPath = filepath.Join(collectionPath, rObj.Name+".l2")
+				fmt.Println("TPATH1", targetPath)
+			} else {
+				fmt.Println("@TP", folderMap[rObj.ParentFolder])
+				targetPath = filepath.Join(folderMap[rObj.ParentFolder].FullPath, rObj.Name+".l2")
+				fmt.Println("TPATH2", targetPath)
+			}
+			err := os.WriteFile(targetPath, []byte(res), 0644)
+			if err != nil {
+				log.Fatal().Msg(err.Error())
+			}
+		}
+	}
+}
+
+func generateRequestMap(requestsList *gabs.Container) {
+	fmt.Println("@@The requests", requestsList)
+	for _, request := range requestsList.Children() {
+		fmt.Println(request)
+		rName := request.S("name").Data().(string)
+		rID := request.S("id").Data().(string)
+		rURL := request.S("url").Data().(string)
+		rRequestType := request.S("method").Data().(string)
+		rRawModeData := ""
+		if rRequestType == "POST" {
+			rRawModeDataObj := request.S("rawModeData").Data()
+			if rRawModeDataObj != nil {
+				rRawModeData = rRawModeDataObj.(string)
+			}
+		}
+		rMultiData := make(map[string][]string)
+		rFolderData := request.S("folder").Data()
+		rFolder := ""
+		if rFolderData != nil {
+			rFolder = rFolderData.(string)
+		}
+		rHeaderData := make(map[string]string)
+		requestMap[rID] = Request{rURL, rName, "", "", rRequestType, rRawModeData, rMultiData, rFolder, rHeaderData, rID}
+		fmt.Println("===")
+	}
+	fmt.Println("*****")
+	fmt.Println(requestMap)
 }
 
 // PostmanConvert takes in a Postman data file
@@ -112,6 +169,7 @@ func PostmanConvert(postmanFile string, targetFolder string) {
 	collections := pJSON.S("collections")
 	for _, collection := range collections.Children() {
 		collectionFolders := collection.S("folders")
+		collectionRequests := collection.S("requests")
 		collectionName := collection.S("name")
 		collectionPath := filepath.Join(targetFolder, collectionName.Data().(string))
 		err := os.MkdirAll(collectionPath, os.ModePerm)
@@ -125,5 +183,7 @@ func PostmanConvert(postmanFile string, targetFolder string) {
 		}
 		fmt.Println("cOrder = ", cOrder)
 		createFolderTree(cOrder, collectionPath)
+		generateRequestMap(collectionRequests)
+		createRequestFiles(collectionPath)
 	}
 }
