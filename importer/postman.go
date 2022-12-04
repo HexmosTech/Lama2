@@ -8,6 +8,7 @@ package importer
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 
 	"github.com/HexmosTech/gabs/v2"
 	"github.com/rs/zerolog/log"
@@ -23,8 +24,10 @@ import (
 // environMap
 
 type Folder struct {
-	Name  string
-	Ident string
+	Name     string
+	Ident    string
+	Order    []string
+	FullPath string
 }
 
 type Request struct {
@@ -58,8 +61,36 @@ func init() {
 	environMap = make(map[string]Environ)
 }
 
+func createFolderTree(folderIDOrder []string, parentPath string) {
+	for _, fID := range folderIDOrder {
+		folder := folderMap[fID]
+
+		targetPath := filepath.Join(parentPath, folder.Name)
+		folder.FullPath = targetPath
+		err := os.MkdirAll(targetPath, os.ModePerm)
+		if err != nil {
+			log.Fatal().Msg(err.Error())
+		}
+
+		createFolderTree(folder.Order, targetPath)
+	}
+}
+
 func generateFolderMap(foldersList *gabs.Container) {
-	fmt.Println("The folder", foldersList)
+	fmt.Println("@@The folders", foldersList)
+	for _, folder := range foldersList.Children() {
+		fmt.Println(folder)
+		fName := folder.S("name").Data().(string)
+		fID := folder.S("id").Data().(string)
+		fOrder := make([]string, 0)
+		for _, e := range folder.S("folders_order").Children() {
+			fOrder = append(fOrder, e.Data().(string))
+		}
+		folderMap[fID] = Folder{fName, fID, fOrder, ""}
+		fmt.Println("===")
+	}
+	fmt.Println("*****")
+	fmt.Println(folderMap)
 }
 
 // PostmanConvert takes in a Postman data file
@@ -78,13 +109,21 @@ func PostmanConvert(postmanFile string, targetFolder string) {
 	if e2 != nil {
 		log.Fatal().Msg(e.Error())
 	}
-	coll := pJSON.S("collections")
-	for _, child := range coll.Children() {
-		foldersList := child.S("folders")
-		for _, folder := range foldersList.Children() {
-			fmt.Println(folder)
-			generateFolderMap(folder)
-			fmt.Println("===")
+	collections := pJSON.S("collections")
+	for _, collection := range collections.Children() {
+		collectionFolders := collection.S("folders")
+		collectionName := collection.S("name")
+		collectionPath := filepath.Join(targetFolder, collectionName.Data().(string))
+		err := os.MkdirAll(collectionPath, os.ModePerm)
+		if err != nil {
+			log.Fatal().Msg(err.Error())
 		}
+		generateFolderMap(collectionFolders)
+		cOrder := make([]string, 0)
+		for _, e := range collection.S("folders_order").Children() {
+			cOrder = append(cOrder, e.Data().(string))
+		}
+		fmt.Println("cOrder = ", cOrder)
+		createFolderTree(cOrder, collectionPath)
 	}
 }

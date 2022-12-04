@@ -3,6 +3,7 @@ package tests
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 	"testing"
 
 	"github.com/HexmosTech/lama2/importer"
@@ -11,5 +12,5 @@ import (
 func TestPostman(t *testing.T) {
 	path, _ := os.Getwd()
 	fmt.Println(path)
-	importer.PostmanConvert("./data/Backup.postman_dump.json", "blah")
+	importer.PostmanConvert(filepath.Join(".", "data", "Backup.postman_dump.json"), "blah")
 }
