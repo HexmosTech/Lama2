@@ -72,7 +72,7 @@ In particular, we strive to:
     1. API Requests - HTTPie
 1. Start a language formalization effort from the beginning (learning from Markdown history)
 1. Keep language syntax simple
-1. Invest into good documentation
+1. Invest into good documentation; however, ensure users can perform competently without referencing documentation as much as possible.
 1. Strive to keep components decoupled
 
 
