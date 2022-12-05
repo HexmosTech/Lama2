@@ -1,4 +1,4 @@
-// Package `import` helps developers switch
+// Package `import` helps d, rIDevelopers switch
 // to Lama2 from various popular tools. The
 // conversion may not be perfect, but it should
 // help teams get started with minimal manual
@@ -34,14 +34,15 @@ type Folder struct {
 type Request struct {
 	TheURL       string
 	Name         string
-	IsMultipart  string
+	IsMultipart  bool
 	Auth         string
 	RequestType  string
 	RawModeData  string
-	MultiData    map[string][]string
+	MultiData    map[string]string
 	ParentFolder string
 	HeaderData   map[string]string
 	Ident        string
+	FilesData    map[string]string
 }
 
 type Environ struct {
@@ -98,25 +99,43 @@ func generateFolderMap(foldersList *gabs.Container) {
 func createRequestFiles(collectionPath string) {
 	for rID, rObj := range requestMap {
 		op := make([]string, 0)
-		if rObj.RequestType == "GET" {
-			fmt.Println(">>rObj", rID)
-			op = append(op, "GET")
-			op = append(op, rObj.TheURL)
-			res := strings.Join(op, "\n")
-			fmt.Println(res)
-			targetPath := ""
-			if len(rObj.ParentFolder) == 0 {
-				targetPath = filepath.Join(collectionPath, rObj.Name+".l2")
-				fmt.Println("TPATH1", targetPath)
-			} else {
-				fmt.Println("@TP", folderMap[rObj.ParentFolder])
-				targetPath = filepath.Join(folderMap[rObj.ParentFolder].FullPath, rObj.Name+".l2")
-				fmt.Println("TPATH2", targetPath)
+		fmt.Println(">>rObj", rID)
+		op = append(op, rObj.RequestType)
+		op = append(op, rObj.TheURL)
+		for k, v := range rObj.HeaderData {
+			op = append(op, fmt.Sprintf("%s: %s", k, v))
+		}
+		if !rObj.IsMultipart {
+			if rObj.RawModeData != "" {
+				op = append(op, "")
+				op = append(op, rObj.RawModeData)
 			}
-			err := os.WriteFile(targetPath, []byte(res), 0644)
-			if err != nil {
-				log.Fatal().Msg(err.Error())
+		} else {
+			fmt.Println("Handling multipart")
+			op = append(op, "")
+			for k, v := range rObj.MultiData {
+				op = append(op, fmt.Sprintf("%s=%s", k, v))
 			}
+
+			op = append(op, "")
+			for k, v := range rObj.FilesData {
+				op = append(op, fmt.Sprintf("%s@%s # make path relative", k, v))
+			}
+		}
+		res := strings.Join(op, "\n")
+		fmt.Println(res)
+		targetPath := ""
+		if len(rObj.ParentFolder) == 0 {
+			targetPath = filepath.Join(collectionPath, rObj.Name+".l2")
+			fmt.Println("TPATH1", targetPath)
+		} else {
+			fmt.Println("@TP", folderMap[rObj.ParentFolder])
+			targetPath = filepath.Join(folderMap[rObj.ParentFolder].FullPath, rObj.Name+".l2")
+			fmt.Println("TPATH2", targetPath)
+		}
+		err := os.WriteFile(targetPath, []byte(res), 0o644)
+		if err != nil {
+			log.Fatal().Msg(err.Error())
 		}
 	}
 }
@@ -130,20 +149,49 @@ func generateRequestMap(requestsList *gabs.Container) {
 		rURL := request.S("url").Data().(string)
 		rRequestType := request.S("method").Data().(string)
 		rRawModeData := ""
+		IsMultipart := false
+		rMultiData := make(map[string]string)
+		rFilesData := make(map[string]string)
 		if rRequestType == "POST" {
 			rRawModeDataObj := request.S("rawModeData").Data()
 			if rRawModeDataObj != nil {
 				rRawModeData = rRawModeDataObj.(string)
+			} else {
+				rMultiDataObj := request.S("data")
+				if rMultiDataObj.Data() != nil {
+					IsMultipart = true
+					for _, h := range rMultiDataObj.Children() {
+						key := h.S("key").Data().(string)
+						val := h.S("value").Data().(string)
+						rtype := h.S("type").Data().(string)
+						if rtype == "file" {
+							rFilesData[key] = val
+						} else {
+							rMultiData[key] = val
+						}
+					}
+
+				}
 			}
 		}
-		rMultiData := make(map[string][]string)
 		rFolderData := request.S("folder").Data()
 		rFolder := ""
 		if rFolderData != nil {
 			rFolder = rFolderData.(string)
 		}
-		rHeaderData := make(map[string]string)
-		requestMap[rID] = Request{rURL, rName, "", "", rRequestType, rRawModeData, rMultiData, rFolder, rHeaderData, rID}
+
+		rHeaderData := request.S("headerData")
+		rHeader := make(map[string]string)
+		if rHeaderData.Data() != nil {
+			for _, h := range rHeaderData.Children() {
+				key := h.S("key").Data().(string)
+				val := h.S("value").Data().(string)
+				// desc := h.S("description").Data().(string)
+				rHeader[key] = val
+			}
+		}
+		fmt.Println("##rHeader", rHeader, rID)
+		requestMap[rID] = Request{rURL, rName, IsMultipart, "", rRequestType, rRawModeData, rMultiData, rFolder, rHeader, rID, rFilesData}
 		fmt.Println("===")
 	}
 	fmt.Println("*****")
