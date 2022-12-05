@@ -102,6 +102,9 @@ func createRequestFiles(collectionPath string) {
 		fmt.Println(">>rObj", rID)
 		op = append(op, rObj.RequestType)
 		op = append(op, rObj.TheURL)
+		if len(rObj.HeaderData) > 0 {
+			op = append(op, "")
+		}
 		for k, v := range rObj.HeaderData {
 			op = append(op, fmt.Sprintf("%s: %s", k, v))
 		}
