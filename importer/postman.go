@@ -102,8 +102,8 @@ func generateFolderMap(foldersList *gabs.Container) {
 // Converts "{{REMOTE}}/post/{{ENDPOINT}}"  into
 // ${REMOTE}/post/${ENDPOINT}"
 func getL2URL(theURL string) string {
-	var re = regexp.MustCompile(`(?m){{(?P<Var>.*?)}}`)
-	var substitution = "${$1}"
+	re := regexp.MustCompile(`(?m){{(?P<Var>.*?)}}`)
+	substitution := "${$1}"
 	return re.ReplaceAllString(theURL, substitution)
 }
 

@@ -80,4 +80,4 @@ In particular, we strive to:
 
 1. [Full documentation @hexmos.com/lama2](https://hexmos.com/lama2/)
 1. Report issues and propose improvements at [Github issues](https://github.com/HexmosTech/Lama2/issues)
-1. Discuss with the community at [Discord](https://discord.gg/zTmxXA6F)
+1. Discuss with the community at [Discord](https://discord.gg/zTmxXA6F) and [Github Discussions](https://github.com/HexmosTech/Lama2/discussions)

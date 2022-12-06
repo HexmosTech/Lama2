@@ -6,6 +6,6 @@ Join [Hexmos Lama2](https://discord.gg/zTmxXA6F) discord server to discuss with 
 
 Drop an email to `shrijith` `'at'` `hexmos.com` 
 
-## :material-bug: Github Issues
+## :material-bug: Github Issues & Discussions
 
-Report issues and propose improvements at [Github Issues](https://github.com/HexmosTech/Lama2/issues)
+Report issues and propose improvements at [Github Issues](https://github.com/HexmosTech/Lama2/issues) and [Github Discussions](https://github.com/HexmosTech/Lama2/discussions)
