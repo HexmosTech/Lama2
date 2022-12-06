@@ -6,9 +6,12 @@
 package importer
 
 import (
+	"bufio"
 	"fmt"
 	"os"
 	"path/filepath"
+	"regexp"
+	"strconv"
 	"strings"
 
 	"github.com/HexmosTech/gabs/v2"
@@ -96,12 +99,21 @@ func generateFolderMap(foldersList *gabs.Container) {
 	fmt.Println(folderMap)
 }
 
+// Converts "{{REMOTE}}/post/{{ENDPOINT}}"  into
+// ${REMOTE}/post/${ENDPOINT}"
+func getL2URL(theURL string) string {
+	var re = regexp.MustCompile(`(?m){{(?P<Var>.*?)}}`)
+	var substitution = "${$1}"
+	return re.ReplaceAllString(theURL, substitution)
+}
+
 func createRequestFiles(collectionPath string) {
 	for rID, rObj := range requestMap {
 		op := make([]string, 0)
 		fmt.Println(">>rObj", rID)
 		op = append(op, rObj.RequestType)
-		op = append(op, rObj.TheURL)
+		l2URL := getL2URL(rObj.TheURL)
+		op = append(op, l2URL)
 		if len(rObj.HeaderData) > 0 {
 			op = append(op, "")
 		}
@@ -127,20 +139,60 @@ func createRequestFiles(collectionPath string) {
 		}
 		res := strings.Join(op, "\n")
 		fmt.Println(res)
-		targetPath := ""
+		targetRequestPath := ""
+		targetEnvPath := ""
 		if len(rObj.ParentFolder) == 0 {
-			targetPath = filepath.Join(collectionPath, rObj.Name+".l2")
-			fmt.Println("TPATH1", targetPath)
+			targetRequestPath = filepath.Join(collectionPath, rObj.Name+".l2")
+			targetEnvPath = filepath.Join(collectionPath, "l2.env")
+			fmt.Println("TPATH1", targetRequestPath)
 		} else {
 			fmt.Println("@TP", folderMap[rObj.ParentFolder])
-			targetPath = filepath.Join(folderMap[rObj.ParentFolder].FullPath, rObj.Name+".l2")
-			fmt.Println("TPATH2", targetPath)
+			targetRequestPath = filepath.Join(folderMap[rObj.ParentFolder].FullPath, rObj.Name+".l2")
+			targetEnvPath = filepath.Join(folderMap[rObj.ParentFolder].FullPath, "l2.env")
+			fmt.Println("TPATH2", targetRequestPath)
 		}
-		err := os.WriteFile(targetPath, []byte(res), 0o644)
+		err := os.WriteFile(targetRequestPath, []byte(res), 0o644)
 		if err != nil {
 			log.Fatal().Msg(err.Error())
 		}
+		if l2URL != rObj.TheURL {
+			// need an env file
+			envOp := make([]string, 0)
+			for _, v := range environMap {
+				for ek, ev := range v.Values {
+					l := fmt.Sprintf("EXPORT %s=\"%s\"", ek, ev)
+					envOp = append(envOp, l)
+				}
+				break // look at first environment only
+			}
+			envRes := strings.Join(envOp, "\n")
+			err := os.WriteFile(targetEnvPath, []byte(envRes), 0o644)
+			if err != nil {
+				log.Fatal().Msg(err.Error())
+			}
+		}
 	}
+}
+
+func generateEnvironmentMap(environmentList *gabs.Container, environID string) {
+	fmt.Println("@@The environments", environmentList)
+	for _, environment := range environmentList.Children() {
+		fmt.Println(environment)
+		eID := environment.S("id").Data().(string)
+		eMap := make(map[string]string)
+		if eID == environID {
+			for _, envKey := range environment.S("values").Children() {
+				k := envKey.S("key").Data().(string)
+				v := envKey.S("value").Data().(string)
+				eMap[k] = v
+			}
+			name := environment.S("name").Data().(string)
+			fmt.Println("// eMap = ", eMap)
+			environMap[environID] = Environ{name, eMap, environID}
+			break
+		}
+	}
+	fmt.Println("//environMap", environMap[environID])
 }
 
 func generateRequestMap(requestsList *gabs.Container) {
@@ -201,14 +253,7 @@ func generateRequestMap(requestsList *gabs.Container) {
 	fmt.Println(requestMap)
 }
 
-// PostmanConvert takes in a Postman data file
-// and generates a roughly equivalent Lama2 repository.
-// Collections and subcollections become folders.
-// Requests become files, environments get stored in
-// `l2.env` while file attachments get copied relative
-// to the API file
-func PostmanConvert(postmanFile string, targetFolder string) {
-	fmt.Println(postmanFile, targetFolder)
+func ReadPostmanFile(postmanFile string) *gabs.Container {
 	contents, e := os.ReadFile(postmanFile)
 	if e != nil {
 		log.Fatal().Msg(e.Error())
@@ -217,7 +262,49 @@ func PostmanConvert(postmanFile string, targetFolder string) {
 	if e2 != nil {
 		log.Fatal().Msg(e.Error())
 	}
+	return pJSON
+}
+
+func PickEnvironmentID(pJSON *gabs.Container) string {
+	environmentList := pJSON.S("environments")
+	fmt.Println("##@@", environmentList)
+	envsList := make([]string, 0)
+	for _, e := range environmentList.Children() {
+		fmt.Println("e = ", e)
+		envsList = append(envsList, e.S("name").Data().(string))
+	}
+	fmt.Println("Pick environment: ")
+	for k, v := range envsList {
+		fmt.Println(k, ": ", v)
+	}
+	reader := bufio.NewReader(os.Stdin)
+	fmt.Print("Enter Option Number: ")
+	option, _ := reader.ReadString('\n')
+	fmt.Println(option)
+	i, e := strconv.Atoi(option)
+	if e != nil {
+		log.Fatal().Msg("Provide a valid option number")
+	}
+	for idx, e := range environmentList.Children() {
+		fmt.Println("e = ", e)
+		if idx == i {
+			return e.S("id").Data().(string)
+		}
+	}
+	return ""
+}
+
+// PostmanConvert takes in a Postman data file
+// and generates a roughly equivalent Lama2 repository.
+// Collections and subcollections become folders.
+// Requests become files, environments get stored in
+// `l2.env` while file attachments get copied relative
+// to the API file
+func PostmanConvert(pJSON *gabs.Container, targetFolder string, environID string) {
+	fmt.Println(targetFolder)
 	collections := pJSON.S("collections")
+	golbalEnvironments := pJSON.S("environments")
+	generateEnvironmentMap(golbalEnvironments, environID)
 	for _, collection := range collections.Children() {
 		collectionFolders := collection.S("folders")
 		collectionRequests := collection.S("requests")
