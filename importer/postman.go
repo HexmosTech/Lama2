@@ -280,6 +280,7 @@ func PickEnvironmentID(pJSON *gabs.Container) string {
 	reader := bufio.NewReader(os.Stdin)
 	fmt.Print("Enter Option Number: ")
 	option, _ := reader.ReadString('\n')
+	option = strings.TrimSpace(option)
 	fmt.Println(option)
 	i, e := strconv.Atoi(option)
 	if e != nil {

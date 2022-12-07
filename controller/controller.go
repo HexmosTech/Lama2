@@ -10,6 +10,7 @@ import (
 
 	"github.com/HexmosTech/lama2/cmdexec"
 	"github.com/HexmosTech/lama2/cmdgen"
+	"github.com/HexmosTech/lama2/importer"
 	"github.com/HexmosTech/lama2/lama2cmd"
 	outputmanager "github.com/HexmosTech/lama2/outputManager"
 	"github.com/HexmosTech/lama2/parser"
@@ -35,6 +36,20 @@ func Process(version string) {
 	if o.Update {
 		utils.UpdateSelf()
 		return
+	}
+	if len(o.PostmanFile) > 0 {
+		if len(o.LamaDir) > 0 {
+			importer.PostmanImporter(o.PostmanFile, o.LamaDir)
+			return
+		}
+		log.Fatal().Msg("To convert Postman export to Lama2, try: l2 -p PostmanFile -l Lama2Dir")
+	}
+	if len(o.LamaDir) > 0 {
+		if len(o.PostmanFile) > 0 {
+			importer.PostmanImporter(o.PostmanFile, o.LamaDir)
+			return
+		}
+		log.Fatal().Msg("To convert Postman export to Lama2, try: l2 -p PostmanFile -l Lama2Dir")
 	}
 	apiContent, apiDir := preprocess.LamaFile(o.Positional.LamaAPIFile)
 	p := parser.NewLama2Parser()

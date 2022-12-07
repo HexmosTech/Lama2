@@ -10,6 +10,13 @@ To install/update *Lama2* and its dependencies automatically, run the following:
 curl -s https://raw.githubusercontent.com/HexmosTech/Lama2/main/install.sh | bash -s
 ```
 
+
+#### (Optional) Import your collections from Postman
+
+Follow [guide](./postman.md)
+ to import your existing Postman collections into a Plain-Text
+ Lama2 repository.
+
 #### Self update
 
 An easier way to update the binary to latest release is through:

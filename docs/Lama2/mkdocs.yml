@@ -4,6 +4,7 @@ nav:
     - Home: index.md
     - Get Started: 
       - Installation: tutorials/installation.md
+      - Import Postman: tutorials/postman.md
       - Examples: tutorials/examples.md
       - Collaboration: tutorials/collaboration.md
     - Understand:
