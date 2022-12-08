@@ -22,7 +22,7 @@ IDEs and text-editors as well. Think of *Lama2* as [**markdown for APIs.**](refe
 1. **Collaboration:** Share [API repo](tutorials/collaboration.md) with teammates and colleagues to collaborate
 1. **Documentation:** [Explore](index.md) examples, how-tos, explanations, references, FAQ/RAQs, and diagrams. Documentation is a priority, so that you never have to get lost.
 1. **Extensibility:** `.l2` syntax is implemented as a *recursive descent parser*, based on a [formal grammar](reference/grammar.md). [Dig into details](reference/parser.md) and [implement](https://github.com/HexmosTech/Lama2/tree/main/parser) new syntax (ex: to support `websockets`)
-1. **Import from Postman:** Let *Lama2* help you [convert](https://hexmos.com/lama2/tutorials/postman.html) Postman
+1. **Import from Postman:** Let *Lama2* help you [convert](tutorials/postman.md) Postman
 data dumps into a  nice  Plain-Text Lama2 repo.
 
 
