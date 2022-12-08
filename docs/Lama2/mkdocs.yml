@@ -64,3 +64,5 @@ extra:
   analytics:
     provider: google
     property: G-WXSDF484XZ
+extra_javascript:
+  - links.js
