@@ -18,11 +18,12 @@ IDEs and text-editors as well. Think of *Lama2* as [**markdown for APIs.**](refe
 1. **Plain-Text files:** Store APIs in the Plain-Text `.l2` API files. [Simple](explanation/l2format.md) and [human-friendly](explanation/syntax.md) syntax. Learn [basics](tutorials/examples.md) within  minutes!
 1. **Simple CLI:** Launch the [CLI](tutorials/installation.md) tool `l2` on API files to make REST API requests.
 1. **Editor support:** Invoke *Lama2* from your [favorite text editor](tutorials/installation.md#from-vs-code) or IDE. Helpful documentation and tool support to [build editor extensions](tutorials/editor.md) included.
-1. **Import from Postman:** Let *Lama2* help you [convert](https://hexmos.com/lama2/tutorials/postman.html) Postman
 1. **Longevity & track-ability:** Commit `.l2` files to `git` or other version control for long life & change tracking.
 1. **Collaboration:** Share [API repo](tutorials/collaboration.md) with teammates and colleagues to collaborate
 1. **Documentation:** [Explore](index.md) examples, how-tos, explanations, references, FAQ/RAQs, and diagrams. Documentation is a priority, so that you never have to get lost.
 1. **Extensibility:** `.l2` syntax is implemented as a *recursive descent parser*, based on a [formal grammar](reference/grammar.md). [Dig into details](reference/parser.md) and [implement](https://github.com/HexmosTech/Lama2/tree/main/parser) new syntax (ex: to support `websockets`)
+1. **Import from Postman:** Let *Lama2* help you [convert](https://hexmos.com/lama2/tutorials/postman.html) Postman
+data dumps into a  nice  Plain-Text Lama2 repo.
 
 
 ## Terminal Demo: A POST request
