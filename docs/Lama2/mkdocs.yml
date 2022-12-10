@@ -36,6 +36,7 @@ markdown_extensions:
   - pymdownx.details
 theme:
   name: material
+  custom_dir: overrides
   features:
     - navigation.tracking
     # - navigation.tabs
@@ -66,3 +67,4 @@ extra:
     property: G-WXSDF484XZ
 extra_javascript:
   - links.js
+extrahead: "<script src='blah.js'></script>"
