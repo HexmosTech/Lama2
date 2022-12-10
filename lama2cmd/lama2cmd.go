@@ -18,10 +18,12 @@ type Opts struct {
 	Verbose []bool `short:"v" long:"verbose" description:"Show verbose debug information"`
 	// Prettify bool   `short:"p" long:"prettify" description:"Prettify specified .lama file"`
 	// Sort     bool   `short:"s" long:"sort" description:"Sort specification into recommended order"`
-	Nocolor bool `short:"n" long:"nocolor" description:"Disable color in httpie output"`
-	Update  bool `short:"u" long:"update" description:"Update l2 binary to the latest released version (Linux/MacOS only)"`
-	Help    bool `short:"h" long:"help" group:"AddHelp" description:"Usage help for Lama2"`
-	Version bool `long:"version" description:"Print Lama2 binary version"`
+	Nocolor     bool   `short:"n" long:"nocolor" description:"Disable color in httpie output"`
+	Update      bool   `short:"u" long:"update" description:"Update l2 binary to the latest released version (Linux/MacOS only)"`
+	PostmanFile string `short:"p" long:"postmanfile" description:"JSON export from Postman (Settings -> Data -> Export Data)"`
+	LamaDir     string `short:"l" long:"lama2dir" description:"Output directory to put .l2 files after conversion from Postman format"`
+	Help        bool   `short:"h" long:"help" group:"AddHelp" description:"Usage help for Lama2"`
+	Version     bool   `long:"version" description:"Print Lama2 binary version"`
 
 	Positional struct {
 		LamaAPIFile string

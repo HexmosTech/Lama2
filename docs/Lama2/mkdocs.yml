@@ -4,6 +4,7 @@ nav:
     - Home: index.md
     - Get Started: 
       - Installation: tutorials/installation.md
+      - Import Postman: tutorials/postman.md
       - Examples: tutorials/examples.md
       - Collaboration: tutorials/collaboration.md
     - Understand:
@@ -35,6 +36,7 @@ markdown_extensions:
   - pymdownx.details
 theme:
   name: material
+  custom_dir: overrides
   features:
     - navigation.tracking
     # - navigation.tabs
@@ -63,3 +65,6 @@ extra:
   analytics:
     provider: google
     property: G-WXSDF484XZ
+extra_javascript:
+  - links.js
+extrahead: "<script src='blah.js'></script>"

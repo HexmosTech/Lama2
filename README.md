@@ -16,7 +16,7 @@
 
 *Lama2* is a Plain-Text powered REST API client & manager built for serious engineering teams.
 *Lama2* specifies the [`.l2` syntax](https://hexmos.com/lama2/tutorials/examples.html) for describing APIs, and implements a [CLI](https://hexmos.com/lama2/tutorials/installation.html) to execute `.l2` files. Engineers [collaborate](https://hexmos.com/lama2/tutorials/collaboration.html) on `.l2` files using version control. *Lama2* [integrates](https://hexmos.com/lama2/tutorials/editor.html) nicely with
-IDEs and text-editors as well. Think of *Lama2* as [**markdown for APIs.**](https://hexmos.com/lama2/reference/philosophy.html)
+IDEs and text-editors as well. Think of *Lama2* as [**Markdown for APIs.**](https://hexmos.com/lama2/reference/philosophy.html)
 
 ## Benefits 
 
@@ -27,6 +27,8 @@ IDEs and text-editors as well. Think of *Lama2* as [**markdown for APIs.**](http
 1. **Collaboration:** Share [API repo](https://hexmos.com/lama2/tutorials/collaboration.html) with teammates and colleagues to collaborate
 1. **Documentation:** [Explore](https://hexmos.com/lama2/index.html) examples, how-tos, explanations, references, FAQ/RAQs, and diagrams. Documentation is a priority, so that you never have to get lost.
 1. **Extensibility:** `.l2` syntax is implemented as a *recursive descent parser*, based on a [formal grammar](https://hexmos.com/lama2/reference/grammar.html). [Dig into details](https://hexmos.com/lama2/reference/parser.html) and [implement](https://github.com/HexmosTech/Lama2/tree/main/parser) new syntax (ex: to support `websockets`)
+1. **Import from Postman:** Let *Lama2* help you [convert](https://hexmos.com/lama2/tutorials/postman.html) Postman
+data dumps into a  nice  Plain-Text Lama2 repo.
 
 ## Terminal Demo: A POST request
 
@@ -46,6 +48,11 @@ curl -s https://raw.githubusercontent.com/HexmosTech/Lama2/main/install.sh | bas
 
 Learn more about other installation methods from [our docs](https://hexmos.com/lama2/tutorials/installation.html).
 
+### (Optional) Import your collections from Postman
+
+Follow [guide](https://hexmos.com/lama2/tutorials/postman.html)
+ to import your existing Postman collections into a Plain-Text
+ Lama2 repository.
 ### Self update
 
 An easier way to update the binary to latest release is through:
@@ -72,7 +79,7 @@ In particular, we strive to:
     1. API Requests - HTTPie
 1. Start a language formalization effort from the beginning (learning from Markdown history)
 1. Keep language syntax simple
-1. Invest into good documentation
+1. Invest into good documentation; however, ensure users can perform competently without referencing documentation as much as possible.
 1. Strive to keep components decoupled
 
 
@@ -80,4 +87,4 @@ In particular, we strive to:
 
 1. [Full documentation @hexmos.com/lama2](https://hexmos.com/lama2/)
 1. Report issues and propose improvements at [Github issues](https://github.com/HexmosTech/Lama2/issues)
-1. Discuss with the community at [Discord](https://discord.gg/zTmxXA6F)
+1. Discuss with the community at [Discord](https://discord.gg/zTmxXA6F) and [Github Discussions](https://github.com/HexmosTech/Lama2/discussions)
