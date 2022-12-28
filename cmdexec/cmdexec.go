@@ -9,6 +9,7 @@ import (
 	"io"
 	"os"
 	"os/exec"
+	"runtime"
 
 	"github.com/HexmosTech/lama2/utils"
 	"github.com/creack/pty"
@@ -23,16 +24,27 @@ import (
 func ExecCommand(cmdStr string, apiDir string) string {
 	oldDir, _ := os.Getwd()
 	utils.ChangeWorkingDir(apiDir)
-	c := exec.Command("bash", "-c", cmdStr)
-	f, err := pty.Start(c)
-	if err != nil {
-		panic(err)
+	var retStr string
+
+	if runtime.GOOS == "windows" {
+		f, err := exec.Command("cmd", "/C", cmdStr).Output()
+		if err != nil {
+			panic(err)
+		}
+		retStr = string(f)
+	} else {
+		c := exec.Command("bash", "-c", cmdStr)
+		f, err := pty.Start(c)
+		if err != nil {
+			panic(err)
+		}
+		var buffer1 bytes.Buffer
+		writer := io.MultiWriter(&buffer1, os.Stdout)
+		io.Copy(writer, f)
+		ret, _ := io.ReadAll(&buffer1)
+		retStr = string(ret)
 	}
-	var buffer1 bytes.Buffer
-	writer := io.MultiWriter(&buffer1, os.Stdout)
-	io.Copy(writer, f)
-	ret, _ := io.ReadAll(&buffer1)
-	retStr := string(ret)
+
 	utils.ChangeWorkingDir(oldDir)
 	return retStr
 }

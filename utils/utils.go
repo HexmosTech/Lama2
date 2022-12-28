@@ -9,7 +9,6 @@ import (
 	"net/http"
 	"os"
 	"os/exec"
-	"path"
 	"path/filepath"
 	"strings"
 	"unicode"
@@ -84,7 +83,8 @@ func UnicodeCategory(r rune) string {
 // and filename given a filepath
 func GetFilePathComponents(name string) (string, string, string) {
 	fullpath, _ := filepath.Abs(name)
-	dir, fname := path.Split(fullpath)
+	dir := filepath.Dir(fullpath)
+	fname := filepath.Base(fullpath)
 	return fullpath, dir, fname
 }
 
