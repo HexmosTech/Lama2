@@ -4,12 +4,10 @@
 
 At [Hexmos](https://hexmos.com), our engineering infrastructure
 is split into dozens of self-contained software services.
-We deal with 100s of internal APIs, and so felt a need for a good
-workflow for defining, sharing and updating APIs within our teams. 
+We deal with 100s of internal APIs, and so felt a need for a robust workflow for defining, sharing and updating APIs within our teams.
 
 Traditional
-solutions such as Postman/Insomnia tried to implement the collaboration
-features within their applications, and also tended to charge
+solutions such as Postman/Insomnia  implement the collaboration features within their applications, and also tend to charge
 a fee for collaboration. We felt using `git` is the right way to 
 collaborate on APIs, rather than any custom built solution. So,
 in a matter of 2-days we got a regex-based prototype DSL language
