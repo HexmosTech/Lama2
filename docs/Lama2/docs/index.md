@@ -28,7 +28,8 @@ data dumps into a  nice  Plain-Text Lama2 repo.
 
 ## Terminal Demo: A POST request
 
-![](demo.gif)
+
+![](https://hexmos.com/lama2/demo.gif)
 
 **`basic_post.l2`:**
 
@@ -48,7 +49,7 @@ l2 basic_post.l2
 
 ## VSCode Demo: The same POST request
 
-![](demo2.gif)
+![](https://hexmos.com/lama2/demo2.gif)
 
 ## Community and Support
 

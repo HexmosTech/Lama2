@@ -32,11 +32,11 @@ data dumps into a  nice  Plain-Text Lama2 repo.
 
 ## Terminal Demo: A POST request
 
-![](docs/Lama2/docs/demo.gif)
+![](https://hexmos.com/lama2/demo.gif)
 
 ## VSCode Demo: The same POST request
 
-![](docs/Lama2/docs/demo2.gif)
+![](https://hexmos.com/lama2/demo2.gif)
 
 ## Installation/Update
 
