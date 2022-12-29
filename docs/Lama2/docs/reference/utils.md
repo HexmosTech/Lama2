@@ -32,7 +32,7 @@ func ChangeWorkingDir(dir string)
 
 ChangeWorkingDirectory tries to set the CWD; on failure it exits with a log error message
 
-## func [ContainsRune](<https://github.com/HexmosTech/Lama2/blob/master/utils/utils.go#L42>)
+## func [ContainsRune](<https://github.com/HexmosTech/Lama2/blob/master/utils/utils.go#L41>)
 
 ```go
 func ContainsRune(s []rune, e rune) bool
@@ -40,7 +40,7 @@ func ContainsRune(s []rune, e rune) bool
 
 ContainsRune searches for rune \`e\` in a slice of runes \`s\`; returns a boolean
 
-## func [ContainsString](<https://github.com/HexmosTech/Lama2/blob/master/utils/utils.go#L53>)
+## func [ContainsString](<https://github.com/HexmosTech/Lama2/blob/master/utils/utils.go#L52>)
 
 ```go
 func ContainsString(s []string, e string) bool
@@ -48,7 +48,7 @@ func ContainsString(s []string, e string) bool
 
 ContainsString searches for string \`e\` in a slice of strings \`s\`; returns a boolean
 
-## func [ContainsStringPartial](<https://github.com/HexmosTech/Lama2/blob/master/utils/utils.go#L64>)
+## func [ContainsStringPartial](<https://github.com/HexmosTech/Lama2/blob/master/utils/utils.go#L63>)
 
 ```go
 func ContainsStringPartial(s []string, e string) bool
@@ -56,7 +56,7 @@ func ContainsStringPartial(s []string, e string) bool
 
 ContainsStringPartial substring\-searches for string \`e\` in a slice of strings \`s\`; returns a boolean
 
-## func [GetFilePathComponents](<https://github.com/HexmosTech/Lama2/blob/master/utils/utils.go#L85>)
+## func [GetFilePathComponents](<https://github.com/HexmosTech/Lama2/blob/master/utils/utils.go#L84>)
 
 ```go
 func GetFilePathComponents(name string) (string, string, string)
@@ -64,7 +64,7 @@ func GetFilePathComponents(name string) (string, string, string)
 
 GetFilePathComponent returns absolute path, directory, and filename given a filepath
 
-## func [PrettyPrint](<https://github.com/HexmosTech/Lama2/blob/master/utils/utils.go#L35>)
+## func [PrettyPrint](<https://github.com/HexmosTech/Lama2/blob/master/utils/utils.go#L34>)
 
 ```go
 func PrettyPrint(i interface{}) string
@@ -72,7 +72,7 @@ func PrettyPrint(i interface{}) string
 
 PrettyPrint takes in a generic interface\{\} objects and uses standard JSON capabilities to try to print with indentation
 
-## func [SetJSON](<https://github.com/HexmosTech/Lama2/blob/master/utils/utils.go#L25>)
+## func [SetJSON](<https://github.com/HexmosTech/Lama2/blob/master/utils/utils.go#L24>)
 
 ```go
 func SetJSON(parentObj *gabs.Container, childObj *gabs.Container, key string) *gabs.Container
@@ -80,7 +80,7 @@ func SetJSON(parentObj *gabs.Container, childObj *gabs.Container, key string) *g
 
 SetJSON is a helper function to work with the \`gabs\` library, which in turn is an API on top of the standard JSON library The function helps us create \`parentObj.key = childObj\` through using the \`Merge\` primitive available in \`gabs\`
 
-## func [UnicodeCategory](<https://github.com/HexmosTech/Lama2/blob/master/utils/utils.go#L74>)
+## func [UnicodeCategory](<https://github.com/HexmosTech/Lama2/blob/master/utils/utils.go#L73>)
 
 ```go
 func UnicodeCategory(r rune) string

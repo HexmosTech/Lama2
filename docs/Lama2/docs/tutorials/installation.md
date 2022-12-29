@@ -7,7 +7,7 @@
 To install/update *Lama2* and its dependencies automatically, run the following:
 
 ```
-curl -s https://raw.githubusercontent.com/HexmosTech/Lama2/main/install.sh | bash -s
+curl -s https://hexmos.com/lama2/install.sh | bash -s
 ```
 
 
