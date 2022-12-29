@@ -2,7 +2,7 @@
 
 
 <div align="center">
-<img src="banner.png" width="80%" />
+<img src="https://hexmos.com/lama2/banner.png" width="80%" />
 
 ![Build](https://github.com/HexmosTech/Lama2/actions/workflows/release.yml/badge.svg)
 ![Test](https://github.com/HexmosTech/Lama2/actions/workflows/testapp.yml/badge.svg)
