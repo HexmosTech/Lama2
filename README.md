@@ -43,7 +43,7 @@ data dumps into a  nice  Plain-Text Lama2 repo.
 For **Linux/MacOS** systems, run the following command to either install or update *Lama2*:
 
 ```
-curl -s https://raw.githubusercontent.com/HexmosTech/Lama2/main/install.sh | bash -s
+curl -s https://hexmos.com/lama2/install.sh | bash -s
 ```
 
 Learn more about other installation methods from [our docs](https://hexmos.com/lama2/tutorials/installation.html).
