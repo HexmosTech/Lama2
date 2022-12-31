@@ -31,6 +31,12 @@ An easier way to update the binary to latest release is through:
 ```
 l2 -u
 ```
+
+!!! Note
+
+     Install the [VSCode extension](#from-vs-code) to launch requests from within your editor
+
+
 ### Manual install
 
 #### Step 1: Install HTTPie
@@ -93,4 +99,6 @@ Help Options:
 
 ### From VS Code
 
-Find *Lama2 for VSCode* at the [VSCode Marketplace](https://marketplace.visualstudio.com/items?itemName=hexmos.Lama2). The extension requires the *l2* command available (usually at `/usr/local/bin/l2`).
+Find *Lama2 for VSCode* at the [VSCode Marketplace](https://marketplace.visualstudio.com/items?itemName=hexmos.Lama2). The extension requires the *l2* command available (usually at `/usr/local/bin/l2` for Linux/MacOS and `C:\ProgramData\chocolatey\bin` for Windows).
+
+Once the extension is installed, open the command palette (ctrl + shift + p) and search for `Execute current file` to execute the file
