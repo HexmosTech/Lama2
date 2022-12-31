@@ -49,7 +49,7 @@ curl -s https://hexmos.com/lama2/install.sh | bash -s
 For **Windows** systems, run the following command on powershell as an **Administrator** to either install or update *Lama2*: 
 
 ```
-choco install lama2 --force -y
+choco install lama2 --version=1.0.0 --force -y
 ```
 
 Learn more about other installation methods from [our docs](https://hexmos.com/lama2/tutorials/installation.html).

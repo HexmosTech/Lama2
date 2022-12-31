@@ -15,7 +15,7 @@ curl -s https://hexmos.com/lama2/install.sh | bash -s
 To install/update *Lama2* and its dependencies automatically, run the following as *Administrator*:
 
 ```
-choco install lama2 --force -y
+choco install lama2 --version=1.0.0 --force -y
 ```
 
 #### (Optional) Import your collections from Postman
