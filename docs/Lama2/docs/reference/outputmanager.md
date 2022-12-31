@@ -23,7 +23,7 @@ LogBuff is used to append various log statements into memory. If the user toggle
 var LogBuff bytes.Buffer
 ```
 
-## func [ConfigureZeroLog](<https://github.com/HexmosTech/Lama2/blob/master/outputManager/output_manager.go#L33>)
+## func [ConfigureZeroLog](<https://github.com/HexmosTech/Lama2/blob/main/outputManager/output_manager.go#L33>)
 
 ```go
 func ConfigureZeroLog(level string)
@@ -31,7 +31,7 @@ func ConfigureZeroLog(level string)
 
 ConfigureZeroLog provides global log level setting. By default, ZeroLog uses the DEBUG level; however, the function makes the desired level more explicit
 
-## func [WriteJSONOutput](<https://github.com/HexmosTech/Lama2/blob/master/outputManager/output_manager.go#L48>)
+## func [WriteJSONOutput](<https://github.com/HexmosTech/Lama2/blob/main/outputManager/output_manager.go#L48>)
 
 ```go
 func WriteJSONOutput(requestLog string, targetPath string)

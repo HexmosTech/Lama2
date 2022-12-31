@@ -13,7 +13,7 @@ Package \`cmdgen\` provides an API to generate API request commands \(by default
 - [func ConstructCommand(parsedInput *gabs.Container, o *lama2cmd.Opts) string](<#func-constructcommand>)
 
 
-## func [ConstructCommand](<https://github.com/HexmosTech/Lama2/blob/master/cmdgen/cmdgen.go#L93>)
+## func [ConstructCommand](<https://github.com/HexmosTech/Lama2/blob/main/cmdgen/cmdgen.go#L93>)
 
 ```go
 func ConstructCommand(parsedInput *gabs.Container, o *lama2cmd.Opts) string

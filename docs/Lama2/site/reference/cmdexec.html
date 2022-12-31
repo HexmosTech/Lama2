@@ -684,7 +684,7 @@
 <ul>
 <li><a href="#func-execcommand">func ExecCommand(cmdStr string, apiDir string) string</a></li>
 </ul>
-<h2 id="func-execcommand">func <a href="https://github.com/HexmosTech/Lama2/blob/master/cmdexec/cmdexec.go#L24">ExecCommand</a><a class="headerlink" href="#func-execcommand" title="Permanent link">&para;</a></h2>
+<h2 id="func-execcommand">func <a href="https://github.com/HexmosTech/Lama2/blob/main/cmdexec/cmdexec.go#L24">ExecCommand</a><a class="headerlink" href="#func-execcommand" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">ExecCommand</span><span class="p">(</span><span class="nx">cmdStr</span><span class="w"> </span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="nx">apiDir</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="kt">string</span><span class="w"></span>
 </code></pre></div>
 <p>ExecCommand changes directory to the given `apiDir` and then executes the command specified in `cmdStr` During command execution, ExecCommand streams output to stdout. Once execution finishes, previous CWD is restored, and the command output is returned as a string</p>

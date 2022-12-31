@@ -13,7 +13,7 @@ Package controller coordinates all the other components in the \`Lama2\` project
 - [func Process(version string)](<#func-process>)
 
 
-## func [Process](<https://github.com/HexmosTech/Lama2/blob/master/controller/controller.go#L30>)
+## func [Process](<https://github.com/HexmosTech/Lama2/blob/main/controller/controller.go#L30>)
 
 ```go
 func Process(version string)

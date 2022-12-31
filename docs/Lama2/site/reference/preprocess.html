@@ -684,7 +684,7 @@
 <ul>
 <li><a href="#func-lamafile">func LamaFile(inputFile string) (string, string)</a></li>
 </ul>
-<h2 id="func-lamafile">func <a href="https://github.com/HexmosTech/Lama2/blob/master/preprocess/preprocess.go#L37">LamaFile</a><a class="headerlink" href="#func-lamafile" title="Permanent link">&para;</a></h2>
+<h2 id="func-lamafile">func <a href="https://github.com/HexmosTech/Lama2/blob/main/preprocess/preprocess.go#L37">LamaFile</a><a class="headerlink" href="#func-lamafile" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">LamaFile</span><span class="p">(</span><span class="nx">inputFile</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"></span>
 </code></pre></div>
 <p>LamaFile takes in a path to an API file. It moves into the API file directory, reads the API contents, loads the `l2.env` file if available, and finally substitutes environment vars in the API contents Once done, it reverts back to the original directory, and returns the processed l2 file.</p>

@@ -698,7 +698,7 @@
 <li><a href="#type-opts">type Opts</a></li>
 <li><a href="#func-getandvalidatecmd">func GetAndValidateCmd(ipArgs []string) *Opts</a></li>
 </ul>
-<h2 id="type-opts">type <a href="https://github.com/HexmosTech/Lama2/blob/master/lama2cmd/lama2cmd.go#L16-L31">Opts</a><a class="headerlink" href="#type-opts" title="Permanent link">&para;</a></h2>
+<h2 id="type-opts">type <a href="https://github.com/HexmosTech/Lama2/blob/main/lama2cmd/lama2cmd.go#L16-L31">Opts</a><a class="headerlink" href="#type-opts" title="Permanent link">&para;</a></h2>
 <p>The Opts structure stores user preferences, and is used throughout the module to make various decisions.</p>
 <div class="highlight"><pre><span></span><code><span class="kd">type</span><span class="w"> </span><span class="nx">Opts</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">    </span><span class="nx">Output</span><span class="w">  </span><span class="kt">string</span><span class="w"> </span><span class="s">`short:&quot;o&quot; long:&quot;output&quot; description:&quot;Path to output JSON file to store logs, headers and result&quot;`</span><span class="w"></span>
@@ -717,7 +717,7 @@
 <span class="w">    </span><span class="p">}</span><span class="w">   </span><span class="s">`positional-args:&quot;yes&quot;`</span><span class="w"></span>
 <span class="p">}</span><span class="w"></span>
 </code></pre></div>
-<h3 id="func-getandvalidatecmd">func <a href="https://github.com/HexmosTech/Lama2/blob/master/lama2cmd/lama2cmd.go#L81">GetAndValidateCmd</a><a class="headerlink" href="#func-getandvalidatecmd" title="Permanent link">&para;</a></h3>
+<h3 id="func-getandvalidatecmd">func <a href="https://github.com/HexmosTech/Lama2/blob/main/lama2cmd/lama2cmd.go#L81">GetAndValidateCmd</a><a class="headerlink" href="#func-getandvalidatecmd" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">GetAndValidateCmd</span><span class="p">(</span><span class="nx">ipArgs</span><span class="w"> </span><span class="p">[]</span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="nx">Opts</span><span class="w"></span>
 </code></pre></div>
 <p>GetAndValidateCmd takes in the user's CLI input, and checks for validity. If not OK, displays a help message in stdout. Otherwise, fills the Opts structure and returns it Moreover, based on user input, the outputManager gets configured (whether user prefers trace/debug/info level)</p>

@@ -2,7 +2,7 @@
 
 ## Installation/Update
 
-### One-line install/update (Recommended in Linux/MacOS)
+### One-line install/update in Linux/MacOS
 
 To install/update *Lama2* and its dependencies automatically, run the following:
 
@@ -10,6 +10,13 @@ To install/update *Lama2* and its dependencies automatically, run the following:
 curl -s https://hexmos.com/lama2/install.sh | bash -s
 ```
 
+### One-line install/update in Windows
+
+To install/update *Lama2* and its dependencies automatically, run the following as *Administrator*:
+
+```
+choco install lama2 --force -y
+```
 
 #### (Optional) Import your collections from Postman
 

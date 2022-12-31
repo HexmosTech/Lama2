@@ -46,6 +46,12 @@ For **Linux/MacOS** systems, run the following command to either install or upda
 curl -s https://hexmos.com/lama2/install.sh | bash -s
 ```
 
+For **Windows** systems, run the following command on powershell as an **Administrator** to either install or update *Lama2*: 
+
+```
+choco install lama2 --force -y
+```
+
 Learn more about other installation methods from [our docs](https://hexmos.com/lama2/tutorials/installation.html).
 
 ### (Optional) Import your collections from Postman
@@ -53,9 +59,10 @@ Learn more about other installation methods from [our docs](https://hexmos.com/l
 Follow [guide](https://hexmos.com/lama2/tutorials/postman.html)
  to import your existing Postman collections into a Plain-Text
  Lama2 repository.
+ 
 ### Self update
 
-An easier way to update the binary to latest release is through:
+An easier way to update the binary for **Linux/MacOS** to latest release is through:
 
 ```
 l2 -u
