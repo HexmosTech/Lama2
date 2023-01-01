@@ -13,7 +13,7 @@ Package preprocess provides facilities to expand environment variables in \`.l2\
 - [func LamaFile(inputFile string) (string, string)](<#func-lamafile>)
 
 
-## func [LamaFile](<https://github.com/HexmosTech/Lama2/blob/main/preprocess/preprocess.go#L37>)
+## func [LamaFile](<https://github.com/HexmosTech/Lama2/blob/master/preprocess/preprocess.go#L37>)
 
 ```go
 func LamaFile(inputFile string) (string, string)

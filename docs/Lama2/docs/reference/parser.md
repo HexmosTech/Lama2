@@ -67,7 +67,7 @@ The \`Parser\` struct is supposed to be extended to support parsing a new langua
   - [func (p *Parser) Start() *gabs.Container](<#func-parser-start>)
 
 
-## func [CustomPairMerge](<https://github.com/HexmosTech/Lama2/blob/main/parser/jsonparser.go#L28>)
+## func [CustomPairMerge](<https://github.com/HexmosTech/Lama2/blob/master/parser/jsonparser.go#L28>)
 
 ```go
 func CustomPairMerge(destination, source interface{}) interface{}
@@ -75,7 +75,7 @@ func CustomPairMerge(destination, source interface{}) interface{}
 
 CustomPairMerge uses a gabs feature to deal with merge conflicts. More here: https://github.com/HexmosTech/gabs/blob/master/gabs.go#L511
 
-## type [Lama2Parser](<https://github.com/HexmosTech/Lama2/blob/main/parser/lama2parser.go#L11-L14>)
+## type [Lama2Parser](<https://github.com/HexmosTech/Lama2/blob/master/parser/lama2parser.go#L11-L14>)
 
 ```go
 type Lama2Parser struct {
@@ -84,7 +84,7 @@ type Lama2Parser struct {
 }
 ```
 
-### func [NewLama2Parser](<https://github.com/HexmosTech/Lama2/blob/main/parser/lama2parser.go#L18>)
+### func [NewLama2Parser](<https://github.com/HexmosTech/Lama2/blob/master/parser/lama2parser.go#L18>)
 
 ```go
 func NewLama2Parser() *Lama2Parser
@@ -92,7 +92,7 @@ func NewLama2Parser() *Lama2Parser
 
 NewLama2Parser creates a new Lama2Parser and initializes it properly
 
-### func \(\*Lama2Parser\) [AnyType](<https://github.com/HexmosTech/Lama2/blob/main/parser/jsonparser.go#L11>)
+### func \(\*Lama2Parser\) [AnyType](<https://github.com/HexmosTech/Lama2/blob/master/parser/jsonparser.go#L11>)
 
 ```go
 func (p *Lama2Parser) AnyType() (*gabs.Container, error)
@@ -100,49 +100,49 @@ func (p *Lama2Parser) AnyType() (*gabs.Container, error)
 
 AnyType is the top\-most element of a JSON structure It consists of Complex and Primitive Types
 
-### func \(\*Lama2Parser\) [Boolean](<https://github.com/HexmosTech/Lama2/blob/main/parser/jsonparser.go#L125>)
+### func \(\*Lama2Parser\) [Boolean](<https://github.com/HexmosTech/Lama2/blob/master/parser/jsonparser.go#L125>)
 
 ```go
 func (p *Lama2Parser) Boolean() (*gabs.Container, error)
 ```
 
-### func \(\*Lama2Parser\) [ComplexType](<https://github.com/HexmosTech/Lama2/blob/main/parser/jsonparser.go#L16>)
+### func \(\*Lama2Parser\) [ComplexType](<https://github.com/HexmosTech/Lama2/blob/master/parser/jsonparser.go#L16>)
 
 ```go
 func (p *Lama2Parser) ComplexType() (*gabs.Container, error)
 ```
 
-### func \(\*Lama2Parser\) [DataHeader](<https://github.com/HexmosTech/Lama2/blob/main/parser/headers.go#L26>)
+### func \(\*Lama2Parser\) [DataHeader](<https://github.com/HexmosTech/Lama2/blob/master/parser/headers.go#L26>)
 
 ```go
 func (p *Lama2Parser) DataHeader() (*gabs.Container, error)
 ```
 
-### func \(\*Lama2Parser\) [DataInput](<https://github.com/HexmosTech/Lama2/blob/main/parser/headers.go#L42>)
+### func \(\*Lama2Parser\) [DataInput](<https://github.com/HexmosTech/Lama2/blob/master/parser/headers.go#L42>)
 
 ```go
 func (p *Lama2Parser) DataInput() (*gabs.Container, error)
 ```
 
-### func \(\*Lama2Parser\) [Details](<https://github.com/HexmosTech/Lama2/blob/main/parser/lama2parser.go#L139>)
+### func \(\*Lama2Parser\) [Details](<https://github.com/HexmosTech/Lama2/blob/master/parser/lama2parser.go#L139>)
 
 ```go
 func (p *Lama2Parser) Details() (*gabs.Container, error)
 ```
 
-### func \(\*Lama2Parser\) [Digit](<https://github.com/HexmosTech/Lama2/blob/main/parser/numbers.go#L236>)
+### func \(\*Lama2Parser\) [Digit](<https://github.com/HexmosTech/Lama2/blob/master/parser/numbers.go#L236>)
 
 ```go
 func (p *Lama2Parser) Digit() (*gabs.Container, error)
 ```
 
-### func \(\*Lama2Parser\) [Digits](<https://github.com/HexmosTech/Lama2/blob/main/parser/numbers.go#L215>)
+### func \(\*Lama2Parser\) [Digits](<https://github.com/HexmosTech/Lama2/blob/master/parser/numbers.go#L215>)
 
 ```go
 func (p *Lama2Parser) Digits() (*gabs.Container, error)
 ```
 
-### func \(\*Lama2Parser\) [Exponent](<https://github.com/HexmosTech/Lama2/blob/main/parser/numbers.go#L52>)
+### func \(\*Lama2Parser\) [Exponent](<https://github.com/HexmosTech/Lama2/blob/master/parser/numbers.go#L52>)
 
 ```go
 func (p *Lama2Parser) Exponent() (*gabs.Container, error)
@@ -150,7 +150,7 @@ func (p *Lama2Parser) Exponent() (*gabs.Container, error)
 
 An Exponent consists of mandatory 'e' or 'E', optional Sign, followed by Digits
 
-### func \(\*Lama2Parser\) [FilesPair](<https://github.com/HexmosTech/Lama2/blob/main/parser/varjson.go#L97>)
+### func \(\*Lama2Parser\) [FilesPair](<https://github.com/HexmosTech/Lama2/blob/master/parser/varjson.go#L97>)
 
 ```go
 func (p *Lama2Parser) FilesPair() (*gabs.Container, error)
@@ -158,7 +158,7 @@ func (p *Lama2Parser) FilesPair() (*gabs.Container, error)
 
 FilesPair tries to match key and value separated by \`@\`. The key and value can either be a quoted string, or an unquoted Files Unquoted String. If there is no match for either, a ParseError is returned.
 
-### func \(\*Lama2Parser\) [FilesUnquoted](<https://github.com/HexmosTech/Lama2/blob/main/parser/varjson.go#L152>)
+### func \(\*Lama2Parser\) [FilesUnquoted](<https://github.com/HexmosTech/Lama2/blob/master/parser/varjson.go#L152>)
 
 ```go
 func (p *Lama2Parser) FilesUnquoted() (*gabs.Container, error)
@@ -166,13 +166,13 @@ func (p *Lama2Parser) FilesUnquoted() (*gabs.Container, error)
 
 FilesUnquoted matches a string of characters other than \`@\` and returns them as a String
 
-### func \(\*Lama2Parser\) [Fraction](<https://github.com/HexmosTech/Lama2/blob/main/parser/numbers.go#L75>)
+### func \(\*Lama2Parser\) [Fraction](<https://github.com/HexmosTech/Lama2/blob/master/parser/numbers.go#L75>)
 
 ```go
 func (p *Lama2Parser) Fraction() (*gabs.Container, error)
 ```
 
-### func \(\*Lama2Parser\) [FractionRule1](<https://github.com/HexmosTech/Lama2/blob/main/parser/numbers.go#L87>)
+### func \(\*Lama2Parser\) [FractionRule1](<https://github.com/HexmosTech/Lama2/blob/master/parser/numbers.go#L87>)
 
 ```go
 func (p *Lama2Parser) FractionRule1() (*gabs.Container, error)
@@ -180,25 +180,25 @@ func (p *Lama2Parser) FractionRule1() (*gabs.Container, error)
 
 A Fraction consists of mandatory "." \(dot\), followed by Digits.
 
-### func \(\*Lama2Parser\) [HTTPVerb](<https://github.com/HexmosTech/Lama2/blob/main/parser/lama2parser.go#L106>)
+### func \(\*Lama2Parser\) [HTTPVerb](<https://github.com/HexmosTech/Lama2/blob/master/parser/lama2parser.go#L106>)
 
 ```go
 func (p *Lama2Parser) HTTPVerb() (*gabs.Container, error)
 ```
 
-### func \(\*Lama2Parser\) [HeaderData](<https://github.com/HexmosTech/Lama2/blob/main/parser/headers.go#L9>)
+### func \(\*Lama2Parser\) [HeaderData](<https://github.com/HexmosTech/Lama2/blob/master/parser/headers.go#L9>)
 
 ```go
 func (p *Lama2Parser) HeaderData() (*gabs.Container, error)
 ```
 
-### func \(\*Lama2Parser\) [HeaderPair](<https://github.com/HexmosTech/Lama2/blob/main/parser/headers.go#L76>)
+### func \(\*Lama2Parser\) [HeaderPair](<https://github.com/HexmosTech/Lama2/blob/master/parser/headers.go#L76>)
 
 ```go
 func (p *Lama2Parser) HeaderPair() (*gabs.Container, error)
 ```
 
-### func \(\*Lama2Parser\) [Headers](<https://github.com/HexmosTech/Lama2/blob/main/parser/headers.go#L52>)
+### func \(\*Lama2Parser\) [Headers](<https://github.com/HexmosTech/Lama2/blob/master/parser/headers.go#L52>)
 
 ```go
 func (p *Lama2Parser) Headers() (*gabs.Container, error)
@@ -206,13 +206,13 @@ func (p *Lama2Parser) Headers() (*gabs.Container, error)
 
 Headers detects HTTP headers; essentially strings separated by ":" character
 
-### func \(\*Lama2Parser\) [Integer](<https://github.com/HexmosTech/Lama2/blob/main/parser/numbers.go#L106>)
+### func \(\*Lama2Parser\) [Integer](<https://github.com/HexmosTech/Lama2/blob/master/parser/numbers.go#L106>)
 
 ```go
 func (p *Lama2Parser) Integer() (*gabs.Container, error)
 ```
 
-### func \(\*Lama2Parser\) [IntegerRule1](<https://github.com/HexmosTech/Lama2/blob/main/parser/numbers.go#L120>)
+### func \(\*Lama2Parser\) [IntegerRule1](<https://github.com/HexmosTech/Lama2/blob/master/parser/numbers.go#L120>)
 
 ```go
 func (p *Lama2Parser) IntegerRule1() (*gabs.Container, error)
@@ -220,7 +220,7 @@ func (p *Lama2Parser) IntegerRule1() (*gabs.Container, error)
 
 InterRule1 matches a Digit
 
-### func \(\*Lama2Parser\) [IntegerRule2](<https://github.com/HexmosTech/Lama2/blob/main/parser/numbers.go#L135>)
+### func \(\*Lama2Parser\) [IntegerRule2](<https://github.com/HexmosTech/Lama2/blob/master/parser/numbers.go#L135>)
 
 ```go
 func (p *Lama2Parser) IntegerRule2() (*gabs.Container, error)
@@ -228,7 +228,7 @@ func (p *Lama2Parser) IntegerRule2() (*gabs.Container, error)
 
 IntegerRule2 matches 1\-9 mandatorily, and then tries to follow it with Digits
 
-### func \(\*Lama2Parser\) [IntegerRule3](<https://github.com/HexmosTech/Lama2/blob/main/parser/numbers.go#L156>)
+### func \(\*Lama2Parser\) [IntegerRule3](<https://github.com/HexmosTech/Lama2/blob/master/parser/numbers.go#L156>)
 
 ```go
 func (p *Lama2Parser) IntegerRule3() (*gabs.Container, error)
@@ -236,7 +236,7 @@ func (p *Lama2Parser) IntegerRule3() (*gabs.Container, error)
 
 IntegerRule3 starts with a mandatory Sign, and follows with IntegerRule1 \(Digit\)
 
-### func \(\*Lama2Parser\) [IntegerRule4](<https://github.com/HexmosTech/Lama2/blob/main/parser/numbers.go#L187>)
+### func \(\*Lama2Parser\) [IntegerRule4](<https://github.com/HexmosTech/Lama2/blob/master/parser/numbers.go#L187>)
 
 ```go
 func (p *Lama2Parser) IntegerRule4() (*gabs.Container, error)
@@ -244,7 +244,7 @@ func (p *Lama2Parser) IntegerRule4() (*gabs.Container, error)
 
 IntegerRule4 starts with a mandatory Sign, and follows with IntegerRule2
 
-### func \(\*Lama2Parser\) [Lama2File](<https://github.com/HexmosTech/Lama2/blob/main/parser/lama2parser.go#L40>)
+### func \(\*Lama2Parser\) [Lama2File](<https://github.com/HexmosTech/Lama2/blob/master/parser/lama2parser.go#L40>)
 
 ```go
 func (p *Lama2Parser) Lama2File() (*gabs.Container, error)
@@ -252,7 +252,7 @@ func (p *Lama2Parser) Lama2File() (*gabs.Container, error)
 
 Lama2File applies the rule: HTTPVerb Multipart? TheURL Details?
 
-### func \(\*Lama2Parser\) [List](<https://github.com/HexmosTech/Lama2/blob/main/parser/jsonparser.go#L68>)
+### func \(\*Lama2Parser\) [List](<https://github.com/HexmosTech/Lama2/blob/master/parser/jsonparser.go#L68>)
 
 ```go
 func (p *Lama2Parser) List() (*gabs.Container, error)
@@ -260,7 +260,7 @@ func (p *Lama2Parser) List() (*gabs.Container, error)
 
 List is a slightly lenient version of standard JSON list. In Lama2 List, it is OK to have a trailing comma after the last element \(whereas in strict JSON, it is not OK to have trailing comma\)
 
-### func \(\*Lama2Parser\) [Map](<https://github.com/HexmosTech/Lama2/blob/main/parser/jsonparser.go#L36>)
+### func \(\*Lama2Parser\) [Map](<https://github.com/HexmosTech/Lama2/blob/master/parser/jsonparser.go#L36>)
 
 ```go
 func (p *Lama2Parser) Map() (*gabs.Container, error)
@@ -268,19 +268,19 @@ func (p *Lama2Parser) Map() (*gabs.Container, error)
 
 Map is a slightly lenient version of standard JSON map. In Lama2 Map, it is OK to have a trailing comma after the last element \(whereas in strict JSON, it is not OK to have trailing comma\)
 
-### func \(\*Lama2Parser\) [Multipart](<https://github.com/HexmosTech/Lama2/blob/main/parser/lama2parser.go#L126>)
+### func \(\*Lama2Parser\) [Multipart](<https://github.com/HexmosTech/Lama2/blob/master/parser/lama2parser.go#L126>)
 
 ```go
 func (p *Lama2Parser) Multipart() (*gabs.Container, error)
 ```
 
-### func \(\*Lama2Parser\) [Null](<https://github.com/HexmosTech/Lama2/blob/main/parser/jsonparser.go#L141>)
+### func \(\*Lama2Parser\) [Null](<https://github.com/HexmosTech/Lama2/blob/master/parser/jsonparser.go#L141>)
 
 ```go
 func (p *Lama2Parser) Null() (*gabs.Container, error)
 ```
 
-### func \(\*Lama2Parser\) [Number](<https://github.com/HexmosTech/Lama2/blob/main/parser/numbers.go#L16>)
+### func \(\*Lama2Parser\) [Number](<https://github.com/HexmosTech/Lama2/blob/master/parser/numbers.go#L16>)
 
 ```go
 func (p *Lama2Parser) Number() (*gabs.Container, error)
@@ -288,25 +288,25 @@ func (p *Lama2Parser) Number() (*gabs.Container, error)
 
 A Number consists of a mandatory integer part, and optional Fraction and Exponent parts. The Number method "collects" these three elements, converts them into a json.Number\(\) type, and finally returns the Number wrapped within a gabs Container
 
-### func \(\*Lama2Parser\) [OneNine](<https://github.com/HexmosTech/Lama2/blob/main/parser/numbers.go#L248>)
+### func \(\*Lama2Parser\) [OneNine](<https://github.com/HexmosTech/Lama2/blob/master/parser/numbers.go#L248>)
 
 ```go
 func (p *Lama2Parser) OneNine() (*gabs.Container, error)
 ```
 
-### func \(\*Lama2Parser\) [Pair](<https://github.com/HexmosTech/Lama2/blob/main/parser/jsonparser.go#L104>)
+### func \(\*Lama2Parser\) [Pair](<https://github.com/HexmosTech/Lama2/blob/master/parser/jsonparser.go#L104>)
 
 ```go
 func (p *Lama2Parser) Pair() (*gabs.Container, error)
 ```
 
-### func \(\*Lama2Parser\) [PrimitiveType](<https://github.com/HexmosTech/Lama2/blob/main/parser/jsonparser.go#L21>)
+### func \(\*Lama2Parser\) [PrimitiveType](<https://github.com/HexmosTech/Lama2/blob/master/parser/jsonparser.go#L21>)
 
 ```go
 func (p *Lama2Parser) PrimitiveType() (*gabs.Container, error)
 ```
 
-### func \(\*Lama2Parser\) [QuotedString](<https://github.com/HexmosTech/Lama2/blob/main/parser/lama_strings.go#L31>)
+### func \(\*Lama2Parser\) [QuotedString](<https://github.com/HexmosTech/Lama2/blob/master/parser/lama_strings.go#L31>)
 
 ```go
 func (p *Lama2Parser) QuotedString() (*gabs.Container, error)
@@ -314,13 +314,13 @@ func (p *Lama2Parser) QuotedString() (*gabs.Container, error)
 
 QuotedString accepts both single\-quoted and double\-quoted types of strings. Moreover, it can deal with unicode escape characters, control characters appropriately Ultimately, we get a string wrapped in a gabs container
 
-### func \(\*Lama2Parser\) [Sign](<https://github.com/HexmosTech/Lama2/blob/main/parser/numbers.go#L258>)
+### func \(\*Lama2Parser\) [Sign](<https://github.com/HexmosTech/Lama2/blob/master/parser/numbers.go#L258>)
 
 ```go
 func (p *Lama2Parser) Sign() (*gabs.Container, error)
 ```
 
-### func \(\*Lama2Parser\) [Start](<https://github.com/HexmosTech/Lama2/blob/main/parser/lama2parser.go#L26>)
+### func \(\*Lama2Parser\) [Start](<https://github.com/HexmosTech/Lama2/blob/master/parser/lama2parser.go#L26>)
 
 ```go
 func (p *Lama2Parser) Start() (*gabs.Container, error)
@@ -328,19 +328,19 @@ func (p *Lama2Parser) Start() (*gabs.Container, error)
 
 Start primarily calls the Lama2File method
 
-### func \(\*Lama2Parser\) [TheURL](<https://github.com/HexmosTech/Lama2/blob/main/parser/lama2parser.go#L69>)
+### func \(\*Lama2Parser\) [TheURL](<https://github.com/HexmosTech/Lama2/blob/master/parser/lama2parser.go#L69>)
 
 ```go
 func (p *Lama2Parser) TheURL() (*gabs.Container, error)
 ```
 
-### func \(\*Lama2Parser\) [Unquoted](<https://github.com/HexmosTech/Lama2/blob/main/parser/lama_strings.go#L113>)
+### func \(\*Lama2Parser\) [Unquoted](<https://github.com/HexmosTech/Lama2/blob/master/parser/lama_strings.go#L113>)
 
 ```go
 func (p *Lama2Parser) Unquoted() (*gabs.Container, error)
 ```
 
-### func \(\*Lama2Parser\) [VarJSON](<https://github.com/HexmosTech/Lama2/blob/main/parser/varjson.go#L19>)
+### func \(\*Lama2Parser\) [VarJSON](<https://github.com/HexmosTech/Lama2/blob/master/parser/varjson.go#L19>)
 
 ```go
 func (p *Lama2Parser) VarJSON() (*gabs.Container, error)
@@ -348,7 +348,7 @@ func (p *Lama2Parser) VarJSON() (*gabs.Container, error)
 
 Method VarJSON behaves in two ways depending on whether \`multipart\` is true or not. If there is no multipart, then VarJSON tries to match one or more VarJSONPairs However, if there is multipart, we try to match zero or more VarJSON, followed by zero or more file fields \(separated by \`@\`\). If there is no match at all, we return a ParseError; otherwise the we return the parsed data.
 
-### func \(\*Lama2Parser\) [VarJSONPair](<https://github.com/HexmosTech/Lama2/blob/main/parser/varjson.go#L64>)
+### func \(\*Lama2Parser\) [VarJSONPair](<https://github.com/HexmosTech/Lama2/blob/master/parser/varjson.go#L64>)
 
 ```go
 func (p *Lama2Parser) VarJSONPair() (*gabs.Container, error)
@@ -356,7 +356,7 @@ func (p *Lama2Parser) VarJSONPair() (*gabs.Container, error)
 
 VarJSONPair tries to match key and value separated by \`=\`. The key and value can either be a quoted string, or an unquoted VarJSON unquoted string. If there is no match for either, a ParseError is returned.
 
-### func \(\*Lama2Parser\) [VarJSONUnquoted](<https://github.com/HexmosTech/Lama2/blob/main/parser/varjson.go#L128>)
+### func \(\*Lama2Parser\) [VarJSONUnquoted](<https://github.com/HexmosTech/Lama2/blob/master/parser/varjson.go#L128>)
 
 ```go
 func (p *Lama2Parser) VarJSONUnquoted() (*gabs.Container, error)
@@ -364,7 +364,7 @@ func (p *Lama2Parser) VarJSONUnquoted() (*gabs.Container, error)
 
 VarJSONUnquoted matches a string of characters other than \`=\` and returns them as a String
 
-## type [MinimalParser](<https://github.com/HexmosTech/Lama2/blob/main/parser/parser.go#L27-L29>)
+## type [MinimalParser](<https://github.com/HexmosTech/Lama2/blob/master/parser/parser.go#L27-L29>)
 
 MinimalParser enforces concrete Types to have a Start\(\) method, from which parsing process begins. In the present case, \`Lama2Parser\` adds up dozens of of methods to implement \`.l2\` syntax
 
@@ -374,7 +374,7 @@ type MinimalParser interface {
 }
 ```
 
-## type [Parser](<https://github.com/HexmosTech/Lama2/blob/main/parser/parser.go#L46-L54>)
+## type [Parser](<https://github.com/HexmosTech/Lama2/blob/master/parser/parser.go#L46-L54>)
 
 Struct Parser stores information about the parsing process throughout. 1. Text: Incoming text is stored as an array of runes, to correctly handle unicode characters 2. Pos: Indicates the index position in Text which has already been scanned; starts with \-1 3. TotalLen: Number of runes in the input 4. Pm: Composing an external MinimalParser \(such as Lama2Parser\) which builds upon Parser to provide the new language recognition capabilities 5. ruleMethodMap: Scans through Pm, and creates a mapping from method name to method value through reflection 6. LineNum: Number of normalized newlines found till now. Used in providing useful context in error messages
 
@@ -391,13 +391,13 @@ type Parser struct {
 }
 ```
 
-### func \(\*Parser\) [Char](<https://github.com/HexmosTech/Lama2/blob/main/parser/char_handle.go#L10>)
+### func \(\*Parser\) [Char](<https://github.com/HexmosTech/Lama2/blob/master/parser/char_handle.go#L10>)
 
 ```go
 func (p *Parser) Char() (rune, error)
 ```
 
-### func \(\*Parser\) [CharClass](<https://github.com/HexmosTech/Lama2/blob/main/parser/char_handle.go#L28>)
+### func \(\*Parser\) [CharClass](<https://github.com/HexmosTech/Lama2/blob/master/parser/char_handle.go#L28>)
 
 ```go
 func (p *Parser) CharClass(charClass string) (rune, error)
@@ -405,7 +405,7 @@ func (p *Parser) CharClass(charClass string) (rune, error)
 
 CharClass implements the familiar regex syntax for specifying ranges of characters that are deemed acceptable. A good description of CharClass is available here: Read the section "Processing Character Ranges" at https://www.booleanworld.com/building-recursive-descent-parsers-definitive-guide/
 
-### func \(\*Parser\) [Init](<https://github.com/HexmosTech/Lama2/blob/main/parser/parser.go#L68>)
+### func \(\*Parser\) [Init](<https://github.com/HexmosTech/Lama2/blob/master/parser/parser.go#L68>)
 
 ```go
 func (p *Parser) Init()
@@ -413,7 +413,7 @@ func (p *Parser) Init()
 
 Method Init creates the most important data stucture for parsing: ruleMethodMap. We use reflection to create a mapping of each Pm.\<method\_name\> to \<method\_value\>
 
-### func \(\*Parser\) [Keyword](<https://github.com/HexmosTech/Lama2/blob/main/parser/keyword.go#L13>)
+### func \(\*Parser\) [Keyword](<https://github.com/HexmosTech/Lama2/blob/master/parser/keyword.go#L13>)
 
 ```go
 func (p *Parser) Keyword(kw string, eatWsStart bool, eatWsEnd bool, caseInsensitive bool) ([]rune, error)
@@ -421,7 +421,7 @@ func (p *Parser) Keyword(kw string, eatWsStart bool, eatWsEnd bool, caseInsensit
 
 Method Keyword is a versatile; it can eat whitespace before/after the expected string, and it can do an optionally case insensitive match for the keyword
 
-### func \(\*Parser\) [Match](<https://github.com/HexmosTech/Lama2/blob/main/parser/match.go#L25>)
+### func \(\*Parser\) [Match](<https://github.com/HexmosTech/Lama2/blob/master/parser/match.go#L25>)
 
 ```go
 func (p *Parser) Match(rules []string) (*gabs.Container, error)
@@ -429,7 +429,7 @@ func (p *Parser) Match(rules []string) (*gabs.Container, error)
 
 Method Match is the most important of all in the parser package. Match takes in a slice of rules \(essentially method names\), and then executes them one by one. On successful match, we return a gabs Container with \`error\` set to \`nil\` When a rule fails to match, we reset the scan position to initial position; moreover, we keep a continuous track of the farthest/longest match till present. The farthest match error is potentially the most useful error message to the user; thus, for error report, Match returns the farthest matching error
 
-### func \(\*Parser\) [Parse](<https://github.com/HexmosTech/Lama2/blob/main/parser/parser.go#L83>)
+### func \(\*Parser\) [Parse](<https://github.com/HexmosTech/Lama2/blob/master/parser/parser.go#L83>)
 
 ```go
 func (p *Parser) Parse(text string) (*gabs.Container, error)
@@ -437,7 +437,7 @@ func (p *Parser) Parse(text string) (*gabs.Container, error)
 
 Method Parse normalizes newlines and then creates a rune version of the input data. The Start\(\) method proceeds to process the rune version of data
 
-### func \(\*Parser\) [SetText](<https://github.com/HexmosTech/Lama2/blob/main/parser/parser.go#L125>)
+### func \(\*Parser\) [SetText](<https://github.com/HexmosTech/Lama2/blob/master/parser/parser.go#L125>)
 
 ```go
 func (p *Parser) SetText(text string)
@@ -445,13 +445,13 @@ func (p *Parser) SetText(text string)
 
 Method SetText is a utility used primarily in testing, when we don't want to call Start\(\) automatically as in Parse
 
-### func \(\*Parser\) [SplitCharRanges](<https://github.com/HexmosTech/Lama2/blob/main/parser/char_handle.go#L62>)
+### func \(\*Parser\) [SplitCharRanges](<https://github.com/HexmosTech/Lama2/blob/master/parser/char_handle.go#L62>)
 
 ```go
 func (p *Parser) SplitCharRanges(charClass string) ([]string, error)
 ```
 
-### func \(\*Parser\) [Start](<https://github.com/HexmosTech/Lama2/blob/main/parser/parser.go#L60>)
+### func \(\*Parser\) [Start](<https://github.com/HexmosTech/Lama2/blob/master/parser/parser.go#L60>)
 
 ```go
 func (p *Parser) Start() *gabs.Container

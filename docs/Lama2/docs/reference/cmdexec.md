@@ -13,7 +13,7 @@ Package \`cmdexec\` provides a facility to execute l2 commands, stream output to
 - [func ExecCommand(cmdStr string, apiDir string) string](<#func-execcommand>)
 
 
-## func [ExecCommand](<https://github.com/HexmosTech/Lama2/blob/main/cmdexec/cmdexec.go#L24>)
+## func [ExecCommand](<https://github.com/HexmosTech/Lama2/blob/master/cmdexec/cmdexec.go#L24>)
 
 ```go
 func ExecCommand(cmdStr string, apiDir string) string
