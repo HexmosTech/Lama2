@@ -29,7 +29,8 @@ IDEs and text-editors as well. Think of *Lama2* as [**Markdown for APIs.**](http
 1. **Collaboration:** Share [API repo](https://hexmos.com/lama2/tutorials/collaboration.html) with teammates and colleagues to collaborate
 1. **Documentation:** [Explore](https://hexmos.com/lama2/index.html) examples, how-tos, explanations, references, FAQ/RAQs, and diagrams. Documentation is a priority, so that you never have to get lost.
 1. **Extensibility:** `.l2` syntax is implemented as a *recursive descent parser*, based on a [formal grammar](https://hexmos.com/lama2/reference/grammar.html). [Dig into details](https://hexmos.com/lama2/reference/parser.html) and [implement](https://github.com/HexmosTech/Lama2/tree/main/parser) new syntax (ex: to support `websockets`)
-1. **Import from Postman:** Let *Lama2* help you [convert](https://hexmos.com/lama2/tutorials/postman.html) Postman
+
+> :bulb: **Coming from Postman?** Let *Lama2* help you [convert](https://hexmos.com/lama2/tutorials/postman.html) Postman
 data dumps into a  nice  Plain-Text Lama2 repo.
 
 ## Terminal Demo: A POST request
