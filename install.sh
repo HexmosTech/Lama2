@@ -99,7 +99,7 @@ search="http.*${the_os}-${architecture}.tar.gz\"$"
 echo "${search}"
 archive=$(echo "${api_resp}" | grep "${search}" | sed 's|[\"\,]*||g' | sed 's/browser_download_url://g' | xargs)
 wget -O /tmp/l2_latest.tar.gz "${archive}"
-tar --overwrite -xvzf /tmp/l2_latest.tar.gz -C /tmp
+tar -xvzf /tmp/l2_latest.tar.gz -C /tmp
 sudo rm -f /usr/local/bin/l2 /usr/bin/l2
 sudo mv /tmp/l2 /usr/local/bin
 
