@@ -1,0 +1,114 @@
+%YAML 1.2
+---
+name: lama2
+scope: source.lama2
+file_extensions: [ l2, lama2 ]
+
+contexts:
+  main:
+    - match: '(#.*)'
+      captures:
+        0: comment.lama2
+    - include: preamble
+    - include: json
+    - include: headers
+    - include: varjson
+    - include: files
+    - match: '(.)'
+      captures:
+        0: text.lama2
+  varjson:
+    - match: '(.*)(=)([^\x{0023}]+)'
+      captures:
+        0: constant.language.lama2
+        1: keyword.operator.lama2
+        2: string.source.lama2
+    - match: '(.)'
+      captures:
+        0: text.lama2
+  files:
+    - match: '(.*)(@)([^\x{0023}]+)'
+      captures:
+        0: constant.language.lama2
+        1: keyword.operator.lama2
+        2: string.source.lama2
+    - match: '(.)'
+      captures:
+        0: text.lama2
+  headers:
+    - match: '(.*)(:)([^\x{0023}]+)'
+      captures:
+        0: constant.language.lama2
+        1: keyword.operator.lama2
+        2: string.source.lama2
+    - match: '(.)'
+      captures:
+        0: text.lama2
+  preamble:
+    - match: '(GET|POST|PUT|DELETE|get|post|put|delete)'
+      captures:
+        0: keyword.lama2
+    - match: '(MULTIPART|multipart)'
+      captures:
+        0: keyword.lama2
+    - match: '(https?|\$\{.*\})(.*)'
+      captures:
+        0: variable.lama2
+        1: keyword.operator.lama2
+    - match: '(.)'
+      captures:
+        0: text.lama2
+  json:
+    - match: '(\{)'
+      captures:
+        0: keyword.operator.lama2
+      push: 
+        - match: '(\})'
+          pop: true
+          captures:
+            0: keyword.operator.lama2
+        - include: json
+        - match: '(.)'
+          captures:
+            0: text.lama2
+    - match: '(\[)'
+      captures:
+        0: keyword.operator.lama2
+      push: 
+        - match: '(\])'
+          pop: true
+          captures:
+            0: keyword.operator.lama2
+        - include: json
+        - match: '(.)'
+          captures:
+            0: text.lama2
+    - match: '(,|\:)'
+      captures:
+        0: keyword.operator.lama2
+    - match: '(\")'
+      captures:
+        0: keyword.operator.lama2
+      push: 
+        - match: '(\")'
+          pop: true
+          captures:
+            0: keyword.operator.lama2
+        - match: '((?:\\u[0-9a-f]{4})|(?:\\[\x{0022}\x{005c}\x{002f}bfnrt]))'
+          captures:
+            0: constant.character.escape.lama2
+        - match: '([^\"\x{005c}]+)'
+          captures:
+            0: string.unquoted.lama2
+        - match: '(.)'
+          captures:
+            0: text.lama2
+    - match: '((?:\-?(?:0|(?:[1-9][0-9]*)))(?:(?:\.[0-9]*)(?:(?:e|E)(?:\+|\-)[0-9]+)?)?)'
+      captures:
+        0: storage.type.lama2
+    - match: '(true|false|null)'
+      captures:
+        0: storage.type.lama2
+    - match: '(.)'
+      captures:
+        0: text.lama2

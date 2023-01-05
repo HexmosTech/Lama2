@@ -1,0 +1,171 @@
+/*
+* To try in Ace editor, copy and paste into the mode creator
+* here : http://ace.c9.io/tool/mode_creator.html
+*/
+
+define(function(require, exports, module) {
+"use strict";
+var oop = require("../lib/oop");
+var TextHighlightRules = require("./text_highlight_rules").TextHighlightRules;
+/* --------------------- START ----------------------------- */
+var Lama2HighlightRules = function() {
+this.$rules = {
+"start" : [
+   {
+      "token" : "comment",
+      "regex" : "(#.*)"
+   },
+   {
+      "token" : "keyword",
+      "regex" : "(GET|POST|PUT|DELETE|get|post|put|delete)"
+   },
+   {
+      "token" : "keyword",
+      "regex" : "(MULTIPART|multipart)"
+   },
+   {
+      "token" : ["variable", "keyword.operator"],
+      "regex" : "(https?|\\$\\{.*\\})(.*)"
+   },
+   {
+      "token" : "keyword.operator",
+      "regex" : "(\\{)",
+      "push" : "json__1"
+   },
+   {
+      "token" : "keyword.operator",
+      "regex" : "(\\[)",
+      "push" : "json__2"
+   },
+   {
+      "token" : "keyword.operator",
+      "regex" : "(,|\\:)"
+   },
+   {
+      "token" : "keyword.operator",
+      "regex" : "(\\\")",
+      "push" : "json__3"
+   },
+   {
+      "token" : "storage.type",
+      "regex" : "((?:\\-?(?:0|(?:[1-9][0-9]*)))(?:(?:\\.[0-9]*)(?:(?:e|E)(?:\\+|\\-)[0-9]+)?)?)"
+   },
+   {
+      "token" : "storage.type",
+      "regex" : "(true|false|null)"
+   },
+   {
+      "token" : ["constant.language", "keyword.operator", "string.source"],
+      "regex" : "(.*)(:)([^#]+)"
+   },
+   {
+      "token" : ["constant.language", "keyword.operator", "string.source"],
+      "regex" : "(.*)(=)([^#]+)"
+   },
+   {
+      "token" : ["constant.language", "keyword.operator", "string.source"],
+      "regex" : "(.*)(@)([^#]+)"
+   },
+   {
+      defaultToken : "text",
+   }
+], 
+"json__1" : [
+   {
+      "token" : "keyword.operator",
+      "regex" : "(\\})",
+      "next" : "pop"
+   },
+   {
+      "token" : "keyword.operator",
+      "regex" : "(\\{)",
+      "push" : "json__1"
+   },
+   {
+      "token" : "keyword.operator",
+      "regex" : "(\\[)",
+      "push" : "json__2"
+   },
+   {
+      "token" : "keyword.operator",
+      "regex" : "(,|\\:)"
+   },
+   {
+      "token" : "keyword.operator",
+      "regex" : "(\\\")",
+      "push" : "json__3"
+   },
+   {
+      "token" : "storage.type",
+      "regex" : "((?:\\-?(?:0|(?:[1-9][0-9]*)))(?:(?:\\.[0-9]*)(?:(?:e|E)(?:\\+|\\-)[0-9]+)?)?)"
+   },
+   {
+      "token" : "storage.type",
+      "regex" : "(true|false|null)"
+   },
+   {
+      defaultToken : "text",
+   }
+], 
+"json__2" : [
+   {
+      "token" : "keyword.operator",
+      "regex" : "(\\])",
+      "next" : "pop"
+   },
+   {
+      "token" : "keyword.operator",
+      "regex" : "(\\{)",
+      "push" : "json__1"
+   },
+   {
+      "token" : "keyword.operator",
+      "regex" : "(\\[)",
+      "push" : "json__2"
+   },
+   {
+      "token" : "keyword.operator",
+      "regex" : "(,|\\:)"
+   },
+   {
+      "token" : "keyword.operator",
+      "regex" : "(\\\")",
+      "push" : "json__3"
+   },
+   {
+      "token" : "storage.type",
+      "regex" : "((?:\\-?(?:0|(?:[1-9][0-9]*)))(?:(?:\\.[0-9]*)(?:(?:e|E)(?:\\+|\\-)[0-9]+)?)?)"
+   },
+   {
+      "token" : "storage.type",
+      "regex" : "(true|false|null)"
+   },
+   {
+      defaultToken : "text",
+   }
+], 
+"json__3" : [
+   {
+      "token" : "keyword.operator",
+      "regex" : "(\\\")",
+      "next" : "pop"
+   },
+   {
+      "token" : "constant.character.escape",
+      "regex" : "((?:\\\\u[0-9a-f]{4})|(?:\\\\[\"\\\\/bfnrt]))"
+   },
+   {
+      "token" : "string.unquoted",
+      "regex" : "([^\\\"\\\\]+)"
+   },
+   {
+      defaultToken : "text",
+   }
+]
+};
+this.normalizeRules();
+};
+/* ------------------------ END ------------------------------ */
+oop.inherits(Lama2HighlightRules, TextHighlightRules);
+exports.Lama2HighlightRules = Lama2HighlightRules;
+});

@@ -1,0 +1,214 @@
+'fileTypes' : [
+    'l2'
+    'lama2'
+  ]
+  'name' : 'lama2'
+  'patterns' : [
+    {
+      'include' : '#main'
+    }
+  ]
+  'scopeName' : 'source.lama2'
+  'uuid' : ''
+  'repository' : {
+    'main' : {
+      'patterns' : [
+        {
+          'match' : '(#.*)'
+          'name' : 'comment.lama2'
+        }
+        {
+          'include' : '#preamble'
+        }
+        {
+          'include' : '#json'
+        }
+        {
+          'include' : '#headers'
+        }
+        {
+          'include' : '#varjson'
+        }
+        {
+          'include' : '#files'
+        }
+      ]
+    }
+    'files' : {
+      'patterns' : [
+        {
+          'match' : '(.*)(@)([^\\x{0023}]+)'
+          'captures' : {
+            '1' : {
+              'name' : 'constant.language.lama2'
+            }
+            '2' : {
+              'name' : 'keyword.operator.lama2'
+            }
+            '3' : {
+              'name' : 'string.source.lama2'
+            }
+          }
+        }
+      ]
+    }
+    'headers' : {
+      'patterns' : [
+        {
+          'match' : '(.*)(:)([^\\x{0023}]+)'
+          'captures' : {
+            '1' : {
+              'name' : 'constant.language.lama2'
+            }
+            '2' : {
+              'name' : 'keyword.operator.lama2'
+            }
+            '3' : {
+              'name' : 'string.source.lama2'
+            }
+          }
+        }
+      ]
+    }
+    'json' : {
+      'patterns' : [
+        {
+          'begin' : '(\\{)'
+          'beginCaptures' : {
+            '1' : {
+              'name' : 'keyword.operator.lama2'
+            }
+          }
+          'patterns' : [
+            {
+              'include' : '#json__1'
+            }
+          ]
+          'end' : '(\\})'
+          'endCaptures' : {
+            '1' : {
+              'name' : 'keyword.operator.lama2'
+            }
+          }
+        }
+        {
+          'begin' : '(\\[)'
+          'beginCaptures' : {
+            '1' : {
+              'name' : 'keyword.operator.lama2'
+            }
+          }
+          'patterns' : [
+            {
+              'include' : '#json__2'
+            }
+          ]
+          'end' : '(\\])'
+          'endCaptures' : {
+            '1' : {
+              'name' : 'keyword.operator.lama2'
+            }
+          }
+        }
+        {
+          'match' : '(,|\\:)'
+          'name' : 'keyword.operator.lama2'
+        }
+        {
+          'begin' : '(\\")'
+          'beginCaptures' : {
+            '1' : {
+              'name' : 'keyword.operator.lama2'
+            }
+          }
+          'patterns' : [
+            {
+              'include' : '#json__3'
+            }
+          ]
+          'end' : '(\\")'
+          'endCaptures' : {
+            '1' : {
+              'name' : 'keyword.operator.lama2'
+            }
+          }
+        }
+        {
+          'match' : '((?:\\-?(?:0|(?:[1-9][0-9]*)))(?:(?:\\.[0-9]*)(?:(?:e|E)(?:\\+|\\-)[0-9]+)?)?)'
+          'name' : 'storage.type.lama2'
+        }
+        {
+          'match' : '(true|false|null)'
+          'name' : 'storage.type.lama2'
+        }
+      ]
+    }
+    'json__1' : {
+      'patterns' : [
+        {
+          'include' : '#json'
+        }
+      ]
+    }
+    'json__2' : {
+      'patterns' : [
+        {
+          'include' : '#json'
+        }
+      ]
+    }
+    'json__3' : {
+      'patterns' : [
+        {
+          'match' : '((?:\\\\u[0-9a-f]{4})|(?:\\\\[\\x{0022}\\x{005c}\\x{002f}bfnrt]))'
+          'name' : 'constant.character.escape.lama2'
+        }
+        {
+          'match' : '([^\\"\\x{005c}]+)'
+          'name' : 'string.unquoted.lama2'
+        }
+      ]
+    }
+    'preamble' : {
+      'patterns' : [
+        {
+          'match' : '(GET|POST|PUT|DELETE|get|post|put|delete)'
+          'name' : 'keyword.lama2'
+        }
+        {
+          'match' : '(MULTIPART|multipart)'
+          'name' : 'keyword.lama2'
+        }
+        {
+          'match' : '(https?|\\$\\{.*\\})(.*)'
+          'captures' : {
+            '1' : {
+              'name' : 'variable.lama2'
+            }
+            '2' : {
+              'name' : 'keyword.operator.lama2'
+            }
+          }
+        }
+      ]
+    }
+    'varjson' : {
+      'patterns' : [
+        {
+          'match' : '(.*)(=)([^\\x{0023}]+)'
+          'captures' : {
+            '1' : {
+              'name' : 'constant.language.lama2'
+            }
+            '2' : {
+              'name' : 'keyword.operator.lama2'
+            }
+            '3' : {
+              'name' : 'string.source.lama2'
+            }
+          }
+        }
+      ]
+    }
+  }
+  

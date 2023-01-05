@@ -1,0 +1,169 @@
+name               = lama2
+file_extensions [] = l2, lama2;
+
+contexts[] {
+    main : context {
+    
+      : pattern {
+          regex \= (#.*)
+          styles[] = .comment;
+      }
+
+      : include "preamble";
+
+      : include "json";
+      
+      : include "headers";
+      
+      : include "varjson";
+      
+      : include "files";
+      
+
+    }
+    
+   varjson : context {
+      : pattern {
+         regex \= (.*)(=)([^#]+)
+         styles[] = .hkey, .punctuation, .hval;
+      }
+   }
+   
+   files : context {
+      : pattern {
+         regex \= (.*)(@)([^#]+)
+         styles[] = .hkey, .punctuation, .hval;
+      }
+   }
+    
+   headers : context {
+      : pattern {
+         regex \= (.*)(:)([^#]+)
+         styles[] = .hkey, .punctuation, .hval;
+      }
+   }
+    
+   preamble : context {
+      : pattern {
+          regex   \= (GET|POST|PUT|DELETE|get|post|put|delete)
+          styles[] = .keyword;
+      }
+      
+      : pattern {
+          regex   \= (MULTIPART|multipart)
+          styles[] = .keyword;
+      }
+      
+      : pattern {
+         regex \= (https?|\$\{.*\})(.*)
+         styles[] = .variable, .punctuation;
+      }
+   }
+    
+   json : context {
+         : inline_push {
+         regex       \= (\{)
+         styles []    = .punctuation;
+         : pop {
+            regex    \= (\})
+            styles [] = .punctuation;
+         }
+         : include "json" ;
+      }
+      : inline_push {
+         regex       \= (\[)
+         styles []    = .punctuation;
+         : pop {
+            regex    \= (\])
+            styles [] = .punctuation;
+         }
+         : include "json" ;
+      }
+      : pattern {
+         regex       \= (,|\:)
+         styles []    = .punctuation;
+      }
+      : inline_push {
+         regex       \= (\")
+         styles []    = .punctuation;
+         : pop {
+            regex    \= (\")
+            styles [] = .punctuation;
+         }
+         : pattern {
+            regex    \= ((?:\\u[0-9a-f]{4})|(?:\\["\\/bfnrt]))
+            styles [] = .escape_char;
+         }
+         : pattern {
+            regex    \= ([^\"\\]+)
+            styles [] = .attribute_value;
+         }
+      }
+      : pattern {
+         regex       \= ((?:\-?(?:0|(?:[1-9][0-9]*)))(?:(?:\.[0-9]*)(?:(?:e|E)(?:\+|\-)[0-9]+)?)?)
+         styles []    = .special;
+      }
+      : pattern {
+         regex       \= (true|false|null)
+         styles []    = .special;
+      }
+      # : pattern {
+      #   regex       \= ([^\s])
+      #   styles []    = .illegal;
+      # }
+   }
+}
+styles[] {
+   .keyword : style {
+      color            = gold
+      textmate_scope   = keyword
+      pygments_scope   = Keyword
+   }
+   .comment : style {
+      color            = #797979
+      textmate_scope   = comment
+      pygments_scope   = Comment
+   }
+   .variable : style {
+      color            = green
+      textmate_scope   = variable
+      pygments_scope   = Name.Variable
+   }
+   .hkey : style {
+      color = #b05279
+      textmate_scope   = constant.language
+      pygments_scope   = Name.Constant
+   }
+   .hval : style {
+      color = #e87d3e
+      textmate_scope   = string.source
+      pygments_scope   = Literal
+   }
+   .escape_char : style {
+      textmate_scope   = constant.character.escape
+      pygments_scope   = String.Escape
+      color            = #0a0
+      background_color = #232
+   }
+   .illegal : style {
+      textmate_scope   = invalid.illegal
+      pygments_scope   = Generic.Error
+      color            = white
+      background_color = red
+   }
+   .punctuation : style {
+      textmate_scope   = keyword.operator
+      pygments_scope   = Punctuation
+      color            = red_2
+   }
+   .attribute_value : style {
+      textmate_scope   = string.unquoted
+      pygments_scope   = String.Char
+      color            = gold
+   }
+   .special : style {
+      textmate_scope   = storage.type
+      pygments_scope   = Keyword.Type
+      color            = #6bc
+   }
+}

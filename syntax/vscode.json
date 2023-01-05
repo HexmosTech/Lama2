@@ -1,0 +1,91 @@
+{
+	"name": "Lama2",
+	"displayName": "Lama2",
+	"description": "Nifty VSCode UI for Lama2, the plain-text powered API client",
+	"version": "0.1.2",
+	"publisher": "Hexmos",
+	"license": "SEE LICENSE IN LICENSE",
+	"icon": "lama2.png",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/HexmosTech/VSCodeLama2"
+	},
+	"engines": {
+		"vscode": "^1.65.0"
+	},
+	"languages": [
+		{
+			"id": "lama2",
+			"extensions": [
+				".l2",
+				".lama2"
+			],
+			"aliases": [
+				"lama2",
+				"l2"
+			]
+		}
+	],
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"onCommand:lama2.ExecuteCurrentFile",
+		"onLanguage:http"
+	],
+	"main": "./out/extension.js",
+	"contributes": {
+		"languages": [
+			{
+				"id": "lama2",
+				"extensions": [
+					".l2",
+					".lama2"
+				],
+				"aliases": [
+					"lama2",
+					"l2"
+				]
+			}
+		],
+		"grammars": [
+			{
+			  "language": "lama2",
+			  "scopeName": "source.lama2",
+			  "path": "./syntaxes/lama2.tmGrammar.json"
+			}
+	  	],
+		"commands": [
+			{
+				"command": "lama2.ExecuteCurrentFile",
+				"title": "Lama2: Execute Current File"
+			}
+		]
+	},
+	"scripts": {
+		"vscode:prepublish": "yarn run compile",
+		"compile": "tsc -p ./",
+		"watch": "tsc -watch -p ./",
+		"pretest": "yarn run compile && yarn run lint",
+		"lint": "eslint src --ext ts",
+		"test": "node ./out/test/runTest.js"
+	},
+	"devDependencies": {
+		"@types/glob": "^7.2.0",
+		"@types/mocha": "^9.1.0",
+		"@types/node": "14.x",
+		"@types/vscode": "^1.65.0",
+		"@typescript-eslint/eslint-plugin": "^5.12.1",
+		"@typescript-eslint/parser": "^5.12.1",
+		"@vscode/test-electron": "^2.1.2",
+		"eslint": "^8.9.0",
+		"glob": "^7.2.0",
+		"mocha": "^9.2.1",
+		"typescript": "^4.5.5"
+	},
+	"dependencies": {
+		"ansi-to-html": "^0.7.2",
+		"chokidar": "^3.5.3",
+		"json2html": "^0.0.8"
+	}
+}

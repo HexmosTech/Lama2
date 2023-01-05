@@ -1,0 +1,11 @@
+.text { color:#eee; }
+.keyword {color:#cb6; }
+.comment {color:#797979; }
+.variable {color:#070; }
+.constant.language {color:#b05279; }
+.string.source {color:#e87d3e; }
+.constant.character.escape {color:#0a0; }
+.invalid.illegal {color:#fff; }
+.keyword.operator {color:#c15; }
+.string.unquoted {color:#cb6; }
+.storage.type {color:#6bc; }
