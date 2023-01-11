@@ -1,0 +1,26 @@
+url = http://google.com
+---
+# stage 1
+
+POST
+${LOCAL_COORD}/api/login/
+
+{
+    "username": "admin",
+    "password": "Password@123"
+}
+
+---
+
+# filtering, store in var
+let TOKEN = result["Token"]
+
+---
+
+# stage 2
+GET
+${LOCAL_COORD}/listorgstyle
+
+Authorization: 'Token ${TOKEN}’'
+
+{}
