@@ -82,6 +82,7 @@ func (p *Parser) Init() {
 // proceeds to process the rune version of data
 func (p *Parser) Parse(text string) (*gabs.Container, error) {
 	text = strings.ReplaceAll(text, "\r\n", "\n")
+	text = strings.ReplaceAll(text, "\r", "\n")
 	p.Text = []rune(text)
 	p.Pos = -1
 	p.TotalLen = len(p.Text) - 1

@@ -1,6 +1,7 @@
 package parser
 
 import (
+	"errors"
 	"strings"
 
 	"github.com/HexmosTech/gabs/v2"
@@ -35,10 +36,64 @@ func (p *Lama2Parser) Start() (*gabs.Container, error) {
 	return nil, e
 }
 
-// Lama2File applies the rule:
-// HTTPVerb Multipart? TheURL Details?
 func (p *Lama2Parser) Lama2File() (*gabs.Container, error) {
 	log.Trace().Msg("Within Lama2File")
+	temp := gabs.New()
+	tempArr, e1 := temp.Array()
+	if e1 != nil {
+		return nil, errors.New("Couldn't create Array for the parsed data")
+	}
+	// optionally match processor
+	res2, e2 := p.Match([]string{"Processor"})
+	if e2 == nil {
+		tempArr.ArrayAppend(res2)
+	}
+
+	// match requester
+	res3, e3 := p.Match([]string{"Requester"})
+	if e3 != nil {
+		return nil, e3
+	}
+
+	tempArr.ArrayAppend(res3)
+
+	// until file is done:
+	var res4, res5 *gabs.Container
+	var e4, e5 error
+	for p.Pos < p.TotalLen {
+		// match processor
+		res4, e4 = p.Match([]string{"Processor"})
+		if e4 == nil {
+			tempArr.ArrayAppend(res4)
+		} else {
+			break
+		}
+
+		// match requester
+		res5, e5 = p.Match([]string{"Requester"})
+		if e5 == nil {
+			tempArr.ArrayAppend(res5)
+		}
+	}
+	return tempArr, nil
+}
+
+func (p *Lama2Parser) Processor() (*gabs.Container, error) {
+	log.Trace().Msg("Within Processor")
+	temp := gabs.New()
+	return temp, nil
+}
+
+func (p *Lama2Parser) Separator() (*gabs.Container, error) {
+	log.Trace().Msg("Within Separator")
+	temp := gabs.New()
+	return temp, nil
+}
+
+// Requester applies the rule:
+// HTTPVerb Multipart? TheURL Details?
+func (p *Lama2Parser) Requester() (*gabs.Container, error) {
+	log.Trace().Msg("Within Requester")
 	res, e := p.Match([]string{"HTTPVerb"})
 	temp := gabs.New()
 	if e == nil {

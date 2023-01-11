@@ -1,0 +1,4 @@
+url = "google.com"
+---
+GET
+https://${url}
