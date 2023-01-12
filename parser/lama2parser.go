@@ -50,6 +50,11 @@ func (p *Lama2Parser) Lama2File() (*gabs.Container, error) {
 		tempArr.ArrayAppend(res2)
 	}
 
+	_, e21 := p.Match([]string{"Separator"})
+	if e2 != nil && e21 == nil {
+		return nil, utils.NewParseError(p.Pos+1, p.LineNum+1, "Separator without preceding processor block found", []string{})
+	}
+
 	// match requester
 	res3, e3 := p.Match([]string{"Requester"})
 	if e3 != nil {
@@ -57,6 +62,8 @@ func (p *Lama2Parser) Lama2File() (*gabs.Container, error) {
 	}
 
 	tempArr.ArrayAppend(res3)
+
+	fmt.Println(tempArr)
 
 	// until file is done:
 	var res4, res5 *gabs.Container
@@ -68,6 +75,11 @@ func (p *Lama2Parser) Lama2File() (*gabs.Container, error) {
 			tempArr.ArrayAppend(res4)
 		} else {
 			break
+		}
+
+		_, e21 := p.Match([]string{"Separator"})
+		if e2 != nil && e21 == nil {
+			return nil, utils.NewParseError(p.Pos+1, p.LineNum+1, "Separator without preceding processor block found", []string{})
 		}
 
 		// match requester
@@ -87,7 +99,7 @@ func (p *Lama2Parser) Processor() (*gabs.Container, error) {
 	if res {
 		return nil, utils.NewParseError(p.Pos+1, p.LineNum+1, "HTTPVerb found at start of block; cannot be a Requestor block", []string{})
 	}
-	res2, _ := p.MatchUntil("\\n---\\n")
+	res2, _ := p.MatchUntil("\n---\n")
 	fmt.Println(res2.String())
 
 	return res2, nil
@@ -96,6 +108,10 @@ func (p *Lama2Parser) Processor() (*gabs.Container, error) {
 func (p *Lama2Parser) Separator() (*gabs.Container, error) {
 	log.Trace().Msg("Within Separator")
 	temp := gabs.New()
+	_, e := p.Keyword("\n---\n", false, false, false)
+	if e != nil {
+		return nil, utils.NewParseError(p.Pos+1, p.LineNum+1, "Couldnt' find separator", []string{})
+	}
 	return temp, nil
 }
 
