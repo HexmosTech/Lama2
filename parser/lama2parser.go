@@ -2,6 +2,7 @@ package parser
 
 import (
 	"errors"
+	"fmt"
 	"strings"
 
 	"github.com/HexmosTech/gabs/v2"
@@ -41,7 +42,7 @@ func (p *Lama2Parser) Lama2File() (*gabs.Container, error) {
 	temp := gabs.New()
 	tempArr, e1 := temp.Array()
 	if e1 != nil {
-		return nil, errors.New("Couldn't create Array for the parsed data")
+		return nil, errors.New("couldn't create Array for the parsed data")
 	}
 	// optionally match processor
 	res2, e2 := p.Match([]string{"Processor"})
@@ -80,8 +81,16 @@ func (p *Lama2Parser) Lama2File() (*gabs.Container, error) {
 
 func (p *Lama2Parser) Processor() (*gabs.Container, error) {
 	log.Trace().Msg("Within Processor")
-	temp := gabs.New()
-	return temp, nil
+	// A Processor cannot start with any of the HTTP Verbs
+	res := p.LookAhead([]string{"HTTPVerb"})
+	fmt.Println("HTTPVerb Lookahead = ", res)
+	if res {
+		return nil, utils.NewParseError(p.Pos+1, p.LineNum+1, "HTTPVerb found at start of block; cannot be a Requestor block", []string{})
+	}
+	res2, _ := p.MatchUntil("\\n---\\n")
+	fmt.Println(res2.String())
+
+	return res2, nil
 }
 
 func (p *Lama2Parser) Separator() (*gabs.Container, error) {
