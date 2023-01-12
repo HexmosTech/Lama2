@@ -1,4 +1,4 @@
-url = "google.com"
+let url = "google.com"
 ---
 GET
 https://${url}
