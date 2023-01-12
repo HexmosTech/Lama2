@@ -99,10 +99,13 @@ func (p *Lama2Parser) Processor() (*gabs.Container, error) {
 	if res {
 		return nil, utils.NewParseError(p.Pos+1, p.LineNum+1, "HTTPVerb found at start of block; cannot be a Requestor block", []string{})
 	}
+	temp := gabs.New()
 	res2, _ := p.MatchUntil("\n---\n")
+	temp.Set("processor", "type")
+	temp.Set(res2, "value")
 	fmt.Println(res2.String())
 
-	return res2, nil
+	return temp, nil
 }
 
 func (p *Lama2Parser) Separator() (*gabs.Container, error) {
