@@ -171,7 +171,7 @@ func (p *Lama2Parser) TheURL() (*gabs.Container, error) {
 	}
 
 	for {
-		up, err := p.CharClass("A-Za-z0-9-._~:/?#[]@!$&'()*+,;%=")
+		up, err := p.CharClass("A-Za-z0-9-._~:/?#[]@!$&'()*+,;%=}{")
 		if err == nil {
 			res = append(res, string(up))
 		} else {

@@ -20,7 +20,7 @@ func loadElfEnv() {
 	}
 }
 
-func getLamaFileAsString(path string) string {
+func GetLamaFileAsString(path string) string {
 	b, err := ioutil.ReadFile(path) // just pass the file name
 	if err != nil {
 		log.Fatal().Str("Type", "Preprocess").Msg(fmt.Sprint("Couldn't read: ", path))
@@ -35,7 +35,7 @@ func getLamaFileAsString(path string) string {
 // Once done, it reverts back to the original directory,
 // and returns the processed l2 file.
 func LamaFile(inputFile string) (string, string) {
-	content := getLamaFileAsString(inputFile)
+	content := GetLamaFileAsString(inputFile)
 	_, dir, _ := utils.GetFilePathComponents(inputFile)
 	oldDir, _ := os.Getwd()
 
