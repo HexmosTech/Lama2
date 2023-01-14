@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/HexmosTech/gabs/v2"
 	"github.com/HexmosTech/lama2/cmdexec"
 	"github.com/HexmosTech/lama2/cmdgen"
 	"github.com/HexmosTech/lama2/importer"
@@ -16,6 +17,9 @@ import (
 	"github.com/HexmosTech/lama2/parser"
 	"github.com/HexmosTech/lama2/preprocess"
 	"github.com/HexmosTech/lama2/utils"
+	"github.com/dop251/goja"
+	"github.com/dop251/goja_nodejs/console"
+	"github.com/dop251/goja_nodejs/require"
 	"github.com/rs/zerolog/log"
 )
 
@@ -51,9 +55,10 @@ func Process(version string) {
 		}
 		log.Fatal().Msg("To convert Postman export to Lama2, try: l2 -p PostmanFile -l Lama2Dir")
 	}
-	apiContent, apiDir := preprocess.LamaFile(o.Positional.LamaAPIFile)
+	apiContent := preprocess.GetLamaFileAsString(o.Positional.LamaAPIFile)
 	p := parser.NewLama2Parser()
 	parsedAPI, e := p.Parse(apiContent)
+
 	if e != nil {
 		log.Fatal().
 			Str("Type", "Controller").
@@ -62,6 +67,28 @@ func Process(version string) {
 			Msg(fmt.Sprint("Parse Error"))
 	}
 	log.Debug().Str("Parsed API", parsedAPI.String()).Msg("")
+	fmt.Println("***")
+	parsedAPIblocks := parsedAPI.S("value").Data().(*gabs.Container).Children()
+	fmt.Println(parsedAPIblocks)
+	fmt.Println("***")
+	vm := goja.New()
+	new(require.Registry).Enable(vm)
+	console.Enable(vm)
+	for i, block := range parsedAPIblocks {
+		fmt.Println(">> ", i)
+		fmt.Println(block)
+		blockType := block.S("type").Data().(string)
+		if blockType == "processor" {
+			b := block.S("value").Data().(*gabs.Container)
+			fmt.Println(b)
+			script := b.Data().(string)
+			vm.RunString(script)
+			fmt.Println(vm.Get("url").String())
+		}
+	}
+	return
+
+	apiContent, apiDir := preprocess.LamaFile(o.Positional.LamaAPIFile)
 	cmdStr := cmdgen.ConstructCommand(parsedAPI, o)
 	log.Info().Msg("COMMAND:\n" + cmdStr)
 	op := cmdexec.ExecCommand(cmdStr, apiDir)
