@@ -7,6 +7,7 @@ package contoller
 import (
 	"fmt"
 	"os"
+	"path"
 
 	"github.com/HexmosTech/gabs/v2"
 	"github.com/HexmosTech/lama2/cmdexec"
@@ -57,6 +58,7 @@ func Process(version string) {
 	}
 	apiContent := preprocess.GetLamaFileAsString(o.Positional.LamaAPIFile)
 	_, dir, _ := utils.GetFilePathComponents(o.Positional.LamaAPIFile)
+	preprocess.LoadElfEnv(path.Join(dir, "l2.env"))
 	p := parser.NewLama2Parser()
 	parsedAPI, e := p.Parse(apiContent)
 

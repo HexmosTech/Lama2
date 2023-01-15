@@ -13,8 +13,8 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-func loadElfEnv() {
-	err := godotenv.Load("l2.env")
+func LoadElfEnv(l2path string) {
+	err := godotenv.Load(l2path)
 	if err != nil {
 		log.Info().Str("Type", "Preprocess").Msg("Didn't find l2.env in the API directory")
 	}
@@ -40,7 +40,7 @@ func LamaFile(inputFile string) (string, string) {
 	oldDir, _ := os.Getwd()
 
 	utils.ChangeWorkingDir(dir)
-	loadElfEnv()
+	LoadElfEnv("l2.env")
 	content = os.ExpandEnv(content)
 	utils.ChangeWorkingDir(oldDir)
 
