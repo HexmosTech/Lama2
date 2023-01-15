@@ -151,24 +151,26 @@ func (p *Lama2Parser) Requester() (*gabs.Container, error) {
 
 func (p *Lama2Parser) TheURL() (*gabs.Container, error) {
 	res := []string{}
-	kw, e := p.Keyword("http", true, false, true)
-	if e == nil {
-		res = append(res, string(kw))
-	} else {
-		return nil, utils.NewParseError(p.Pos+1, p.LineNum+1, "Couldn't find URL (starting with http(s)", []string{})
-	}
+	/*
+		kw, e := p.Keyword("http", true, false, true)
+		if e == nil {
+			res = append(res, string(kw))
+		} else {
+			return nil, utils.NewParseError(p.Pos+1, p.LineNum+1, "Couldn't find URL (starting with http(s)", []string{})
+		}
 
-	_, e = p.CharClass("s")
-	if e == nil {
-		res = append(res, "s")
-	}
+		_, e = p.CharClass("s")
+		if e == nil {
+			res = append(res, "s")
+		}
 
-	_, e = p.Keyword("://", false, false, true)
-	if e == nil {
-		res = append(res, "://")
-	} else {
-		return nil, utils.NewParseError(p.Pos+1, p.LineNum+1, "Couldn't find URL (starting with http(s)://", []string{})
-	}
+		_, e = p.Keyword("://", false, false, true)
+		if e == nil {
+			res = append(res, "://")
+		} else {
+			return nil, utils.NewParseError(p.Pos+1, p.LineNum+1, "Couldn't find URL (starting with http(s)://", []string{})
+		}
+	*/
 
 	for {
 		up, err := p.CharClass("A-Za-z0-9-._~:/?#[]@!$&'()*+,;%=}{")
