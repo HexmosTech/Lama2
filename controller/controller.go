@@ -83,7 +83,11 @@ func Process(version string) {
 			fmt.Println(b)
 			script := b.Data().(string)
 			vm.RunString(script)
-			fmt.Println(vm.Get("url").String())
+		} else if blockType == "Lama2File" {
+			b := block.S("url", "value").Data().(string)
+			fmt.Println(b)
+			url := preprocess.ExpandEnv(b, vm)
+			fmt.Println(url)
 		}
 	}
 	return
