@@ -92,11 +92,11 @@ func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, header
 // command
 func ConstructCommand(parsedInput *gabs.Container, o *lama2cmd.Opts) string {
 	log.Info().Str("ParsedInput", parsedInput.String()).Msg("")
-	httpv := parsedInput.S("value", "verb", "value")
-	url := parsedInput.S("value", "url", "value")
-	jsonObj := parsedInput.S("value", "details", "ip_data")
-	headers := parsedInput.S("value", "details", "headers")
-	multipart := parsedInput.S("value", "multipart", "value")
+	httpv := parsedInput.S("verb", "value")
+	url := parsedInput.S("url", "value")
+	jsonObj := parsedInput.S("details", "ip_data")
+	headers := parsedInput.S("details", "headers")
+	multipart := parsedInput.S("multipart", "value")
 	multipartBool := false
 	if multipart != nil {
 		multipartBool = true

@@ -56,6 +56,7 @@ func Process(version string) {
 		log.Fatal().Msg("To convert Postman export to Lama2, try: l2 -p PostmanFile -l Lama2Dir")
 	}
 	apiContent := preprocess.GetLamaFileAsString(o.Positional.LamaAPIFile)
+	_, dir, _ := utils.GetFilePathComponents(o.Positional.LamaAPIFile)
 	p := parser.NewLama2Parser()
 	parsedAPI, e := p.Parse(apiContent)
 
@@ -87,7 +88,23 @@ func Process(version string) {
 			b := block.S("url", "value").Data().(string)
 			fmt.Println(b)
 			url := preprocess.ExpandEnv(b, vm)
+			e1 := block.Delete("url", "value")
+			fmt.Println(block)
+			fmt.Println(e1)
+			_, e = block.Set(url, "url", "value")
+			fmt.Println(e)
+			fmt.Println(block)
 			fmt.Println(url)
+			// TODO - replace stuff in headers, and varjson and json as well
+			cmd := cmdgen.ConstructCommand(block, o)
+			retStr := cmdexec.ExecCommand(cmd, dir)
+			fmt.Println("----------xxxxxxxxx-----------")
+			fmt.Println(retStr)
+			parsedOutput := outputmanager.RequestLogParser(retStr)
+			poStr := parsedOutput.S("body").Data().(string)
+			fmt.Println("----------zzzzzzzzz-----------")
+			fmt.Println(poStr)
+
 		}
 	}
 	return

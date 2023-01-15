@@ -1,5 +1,7 @@
 github.com/HexmosTech/gabs/v2 v2.6.3 h1:MMa1uIm1EUuDf10sxWN4Uc1alVaIndiRB6cI+fxANSk=
 github.com/HexmosTech/gabs/v2 v2.6.3/go.mod h1:N0CS9VkSjf+MRW/7vSussTUvp2rxEdYE4XrJjf1SDgg=
+github.com/HexmosTech/gabs/v2 v2.6.4 h1:yyCvvIKDtSI55u/tjAeuiEHbytMkKcfgib/Skpk7UPQ=
+github.com/HexmosTech/gabs/v2 v2.6.4/go.mod h1:N0CS9VkSjf+MRW/7vSussTUvp2rxEdYE4XrJjf1SDgg=
 github.com/coreos/go-systemd/v22 v22.3.3-0.20220203105225-a9a7ef127534/go.mod h1:Y58oyj3AT4RCenI/lSvhwexgC+NSVTIJ3seZv2GcEnc=
 github.com/creack/pty v1.1.9/go.mod h1:oKZEueFk5CKHvIhNR5MUki03XCEU+Q6VDXinZuGJ33E=
 github.com/creack/pty v1.1.18 h1:n56/Zwd5o6whRC5PMGretI4IdRLlmBXYNjScPaBgsbY=

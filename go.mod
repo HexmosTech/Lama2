@@ -3,7 +3,7 @@ module github.com/HexmosTech/lama2
 go 1.17
 
 require (
-	github.com/HexmosTech/gabs/v2 v2.6.3
+	github.com/HexmosTech/gabs/v2 v2.6.4
 	github.com/creack/pty v1.1.18
 	github.com/dop251/goja v0.0.0-20230111111035-473251c96b4c
 	github.com/dop251/goja_nodejs v0.0.0-20221211191749-434192f0843e

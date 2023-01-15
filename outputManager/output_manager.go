@@ -40,12 +40,7 @@ func ConfigureZeroLog(level string) {
 	zerolog.SetGlobalLevel(logLevelMap[level])
 }
 
-// WriteJSONOutput is primarily built for helping with
-// Extension/Integration building with external tools.
-// Extension writers may simply call `l2 -n -o /tmp/lama2.json ...`
-// to invoke WriteJSONOutput; the generated json file contains
-// three keys: `logs`, `headers`, `body`
-func WriteJSONOutput(requestLog string, targetPath string) {
+func RequestLogParser(requestLog string) *gabs.Container {
 	re := regexp.MustCompile(`(?m)^\s*[{\[<]`)
 
 	idx := re.FindStringIndex(requestLog)
@@ -57,6 +52,16 @@ func WriteJSONOutput(requestLog string, targetPath string) {
 	temp.Set(body, "body")
 	temp.Set(LogBuff.String(), "logs")
 
+	return temp
+}
+
+// WriteJSONOutput is primarily built for helping with
+// Extension/Integration building with external tools.
+// Extension writers may simply call `l2 -n -o /tmp/lama2.json ...`
+// to invoke WriteJSONOutput; the generated json file contains
+// three keys: `logs`, `headers`, `body`
+func WriteJSONOutput(requestLog string, targetPath string) {
+	temp := RequestLogParser(requestLog)
 	err := os.WriteFile(targetPath, []byte(temp.String()), 0o644)
 	if err != nil {
 		log.Fatal().Msg(fmt.Sprintf("Couldn't write JSON output to: %s", targetPath))

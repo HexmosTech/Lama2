@@ -7,6 +7,7 @@
 package preprocess
 
 import (
+	"fmt"
 	"os"
 	"strings"
 
@@ -38,7 +39,13 @@ func Expand(s string, vm *goja.Runtime, mapping map[string]string) string {
 				if jsVal != nil {
 					buf = append(buf, []byte(jsVal.String())...)
 				} else {
-					buf = append(buf, mapping[name]...)
+					val, ok := mapping[name]
+					if ok {
+						buf = append(buf, val...)
+					} else {
+						buf = append(buf, ""...)
+						fmt.Println("Couldn't find the variable `" + name + "`,  in both Javascript processor block and environment variables. Replacing with empty string")
+					}
 				}
 			}
 			j += w

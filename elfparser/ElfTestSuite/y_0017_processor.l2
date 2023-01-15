@@ -1,4 +1,4 @@
-let url = "google.com"
+let url = "localhost:8080/get"
 ---
 GET
-https://${url}
+http://${url}
