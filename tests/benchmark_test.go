@@ -9,7 +9,7 @@ import (
 
 func BenchmarkBasicGet(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		os.Args = []string{"l2", "../examples/0009_processor_basic/0009_processor_basic.l2"}
+		os.Args = []string{"l2", "-n", "../examples/0009_processor_basic/0009_processor_basic.l2"}
 		// os.Args = []string{"l2", "../elfparser/ElfTestSuite/y_0017_processor.l2"}
 		controller.Process("")
 	}

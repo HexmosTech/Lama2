@@ -1,4 +1,4 @@
-url = http://google.com
+url = "http://google.com"
 ---
 # stage 1
 
@@ -13,8 +13,9 @@ ${LOCAL_COORD}/anything
 
 ---
 
-# filtering, store in var
-let TOKEN = result["Token"]
+// filtering, store in var
+let TOKEN = result["json"]["Token"]
+console.log(TOKEN)
 
 ---
 
