@@ -24,6 +24,14 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
+func expandUrl(block *gabs.Container, vm *goja.Runtime) {
+	b := block.S("url", "value").Data().(string)
+	fmt.Println(b)
+	url := preprocess.ExpandEnv(b, vm)
+	block.Delete("url", "value")
+	block.Set(url, "url", "value")
+}
+
 // Process initiates the following tasks in the given order:
 // 1. Parse command line arguments
 // 2. Read API file contents
@@ -87,26 +95,21 @@ func Process(version string) {
 			script := b.Data().(string)
 			vm.RunString(script)
 		} else if blockType == "Lama2File" {
-			b := block.S("url", "value").Data().(string)
-			fmt.Println(b)
-			url := preprocess.ExpandEnv(b, vm)
-			e1 := block.Delete("url", "value")
-			fmt.Println(block)
-			fmt.Println(e1)
-			_, e = block.Set(url, "url", "value")
-			fmt.Println(e)
-			fmt.Println(block)
-			fmt.Println(url)
+			expandUrl(block, vm)
 			// TODO - replace stuff in headers, and varjson and json as well
 			cmd := cmdgen.ConstructCommand(block, o)
 			retStr := cmdexec.ExecCommand(cmd, dir)
 			fmt.Println("----------xxxxxxxxx-----------")
 			fmt.Println(retStr)
-			parsedOutput := outputmanager.RequestLogParser(retStr)
-			poStr := parsedOutput.S("body").Data().(string)
-			fmt.Println("----------zzzzzzzzz-----------")
-			fmt.Println(poStr)
-
+			parsedOutput, e1 := outputmanager.RequestLogParser(retStr)
+			if e1 == nil {
+				fmt.Println("ParsedOutput", parsedOutput)
+				poStr := parsedOutput.S("body").Data().(string)
+				fmt.Println("----------zzzzzzzzz-----------")
+				fmt.Println(poStr)
+			} else {
+				fmt.Println(parsedOutput.S("errors").Data().(string))
+			}
 		}
 	}
 	return
