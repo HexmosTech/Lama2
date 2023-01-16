@@ -5,6 +5,7 @@ package outputmanager
 
 import (
 	"bytes"
+	"errors"
 	"fmt"
 	"os"
 	"regexp"
@@ -40,10 +41,20 @@ func ConfigureZeroLog(level string) {
 	zerolog.SetGlobalLevel(logLevelMap[level])
 }
 
-func RequestLogParser(requestLog string) *gabs.Container {
-	re := regexp.MustCompile(`(?m)^\s*[{\[<]`)
+func wrapError(requestError string) *gabs.Container {
+	temp := gabs.New()
+	temp.Set(requestError, "errors")
+	return temp
+}
 
+func RequestLogParser(requestLog string) (*gabs.Container, error) {
+	re := regexp.MustCompile(`(?m)^\s*[{\[<]`)
 	idx := re.FindStringIndex(requestLog)
+	if idx == nil {
+		// TODO: is this some other sort of binary file? Are images handled
+		return wrapError(requestLog), errors.New("Request caused errors. See error attribute for details.")
+	}
+
 	headers := string(requestLog[:idx[0]])
 	body := string(requestLog[idx[0]:])
 
@@ -52,7 +63,7 @@ func RequestLogParser(requestLog string) *gabs.Container {
 	temp.Set(body, "body")
 	temp.Set(LogBuff.String(), "logs")
 
-	return temp
+	return temp, nil
 }
 
 // WriteJSONOutput is primarily built for helping with
@@ -61,7 +72,7 @@ func RequestLogParser(requestLog string) *gabs.Container {
 // to invoke WriteJSONOutput; the generated json file contains
 // three keys: `logs`, `headers`, `body`
 func WriteJSONOutput(requestLog string, targetPath string) {
-	temp := RequestLogParser(requestLog)
+	temp, _ := RequestLogParser(requestLog)
 	err := os.WriteFile(targetPath, []byte(temp.String()), 0o644)
 	if err != nil {
 		log.Fatal().Msg(fmt.Sprintf("Couldn't write JSON output to: %s", targetPath))
