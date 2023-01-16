@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"os"
 	"path"
+	"regexp"
 
 	"github.com/HexmosTech/gabs/v2"
 	"github.com/HexmosTech/lama2/cmdexec"
@@ -30,6 +31,34 @@ func expandUrl(block *gabs.Container, vm *goja.Runtime) {
 	url := preprocess.ExpandEnv(b, vm)
 	block.Delete("url", "value")
 	block.Set(url, "url", "value")
+}
+
+func runVmCode(chainCode string, vm *goja.Runtime) {
+	_, err := vm.RunString(chainCode)
+	if ex, ok := err.(*goja.Exception); ok {
+		fmt.Println(ex.String())
+	}
+}
+
+func guessRespType(resp string) string {
+	match, _ := regexp.MatchString(`^\s*<`, resp)
+	if match {
+		return "xml"
+	}
+	return "json"
+}
+
+func generateChainCode(resp string) string {
+	code := `try {
+		result = JSON.parse(String.raw` + "`" + resp + "`" + `)	
+		console.log("Stored as JSON")
+	} catch (e) {
+		result = String.raw` + "`" + resp + "`" + ` 	
+		console.log(e)
+		console.log("Stored as string")
+	}`
+	fmt.Println(code)
+	return code
 }
 
 // Process initiates the following tasks in the given order:
@@ -93,7 +122,7 @@ func Process(version string) {
 			b := block.S("value").Data().(*gabs.Container)
 			fmt.Println(b)
 			script := b.Data().(string)
-			vm.RunString(script)
+			runVmCode(script, vm)
 		} else if blockType == "Lama2File" {
 			expandUrl(block, vm)
 			// TODO - replace stuff in headers, and varjson and json as well
@@ -107,6 +136,9 @@ func Process(version string) {
 				poStr := parsedOutput.S("body").Data().(string)
 				fmt.Println("----------zzzzzzzzz-----------")
 				fmt.Println(poStr)
+				// rType := guessRespType(poStr)
+				chainCode := generateChainCode(poStr)
+				runVmCode(chainCode, vm)
 			} else {
 				fmt.Println(parsedOutput.S("errors").Data().(string))
 			}

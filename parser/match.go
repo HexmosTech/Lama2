@@ -90,8 +90,10 @@ func (p *Parser) MatchUntil(end string) (*gabs.Container, error) {
 	chunk := make([]string, 0)
 	temp := gabs.New()
 	for {
+		oldPos := p.Pos
 		_, e1 := p.Keyword(end, false, false, false)
 		if e1 == nil {
+			p.Pos = oldPos
 			temp.Set(strings.Join(chunk, ""))
 			return temp, nil
 		}

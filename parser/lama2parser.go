@@ -50,9 +50,11 @@ func (p *Lama2Parser) Lama2File() (*gabs.Container, error) {
 		tempArr.ArrayAppend(res2)
 	}
 
-	_, e21 := p.Match([]string{"Separator"})
+	s1, e21 := p.Match([]string{"Separator"})
 	if e2 != nil && e21 == nil {
 		return nil, utils.NewParseError(p.Pos+1, p.LineNum+1, "Separator without preceding processor block found", []string{})
+	} else {
+		fmt.Println("s1", s1)
 	}
 
 	// match requester
@@ -69,6 +71,13 @@ func (p *Lama2Parser) Lama2File() (*gabs.Container, error) {
 	var res4, res5 *gabs.Container
 	var e4, e5 error
 	for p.Pos < p.TotalLen {
+		s2, e23 := p.Match([]string{"Separator"})
+		if e2 != nil && e23 == nil {
+			return nil, utils.NewParseError(p.Pos+1, p.LineNum+1, "Separator without preceding processor block found", []string{})
+		} else {
+			fmt.Println("s2", s2)
+		}
+
 		// match processor
 		res4, e4 = p.Match([]string{"Processor"})
 		if e4 == nil {
@@ -77,9 +86,11 @@ func (p *Lama2Parser) Lama2File() (*gabs.Container, error) {
 			break
 		}
 
-		_, e21 := p.Match([]string{"Separator"})
-		if e2 != nil && e21 == nil {
+		s3, e22 := p.Match([]string{"Separator"})
+		if e2 != nil && e22 == nil {
 			return nil, utils.NewParseError(p.Pos+1, p.LineNum+1, "Separator without preceding processor block found", []string{})
+		} else {
+			fmt.Println("s3", s3)
 		}
 
 		// match requester
@@ -111,7 +122,8 @@ func (p *Lama2Parser) Processor() (*gabs.Container, error) {
 func (p *Lama2Parser) Separator() (*gabs.Container, error) {
 	log.Trace().Msg("Within Separator")
 	temp := gabs.New()
-	_, e := p.Keyword("\n---\n", false, false, false)
+	s, e := p.Keyword("---\n", false, false, false)
+	temp.Set(string(s))
 	if e != nil {
 		return nil, utils.NewParseError(p.Pos+1, p.LineNum+1, "Couldnt' find separator", []string{})
 	}
