@@ -28,9 +28,18 @@ import (
 func expandHeaders(block *gabs.Container, vm *goja.Runtime) {
 	headerMap := block.S("details", "headers")
 	fmt.Println(headerMap)
+	newHeaderMap := gabs.New()
 	for k, v := range headerMap.ChildrenMap() {
 		fmt.Println(k, " = ", v)
+		key := preprocess.ExpandEnv(k, vm)
+		val := preprocess.ExpandEnv(v.Data().(*gabs.Container).Data().(string), vm)
+		valWrap := gabs.New()
+		valWrap.Set(val)
+		newHeaderMap.Set(valWrap, key)
 	}
+	block.Delete("details", "headers")
+	block.Set(newHeaderMap, "details", "headers")
+	fmt.Println(block)
 
 }
 
