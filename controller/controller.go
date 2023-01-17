@@ -51,6 +51,21 @@ func expandUrl(block *gabs.Container, vm *goja.Runtime) {
 	block.Set(url, "url", "value")
 }
 
+func expandJSON(block *gabs.Container, vm *goja.Runtime) {
+	fmt.Println("In expandJSON", block)
+	dataBlock := block.S("details", "ip_data")
+	dataBlockStr := dataBlock.String()
+	dataBlockStr = preprocess.ExpandEnv(dataBlockStr, vm)
+	fmt.Println(dataBlockStr)
+	processedBlock, err := gabs.ParseJSON([]byte(dataBlockStr))
+	if err != nil {
+		fmt.Println("Couldn't expand env variables on top of the JSON. Try TODO option") // TODO
+	}
+	block.Delete("details", "ip_data")
+	block.Set(processedBlock, "details", "ip_data")
+	fmt.Println(block)
+}
+
 func runVmCode(chainCode string, vm *goja.Runtime) {
 	_, err := vm.RunString(chainCode)
 	if ex, ok := err.(*goja.Exception); ok {
@@ -144,6 +159,7 @@ func Process(version string) {
 		} else if blockType == "Lama2File" {
 			expandUrl(block, vm)
 			expandHeaders(block, vm)
+			expandJSON(block, vm)
 			// TODO - replace stuff in headers, and varjson and json as well
 			cmd := cmdgen.ConstructCommand(block, o)
 			retStr := cmdexec.ExecCommand(cmd, dir)

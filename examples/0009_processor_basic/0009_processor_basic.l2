@@ -8,6 +8,7 @@ ${LOCAL_COORD}/anything
 {
     "username": "admin",
     "password": "Password@123",
+    "from": "${LOCAL_COORD}/anything",
     "Token": "MySuperSecretToken"
 }
 
