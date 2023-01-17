@@ -25,6 +25,15 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
+func expandHeaders(block *gabs.Container, vm *goja.Runtime) {
+	headerMap := block.S("details", "headers")
+	fmt.Println(headerMap)
+	for k, v := range headerMap.ChildrenMap() {
+		fmt.Println(k, " = ", v)
+	}
+
+}
+
 func expandUrl(block *gabs.Container, vm *goja.Runtime) {
 	b := block.S("url", "value").Data().(string)
 	fmt.Println(b)
@@ -125,6 +134,7 @@ func Process(version string) {
 			runVmCode(script, vm)
 		} else if blockType == "Lama2File" {
 			expandUrl(block, vm)
+			expandHeaders(block, vm)
 			// TODO - replace stuff in headers, and varjson and json as well
 			cmd := cmdgen.ConstructCommand(block, o)
 			retStr := cmdexec.ExecCommand(cmd, dir)
