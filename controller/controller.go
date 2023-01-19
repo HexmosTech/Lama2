@@ -54,6 +54,9 @@ func expandUrl(block *gabs.Container, vm *goja.Runtime) {
 func expandJSON(block *gabs.Container, vm *goja.Runtime) {
 	fmt.Println("In expandJSON", block)
 	dataBlock := block.S("details", "ip_data")
+	if dataBlock == nil {
+		return
+	}
 	dataBlockStr := dataBlock.String()
 	dataBlockStr = preprocess.ExpandEnv(dataBlockStr, vm)
 	fmt.Println(dataBlockStr)
@@ -169,6 +172,7 @@ func Process(version string) {
 			if e1 == nil {
 				fmt.Println("ParsedOutput", parsedOutput)
 				poStr := parsedOutput.S("body").Data().(string)
+				// poStr = stripansi.Strip(poStr)
 				fmt.Println("----------zzzzzzzzz-----------")
 				fmt.Println(poStr)
 				// rType := guessRespType(poStr)
@@ -181,11 +185,13 @@ func Process(version string) {
 	}
 	return
 
-	apiContent, apiDir := preprocess.LamaFile(o.Positional.LamaAPIFile)
-	cmdStr := cmdgen.ConstructCommand(parsedAPI, o)
-	log.Info().Msg("COMMAND:\n" + cmdStr)
-	op := cmdexec.ExecCommand(cmdStr, apiDir)
-	if o.Output != "" {
-		outputmanager.WriteJSONOutput(op, o.Output)
-	}
+	/*
+		apiContent, apiDir := preprocess.LamaFile(o.Positional.LamaAPIFile)
+		cmdStr := cmdgen.ConstructCommand(parsedAPI, o)
+		log.Info().Msg("COMMAND:\n" + cmdStr)
+		op := cmdexec.ExecCommand(cmdStr, apiDir)
+		if o.Output != "" {
+			outputmanager.WriteJSONOutput(op, o.Output)
+		}
+	*/
 }
