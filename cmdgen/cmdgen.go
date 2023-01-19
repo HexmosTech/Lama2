@@ -15,7 +15,7 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, headers *gabs.Container, multipart bool, o *lama2cmd.Opts) string {
+func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, headers *gabs.Container, multipart bool, o *lama2cmd.Opts) []string {
 	command := make([]string, 0)
 	log.Info().
 		Str("Type", "Construct Command").
@@ -55,7 +55,7 @@ func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, header
 		command = append(command, "' |")
 	}
 
-	command = append(command, "http ")
+	command = append(command, "ht ")
 	if o.Nocolor {
 		command = append(command, "--pretty=none ")
 	}
@@ -80,18 +80,28 @@ func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, header
 			command = append(command, "'"+key+":"+val.Data().(*gabs.Container).Data().(string)+"'  ")
 		}
 	}
+	cleanCommand := make([]string, 0)
+	for _, c := range command {
+		cleanC := strings.TrimSpace(c)
+		cleanCommand = append(cleanCommand, cleanC)
+	}
+	return cleanCommand
 
-	commandStr := strings.Join(command, "")
-	log.Info().Str("Generated command", commandStr)
-	return commandStr
+	/*
+		commandStr := strings.Join(command, "")
+		fmt.Println("### ", commandStr)
+		log.Info().Str("Generated command", commandStr)
+		return commandStr
+	*/
 }
 
 // ConstructCommand extracts the HTTP verb, url and other
 // API file inputs, figures out the type of target command
 // and finally generates a string representing the generated
 // command
-func ConstructCommand(parsedInput *gabs.Container, o *lama2cmd.Opts) string {
+func ConstructCommand(parsedInput *gabs.Container, o *lama2cmd.Opts) []string {
 	log.Info().Str("ParsedInput", parsedInput.String()).Msg("")
+	fmt.Println(parsedInput)
 	httpv := parsedInput.S("verb", "value")
 	url := parsedInput.S("url", "value")
 	jsonObj := parsedInput.S("details", "ip_data")
