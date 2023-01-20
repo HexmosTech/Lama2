@@ -4,6 +4,8 @@ github.com/HexmosTech/gabs/v2 v2.6.5 h1:08ZCTfpH/ZxGwrjOfipdZ7x75t0svRDIw2qjlGyA
 github.com/HexmosTech/gabs/v2 v2.6.5/go.mod h1:172vE+burNJgaTsFgfbzzqT4wF+FELkL3t2BCmxa2lo=
 github.com/HexmosTech/httpie-go v1.0.1 h1:lyqDEQlE1iPj4T0p6IC/NdUKAYHZEhwdkPJMpZp0a1I=
 github.com/HexmosTech/httpie-go v1.0.1/go.mod h1:2aRNqtFETKRpnQipCxs98pWelBaTcL40Mw/cM/QacrI=
+github.com/HexmosTech/httpie-go v1.0.2 h1:YP72eKtv/Ey/ubcFO8eHm6DFLEC2CyJQlkgYur0pC50=
+github.com/HexmosTech/httpie-go v1.0.2/go.mod h1:2aRNqtFETKRpnQipCxs98pWelBaTcL40Mw/cM/QacrI=
 github.com/VividCortex/ewma v1.1.1 h1:MnEK4VOv6n0RSY4vtRe3h11qjxL3+t0B8yOL8iMXdcM=
 github.com/VividCortex/ewma v1.1.1/go.mod h1:2Tkkvm3sRDVXaiyucHiACn4cqf7DpdyLvmxzcbUokwA=
 github.com/acarl005/stripansi v0.0.0-20180116102854-5a71ef0e047d h1:licZJFw2RwpHMqeKTCYkitsPqHNxTmd4SNR5r94FGM8=

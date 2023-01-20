@@ -5,6 +5,7 @@
 package cmdexec
 
 import (
+	"fmt"
 	"os"
 	"runtime"
 	"strings"
@@ -33,7 +34,12 @@ func ExecCommand(cmdSlice []string, stdinBody string, apiDir string) string {
 			retStr = string(f)
 		*/
 	} else {
-		httpie.Lama2Entry(cmdSlice, strings.NewReader(stdinBody))
+		resp, err := httpie.Lama2Entry(cmdSlice, strings.NewReader(stdinBody))
+		if err != nil {
+			fmt.Println("Error from httpie Lama2Entry", err)
+		}
+		fmt.Println("Response body from httpie: ")
+		fmt.Println(resp.Body)
 		/*
 			c := exec.Command("bash", "-c", cmdStr)
 			f, err := pty.Start(c)
