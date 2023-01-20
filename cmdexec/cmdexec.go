@@ -5,9 +5,9 @@
 package cmdexec
 
 import (
+	"errors"
 	"fmt"
 	"os"
-	"runtime"
 	"strings"
 
 	"github.com/HexmosTech/httpie-go"
@@ -20,40 +20,39 @@ import (
 // to stdout.
 // Once execution finishes, previous CWD is restored,
 // and the command output is returned as a string
-func ExecCommand(cmdSlice []string, stdinBody string, apiDir string) string {
+func ExecCommand(cmdSlice []string, stdinBody string, apiDir string) (string, error) {
 	oldDir, _ := os.Getwd()
 	utils.ChangeWorkingDir(apiDir)
-	var retStr string
 
-	if runtime.GOOS == "windows" {
-		/*
-			f, err := exec.Command("cmd", "/C", cmdStr).Output()
-			if err != nil {
-				panic(err)
-			}
-			retStr = string(f)
-		*/
-	} else {
-		resp, err := httpie.Lama2Entry(cmdSlice, strings.NewReader(stdinBody))
-		if err != nil {
-			fmt.Println("Error from httpie Lama2Entry", err)
-		}
-		fmt.Println("Response body from httpie: ")
-		fmt.Println(resp.Body)
-		/*
-			c := exec.Command("bash", "-c", cmdStr)
-			f, err := pty.Start(c)
-			if err != nil {
-				panic(err)
-			}
-			var buffer1 bytes.Buffer
-			writer := io.MultiWriter(&buffer1, os.Stdout)
-			io.Copy(writer, f)
-			ret, _ := io.ReadAll(&buffer1)
-			retStr = string(ret)
-		*/
+	/*
+		if runtime.GOOS == "windows" {
+				f, err := exec.Command("cmd", "/C", cmdStr).Output()
+				if err != nil {
+					panic(err)
+				}
+				retStr = string(f)
+		} else {
+	*/
+	resp, err := httpie.Lama2Entry(cmdSlice, strings.NewReader(stdinBody))
+	if err != nil {
+		fmt.Println("Error from httpie Lama2Entry", err)
+		return "", errors.New("The request didn't go through")
 	}
+	fmt.Println("Response body from httpie: ")
+	fmt.Println(resp.Body)
+	/*
+		c := exec.Command("bash", "-c", cmdStr)
+		f, err := pty.Start(c)
+		if err != nil {
+			panic(err)
+		}
+		var buffer1 bytes.Buffer
+		writer := io.MultiWriter(&buffer1, os.Stdout)
+		io.Copy(writer, f)
+		ret, _ := io.ReadAll(&buffer1)
+		retStr = string(ret)
+	*/
 
 	utils.ChangeWorkingDir(oldDir)
-	return retStr
+	return resp.Body, nil
 }

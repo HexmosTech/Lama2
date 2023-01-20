@@ -15,7 +15,6 @@ import (
 	"github.com/HexmosTech/lama2/cmdgen"
 	"github.com/HexmosTech/lama2/importer"
 	"github.com/HexmosTech/lama2/lama2cmd"
-	outputmanager "github.com/HexmosTech/lama2/outputManager"
 	"github.com/HexmosTech/lama2/parser"
 	"github.com/HexmosTech/lama2/preprocess"
 	"github.com/HexmosTech/lama2/utils"
@@ -28,6 +27,9 @@ import (
 func expandHeaders(block *gabs.Container, vm *goja.Runtime) {
 	headerMap := block.S("details", "headers")
 	fmt.Println(headerMap)
+	if headerMap == nil {
+		return
+	}
 	newHeaderMap := gabs.New()
 	for k, v := range headerMap.ChildrenMap() {
 		fmt.Println(k, " = ", v)
@@ -165,21 +167,21 @@ func Process(version string) {
 			expandJSON(block, vm)
 			// TODO - replace stuff in headers, and varjson and json as well
 			cmd, stdinBody := cmdgen.ConstructCommand(block, o)
-			retStr := cmdexec.ExecCommand(cmd, stdinBody, dir)
+			retStr, e1 := cmdexec.ExecCommand(cmd, stdinBody, dir)
 			fmt.Println("----------xxxxxxxxx-----------")
 			fmt.Println(retStr)
-			parsedOutput, e1 := outputmanager.RequestLogParser(retStr)
+			// parsedOutput, e1 := outputmanager.RequestLogParser(retStr)
 			if e1 == nil {
-				fmt.Println("ParsedOutput", parsedOutput)
-				poStr := parsedOutput.S("body").Data().(string)
+				// fmt.Println("ParsedOutput", parsedOutput)
+				// poStr := parsedOutput.S("body").Data().(string)
 				// poStr = stripansi.Strip(poStr)
 				fmt.Println("----------zzzzzzzzz-----------")
-				fmt.Println(poStr)
+				// fmt.Println(poStr)
 				// rType := guessRespType(poStr)
-				chainCode := generateChainCode(poStr)
+				chainCode := generateChainCode(retStr)
 				runVmCode(chainCode, vm)
 			} else {
-				fmt.Println(parsedOutput.S("errors").Data().(string))
+				fmt.Println(e1)
 			}
 		}
 	}
