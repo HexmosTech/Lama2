@@ -19,7 +19,7 @@ import (
 // to stdout.
 // Once execution finishes, previous CWD is restored,
 // and the command output is returned as a string
-func ExecCommand(cmdSlice []string, apiDir string) string {
+func ExecCommand(cmdSlice []string, stdinBody string, apiDir string) string {
 	oldDir, _ := os.Getwd()
 	utils.ChangeWorkingDir(apiDir)
 	var retStr string
@@ -33,8 +33,7 @@ func ExecCommand(cmdSlice []string, apiDir string) string {
 			retStr = string(f)
 		*/
 	} else {
-		bodyStr := ""
-		httpie.Lama2Entry(cmdSlice, strings.NewReader(bodyStr))
+		httpie.Lama2Entry(cmdSlice, strings.NewReader(stdinBody))
 		/*
 			c := exec.Command("bash", "-c", cmdStr)
 			f, err := pty.Start(c)

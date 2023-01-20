@@ -164,8 +164,8 @@ func Process(version string) {
 			expandHeaders(block, vm)
 			expandJSON(block, vm)
 			// TODO - replace stuff in headers, and varjson and json as well
-			cmd := cmdgen.ConstructCommand(block, o)
-			retStr := cmdexec.ExecCommand(cmd, dir)
+			cmd, stdinBody := cmdgen.ConstructCommand(block, o)
+			retStr := cmdexec.ExecCommand(cmd, stdinBody, dir)
 			fmt.Println("----------xxxxxxxxx-----------")
 			fmt.Println(retStr)
 			parsedOutput, e1 := outputmanager.RequestLogParser(retStr)
