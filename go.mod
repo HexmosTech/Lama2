@@ -4,7 +4,7 @@ go 1.17
 
 require (
 	github.com/HexmosTech/gabs/v2 v2.6.5
-	github.com/creack/pty v1.1.18
+	github.com/HexmosTech/httpie-go v1.0.1
 	github.com/dop251/goja v0.0.0-20230116105012-0341fef34b46
 	github.com/dop251/goja_nodejs v0.0.0-20221211191749-434192f0843e
 	github.com/jessevdk/go-flags v1.5.0
@@ -14,7 +14,6 @@ require (
 
 require (
 	code.cloudfoundry.org/bytefmt v0.0.0-20200131002437-cf55d5288a48 // indirect
-	github.com/HexmosTech/httpie-go v1.0.1 // indirect
 	github.com/VividCortex/ewma v1.1.1 // indirect
 	github.com/acarl005/stripansi v0.0.0-20180116102854-5a71ef0e047d // indirect
 	github.com/dlclark/regexp2 v1.8.0 // indirect

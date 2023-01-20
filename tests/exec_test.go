@@ -23,8 +23,8 @@ func TestExec(t *testing.T) {
 	if e != nil {
 		t.Fatalf("Error on parsing")
 	}
-	r2 := cmdgen.ConstructCommand(res, &opts)
+	r2, body := cmdgen.ConstructCommand(res, &opts)
 	log.Debug().Strs("Generated command", r2).Msg("")
-	r3 := cmdexec.ExecCommand(r2, apiDir)
+	r3 := cmdexec.ExecCommand(r2, body, apiDir)
 	log.Debug().Str("Execution result", r3).Msg("")
 }

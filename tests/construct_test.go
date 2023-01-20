@@ -20,6 +20,7 @@ func TestConstruct(t *testing.T) {
 	if e != nil {
 		t.Fatalf("Error on parsing")
 	}
-	r2 := cmdgen.ConstructCommand(res, &opts)
+	r2, body := cmdgen.ConstructCommand(res, &opts)
 	log.Debug().Strs("Constructed command", r2).Msg("")
+	log.Debug().Str("Constructed body: ", body).Msg("")
 }

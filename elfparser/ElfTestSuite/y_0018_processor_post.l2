@@ -1,0 +1,7 @@
+let url = "localhost:8080/post"
+---
+POST
+http://${url}
+{
+    "hello": "world"
+}
