@@ -24,6 +24,6 @@ console.log(TOKEN)
 GET
 ${LOCAL_COORD}/bearer
 
-Authorization: 'Bearer ${TOKEN}’'
+Authorization: 'Bearer ${TOKEN}'
 
 {}
