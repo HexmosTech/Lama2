@@ -15,6 +15,7 @@ ${LOCAL_COORD}/anything
 ---
 
 // filtering, store in var
+console.log("@@Result", result)
 let TOKEN = result["json"]["Token"]
 console.log(TOKEN)
 

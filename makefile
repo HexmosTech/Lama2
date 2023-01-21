@@ -4,6 +4,15 @@ buildme:
 	go mod tidy
 	go build -o build/l2 -ldflags "-X main.version=`git tag --sort=-version:refname | head -n 1`" l2.go
 
+debug:
+	go mod tidy
+	go build -gcflags=all="-N -l" -ldflags=-w -ldflags=-compressdwarf=false
+	echo "\033[31m(1) At localhost:8081, set gdbserver address as localhost:8082;\n(2) Also run "monitor exit" from gdb client to terminate the server\033[0m"
+	-pkill -9 gdbgui && true
+	gdbgui -p 8081&
+	gdbserver localhost:8082 ./lama2 examples/0009_processor_basic/0009_processor_basic.l2
+
+
 lint:
 	golangci-lint run --disable-all -E revive ./...
 
