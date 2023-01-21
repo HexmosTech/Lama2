@@ -167,6 +167,7 @@ func Process(version string) {
 			expandJSON(block, vm)
 			// TODO - replace stuff in headers, and varjson and json as well
 			cmd, stdinBody := cmdgen.ConstructCommand(block, o)
+			fmt.Println("@@Body", stdinBody)
 			retStr, e1 := cmdexec.ExecCommand(cmd, stdinBody, dir)
 			fmt.Println("----------xxxxxxxxx-----------")
 			fmt.Println(retStr)
