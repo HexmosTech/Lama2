@@ -2,7 +2,6 @@ package parser
 
 import (
 	"errors"
-	"fmt"
 	"strings"
 
 	"github.com/HexmosTech/gabs/v2"
@@ -60,7 +59,7 @@ func (p *Lama2Parser) Lama2File() (*gabs.Container, error) {
 	} else if proc_e1 == nil && sep_e1 != nil {
 		return nil, utils.NewParseError(p.Pos+1, p.LineNum+1, "Processor without subsequent requestor block found", []string{})
 	} else {
-		fmt.Println("Found separator")
+		log.Debug().Str("Found separator", "---").Msg("")
 	}
 
 	// match requester
@@ -71,7 +70,7 @@ func (p *Lama2Parser) Lama2File() (*gabs.Container, error) {
 
 	tempArr.ArrayAppend(res3)
 
-	fmt.Println(tempArr)
+	log.Debug().Str("Parse structure so far", tempArr.String())
 
 	// until file is done:
 	var res4, res5 *gabs.Container
@@ -113,7 +112,7 @@ func (p *Lama2Parser) Processor() (*gabs.Container, error) {
 	log.Trace().Msg("Within Processor")
 	// A Processor cannot start with any of the HTTP Verbs
 	res := p.LookAhead([]string{"HTTPVerb"})
-	fmt.Println("HTTPVerb Lookahead = ", res)
+	log.Debug().Bool("HTTPVerb LookAhead result", res)
 	if res {
 		return nil, utils.NewParseError(p.Pos+1, p.LineNum+1, "HTTPVerb found at start of block; cannot be a Requestor block", []string{})
 	}
@@ -121,7 +120,7 @@ func (p *Lama2Parser) Processor() (*gabs.Container, error) {
 	res2, _ := p.MatchUntil("\n---\n")
 	temp.Set("processor", "type")
 	temp.Set(res2, "value")
-	fmt.Println(res2.String())
+	log.Debug().Str("Processor block parsed", res2.String()).Msg("")
 
 	return temp, nil
 }
