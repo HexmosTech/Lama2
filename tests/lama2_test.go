@@ -11,6 +11,7 @@ import (
 	"testing"
 
 	"github.com/HexmosTech/gabs/v2"
+	contoller "github.com/HexmosTech/lama2/controller"
 	"github.com/HexmosTech/lama2/parser"
 	"github.com/HexmosTech/lama2/utils"
 	"github.com/rs/zerolog/log"
@@ -113,8 +114,8 @@ func TestJsonParserExhaustive(t *testing.T) {
 		// "y_string_accepted_surrogate_pairs.json",
 		// "y_string_last_surrogates_1_and_2.json",
 		// "y_string_surrogates_U+1D11E_MUSICAL_SYMBOL_G_CLEF.json",
-		// "y_string_unescaped_char_delete.json",
-		// "y_string_with_del_character.json",
+		"y_string_unescaped_char_delete.json",
+		"y_string_with_del_character.json",
 		// "y_string_unicode_U+10FFFE_nonchar.json",
 		// "y_string_unicode_U+1FFFE_nonchar.json",
 	}
@@ -138,7 +139,13 @@ func TestJsonParserExhaustive(t *testing.T) {
 		if e3 != nil {
 			return
 		}
-		jp := jj.S("value", "details", "ip_data")
+
+		blocks := contoller.GetParsedAPIBlocks(jj)
+		var jp *gabs.Container
+		for _, block := range blocks {
+			jp = block
+		}
+		jp = jp.S("details", "ip_data")
 
 		var v1, v2 interface{}
 		json.Unmarshal([]byte(gj.String()), &v1)
