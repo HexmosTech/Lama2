@@ -38,6 +38,10 @@ func (p *Lama2Parser) Start() (*gabs.Container, error) {
 }
 
 func (p *Lama2Parser) Lama2File() (*gabs.Container, error) {
+
+	// Trying to get:
+	// PSBlock? Requestor [SPSBlock Requestor]*
+
 	log.Trace().Msg("Within Lama2File")
 	temp := gabs.New()
 	tempArr, e1 := temp.Array()
@@ -45,22 +49,24 @@ func (p *Lama2Parser) Lama2File() (*gabs.Container, error) {
 		return nil, errors.New("couldn't create Array for the parsed data")
 	}
 	// optionally match processor
-	res2, e2 := p.Match([]string{"Processor"})
-	if e2 == nil {
+	res2, proc_e1 := p.Match([]string{"Processor"})
+	if proc_e1 == nil {
 		tempArr.ArrayAppend(res2)
 	}
 
-	s1, e21 := p.Match([]string{"Separator"})
-	if e2 != nil && e21 == nil {
+	_, sep_e1 := p.Match([]string{"Separator"})
+	if proc_e1 != nil && sep_e1 == nil {
 		return nil, utils.NewParseError(p.Pos+1, p.LineNum+1, "Separator without preceding processor block found", []string{})
+	} else if proc_e1 == nil && sep_e1 != nil {
+		return nil, utils.NewParseError(p.Pos+1, p.LineNum+1, "Processor without subsequent requestor block found", []string{})
 	} else {
-		fmt.Println("s1", s1)
+		fmt.Println("Found separator")
 	}
 
 	// match requester
-	res3, e3 := p.Match([]string{"Requester"})
-	if e3 != nil {
-		return nil, e3
+	res3, req_e1 := p.Match([]string{"Requester"})
+	if req_e1 != nil {
+		return nil, req_e1
 	}
 
 	tempArr.ArrayAppend(res3)
@@ -69,33 +75,34 @@ func (p *Lama2Parser) Lama2File() (*gabs.Container, error) {
 
 	// until file is done:
 	var res4, res5 *gabs.Container
-	var e4, e5 error
+	var proc_e2, e5 error
 	for p.Pos < p.TotalLen {
-		s2, e23 := p.Match([]string{"Separator"})
-		if e2 != nil && e23 == nil {
-			return nil, utils.NewParseError(p.Pos+1, p.LineNum+1, "Separator without preceding processor block found", []string{})
-		} else {
-			fmt.Println("s2", s2)
+		_, sep_e2 := p.Match([]string{"Separator"})
+		if sep_e2 != nil {
+			return nil, utils.NewParseError(p.Pos+1, p.LineNum+1, "Separator expected (1)", []string{})
 		}
-
 		// match processor
-		res4, e4 = p.Match([]string{"Processor"})
-		if e4 == nil {
-			tempArr.ArrayAppend(res4)
-		} else {
-			break
+		res4, proc_e2 = p.Match([]string{"Processor"})
+		if proc_e2 != nil {
+			return nil, utils.NewParseError(p.Pos+1, p.LineNum+1, "Processor expected (2)", []string{})
 		}
 
-		s3, e22 := p.Match([]string{"Separator"})
-		if e2 != nil && e22 == nil {
-			return nil, utils.NewParseError(p.Pos+1, p.LineNum+1, "Separator without preceding processor block found", []string{})
-		} else {
-			fmt.Println("s3", s3)
+		if p.Pos < p.TotalLen {
+			_, sep_e3 := p.Match([]string{"Separator"})
+			if sep_e3 != nil {
+				return nil, utils.NewParseError(p.Pos+1, p.LineNum+1, "Separator exepcted (3)", []string{})
+			}
+
 		}
 
 		// match requester
-		res5, e5 = p.Match([]string{"Requester"})
-		if e5 == nil {
+		if p.Pos < p.TotalLen {
+			res5, e5 = p.Match([]string{"Requester"})
+			if e5 != nil {
+				return nil, utils.NewParseError(p.Pos+1, p.LineNum+1, "Request block exepcted (4)", []string{})
+			}
+
+			tempArr.ArrayAppend(res4)
 			tempArr.ArrayAppend(res5)
 		}
 	}
