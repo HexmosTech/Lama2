@@ -61,7 +61,7 @@ func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, header
 		command = append(command, "--pretty=none ")
 	}
 	if multipart {
-		command = append(command, "--multipart ")
+		command = append(command, "--ignore-stdin", "--form")
 	}
 
 	command = append(command, httpv+" ")
@@ -71,8 +71,8 @@ func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, header
 		for key, val := range jsonObj.Data().(*gabs.Container).ChildrenMap() {
 			command = append(command, "'"+key+"'='"+val.Data().(string)+"'  ")
 		}
-		for key, val := range files.Data().(*gabs.Container).ChildrenMap() {
-			command = append(command, "'"+key+"'@'"+val.Data().(string)+"'  ")
+		for key, val := range files.ChildrenMap() {
+			command = append(command, key+"@"+val.Data().(string))
 		}
 	}
 
@@ -85,6 +85,9 @@ func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, header
 	for _, c := range command {
 		cleanC := strings.TrimSpace(c)
 		cleanCommand = append(cleanCommand, cleanC)
+	}
+	if multipart {
+		return cleanCommand, ""
 	}
 	return cleanCommand, jsonStr
 
