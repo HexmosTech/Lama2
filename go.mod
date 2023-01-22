@@ -1,10 +1,10 @@
 module github.com/HexmosTech/lama2
 
-go 1.17
+go 1.19
 
 require (
 	github.com/HexmosTech/gabs/v2 v2.6.5
-	github.com/HexmosTech/httpie-go v1.0.4
+	github.com/HexmosTech/httpie-go v1.0.5
 	github.com/dop251/goja v0.0.0-20230116105012-0341fef34b46
 	github.com/dop251/goja_nodejs v0.0.0-20221211191749-434192f0843e
 	github.com/jessevdk/go-flags v1.5.0
