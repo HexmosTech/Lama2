@@ -108,10 +108,14 @@ func ExecuteProcessorBlock(block *gabs.Container, vm *goja.Runtime) {
 	runVmCode(script, vm)
 }
 
-func ExecuteRequestorBlock(block *gabs.Container, vm *goja.Runtime, opts *lama2cmd.Opts, dir string) {
+func ProcessVarsInBlock(block *gabs.Container, vm *goja.Runtime) {
 	expandUrl(block, vm)
 	expandHeaders(block, vm)
 	expandJSON(block, vm)
+}
+
+func ExecuteRequestorBlock(block *gabs.Container, vm *goja.Runtime, opts *lama2cmd.Opts, dir string) {
+	ProcessVarsInBlock(block, vm)
 	// TODO - replace stuff in headers, and varjson and json as well
 	cmd, stdinBody := cmdgen.ConstructCommand(block, opts)
 	fmt.Println("@@Body", stdinBody)
@@ -134,16 +138,7 @@ func ExecuteRequestorBlock(block *gabs.Container, vm *goja.Runtime, opts *lama2c
 
 }
 
-// Process initiates the following tasks in the given order:
-// 1. Parse command line arguments
-// 2. Read API file contents
-// 3. Expand environment variables in API file
-// 4. Parse the API contents
-// 5. Generate API request command
-// 6. Execute command & retrieve results
-// 7. Optionally, post-process and write results to a JSON file
-func Process(version string) {
-	o := lama2cmd.GetAndValidateCmd(os.Args)
+func ArgParsing(o lama2cmd.Opts, version string) {
 	if o.Version {
 		fmt.Println(version)
 		return
@@ -155,17 +150,47 @@ func Process(version string) {
 	if len(o.PostmanFile) > 0 {
 		if len(o.LamaDir) > 0 {
 			importer.PostmanImporter(o.PostmanFile, o.LamaDir)
-			return
+			os.Exit(1)
 		}
 		log.Fatal().Msg("To convert Postman export to Lama2, try: l2 -p PostmanFile -l Lama2Dir")
 	}
 	if len(o.LamaDir) > 0 {
 		if len(o.PostmanFile) > 0 {
 			importer.PostmanImporter(o.PostmanFile, o.LamaDir)
-			return
+			os.Exit(1)
 		}
 		log.Fatal().Msg("To convert Postman export to Lama2, try: l2 -p PostmanFile -l Lama2Dir")
 	}
+
+}
+
+func HandleParsedFile(parsedAPI *gabs.Container, o *lama2cmd.Opts, dir string) {
+	parsedAPIblocks := GetParsedAPIBlocks(parsedAPI)
+	fmt.Println(parsedAPIblocks)
+	fmt.Println("***")
+	vm := GetJSVm()
+	for i, block := range parsedAPIblocks {
+		fmt.Println(">> ", i)
+		fmt.Println(block)
+		blockType := block.S("type").Data().(string)
+		if blockType == "processor" {
+			ExecuteProcessorBlock(block, vm)
+		} else if blockType == "Lama2File" {
+			ExecuteRequestorBlock(block, vm, o, dir)
+		}
+	}
+}
+
+// Process initiates the following tasks in the given order:
+// 1. Parse command line arguments
+// 2. Read API file contents
+// 3. Expand environment variables in API file
+// 4. Parse the API contents
+// 5. Generate API request command
+// 6. Execute command & retrieve results
+// 7. Optionally, post-process and write results to a JSON file
+func Process(version string) {
+	o := lama2cmd.GetAndValidateCmd(os.Args)
 	apiContent := preprocess.GetLamaFileAsString(o.Positional.LamaAPIFile)
 	_, dir, _ := utils.GetFilePathComponents(o.Positional.LamaAPIFile)
 	preprocess.LoadElfEnv(path.Join(dir, "l2.env"))
@@ -181,18 +206,5 @@ func Process(version string) {
 	}
 	log.Debug().Str("Parsed API", parsedAPI.String()).Msg("")
 	fmt.Println("***")
-	parsedAPIblocks := GetParsedAPIBlocks(parsedAPI)
-	fmt.Println(parsedAPIblocks)
-	fmt.Println("***")
-	vm := GetJSVm()
-	for i, block := range parsedAPIblocks {
-		fmt.Println(">> ", i)
-		fmt.Println(block)
-		blockType := block.S("type").Data().(string)
-		if blockType == "processor" {
-			ExecuteProcessorBlock(block, vm)
-		} else if blockType == "Lama2File" {
-			ExecuteRequestorBlock(block, vm, o, dir)
-		}
-	}
+	HandleParsedFile(parsedAPI, o, dir)
 }

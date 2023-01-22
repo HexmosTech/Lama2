@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/HexmosTech/lama2/cmdgen"
+	contoller "github.com/HexmosTech/lama2/controller"
 	"github.com/HexmosTech/lama2/lama2cmd"
 	"github.com/HexmosTech/lama2/parser"
 	"github.com/rs/zerolog/log"
@@ -12,15 +13,19 @@ import (
 // matchFiles, _ := getDataFiles("../elfparser/ElfTestSuite", "y_0012_varjson_multipart.l2")
 
 func TestConstruct(t *testing.T) {
-	opts := lama2cmd.Opts{}
-	s, _ := FileToString("../elfparser/ElfTestSuite/y_0012_varjson_multipart.l2")
-	// s, _ := FileToString("../elfparser/ElfTestSuite/y_0014_at_equal_ambiguity.l2")
+	fpath := "../elfparser/ElfTestSuite/y_0012_varjson_multipart.l2"
+	cmd := []string{"l2", fpath}
+	opts := lama2cmd.GetAndValidateCmd(cmd)
+	s, _ := FileToString(fpath)
 	lp := parser.NewLama2Parser()
 	res, e := lp.Parse(s)
 	if e != nil {
 		t.Fatalf("Error on parsing")
 	}
-	r2, body := cmdgen.ConstructCommand(res, &opts)
-	log.Debug().Strs("Constructed command", r2).Msg("")
-	log.Debug().Str("Constructed body: ", body).Msg("")
+	blocks := contoller.GetParsedAPIBlocks(res)
+	for _, block := range blocks {
+		r2, body := cmdgen.ConstructCommand(block, opts)
+		log.Debug().Strs("Constructed command", r2).Msg("")
+		log.Debug().Str("Constructed body: ", body).Msg("")
+	}
 }
