@@ -108,12 +108,12 @@ func ExecuteProcessorBlock(block *gabs.Container, vm *goja.Runtime) {
 	runVmCode(script, vm)
 }
 
-func ExecuteRequestorBlock(block *gabs.Container, vm *goja.Runtime, o *lama2cmd.Opts, dir string) {
+func ExecuteRequestorBlock(block *gabs.Container, vm *goja.Runtime, opts *lama2cmd.Opts, dir string) {
 	expandUrl(block, vm)
 	expandHeaders(block, vm)
 	expandJSON(block, vm)
 	// TODO - replace stuff in headers, and varjson and json as well
-	cmd, stdinBody := cmdgen.ConstructCommand(block, o)
+	cmd, stdinBody := cmdgen.ConstructCommand(block, opts)
 	fmt.Println("@@Body", stdinBody)
 	retStr, e1 := cmdexec.ExecCommand(cmd, stdinBody, dir)
 	fmt.Println("----------xxxxxxxxx-----------")
