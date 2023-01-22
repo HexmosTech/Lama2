@@ -8,7 +8,6 @@ import (
 	"fmt"
 	"os"
 	"path"
-	"regexp"
 
 	"github.com/HexmosTech/gabs/v2"
 	"github.com/HexmosTech/lama2/cmdexec"
@@ -76,14 +75,6 @@ func runVmCode(chainCode string, vm *goja.Runtime) {
 	if ex, ok := err.(*goja.Exception); ok {
 		fmt.Println(ex.String())
 	}
-}
-
-func guessRespType(resp string) string {
-	match, _ := regexp.MatchString(`^\s*<`, resp)
-	if match {
-		return "xml"
-	}
-	return "json"
 }
 
 func generateChainCode(resp string) string {
