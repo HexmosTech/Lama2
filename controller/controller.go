@@ -25,13 +25,13 @@ import (
 
 func expandHeaders(block *gabs.Container, vm *goja.Runtime) {
 	headerMap := block.S("details", "headers")
-	fmt.Println(headerMap)
+	log.Debug().Str("HeaderMap", headerMap.String()).Msg("")
 	if headerMap == nil {
 		return
 	}
 	newHeaderMap := gabs.New()
 	for k, v := range headerMap.ChildrenMap() {
-		fmt.Println(k, " = ", v)
+		log.Trace().Strs("Header pair", []string{k, " = ", v.String()}).Msg("")
 		key := preprocess.ExpandEnv(k, vm)
 		val := preprocess.ExpandEnv(v.Data().(*gabs.Container).Data().(string), vm)
 		valWrap := gabs.New()
@@ -40,40 +40,40 @@ func expandHeaders(block *gabs.Container, vm *goja.Runtime) {
 	}
 	block.Delete("details", "headers")
 	block.Set(newHeaderMap, "details", "headers")
-	fmt.Println(block)
-
+	log.Debug().Str("Expanded Header block", block.String()).Msg("")
 }
 
 func expandUrl(block *gabs.Container, vm *goja.Runtime) {
 	b := block.S("url", "value").Data().(string)
-	fmt.Println(b)
+	log.Debug().Str("Url block", b).Msg("")
 	url := preprocess.ExpandEnv(b, vm)
 	block.Delete("url", "value")
 	block.Set(url, "url", "value")
 }
 
 func expandJSON(block *gabs.Container, vm *goja.Runtime) {
-	fmt.Println("In expandJSON", block)
+	log.Debug().Str("JSON block to be expanded", block.String()).Msg("")
 	dataBlock := block.S("details", "ip_data")
 	if dataBlock == nil {
 		return
 	}
 	dataBlockStr := dataBlock.String()
 	dataBlockStr = preprocess.ExpandEnv(dataBlockStr, vm)
-	fmt.Println(dataBlockStr)
+	log.Debug().Str("Expanded JSON data block", dataBlockStr).Msg("")
 	processedBlock, err := gabs.ParseJSON([]byte(dataBlockStr))
 	if err != nil {
-		fmt.Println("Couldn't expand env variables on top of the JSON. Try TODO option") // TODO
+		log.Error().Str("Preprocess JSON block issue", "").Msg("")
+		return
 	}
 	block.Delete("details", "ip_data")
 	block.Set(processedBlock, "details", "ip_data")
-	fmt.Println(block)
+	log.Debug().Str("Processed JSON block", block.String()).Msg("")
 }
 
 func runVmCode(chainCode string, vm *goja.Runtime) {
 	_, err := vm.RunString(chainCode)
 	if ex, ok := err.(*goja.Exception); ok {
-		fmt.Println(ex.String())
+		log.Fatal().Str("Error executing JS processor block", ex.String()).Msg("")
 	}
 }
 
@@ -86,7 +86,7 @@ func generateChainCode(resp string) string {
 		console.log(e)
 		console.log("Stored as string")
 	}`
-	fmt.Println(code)
+	log.Debug().Str("Chain code generated", code).Msg("")
 	return code
 }
 
@@ -103,7 +103,7 @@ func GetJSVm() *goja.Runtime {
 
 func ExecuteProcessorBlock(block *gabs.Container, vm *goja.Runtime) {
 	b := block.S("value").Data().(*gabs.Container)
-	fmt.Println(b)
+	log.Debug().Str("Processor block incoming block", block.String()).Msg("")
 	script := b.Data().(string)
 	runVmCode(script, vm)
 }
@@ -118,22 +118,15 @@ func ExecuteRequestorBlock(block *gabs.Container, vm *goja.Runtime, opts *lama2c
 	ProcessVarsInBlock(block, vm)
 	// TODO - replace stuff in headers, and varjson and json as well
 	cmd, stdinBody := cmdgen.ConstructCommand(block, opts)
-	fmt.Println("@@Body", stdinBody)
+	log.Debug().Str("Stdin Body to be passed into httpie", stdinBody).Msg("")
 	retStr, e1 := cmdexec.ExecCommand(cmd, stdinBody, dir)
-	fmt.Println("----------xxxxxxxxx-----------")
-	fmt.Println(retStr)
-	// parsedOutput, e1 := outputmanager.RequestLogParser(retStr)
+	log.Debug().Str("Response from ExecCommand", retStr).Msg("")
 	if e1 == nil {
-		// fmt.Println("ParsedOutput", parsedOutput)
-		// poStr := parsedOutput.S("body").Data().(string)
-		// poStr = stripansi.Strip(poStr)
-		fmt.Println("----------zzzzzzzzz-----------")
-		// fmt.Println(poStr)
-		// rType := guessRespType(poStr)
 		chainCode := generateChainCode(retStr)
 		runVmCode(chainCode, vm)
 	} else {
-		fmt.Println(e1)
+		log.Fatal().Str("Error from ExecCommand", e1.Error())
+		os.Exit(1)
 	}
 
 }
@@ -166,12 +159,10 @@ func ArgParsing(o lama2cmd.Opts, version string) {
 
 func HandleParsedFile(parsedAPI *gabs.Container, o *lama2cmd.Opts, dir string) {
 	parsedAPIblocks := GetParsedAPIBlocks(parsedAPI)
-	fmt.Println(parsedAPIblocks)
-	fmt.Println("***")
 	vm := GetJSVm()
 	for i, block := range parsedAPIblocks {
-		fmt.Println(">> ", i)
-		fmt.Println(block)
+		log.Debug().Int("Block num", i).Msg("")
+		log.Debug().Str("Block getting processed", block.String()).Msg("")
 		blockType := block.S("type").Data().(string)
 		if blockType == "processor" {
 			ExecuteProcessorBlock(block, vm)
@@ -205,6 +196,5 @@ func Process(version string) {
 			Msg(fmt.Sprint("Parse Error"))
 	}
 	log.Debug().Str("Parsed API", parsedAPI.String()).Msg("")
-	fmt.Println("***")
 	HandleParsedFile(parsedAPI, o, dir)
 }

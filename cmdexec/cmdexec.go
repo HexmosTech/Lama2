@@ -6,12 +6,12 @@ package cmdexec
 
 import (
 	"errors"
-	"fmt"
 	"os"
 	"strings"
 
 	"github.com/HexmosTech/httpie-go"
 	"github.com/HexmosTech/lama2/utils"
+	"github.com/rs/zerolog/log"
 )
 
 // ExecCommand changes directory to the given `apiDir`
@@ -23,36 +23,12 @@ import (
 func ExecCommand(cmdSlice []string, stdinBody string, apiDir string) (string, error) {
 	oldDir, _ := os.Getwd()
 	utils.ChangeWorkingDir(apiDir)
-
-	/*
-		if runtime.GOOS == "windows" {
-				f, err := exec.Command("cmd", "/C", cmdStr).Output()
-				if err != nil {
-					panic(err)
-				}
-				retStr = string(f)
-		} else {
-	*/
 	resp, err := httpie.Lama2Entry(cmdSlice, strings.NewReader(stdinBody))
 	if err != nil {
-		fmt.Println("Error from httpie Lama2Entry", err)
-		return "", errors.New("The request didn't go through")
+		log.Fatal().Str("Error from the API executor", err.Error()).Msg("")
+		return "", errors.New("Error from API executor: " + err.Error())
 	}
-	fmt.Println("Response body from httpie: ")
-	fmt.Println(resp.Body)
-	/*
-		c := exec.Command("bash", "-c", cmdStr)
-		f, err := pty.Start(c)
-		if err != nil {
-			panic(err)
-		}
-		var buffer1 bytes.Buffer
-		writer := io.MultiWriter(&buffer1, os.Stdout)
-		io.Copy(writer, f)
-		ret, _ := io.ReadAll(&buffer1)
-		retStr = string(ret)
-	*/
-
+	log.Debug().Str("Response body from API executor", resp.Body).Msg("")
 	utils.ChangeWorkingDir(oldDir)
 	return resp.Body, nil
 }
