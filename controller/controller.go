@@ -99,6 +99,50 @@ func generateChainCode(resp string) string {
 	return code
 }
 
+func GetParsedAPIBlocks(parsedAPI *gabs.Container) []*gabs.Container {
+	return parsedAPI.S("value").Data().(*gabs.Container).Children()
+}
+
+func GetJSVm() *goja.Runtime {
+	vm := goja.New()
+	new(require.Registry).Enable(vm)
+	console.Enable(vm)
+	return vm
+}
+
+func ExecuteProcessorBlock(block *gabs.Container, vm *goja.Runtime) {
+	b := block.S("value").Data().(*gabs.Container)
+	fmt.Println(b)
+	script := b.Data().(string)
+	runVmCode(script, vm)
+}
+
+func ExecuteRequestorBlock(block *gabs.Container, vm *goja.Runtime, o *lama2cmd.Opts, dir string) {
+	expandUrl(block, vm)
+	expandHeaders(block, vm)
+	expandJSON(block, vm)
+	// TODO - replace stuff in headers, and varjson and json as well
+	cmd, stdinBody := cmdgen.ConstructCommand(block, o)
+	fmt.Println("@@Body", stdinBody)
+	retStr, e1 := cmdexec.ExecCommand(cmd, stdinBody, dir)
+	fmt.Println("----------xxxxxxxxx-----------")
+	fmt.Println(retStr)
+	// parsedOutput, e1 := outputmanager.RequestLogParser(retStr)
+	if e1 == nil {
+		// fmt.Println("ParsedOutput", parsedOutput)
+		// poStr := parsedOutput.S("body").Data().(string)
+		// poStr = stripansi.Strip(poStr)
+		fmt.Println("----------zzzzzzzzz-----------")
+		// fmt.Println(poStr)
+		// rType := guessRespType(poStr)
+		chainCode := generateChainCode(retStr)
+		runVmCode(chainCode, vm)
+	} else {
+		fmt.Println(e1)
+	}
+
+}
+
 // Process initiates the following tasks in the given order:
 // 1. Parse command line arguments
 // 2. Read API file contents
@@ -146,55 +190,18 @@ func Process(version string) {
 	}
 	log.Debug().Str("Parsed API", parsedAPI.String()).Msg("")
 	fmt.Println("***")
-	parsedAPIblocks := parsedAPI.S("value").Data().(*gabs.Container).Children()
+	parsedAPIblocks := GetParsedAPIBlocks(parsedAPI)
 	fmt.Println(parsedAPIblocks)
 	fmt.Println("***")
-	vm := goja.New()
-	new(require.Registry).Enable(vm)
-	console.Enable(vm)
+	vm := GetJSVm()
 	for i, block := range parsedAPIblocks {
 		fmt.Println(">> ", i)
 		fmt.Println(block)
 		blockType := block.S("type").Data().(string)
 		if blockType == "processor" {
-			b := block.S("value").Data().(*gabs.Container)
-			fmt.Println(b)
-			script := b.Data().(string)
-			runVmCode(script, vm)
+			ExecuteProcessorBlock(block, vm)
 		} else if blockType == "Lama2File" {
-			expandUrl(block, vm)
-			expandHeaders(block, vm)
-			expandJSON(block, vm)
-			// TODO - replace stuff in headers, and varjson and json as well
-			cmd, stdinBody := cmdgen.ConstructCommand(block, o)
-			fmt.Println("@@Body", stdinBody)
-			retStr, e1 := cmdexec.ExecCommand(cmd, stdinBody, dir)
-			fmt.Println("----------xxxxxxxxx-----------")
-			fmt.Println(retStr)
-			// parsedOutput, e1 := outputmanager.RequestLogParser(retStr)
-			if e1 == nil {
-				// fmt.Println("ParsedOutput", parsedOutput)
-				// poStr := parsedOutput.S("body").Data().(string)
-				// poStr = stripansi.Strip(poStr)
-				fmt.Println("----------zzzzzzzzz-----------")
-				// fmt.Println(poStr)
-				// rType := guessRespType(poStr)
-				chainCode := generateChainCode(retStr)
-				runVmCode(chainCode, vm)
-			} else {
-				fmt.Println(e1)
-			}
+			ExecuteRequestorBlock(block, vm, o, dir)
 		}
 	}
-	return
-
-	/*
-		apiContent, apiDir := preprocess.LamaFile(o.Positional.LamaAPIFile)
-		cmdStr := cmdgen.ConstructCommand(parsedAPI, o)
-		log.Info().Msg("COMMAND:\n" + cmdStr)
-		op := cmdexec.ExecCommand(cmdStr, apiDir)
-		if o.Output != "" {
-			outputmanager.WriteJSONOutput(op, o.Output)
-		}
-	*/
 }
