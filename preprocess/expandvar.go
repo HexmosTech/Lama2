@@ -7,11 +7,11 @@
 package preprocess
 
 import (
-	"fmt"
 	"os"
 	"strings"
 
 	"github.com/dop251/goja"
+	"github.com/rs/zerolog/log"
 )
 
 // Expand replaces ${var} or $var in the string based on the mapping function.
@@ -44,7 +44,7 @@ func Expand(s string, vm *goja.Runtime, mapping map[string]string) string {
 						buf = append(buf, val...)
 					} else {
 						buf = append(buf, ""...)
-						fmt.Println("Couldn't find the variable `" + name + "`,  in both Javascript processor block and environment variables. Replacing with empty string")
+						log.Warn().Str("Couldn't find the variable `"+name+"`,  in both Javascript processor block and environment variables. Replacing with empty string", "").Msg("")
 					}
 				}
 			}

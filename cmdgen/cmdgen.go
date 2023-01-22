@@ -90,13 +90,6 @@ func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, header
 		return cleanCommand, ""
 	}
 	return cleanCommand, jsonStr
-
-	/*
-		commandStr := strings.Join(command, "")
-		fmt.Println("### ", commandStr)
-		log.Info().Str("Generated command", commandStr)
-		return commandStr
-	*/
 }
 
 // ConstructCommand extracts the HTTP verb, url and other
@@ -105,7 +98,6 @@ func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, header
 // command
 func ConstructCommand(parsedInput *gabs.Container, o *lama2cmd.Opts) ([]string, string) {
 	log.Info().Str("ParsedInput", parsedInput.String()).Msg("")
-	fmt.Println(parsedInput)
 	httpv := parsedInput.S("verb", "value")
 	url := parsedInput.S("url", "value")
 	jsonObj := parsedInput.S("details", "ip_data")

@@ -85,8 +85,9 @@ func (p *Lama2Parser) QuotedString() (*gabs.Container, error) {
 					r2 := strconv.FormatInt(n.Int64(), 16)
 					r3 := fmt.Sprintf("\\u%04s", r2)
 					r4, _ := strconv.Unquote(`"` + r3 + `"`)
-					r4Rune := []rune(r4)
-					fmt.Println(r4Rune)
+					// Uncomment to read the string slice:
+					// r4Rune := []rune(r4)
+					// fmt.Println(r4Rune)
 					chars = append(chars, r4)
 				}
 			} else {
