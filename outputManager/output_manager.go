@@ -47,16 +47,6 @@ func wrapError(requestError string) *gabs.Container {
 }
 
 func ResponseToJSON(resp httpie.ExResponse) (*gabs.Container, error) {
-	/*
-		re := regexp.MustCompile(`(?m)^\s*[{\[<]`)
-		idx := re.FindStringIndex(requestLog)
-		if idx == nil {
-			// TODO: is this some other sort of binary file? Are images handled
-			return wrapError(requestLog), errors.New("Request caused errors. See error attribute for details.")
-		}
-
-		headers := string(requestLog[:idx[0]])
-	*/
 	body := string(resp.Body)
 
 	var headerMapStr string
