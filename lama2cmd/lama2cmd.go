@@ -6,7 +6,9 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/HexmosTech/lama2/importer"
 	outputmanager "github.com/HexmosTech/lama2/outputManager"
+	"github.com/HexmosTech/lama2/utils"
 	"github.com/jessevdk/go-flags"
 	"github.com/rs/zerolog/log"
 )
@@ -71,6 +73,34 @@ func getParsedInput(argList []string) (Opts, []string) {
 		Msg("Parsed inputs")
 
 	return o, args
+}
+
+func ArgParsing(o *Opts, version string) {
+	if o.Version {
+		fmt.Println(version)
+		os.Exit(0)
+	}
+	if o.Update {
+		utils.UpdateSelf()
+		os.Exit(0)
+	}
+	if len(o.PostmanFile) > 0 {
+		if len(o.LamaDir) > 0 {
+			importer.PostmanImporter(o.PostmanFile, o.LamaDir)
+			os.Exit(0)
+		}
+		log.Fatal().Msg("To convert Postman export to Lama2, try: l2 -p PostmanFile -l Lama2Dir")
+		os.Exit(1)
+	}
+	if len(o.LamaDir) > 0 {
+		if len(o.PostmanFile) > 0 {
+			importer.PostmanImporter(o.PostmanFile, o.LamaDir)
+			os.Exit(0)
+		}
+		log.Fatal().Msg("To convert Postman export to Lama2, try: l2 -p PostmanFile -l Lama2Dir")
+		os.Exit(1)
+	}
+
 }
 
 // GetAndValidateCmd takes in the user's CLI input, and checks
