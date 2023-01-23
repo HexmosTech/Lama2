@@ -45,7 +45,7 @@ func expandHeaders(block *gabs.Container, vm *goja.Runtime) {
 	log.Debug().Str("Expanded Header block", block.String()).Msg("")
 }
 
-func expandUrl(block *gabs.Container, vm *goja.Runtime) {
+func expandURL(block *gabs.Container, vm *goja.Runtime) {
 	b := block.S("url", "value").Data().(string)
 	log.Debug().Str("Url block", b).Msg("")
 	url := preprocess.ExpandEnv(b, vm)
@@ -72,7 +72,7 @@ func expandJSON(block *gabs.Container, vm *goja.Runtime) {
 	log.Debug().Str("Processed JSON block", block.String()).Msg("")
 }
 
-func runVmCode(chainCode string, vm *goja.Runtime) {
+func runVMCode(chainCode string, vm *goja.Runtime) {
 	_, err := vm.RunString(chainCode)
 	if ex, ok := err.(*goja.Exception); ok {
 		log.Fatal().Str("Error executing JS processor block", ex.String()).Msg("")
@@ -107,11 +107,11 @@ func ExecuteProcessorBlock(block *gabs.Container, vm *goja.Runtime) {
 	b := block.S("value").Data().(*gabs.Container)
 	log.Debug().Str("Processor block incoming block", block.String()).Msg("")
 	script := b.Data().(string)
-	runVmCode(script, vm)
+	runVMCode(script, vm)
 }
 
 func ProcessVarsInBlock(block *gabs.Container, vm *goja.Runtime) {
-	expandUrl(block, vm)
+	expandURL(block, vm)
 	expandHeaders(block, vm)
 	expandJSON(block, vm)
 }
@@ -125,7 +125,7 @@ func ExecuteRequestorBlock(block *gabs.Container, vm *goja.Runtime, opts *lama2c
 	log.Debug().Str("Response from ExecCommand", resp.Body).Msg("")
 	if e1 == nil {
 		chainCode := generateChainCode(resp.Body)
-		runVmCode(chainCode, vm)
+		runVMCode(chainCode, vm)
 	} else {
 		log.Fatal().Str("Error from ExecCommand", e1.Error())
 		os.Exit(1)
