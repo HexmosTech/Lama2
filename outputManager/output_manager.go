@@ -5,12 +5,11 @@ package outputmanager
 
 import (
 	"bytes"
-	"errors"
 	"fmt"
 	"os"
-	"regexp"
 
 	"github.com/HexmosTech/gabs/v2"
+	"github.com/HexmosTech/httpie-go"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 )
@@ -47,19 +46,26 @@ func wrapError(requestError string) *gabs.Container {
 	return temp
 }
 
-func RequestLogParser(requestLog string) (*gabs.Container, error) {
-	re := regexp.MustCompile(`(?m)^\s*[{\[<]`)
-	idx := re.FindStringIndex(requestLog)
-	if idx == nil {
-		// TODO: is this some other sort of binary file? Are images handled
-		return wrapError(requestLog), errors.New("Request caused errors. See error attribute for details.")
+func ResponseToJSON(resp httpie.ExResponse) (*gabs.Container, error) {
+	/*
+		re := regexp.MustCompile(`(?m)^\s*[{\[<]`)
+		idx := re.FindStringIndex(requestLog)
+		if idx == nil {
+			// TODO: is this some other sort of binary file? Are images handled
+			return wrapError(requestLog), errors.New("Request caused errors. See error attribute for details.")
+		}
+
+		headers := string(requestLog[:idx[0]])
+	*/
+	body := string(resp.Body)
+
+	var headerMapStr string
+	for k, v := range resp.Headers {
+		headerMapStr += k + ": " + v + "\n"
 	}
 
-	headers := string(requestLog[:idx[0]])
-	body := string(requestLog[idx[0]:])
-
 	temp := gabs.New()
-	temp.Set(headers, "headers")
+	temp.Set(headerMapStr, "headers")
 	temp.Set(body, "body")
 	temp.Set(LogBuff.String(), "logs")
 
@@ -71,8 +77,8 @@ func RequestLogParser(requestLog string) (*gabs.Container, error) {
 // Extension writers may simply call `l2 -n -o /tmp/lama2.json ...`
 // to invoke WriteJSONOutput; the generated json file contains
 // three keys: `logs`, `headers`, `body`
-func WriteJSONOutput(requestLog string, targetPath string) {
-	temp, _ := RequestLogParser(requestLog)
+func WriteJSONOutput(resp httpie.ExResponse, targetPath string) {
+	temp, _ := ResponseToJSON(resp)
 	err := os.WriteFile(targetPath, []byte(temp.String()), 0o644)
 	if err != nil {
 		log.Fatal().Msg(fmt.Sprintf("Couldn't write JSON output to: %s", targetPath))

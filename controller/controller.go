@@ -10,10 +10,12 @@ import (
 	"path"
 
 	"github.com/HexmosTech/gabs/v2"
+	"github.com/HexmosTech/httpie-go"
 	"github.com/HexmosTech/lama2/cmdexec"
 	"github.com/HexmosTech/lama2/cmdgen"
 	"github.com/HexmosTech/lama2/importer"
 	"github.com/HexmosTech/lama2/lama2cmd"
+	outputmanager "github.com/HexmosTech/lama2/outputManager"
 	"github.com/HexmosTech/lama2/parser"
 	"github.com/HexmosTech/lama2/preprocess"
 	"github.com/HexmosTech/lama2/utils"
@@ -114,21 +116,21 @@ func ProcessVarsInBlock(block *gabs.Container, vm *goja.Runtime) {
 	expandJSON(block, vm)
 }
 
-func ExecuteRequestorBlock(block *gabs.Container, vm *goja.Runtime, opts *lama2cmd.Opts, dir string) {
+func ExecuteRequestorBlock(block *gabs.Container, vm *goja.Runtime, opts *lama2cmd.Opts, dir string) httpie.ExResponse {
 	ProcessVarsInBlock(block, vm)
 	// TODO - replace stuff in headers, and varjson and json as well
 	cmd, stdinBody := cmdgen.ConstructCommand(block, opts)
 	log.Debug().Str("Stdin Body to be passed into httpie", stdinBody).Msg("")
-	retStr, e1 := cmdexec.ExecCommand(cmd, stdinBody, dir)
-	log.Debug().Str("Response from ExecCommand", retStr).Msg("")
+	resp, e1 := cmdexec.ExecCommand(cmd, stdinBody, dir)
+	log.Debug().Str("Response from ExecCommand", resp.Body).Msg("")
 	if e1 == nil {
-		chainCode := generateChainCode(retStr)
+		chainCode := generateChainCode(resp.Body)
 		runVmCode(chainCode, vm)
 	} else {
 		log.Fatal().Str("Error from ExecCommand", e1.Error())
 		os.Exit(1)
 	}
-
+	return resp
 }
 
 func ArgParsing(o lama2cmd.Opts, version string) {
@@ -160,6 +162,7 @@ func ArgParsing(o lama2cmd.Opts, version string) {
 func HandleParsedFile(parsedAPI *gabs.Container, o *lama2cmd.Opts, dir string) {
 	parsedAPIblocks := GetParsedAPIBlocks(parsedAPI)
 	vm := GetJSVm()
+	var resp httpie.ExResponse
 	for i, block := range parsedAPIblocks {
 		log.Debug().Int("Block num", i).Msg("")
 		log.Debug().Str("Block getting processed", block.String()).Msg("")
@@ -167,9 +170,13 @@ func HandleParsedFile(parsedAPI *gabs.Container, o *lama2cmd.Opts, dir string) {
 		if blockType == "processor" {
 			ExecuteProcessorBlock(block, vm)
 		} else if blockType == "Lama2File" {
-			ExecuteRequestorBlock(block, vm, o, dir)
+			resp = ExecuteRequestorBlock(block, vm, o, dir)
 		}
 	}
+	if o.Output != "" {
+		outputmanager.WriteJSONOutput(resp, o.Output)
+	}
+
 }
 
 // Process initiates the following tasks in the given order:
