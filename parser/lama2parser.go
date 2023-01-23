@@ -48,24 +48,24 @@ func (p *Lama2Parser) Lama2File() (*gabs.Container, error) {
 		return nil, errors.New("couldn't create Array for the parsed data")
 	}
 	// optionally match processor
-	res2, proc_e1 := p.Match([]string{"Processor"})
-	if proc_e1 == nil {
+	res2, procE1 := p.Match([]string{"Processor"})
+	if procE1 == nil {
 		tempArr.ArrayAppend(res2)
 	}
 
-	_, sep_e1 := p.Match([]string{"Separator"})
-	if proc_e1 != nil && sep_e1 == nil {
+	_, sepE1 := p.Match([]string{"Separator"})
+	if procE1 != nil && sepE1 == nil {
 		return nil, utils.NewParseError(p.Pos+1, p.LineNum+1, "Separator without preceding processor block found", []string{})
-	} else if proc_e1 == nil && sep_e1 != nil {
+	} else if procE1 == nil && sepE1 != nil {
 		return nil, utils.NewParseError(p.Pos+1, p.LineNum+1, "Processor without subsequent requestor block found", []string{})
 	} else {
 		log.Debug().Str("Found separator", "---").Msg("")
 	}
 
 	// match requester
-	res3, req_e1 := p.Match([]string{"Requester"})
-	if req_e1 != nil {
-		return nil, req_e1
+	res3, reqE1 := p.Match([]string{"Requester"})
+	if reqE1 != nil {
+		return nil, reqE1
 	}
 
 	tempArr.ArrayAppend(res3)
@@ -74,21 +74,21 @@ func (p *Lama2Parser) Lama2File() (*gabs.Container, error) {
 
 	// until file is done:
 	var res4, res5 *gabs.Container
-	var proc_e2, e5 error
+	var procE2, e5 error
 	for p.Pos < p.TotalLen {
-		_, sep_e2 := p.Match([]string{"Separator"})
-		if sep_e2 != nil {
+		_, sepE2 := p.Match([]string{"Separator"})
+		if sepE2 != nil {
 			return nil, utils.NewParseError(p.Pos+1, p.LineNum+1, "Separator expected (1)", []string{})
 		}
 		// match processor
-		res4, proc_e2 = p.Match([]string{"Processor"})
-		if proc_e2 != nil {
+		res4, procE2 = p.Match([]string{"Processor"})
+		if procE2 != nil {
 			return nil, utils.NewParseError(p.Pos+1, p.LineNum+1, "Processor expected (2)", []string{})
 		}
 
 		if p.Pos < p.TotalLen {
-			_, sep_e3 := p.Match([]string{"Separator"})
-			if sep_e3 != nil {
+			_, sepE3 := p.Match([]string{"Separator"})
+			if sepE3 != nil {
 				return nil, utils.NewParseError(p.Pos+1, p.LineNum+1, "Separator exepcted (3)", []string{})
 			}
 
