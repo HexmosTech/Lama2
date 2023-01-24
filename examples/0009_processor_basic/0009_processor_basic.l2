@@ -3,7 +3,7 @@ url = "http://google.com"
 # stage 1
 
 POST
-${LOCAL_COORD}/anything
+${REMOTE_COORD}/anything
 
 {
     "username": "admin",
@@ -23,7 +23,7 @@ console.log(TOKEN)
 
 # stage 2
 GET
-${LOCAL_COORD}/bearer
+${REMOTE_COORD}/bearer
 
 Authorization: 'Bearer ${TOKEN}'
 
