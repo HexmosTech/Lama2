@@ -1,5 +1,25 @@
 # FAQs/RAQs
 
+### Why pick Javascript as the scripting/glue language?
+
+Lama2's [design philosophy](reference/philosophy.md) advocates "delegate to mature and preferably open tools". 
+
+After analysis, we finally picked JS due to following reasons:
+
+- Most people working with APIs probably already know JS
+- Easy to support XPath/JSONPath or even JQ clones right into JS
+- Even if you don't know any of (2), simple JS object notation + good old loops will take you far
+- Native support for JSON (and dom manipulation is common too, for xml type responses)
+- Good amount of power for implementation effort exerted
+- For simple use cases, one barely has to understand any serious JS. Object/map notation is quite intuitive.
+
+Ultimately, we believe JS passes our "Intern Test" for usability.
+
+### What is the *Intern Test*?
+
+*Lama2* API files must remain easy for interns to get used with minimal handholding from more experienced engineers. If it doesn't work for interns, then it doesn't work for our teams at Hexmos as well.
+
+
 ### Why did you create *Lama2*?
 
 At [Hexmos](https://hexmos.com), our engineering infrastructure

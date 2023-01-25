@@ -522,6 +522,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#chain-requests-through-javascript-blocks" class="md-nav__link">
+    Chain requests through Javascript blocks
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -820,6 +827,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#chain-requests-through-javascript-blocks" class="md-nav__link">
+    Chain requests through Javascript blocks
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -909,6 +923,23 @@ commands into environment variables:</p>
 <div class="highlight"><pre><span></span><code>export PHOTO=`base64 image.jpeg`
 </code></pre></div>
 <p>One can load the <code>PHOTO</code> variable in API files.</p>
+<h3 id="chain-requests-through-javascript-blocks">Chain requests through Javascript blocks<a class="headerlink" href="#chain-requests-through-javascript-blocks" title="Permanent link">&para;</a></h3>
+<p><em>Lama2</em> supports plain Javascript (JS) blocks
+as a glue for manipulating responses and passing on
+values to later stages. At a higher
+level, a chain of requests may look like:</p>
+<div class="highlight"><pre><span></span><code>Javascript 1
+---
+L2 Request 1
+---
+Javscript 2
+---
+L2 Request 2
+</code></pre></div>
+<p>The triple-dash (<code>---</code>) separator is mandatory. The special
+variable <code>result</code> contains the response from previous stages.</p>
+<p>For example, in the above case, <code>Javascript 2</code> can access the response from <code>L2 Request 1</code> through the <code>result</code> variable.</p>
+<p>Learn more about request chaining in <a href="tutorials/examples.md#chain-requests-using-javascript">Examples</a>.</p>
 
 
   

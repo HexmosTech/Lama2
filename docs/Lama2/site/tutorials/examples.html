@@ -436,6 +436,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#chain-requests-using-javascript" class="md-nav__link">
+    Chain requests using Javascript
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -802,6 +809,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#chain-requests-using-javascript" class="md-nav__link">
+    Chain requests using Javascript
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -984,6 +998,46 @@ http://httpbin.org/post
 }
 </code></pre></div>
 Get <a href="https://github.com/HexmosTech/Lama2/tree/main/examples/0008_base64_image">Source Files</a></p>
+<h2 id="chain-requests-using-javascript">Chain requests using Javascript<a class="headerlink" href="#chain-requests-using-javascript" title="Permanent link">&para;</a></h2>
+<p>In Lama2, we have alternating requestor and processor (JS) blocks, separated by <code>---</code>.</p>
+<p>Each processor (JS) block has a special variable <code>result</code>, storing the response
+from previous requestor block. If possible,
+<code>result</code> is automatically stored as a JS
+object through <code>JSON.parse()</code>. Otherwise,
+<code>result</code> is stored as a regular <code>string</code>.</p>
+<div class="highlight"><pre><span></span><code>url = &quot;http://google.com&quot;
+---
+# stage 1
+
+POST
+${REMOTE_COORD}/anything
+
+{
+    &quot;username&quot;: &quot;admin&quot;,
+    &quot;password&quot;: &quot;Password@123&quot;,
+    &quot;from&quot;: &quot;${LOCAL_COORD}/anything&quot;,
+    &quot;url&quot;: &quot;${url}&quot;,
+    &quot;Token&quot;: &quot;MySuperSecretToken&quot;
+}
+
+---
+
+// filtering, store in var
+console.log(&quot;@@Result&quot;, result)
+let TOKEN = result[&quot;json&quot;][&quot;Token&quot;]
+console.log(TOKEN)
+
+---
+
+# stage 2
+GET
+${REMOTE_COORD}/bearer
+
+Authorization: &#39;Bearer ${TOKEN}&#39;
+
+{}
+</code></pre></div>
+<p>Get <a href="https://github.com/HexmosTech/Lama2/tree/main/examples/0009_processor_basic">Source Files</a></p>
 
 
   

@@ -214,3 +214,50 @@ http://httpbin.org/post
 }
 ```
 Get [Source Files](https://github.com/HexmosTech/Lama2/tree/main/examples/0008_base64_image)
+
+## Chain requests using Javascript
+
+In Lama2, we have alternating requestor and processor (JS) blocks, separated by `---`.
+
+Each processor (JS) block has a special variable `result`, storing the response
+from previous requestor block. If possible,
+`result` is automatically stored as a JS
+object through `JSON.parse()`. Otherwise,
+`result` is stored as a regular `string`.
+
+```
+url = "http://google.com"
+---
+# stage 1
+
+POST
+${REMOTE_COORD}/anything
+
+{
+    "username": "admin",
+    "password": "Password@123",
+    "from": "${LOCAL_COORD}/anything",
+    "url": "${url}",
+    "Token": "MySuperSecretToken"
+}
+
+---
+
+// filtering, store in var
+console.log("@@Result", result)
+let TOKEN = result["json"]["Token"]
+console.log(TOKEN)
+
+---
+
+# stage 2
+GET
+${REMOTE_COORD}/bearer
+
+Authorization: 'Bearer ${TOKEN}'
+
+{}
+```
+
+
+Get [Source Files](https://github.com/HexmosTech/Lama2/tree/main/examples/0009_processor_basic)

@@ -103,3 +103,27 @@ export PHOTO=`base64 image.jpeg`
 ```
 
 One can load the `PHOTO` variable in API files.
+
+### Chain requests through Javascript blocks
+
+*Lama2* supports plain Javascript (JS) blocks
+as a glue for manipulating responses and passing on
+values to later stages. At a higher
+level, a chain of requests may look like:
+
+```
+Javascript 1
+---
+L2 Request 1
+---
+Javscript 2
+---
+L2 Request 2
+```
+
+The triple-dash (`---`) separator is mandatory. The special
+variable `result` contains the response from previous stages.
+
+For example, in the above case, `Javascript 2` can access the response from `L2 Request 1` through the `result` variable.
+
+Learn more about request chaining in [Examples](tutorials/examples.md#chain-requests-using-javascript).
