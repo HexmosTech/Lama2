@@ -10,10 +10,38 @@ Package controller coordinates all the other components in the \`Lama2\` project
 
 ## Index
 
+- [func ExecuteProcessorBlock(block *gabs.Container, vm *goja.Runtime)](<#func-executeprocessorblock>)
+- [func ExecuteRequestorBlock(block *gabs.Container, vm *goja.Runtime, opts *lama2cmd.Opts, dir string) httpie.ExResponse](<#func-executerequestorblock>)
+- [func GetParsedAPIBlocks(parsedAPI *gabs.Container) []*gabs.Container](<#func-getparsedapiblocks>)
+- [func HandleParsedFile(parsedAPI *gabs.Container, o *lama2cmd.Opts, dir string)](<#func-handleparsedfile>)
 - [func Process(version string)](<#func-process>)
 
 
-## func [Process](<https://github.com/HexmosTech/Lama2/blob/master/controller/controller.go#L30>)
+## func [ExecuteProcessorBlock](<https://github.com/HexmosTech/Lama2/blob/master/controller/controller.go#L29>)
+
+```go
+func ExecuteProcessorBlock(block *gabs.Container, vm *goja.Runtime)
+```
+
+## func [ExecuteRequestorBlock](<https://github.com/HexmosTech/Lama2/blob/master/controller/controller.go#L36>)
+
+```go
+func ExecuteRequestorBlock(block *gabs.Container, vm *goja.Runtime, opts *lama2cmd.Opts, dir string) httpie.ExResponse
+```
+
+## func [GetParsedAPIBlocks](<https://github.com/HexmosTech/Lama2/blob/master/controller/controller.go#L25>)
+
+```go
+func GetParsedAPIBlocks(parsedAPI *gabs.Container) []*gabs.Container
+```
+
+## func [HandleParsedFile](<https://github.com/HexmosTech/Lama2/blob/master/controller/controller.go#L53>)
+
+```go
+func HandleParsedFile(parsedAPI *gabs.Container, o *lama2cmd.Opts, dir string)
+```
+
+## func [Process](<https://github.com/HexmosTech/Lama2/blob/master/controller/controller.go#L81>)
 
 ```go
 func Process(version string)

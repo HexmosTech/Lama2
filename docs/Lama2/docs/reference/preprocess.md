@@ -10,16 +10,76 @@ Package preprocess provides facilities to expand environment variables in \`.l2\
 
 ## Index
 
+- [func Expand(s string, vm *goja.Runtime, mapping map[string]string) string](<#func-expand>)
+- [func ExpandEnv(s string, vm *goja.Runtime) string](<#func-expandenv>)
+- [func ExpandHeaders(block *gabs.Container, vm *goja.Runtime)](<#func-expandheaders>)
+- [func ExpandJSON(block *gabs.Container, vm *goja.Runtime)](<#func-expandjson>)
+- [func ExpandURL(block *gabs.Container, vm *goja.Runtime)](<#func-expandurl>)
+- [func GetLamaFileAsString(path string) string](<#func-getlamafileasstring>)
 - [func LamaFile(inputFile string) (string, string)](<#func-lamafile>)
+- [func LoadElfEnv(l2path string)](<#func-loadelfenv>)
+- [func ProcessVarsInBlock(block *gabs.Container, vm *goja.Runtime)](<#func-processvarsinblock>)
 
 
-## func [LamaFile](<https://github.com/HexmosTech/Lama2/blob/master/preprocess/preprocess.go#L37>)
+## func [Expand](<https://github.com/HexmosTech/Lama2/blob/master/preprocess/expandvar.go#L19>)
+
+```go
+func Expand(s string, vm *goja.Runtime, mapping map[string]string) string
+```
+
+Expand replaces $\{var\} or $var in the string based on the mapping function. For example, os.ExpandEnv\(s\) is equivalent to os.Expand\(s, os.Getenv\).
+
+## func [ExpandEnv](<https://github.com/HexmosTech/Lama2/blob/master/preprocess/expandvar.go#L74>)
+
+```go
+func ExpandEnv(s string, vm *goja.Runtime) string
+```
+
+ExpandEnv replaces $\{var\} or $var in the string according to the values of the current environment variables. References to undefined variables are replaced by the empty string.
+
+## func [ExpandHeaders](<https://github.com/HexmosTech/Lama2/blob/master/preprocess/preprocess.go#L24>)
+
+```go
+func ExpandHeaders(block *gabs.Container, vm *goja.Runtime)
+```
+
+## func [ExpandJSON](<https://github.com/HexmosTech/Lama2/blob/master/preprocess/preprocess.go#L52>)
+
+```go
+func ExpandJSON(block *gabs.Container, vm *goja.Runtime)
+```
+
+## func [ExpandURL](<https://github.com/HexmosTech/Lama2/blob/master/preprocess/preprocess.go#L44>)
+
+```go
+func ExpandURL(block *gabs.Container, vm *goja.Runtime)
+```
+
+## func [GetLamaFileAsString](<https://github.com/HexmosTech/Lama2/blob/master/preprocess/preprocess.go#L78>)
+
+```go
+func GetLamaFileAsString(path string) string
+```
+
+## func [LamaFile](<https://github.com/HexmosTech/Lama2/blob/master/preprocess/preprocess.go#L92>)
 
 ```go
 func LamaFile(inputFile string) (string, string)
 ```
 
 LamaFile takes in a path to an API file. It moves into the API file directory, reads the API contents, loads the \`l2.env\` file if available, and finally substitutes environment vars in the API contents Once done, it reverts back to the original directory, and returns the processed l2 file.
+
+## func [LoadElfEnv](<https://github.com/HexmosTech/Lama2/blob/master/preprocess/preprocess.go#L71>)
+
+```go
+func LoadElfEnv(l2path string)
+```
+
+## func [ProcessVarsInBlock](<https://github.com/HexmosTech/Lama2/blob/master/preprocess/preprocess.go#L18>)
+
+```go
+func ProcessVarsInBlock(block *gabs.Container, vm *goja.Runtime)
+```
 
 
 

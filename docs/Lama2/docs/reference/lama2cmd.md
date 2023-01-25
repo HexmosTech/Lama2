@@ -10,11 +10,18 @@ Package \`lama2cmd\` provides CLI argument parsing facilities. It hosts the \`Op
 
 ## Index
 
+- [func ArgParsing(o *Opts, version string)](<#func-argparsing>)
 - [type Opts](<#type-opts>)
   - [func GetAndValidateCmd(ipArgs []string) *Opts](<#func-getandvalidatecmd>)
 
 
-## type [Opts](<https://github.com/HexmosTech/Lama2/blob/master/lama2cmd/lama2cmd.go#L16-L31>)
+## func [ArgParsing](<https://github.com/HexmosTech/Lama2/blob/master/lama2cmd/lama2cmd.go#L78>)
+
+```go
+func ArgParsing(o *Opts, version string)
+```
+
+## type [Opts](<https://github.com/HexmosTech/Lama2/blob/master/lama2cmd/lama2cmd.go#L18-L33>)
 
 The Opts structure stores user preferences, and is used throughout the module to make various decisions.
 
@@ -37,7 +44,7 @@ type Opts struct {
 }
 ```
 
-### func [GetAndValidateCmd](<https://github.com/HexmosTech/Lama2/blob/master/lama2cmd/lama2cmd.go#L81>)
+### func [GetAndValidateCmd](<https://github.com/HexmosTech/Lama2/blob/master/lama2cmd/lama2cmd.go#L111>)
 
 ```go
 func GetAndValidateCmd(ipArgs []string) *Opts
