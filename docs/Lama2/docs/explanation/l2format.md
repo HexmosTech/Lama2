@@ -126,4 +126,4 @@ variable `result` contains the response from previous stages.
 
 For example, in the above case, `Javascript 2` can access the response from `L2 Request 1` through the `result` variable.
 
-Learn more about request chaining in [Examples](tutorials/examples.md#chain-requests-using-javascript).
+Learn more about request chaining in [Examples](../tutorials/examples.md#chain-requests-using-javascript).

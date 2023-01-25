@@ -101,6 +101,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#diagram" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -498,9 +503,45 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Architecture
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="architecture.html" class="md-nav__link md-nav__link--active">
         Architecture
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#diagram" class="md-nav__link">
+    Diagram
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#description" class="md-nav__link">
+    Description
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -637,6 +678,28 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#diagram" class="md-nav__link">
+    Diagram
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#description" class="md-nav__link">
+    Description
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -657,6 +720,7 @@
 
   <h1>Architecture</h1>
 
+<h3 id="diagram">Diagram<a class="headerlink" href="#diagram" title="Permanent link">&para;</a></h3>
 <pre class="mermaid"><code>%%{init: {'securityLevel': 'loose', 'theme':'base'}}%%
 graph TD
     K["Controller Entry &lt;br/&gt;(controller)"]
@@ -688,6 +752,31 @@ graph TD
     A --&gt; I
     P --&gt; H
     L --&gt; L</code></pre>
+<h3 id="description">Description<a class="headerlink" href="#description" title="Permanent link">&para;</a></h3>
+<p>From a high level, how does it work now?</p>
+<ol>
+<li>Read API file</li>
+<li>Create a tree-like structure based on <code>*gabs.Container</code></li>
+<li>Initialize Javascript VM for executing JS blocks</li>
+<li>For each block<ol>
+<li>If block is JS Processor block<ol>
+<li>Execute JS code in VM</li>
+</ol>
+</li>
+<li>Else if block is Requestor block<ol>
+<li>Replace variables with values in the following order<ol>
+<li>Try fetch variable from Javascript VM</li>
+<li>If (1) fails, try fetch variable from <code>l2.env</code></li>
+</ol>
+</li>
+<li>Use the processed elements to create an httpie-go request</li>
+<li>Fetch response</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>If necessary, write the last transaction to <code>.json</code> file</li>
+</ol>
 
 
   

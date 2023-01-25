@@ -1,6 +1,6 @@
-The following is the *recommended* flow for an `.l2` file. The grammar offers some additional flexibilities in ordering the various components, but it is preferable to
+The following is the *recommended* flow for a **simple** `.l2` file. The grammar offers some additional flexibilities in ordering the various components, but it is preferable to
 stick to the following ordering to 
-help with consistency.
+help with consistency. Also, for *chaining requests*, one needs a little bit more syntax -- [See Examples](../tutorials/examples.md#chain-requests-using-javascript)
 
 ```mermaid
 %%{init: {'securityLevel': 'loose', 'theme':'base'}}%%
