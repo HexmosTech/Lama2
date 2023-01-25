@@ -12,7 +12,8 @@ Package \`outputmanager\` provides facilities for controlling the logging librar
 
 - [Variables](<#variables>)
 - [func ConfigureZeroLog(level string)](<#func-configurezerolog>)
-- [func WriteJSONOutput(requestLog string, targetPath string)](<#func-writejsonoutput>)
+- [func ResponseToJSON(resp httpie.ExResponse) (*gabs.Container, error)](<#func-responsetojson>)
+- [func WriteJSONOutput(resp httpie.ExResponse, targetPath string)](<#func-writejsonoutput>)
 
 
 ## Variables
@@ -31,10 +32,16 @@ func ConfigureZeroLog(level string)
 
 ConfigureZeroLog provides global log level setting. By default, ZeroLog uses the DEBUG level; however, the function makes the desired level more explicit
 
-## func [WriteJSONOutput](<https://github.com/HexmosTech/Lama2/blob/master/outputManager/output_manager.go#L48>)
+## func [ResponseToJSON](<https://github.com/HexmosTech/Lama2/blob/master/outputManager/output_manager.go#L49>)
 
 ```go
-func WriteJSONOutput(requestLog string, targetPath string)
+func ResponseToJSON(resp httpie.ExResponse) (*gabs.Container, error)
+```
+
+## func [WriteJSONOutput](<https://github.com/HexmosTech/Lama2/blob/master/outputManager/output_manager.go#L70>)
+
+```go
+func WriteJSONOutput(resp httpie.ExResponse, targetPath string)
 ```
 
 WriteJSONOutput is primarily built for helping with Extension/Integration building with external tools. Extension writers may simply call \`l2 \-n \-o /tmp/lama2.json ...\` to invoke WriteJSONOutput; the generated json file contains three keys: \`logs\`, \`headers\`, \`body\`
