@@ -17,7 +17,7 @@ Iro generates a Textmate syntax file in the `Plist` format. We
 must convert the `Plist` [file](./textmate.plist) into JSON using [wtools](https://wtools.io/convert-plist-to-json). If the converted output is wrapped up in a list `[]`, then remove that part. After removing
 unnecessary junk, we will have a nice syntax JSON of the form `{}`. See the VSCode plugin, particularly [package.json](https://github.com/HexmosTech/Lama2Code/blob/main/package.json#L38) and [syntaxes/lama2.tmGrammar.json](https://github.com/HexmosTech/Lama2Code/blob/main/syntaxes/lama2.tmGrammar.json)
 
-**UPDATE: ** After adding request chaining, the generated `plist` doesn't work as is (with the above minor mods). It took a difficult 5h debugging session to find many issues with how textmate syntax handles line-ends. The present grammar json file in VSCode is heavily modified from the original. 
+**UPDATE:** After adding request chaining, the generated `plist` doesn't work as is (with the above minor mods). It took a difficult 5h debugging session to find many issues with how textmate syntax handles line-ends. The present grammar json file in VSCode is heavily modified from the original. 
 
 Learnings:
 
