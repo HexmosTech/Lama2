@@ -1,14 +1,63 @@
 name               = lama2
 file_extensions [] = l2, lama2;
 
+
 contexts[] {
     main : context {
+    
+      : include "emptyline";
+      
+      : include "separator";
+            
+      : push {
+         uid = uid_lama_push
+         description = lama2 block
+         regex         \= (^\s*(GET|POST|PUT|DELETE|get|post|put|delete))
+         styles []      = .keyword;
+         context []     = root_lama;
+         
+      }
+      
+      : push {
+         uid = uid_lama_push_comment
+         description = lama2 block_comment
+         regex         \= (^\s*#.*)
+         styles []      = .comment;
+         context []     = root_lama;
+         
+      }
+      
+      : push {
+         uid = uid_js_block1
+         description = js block
+         regex \= (?!(^\s*(#|GET|POST|PUT|DELETE|get|post|put|delete)))
+         styles [] = .variable;
+         context [] = root_javascript;
+      }
+
+    }
+   
+   emptyline : context {
+      :pattern {
+         regex \= (^\s*$)
+         styles[] = .whitespace;
+      }
+   }
+   
+   root_lama : context {
+      uid = uid_root_lama
+      : pop {
+         regex      \= (^---$)
+            styles []   = .punctuation;
+      }
+      
+      : include "separator";
     
       : pattern {
           regex \= (#.*)
           styles[] = .comment;
       }
-
+      
       : include "preamble";
 
       : include "json";
@@ -18,10 +67,172 @@ contexts[] {
       : include "varjson";
       
       : include "files";
-      
+   }
+   
+   separator : context {
+      :pattern {
+         regex \= (^---$)
+         styles[] = .punctuation;
+      }
+   }
+   ### Start Javascript contexts 
+   
+   root_javascript : context {
+      uid = uid_js_block2
 
-    }
-    
+      : pop {
+         uid = uid_js_pop1
+         regex      \= (^---$)
+            styles []   = .punctuation;
+         }
+      
+      : include "js_keywords";
+      }
+
+   js_keywords : context {
+      : include "separator";
+      : include "multi_line_comment";
+      : include "js_comment";
+      
+            
+      : include "js_string3";
+      : include "js_string1";
+      : include "js_string2";
+      
+      : include "js_punctuation";
+      : include "js_call";
+
+      : include "js_keyword_new";
+      : include "js_storage_type";
+
+
+      : include "js_keyword_control_flow";
+      : include "js_variable";
+      : include "js_operator";
+      : include "numeric";
+   }
+   
+   js_keyword_new : context {
+      : pattern {
+         regex    \= (?:\b)(?:do|if|in|for|let|new|try|var|case|else|enum|eval|false|null|this|true|void|with|break|catch|class|const|super|throw|while|yield|delete|export|import|public|return|static|switch|typeof|default|extends|finally|package|private|continue|debugger|function|arguments|interface|protected|implements|instanceof)(?:\b)
+         styles[]  = .js_keyword_new;
+      }
+   }
+   
+   js_operator : context {
+      : pattern {
+         regex \= (\+|-|\*|\/|=|>|<|>=|<=|&|\||%|!|\^|\(|\))
+         styles[] = .punctuation;
+      }
+   }
+   
+   js_punctuation: context {
+      :pattern {
+         regex  \= ([.,\/#!$%\^&\*;:{}=\-_\[\]`~()])   
+         styles[] = .punctuation;
+      }
+
+      
+   }
+   
+   js_string1: context {
+      description = jsstring
+      : inline_push {
+         regex         \= (")
+         styles []      = .punctuation;
+         default_style  = .text
+         : pop {
+            regex      \= (")
+            styles []   = .punctuation;
+         }
+      }
+   }
+   
+   js_string2: context {
+      description = jsstring
+      : inline_push {
+         regex         \= (')
+         styles []      = .punctuation;
+         default_style  = .text
+         : pop {
+            regex      \= (')
+            styles []   = .punctuation;
+         }
+      }
+   }
+   
+   js_string3: context {
+      description = jsstring
+      : inline_push {
+         regex         \= (\`)
+         styles []      = .punctuation;
+         default_style  = .text
+         : pop {
+            regex      \= (\`)
+            styles []   = .punctuation;
+         }
+      }
+   }
+   
+   js_variable: context {
+      uid = uid_js_var1
+      : pattern {
+         uid = uid_js_var2
+         regex    \= (?:\b)([_$a-zA-Z\xa0-\uffff][_$a-zA-Z0-9\xa0-\uffff]*)(?:\b)
+         styles[] = .variable;
+      }
+   }
+   
+   js_comment: context {
+      : pattern {
+         regex \= (//.*$)
+         styles[] = .comment;
+      }
+   }
+   
+   js_storage_type : context {
+      : pattern {
+         regex     \= (?:\b)(var|let|const)(?:\b)
+         styles[]   = .js_storage_type;
+      }
+   }
+   
+   js_call : context {
+      : pattern {
+         regex    \= (?:\b)(\.[_$a-zA-Z\xa0-\uffff][_$a-zA-Z0-9\xa0-\uffff]*)(\()
+         styles[] = .funcall, .punctuation;
+      }
+   }
+
+   js_keyword_control_flow : context {
+      : pattern {
+         regex     \= (?:\b)(return|yield)(?:\b)
+         styles[]   = .js_keyword_control_flow;
+      }
+   }
+   
+   numeric : context {
+      : pattern {
+         regex          \= (\b\d+)
+         styles []       = .numeric;
+      }
+   }
+   
+   multi_line_comment : context {
+      description        = multiline
+      : inline_push {
+         regex          \= (/\*)
+         styles []       = .comment;
+         default_style   = .comment
+         : pop {
+            regex       \= (\*/)
+            styles []    = .comment;
+         }
+      }
+   }
+   
+   ### End javascript contexts 
+
    varjson : context {
       : pattern {
          regex \= (.*)(=)([^#]+)
@@ -44,6 +255,7 @@ contexts[] {
    }
     
    preamble : context {
+   
       : pattern {
           regex   \= (GET|POST|PUT|DELETE|get|post|put|delete)
           styles[] = .keyword;
@@ -55,8 +267,13 @@ contexts[] {
       }
       
       : pattern {
-         regex \= (https?|\$\{.*\})(.*)
+         regex \= (https?|\$\{.*\})([^\s]+)(?:\b)
          styles[] = .variable, .punctuation;
+      }
+      
+      : pattern {
+         regex \= (\$\{.*\})(.*)(?:\b)
+         styles[] = .punctuation;
       }
    }
     
@@ -114,6 +331,12 @@ contexts[] {
    }
 }
 styles[] {
+
+   .whitespace : style {
+      color            = gold
+      textmate_scope   = none
+      pygments_scope  = String.Doc
+   }
    .keyword : style {
       color            = gold
       textmate_scope   = keyword
@@ -121,6 +344,7 @@ styles[] {
    }
    .comment : style {
       color            = #797979
+      italic = true
       textmate_scope   = comment
       pygments_scope   = Comment
    }
@@ -145,12 +369,7 @@ styles[] {
       color            = #0a0
       background_color = #232
    }
-   .illegal : style {
-      textmate_scope   = invalid.illegal
-      pygments_scope   = Generic.Error
-      color            = white
-      background_color = red
-   }
+
    .punctuation : style {
       textmate_scope   = keyword.operator
       pygments_scope   = Punctuation
@@ -165,5 +384,44 @@ styles[] {
       textmate_scope   = storage.type
       pygments_scope   = Keyword.Type
       color            = #6bc
+   }
+
+   
+   .funcall : style {
+      color     = orange
+      textmate_scope        = entity.name.function
+      pygments_scope        = Name.Function
+   }
+   
+   .numeric : style {
+      color                 = gold
+      ace_scope             = constant.numeric
+      textmate_scope        = constant.numeric
+      pygments_scope        = Number
+   }
+   
+   .text : style {
+      color                 = yellow
+      ace_scope             = text
+      textmate_scope        = text
+      pygments_scope        = String
+   }
+   
+   .js_keyword_new : style {
+      color           = light_blue
+      textmate_scope  = keyword.operator.new
+      pygments_scope  = Keyword.Declaration
+   }
+   
+   .js_storage_type : style {
+      color           = cyan
+      textmate_scope  = storage.type.js
+      pygments_scope  = Keyword.Namespace
+   }
+   
+   .js_keyword_control_flow : style {
+      color = red
+      textmate_scope = keyword.control.flow
+      pygments_scope = Keyword.Reserved
    }
 }

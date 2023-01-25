@@ -1,214 +1,527 @@
 'fileTypes' : [
-    'l2'
-    'lama2'
-  ]
-  'name' : 'lama2'
-  'patterns' : [
-    {
-      'include' : '#main'
-    }
-  ]
-  'scopeName' : 'source.lama2'
-  'uuid' : ''
-  'repository' : {
-    'main' : {
-      'patterns' : [
-        {
-          'match' : '(#.*)'
-          'name' : 'comment.lama2'
-        }
-        {
-          'include' : '#preamble'
-        }
-        {
-          'include' : '#json'
-        }
-        {
-          'include' : '#headers'
-        }
-        {
-          'include' : '#varjson'
-        }
-        {
-          'include' : '#files'
-        }
-      ]
-    }
-    'files' : {
-      'patterns' : [
-        {
-          'match' : '(.*)(@)([^\\x{0023}]+)'
-          'captures' : {
-            '1' : {
-              'name' : 'constant.language.lama2'
-            }
-            '2' : {
-              'name' : 'keyword.operator.lama2'
-            }
-            '3' : {
-              'name' : 'string.source.lama2'
-            }
-          }
-        }
-      ]
-    }
-    'headers' : {
-      'patterns' : [
-        {
-          'match' : '(.*)(:)([^\\x{0023}]+)'
-          'captures' : {
-            '1' : {
-              'name' : 'constant.language.lama2'
-            }
-            '2' : {
-              'name' : 'keyword.operator.lama2'
-            }
-            '3' : {
-              'name' : 'string.source.lama2'
-            }
-          }
-        }
-      ]
-    }
-    'json' : {
-      'patterns' : [
-        {
-          'begin' : '(\\{)'
-          'beginCaptures' : {
-            '1' : {
-              'name' : 'keyword.operator.lama2'
-            }
-          }
-          'patterns' : [
-            {
-              'include' : '#json__1'
-            }
-          ]
-          'end' : '(\\})'
-          'endCaptures' : {
-            '1' : {
-              'name' : 'keyword.operator.lama2'
-            }
-          }
-        }
-        {
-          'begin' : '(\\[)'
-          'beginCaptures' : {
-            '1' : {
-              'name' : 'keyword.operator.lama2'
-            }
-          }
-          'patterns' : [
-            {
-              'include' : '#json__2'
-            }
-          ]
-          'end' : '(\\])'
-          'endCaptures' : {
-            '1' : {
-              'name' : 'keyword.operator.lama2'
-            }
-          }
-        }
-        {
-          'match' : '(,|\\:)'
-          'name' : 'keyword.operator.lama2'
-        }
-        {
-          'begin' : '(\\")'
-          'beginCaptures' : {
-            '1' : {
-              'name' : 'keyword.operator.lama2'
-            }
-          }
-          'patterns' : [
-            {
-              'include' : '#json__3'
-            }
-          ]
-          'end' : '(\\")'
-          'endCaptures' : {
-            '1' : {
-              'name' : 'keyword.operator.lama2'
-            }
-          }
-        }
-        {
-          'match' : '((?:\\-?(?:0|(?:[1-9][0-9]*)))(?:(?:\\.[0-9]*)(?:(?:e|E)(?:\\+|\\-)[0-9]+)?)?)'
-          'name' : 'storage.type.lama2'
-        }
-        {
-          'match' : '(true|false|null)'
-          'name' : 'storage.type.lama2'
-        }
-      ]
-    }
-    'json__1' : {
-      'patterns' : [
-        {
-          'include' : '#json'
-        }
-      ]
-    }
-    'json__2' : {
-      'patterns' : [
-        {
-          'include' : '#json'
-        }
-      ]
-    }
-    'json__3' : {
-      'patterns' : [
-        {
-          'match' : '((?:\\\\u[0-9a-f]{4})|(?:\\\\[\\x{0022}\\x{005c}\\x{002f}bfnrt]))'
-          'name' : 'constant.character.escape.lama2'
-        }
-        {
-          'match' : '([^\\"\\x{005c}]+)'
-          'name' : 'string.unquoted.lama2'
-        }
-      ]
-    }
-    'preamble' : {
-      'patterns' : [
-        {
-          'match' : '(GET|POST|PUT|DELETE|get|post|put|delete)'
-          'name' : 'keyword.lama2'
-        }
-        {
-          'match' : '(MULTIPART|multipart)'
-          'name' : 'keyword.lama2'
-        }
-        {
-          'match' : '(https?|\\$\\{.*\\})(.*)'
-          'captures' : {
-            '1' : {
-              'name' : 'variable.lama2'
-            }
-            '2' : {
-              'name' : 'keyword.operator.lama2'
-            }
-          }
-        }
-      ]
-    }
-    'varjson' : {
-      'patterns' : [
-        {
-          'match' : '(.*)(=)([^\\x{0023}]+)'
-          'captures' : {
-            '1' : {
-              'name' : 'constant.language.lama2'
-            }
-            '2' : {
-              'name' : 'keyword.operator.lama2'
-            }
-            '3' : {
-              'name' : 'string.source.lama2'
-            }
-          }
-        }
-      ]
-    }
+  'l2'
+  'lama2'
+]
+'name' : 'lama2'
+'patterns' : [
+  {
+    'include' : '#main'
   }
-  
+]
+'scopeName' : 'source.lama2'
+'uuid' : ''
+'repository' : {
+  'main' : {
+    'patterns' : [
+      {
+        'include' : '#emptyline'
+      }
+      {
+        'include' : '#separator'
+      }
+      {
+        'begin' : '(^\\s*(GET|POST|PUT|DELETE|get|post|put|delete))'
+        'beginCaptures' : {
+          '1' : {
+            'name' : 'keyword.lama2'
+          }
+        }
+        'patterns' : [
+          {
+            'include' : '#root_lama'
+          }
+        ]
+        'end' : '(^---$)'
+        'endCaptures' : {
+          '1' : {
+            'name' : 'keyword.operator.lama2'
+          }
+        }
+      }
+      {
+        'begin' : '(^\\s*#.*)'
+        'beginCaptures' : {
+          '1' : {
+            'name' : 'comment.lama2'
+          }
+        }
+        'patterns' : [
+          {
+            'include' : '#root_lama'
+          }
+        ]
+        'end' : '(^---$)'
+        'endCaptures' : {
+          '1' : {
+            'name' : 'keyword.operator.lama2'
+          }
+        }
+      }
+      {
+        'begin' : '(?!(^\\s*(#|GET|POST|PUT|DELETE|get|post|put|delete)))'
+        'beginCaptures' : {
+          '1' : {
+            'name' : 'variable.lama2'
+          }
+        }
+        'patterns' : [
+          {
+            'include' : '#root_javascript'
+          }
+        ]
+        'end' : '(^---$)'
+        'endCaptures' : {
+          '1' : {
+            'name' : 'keyword.operator.lama2'
+          }
+        }
+      }
+    ]
+  }
+  'emptyline' : {
+    'patterns' : [
+      {
+        'match' : '(^\\s*$)'
+        'name' : 'none.lama2'
+      }
+    ]
+  }
+  'files' : {
+    'patterns' : [
+      {
+        'match' : '(.*)(@)([^\\x{0023}]+)'
+        'captures' : {
+          '1' : {
+            'name' : 'constant.language.lama2'
+          }
+          '2' : {
+            'name' : 'keyword.operator.lama2'
+          }
+          '3' : {
+            'name' : 'string.source.lama2'
+          }
+        }
+      }
+    ]
+  }
+  'headers' : {
+    'patterns' : [
+      {
+        'match' : '(.*)(:)([^\\x{0023}]+)'
+        'captures' : {
+          '1' : {
+            'name' : 'constant.language.lama2'
+          }
+          '2' : {
+            'name' : 'keyword.operator.lama2'
+          }
+          '3' : {
+            'name' : 'string.source.lama2'
+          }
+        }
+      }
+    ]
+  }
+  'js_call' : {
+    'patterns' : [
+      {
+        'match' : '(?:\\b)(\\.[_\\x{0024}a-zA-Z\\xa0-\\x{ffff}][_\\x{0024}a-zA-Z0-9\\xa0-\\x{ffff}]*)(\\()'
+        'captures' : {
+          '1' : {
+            'name' : 'entity.name.function.lama2'
+          }
+          '2' : {
+            'name' : 'keyword.operator.lama2'
+          }
+        }
+      }
+    ]
+  }
+  'js_comment' : {
+    'patterns' : [
+      {
+        'match' : '(//.*$)'
+        'name' : 'comment.lama2'
+      }
+    ]
+  }
+  'js_keyword_control_flow' : {
+    'patterns' : [
+      {
+        'match' : '(?:\\b)(return|yield)(?:\\b)'
+        'name' : 'keyword.control.flow.lama2'
+      }
+    ]
+  }
+  'js_keyword_new' : {
+    'patterns' : [
+      {
+        'match' : '(?:\\b)(?:do|if|in|for|let|new|try|var|case|else|enum|eval|false|null|this|true|void|with|break|catch|class|const|super|throw|while|yield|delete|export|import|public|return|static|switch|typeof|default|extends|finally|package|private|continue|debugger|function|arguments|interface|protected|implements|instanceof)(?:\\b)'
+        'name' : 'keyword.operator.new.lama2'
+      }
+    ]
+  }
+  'js_keywords' : {
+    'patterns' : [
+      {
+        'include' : '#separator'
+      }
+      {
+        'include' : '#multi_line_comment'
+      }
+      {
+        'include' : '#js_comment'
+      }
+      {
+        'include' : '#js_string3'
+      }
+      {
+        'include' : '#js_string1'
+      }
+      {
+        'include' : '#js_string2'
+      }
+      {
+        'include' : '#js_punctuation'
+      }
+      {
+        'include' : '#js_call'
+      }
+      {
+        'include' : '#js_keyword_new'
+      }
+      {
+        'include' : '#js_storage_type'
+      }
+      {
+        'include' : '#js_keyword_control_flow'
+      }
+      {
+        'include' : '#js_variable'
+      }
+      {
+        'include' : '#js_operator'
+      }
+      {
+        'include' : '#numeric'
+      }
+    ]
+  }
+  'js_operator' : {
+    'patterns' : [
+      {
+        'match' : '(\\+|-|\\*|\\/|=|>|<|>=|<=|&|\\||%|!|\\^|\\(|\\))'
+        'name' : 'keyword.operator.lama2'
+      }
+    ]
+  }
+  'js_punctuation' : {
+    'patterns' : [
+      {
+        'match' : '([.\\x{002c}\\/\\x{0023}\\x{0021}\\x{0024}\\x{0025}\\^\\x{0026}\\*\\x{003b}\\x{003a}\\x{007b}\\x{007d}\\x{003d}\\-_\\[\\]\\x{0060}\\x{007e}\\x{0028}\\x{0029}])'
+        'name' : 'keyword.operator.lama2'
+      }
+    ]
+  }
+  'js_storage_type' : {
+    'patterns' : [
+      {
+        'match' : '(?:\\b)(var|let|const)(?:\\b)'
+        'name' : 'storage.type.js.lama2'
+      }
+    ]
+  }
+  'js_string1' : {
+    'patterns' : [
+      {
+        'begin' : '(")'
+        'beginCaptures' : {
+          '1' : {
+            'name' : 'keyword.operator.lama2'
+          }
+        }
+        'contentName' : 'text.lama2'
+        'end' : '(")'
+        'endCaptures' : {
+          '1' : {
+            'name' : 'keyword.operator.lama2'
+          }
+        }
+      }
+    ]
+  }
+  'js_string1__1' : {
+    'patterns' : [
+    ]
+  }
+  'js_string2' : {
+    'patterns' : [
+      {
+        'begin' : '(\')'
+        'beginCaptures' : {
+          '1' : {
+            'name' : 'keyword.operator.lama2'
+          }
+        }
+        'contentName' : 'text.lama2'
+        'end' : '(\')'
+        'endCaptures' : {
+          '1' : {
+            'name' : 'keyword.operator.lama2'
+          }
+        }
+      }
+    ]
+  }
+  'js_string2__1' : {
+    'patterns' : [
+    ]
+  }
+  'js_string3' : {
+    'patterns' : [
+      {
+        'begin' : '(\\`)'
+        'beginCaptures' : {
+          '1' : {
+            'name' : 'keyword.operator.lama2'
+          }
+        }
+        'contentName' : 'text.lama2'
+        'end' : '(\\`)'
+        'endCaptures' : {
+          '1' : {
+            'name' : 'keyword.operator.lama2'
+          }
+        }
+      }
+    ]
+  }
+  'js_string3__1' : {
+    'patterns' : [
+    ]
+  }
+  'js_variable' : {
+    'patterns' : [
+      {
+        'match' : '(?:\\b)([_\\x{0024}a-zA-Z\\xa0-\\x{ffff}][_\\x{0024}a-zA-Z0-9\\xa0-\\x{ffff}]*)(?:\\b)'
+        'name' : 'variable.lama2'
+      }
+    ]
+  }
+  'json' : {
+    'patterns' : [
+      {
+        'begin' : '(\\{)'
+        'beginCaptures' : {
+          '1' : {
+            'name' : 'keyword.operator.lama2'
+          }
+        }
+        'patterns' : [
+          {
+            'include' : '#json__1'
+          }
+        ]
+        'end' : '(\\})'
+        'endCaptures' : {
+          '1' : {
+            'name' : 'keyword.operator.lama2'
+          }
+        }
+      }
+      {
+        'begin' : '(\\[)'
+        'beginCaptures' : {
+          '1' : {
+            'name' : 'keyword.operator.lama2'
+          }
+        }
+        'patterns' : [
+          {
+            'include' : '#json__2'
+          }
+        ]
+        'end' : '(\\])'
+        'endCaptures' : {
+          '1' : {
+            'name' : 'keyword.operator.lama2'
+          }
+        }
+      }
+      {
+        'match' : '(,|\\:)'
+        'name' : 'keyword.operator.lama2'
+      }
+      {
+        'begin' : '(\\")'
+        'beginCaptures' : {
+          '1' : {
+            'name' : 'keyword.operator.lama2'
+          }
+        }
+        'patterns' : [
+          {
+            'include' : '#json__3'
+          }
+        ]
+        'end' : '(\\")'
+        'endCaptures' : {
+          '1' : {
+            'name' : 'keyword.operator.lama2'
+          }
+        }
+      }
+      {
+        'match' : '((?:\\-?(?:0|(?:[1-9][0-9]*)))(?:(?:\\.[0-9]*)(?:(?:e|E)(?:\\+|\\-)[0-9]+)?)?)'
+        'name' : 'storage.type.lama2'
+      }
+      {
+        'match' : '(true|false|null)'
+        'name' : 'storage.type.lama2'
+      }
+    ]
+  }
+  'json__1' : {
+    'patterns' : [
+      {
+        'include' : '#json'
+      }
+    ]
+  }
+  'json__2' : {
+    'patterns' : [
+      {
+        'include' : '#json'
+      }
+    ]
+  }
+  'json__3' : {
+    'patterns' : [
+      {
+        'match' : '((?:\\\\u[0-9a-f]{4})|(?:\\\\[\\x{0022}\\x{005c}\\x{002f}bfnrt]))'
+        'name' : 'constant.character.escape.lama2'
+      }
+      {
+        'match' : '([^\\"\\x{005c}]+)'
+        'name' : 'string.unquoted.lama2'
+      }
+    ]
+  }
+  'multi_line_comment' : {
+    'patterns' : [
+      {
+        'begin' : '(/\\*)'
+        'beginCaptures' : {
+          '1' : {
+            'name' : 'comment.lama2'
+          }
+        }
+        'contentName' : 'comment.lama2'
+        'end' : '(\\*/)'
+        'endCaptures' : {
+          '1' : {
+            'name' : 'comment.lama2'
+          }
+        }
+      }
+    ]
+  }
+  'multi_line_comment__1' : {
+    'patterns' : [
+    ]
+  }
+  'numeric' : {
+    'patterns' : [
+      {
+        'match' : '(\\b\\d+)'
+        'name' : 'constant.numeric.lama2'
+      }
+    ]
+  }
+  'preamble' : {
+    'patterns' : [
+      {
+        'match' : '(GET|POST|PUT|DELETE|get|post|put|delete)'
+        'name' : 'keyword.lama2'
+      }
+      {
+        'match' : '(MULTIPART|multipart)'
+        'name' : 'keyword.lama2'
+      }
+      {
+        'match' : '(https?|\\$\\{.*\\})([^\\s]+)(?:\\b)'
+        'captures' : {
+          '1' : {
+            'name' : 'variable.lama2'
+          }
+          '2' : {
+            'name' : 'keyword.operator.lama2'
+          }
+        }
+      }
+      {
+        'match' : '(\\$\\{.*\\})(.*)(?:\\b)'
+        'name' : 'keyword.operator.lama2'
+      }
+    ]
+  }
+  'root_javascript' : {
+    'patterns' : [
+      {
+        'include' : '#js_keywords'
+      }
+    ]
+  }
+  'root_lama' : {
+    'patterns' : [
+      {
+        'include' : '#separator'
+      }
+      {
+        'match' : '(#.*)'
+        'name' : 'comment.lama2'
+      }
+      {
+        'include' : '#preamble'
+      }
+      {
+        'include' : '#json'
+      }
+      {
+        'include' : '#headers'
+      }
+      {
+        'include' : '#varjson'
+      }
+      {
+        'include' : '#files'
+      }
+    ]
+  }
+  'separator' : {
+    'patterns' : [
+      {
+        'match' : '(^---$)'
+        'name' : 'keyword.operator.lama2'
+      }
+    ]
+  }
+  'varjson' : {
+    'patterns' : [
+      {
+        'match' : '(.*)(=)([^\\x{0023}]+)'
+        'captures' : {
+          '1' : {
+            'name' : 'constant.language.lama2'
+          }
+          '2' : {
+            'name' : 'keyword.operator.lama2'
+          }
+          '3' : {
+            'name' : 'string.source.lama2'
+          }
+        }
+      }
+    ]
+  }
+}

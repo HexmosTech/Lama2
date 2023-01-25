@@ -1,11 +1,16 @@
-.text { color:#eee; }
+.none {color:#cb6; }
 .keyword {color:#cb6; }
-.comment {color:#797979; }
+.comment {color:#797979; font-style: italic; }
 .variable {color:#070; }
 .constant.language {color:#b05279; }
 .string.source {color:#e87d3e; }
 .constant.character.escape {color:#0a0; }
-.invalid.illegal {color:#fff; }
 .keyword.operator {color:#c15; }
 .string.unquoted {color:#cb6; }
 .storage.type {color:#6bc; }
+.entity.name.function {color:#f80; }
+.constant.numeric {color:#cb6; }
+.text {color:#ff0; }
+.keyword.operator.new {color:#19f; }
+.storage.type.js {color:#aff; }
+.keyword.control.flow {color:#f00; }

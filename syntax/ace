@@ -12,59 +12,57 @@ var Lama2HighlightRules = function() {
 this.$rules = {
 "start" : [
    {
+      "token" : "none",
+      "regex" : "(^\\s*$)"
+   },
+   {
+      "token" : "keyword.operator",
+      "regex" : "(^---$)"
+   },
+   {
+      "token" : "keyword",
+      "regex" : "(^\\s*(GET|POST|PUT|DELETE|get|post|put|delete))",
+      "push" : "root_lama"
+   },
+   {
       "token" : "comment",
-      "regex" : "(#.*)"
+      "regex" : "(^\\s*#.*)",
+      "push" : "root_lama"
    },
    {
-      "token" : "keyword",
-      "regex" : "(GET|POST|PUT|DELETE|get|post|put|delete)"
+      "token" : "variable",
+      "regex" : "(?!(^\\s*(#|GET|POST|PUT|DELETE|get|post|put|delete)))",
+      "push" : "root_javascript"
    },
    {
-      "token" : "keyword",
-      "regex" : "(MULTIPART|multipart)"
-   },
-   {
-      "token" : ["variable", "keyword.operator"],
-      "regex" : "(https?|\\$\\{.*\\})(.*)"
-   },
-   {
-      "token" : "keyword.operator",
-      "regex" : "(\\{)",
-      "push" : "json__1"
-   },
+      defaultToken : "text",
+   }
+], 
+"js_string1__1" : [
    {
       "token" : "keyword.operator",
-      "regex" : "(\\[)",
-      "push" : "json__2"
+      "regex" : "(\")",
+      "next" : "pop"
    },
+   {
+      defaultToken : "text",
+   }
+], 
+"js_string2__1" : [
    {
       "token" : "keyword.operator",
-      "regex" : "(,|\\:)"
+      "regex" : "(')",
+      "next" : "pop"
    },
+   {
+      defaultToken : "text",
+   }
+], 
+"js_string3__1" : [
    {
       "token" : "keyword.operator",
-      "regex" : "(\\\")",
-      "push" : "json__3"
-   },
-   {
-      "token" : "storage.type",
-      "regex" : "((?:\\-?(?:0|(?:[1-9][0-9]*)))(?:(?:\\.[0-9]*)(?:(?:e|E)(?:\\+|\\-)[0-9]+)?)?)"
-   },
-   {
-      "token" : "storage.type",
-      "regex" : "(true|false|null)"
-   },
-   {
-      "token" : ["constant.language", "keyword.operator", "string.source"],
-      "regex" : "(.*)(:)([^#]+)"
-   },
-   {
-      "token" : ["constant.language", "keyword.operator", "string.source"],
-      "regex" : "(.*)(=)([^#]+)"
-   },
-   {
-      "token" : ["constant.language", "keyword.operator", "string.source"],
-      "regex" : "(.*)(@)([^#]+)"
+      "regex" : "(\\`)",
+      "next" : "pop"
    },
    {
       defaultToken : "text",
@@ -157,6 +155,159 @@ this.$rules = {
    {
       "token" : "string.unquoted",
       "regex" : "([^\\\"\\\\]+)"
+   },
+   {
+      defaultToken : "text",
+   }
+], 
+"multi_line_comment__1" : [
+   {
+      "token" : "comment",
+      "regex" : "(\\*/)",
+      "next" : "pop"
+   },
+   {
+      defaultToken : "comment",
+   }
+], 
+"root_javascript" : [
+   {
+      "token" : "keyword.operator",
+      "regex" : "(^---$)",
+      "next" : "pop"
+   },
+   {
+      "token" : "keyword.operator",
+      "regex" : "(^---$)"
+   },
+   {
+      "token" : "comment",
+      "regex" : "(/\\*)",
+      "push" : "multi_line_comment__1"
+   },
+   {
+      "token" : "comment",
+      "regex" : "(//.*$)"
+   },
+   {
+      "token" : "keyword.operator",
+      "regex" : "(\\`)",
+      "push" : "js_string3__1"
+   },
+   {
+      "token" : "keyword.operator",
+      "regex" : "(\")",
+      "push" : "js_string1__1"
+   },
+   {
+      "token" : "keyword.operator",
+      "regex" : "(')",
+      "push" : "js_string2__1"
+   },
+   {
+      "token" : "keyword.operator",
+      "regex" : "([.,\\/#!$%\\^&\\*;:{}=\\-_\\[\\]`~()])"
+   },
+   {
+      "token" : ["entity.name.function", "keyword.operator"],
+      "regex" : "(?:\\b)(\\.[_$a-zA-Z\\xa0-\\uffff][_$a-zA-Z0-9\\xa0-\\uffff]*)(\\()"
+   },
+   {
+      "token" : "keyword.operator.new",
+      "regex" : "(?:\\b)(?:do|if|in|for|let|new|try|var|case|else|enum|eval|false|null|this|true|void|with|break|catch|class|const|super|throw|while|yield|delete|export|import|public|return|static|switch|typeof|default|extends|finally|package|private|continue|debugger|function|arguments|interface|protected|implements|instanceof)(?:\\b)"
+   },
+   {
+      "token" : "storage.type.js",
+      "regex" : "(?:\\b)(var|let|const)(?:\\b)"
+   },
+   {
+      "token" : "keyword.control.flow",
+      "regex" : "(?:\\b)(return|yield)(?:\\b)"
+   },
+   {
+      "token" : "variable",
+      "regex" : "(?:\\b)([_$a-zA-Z\\xa0-\\uffff][_$a-zA-Z0-9\\xa0-\\uffff]*)(?:\\b)"
+   },
+   {
+      "token" : "keyword.operator",
+      "regex" : "(\\+|-|\\*|\\/|=|>|<|>=|<=|&|\\||%|!|\\^|\\(|\\))"
+   },
+   {
+      "token" : "constant.numeric",
+      "regex" : "(\\b\\d+)"
+   },
+   {
+      defaultToken : "text",
+   }
+], 
+"root_lama" : [
+   {
+      "token" : "keyword.operator",
+      "regex" : "(^---$)",
+      "next" : "pop"
+   },
+   {
+      "token" : "keyword.operator",
+      "regex" : "(^---$)"
+   },
+   {
+      "token" : "comment",
+      "regex" : "(#.*)"
+   },
+   {
+      "token" : "keyword",
+      "regex" : "(GET|POST|PUT|DELETE|get|post|put|delete)"
+   },
+   {
+      "token" : "keyword",
+      "regex" : "(MULTIPART|multipart)"
+   },
+   {
+      "token" : ["variable", "keyword.operator"],
+      "regex" : "(https?|\\$\\{.*\\})([^\\s]+)(?:\\b)"
+   },
+   {
+      "token" : "keyword.operator",
+      "regex" : "(\\$\\{.*\\})(.*)(?:\\b)"
+   },
+   {
+      "token" : "keyword.operator",
+      "regex" : "(\\{)",
+      "push" : "json__1"
+   },
+   {
+      "token" : "keyword.operator",
+      "regex" : "(\\[)",
+      "push" : "json__2"
+   },
+   {
+      "token" : "keyword.operator",
+      "regex" : "(,|\\:)"
+   },
+   {
+      "token" : "keyword.operator",
+      "regex" : "(\\\")",
+      "push" : "json__3"
+   },
+   {
+      "token" : "storage.type",
+      "regex" : "((?:\\-?(?:0|(?:[1-9][0-9]*)))(?:(?:\\.[0-9]*)(?:(?:e|E)(?:\\+|\\-)[0-9]+)?)?)"
+   },
+   {
+      "token" : "storage.type",
+      "regex" : "(true|false|null)"
+   },
+   {
+      "token" : ["constant.language", "keyword.operator", "string.source"],
+      "regex" : "(.*)(:)([^#]+)"
+   },
+   {
+      "token" : ["constant.language", "keyword.operator", "string.source"],
+      "regex" : "(.*)(=)([^#]+)"
+   },
+   {
+      "token" : ["constant.language", "keyword.operator", "string.source"],
+      "regex" : "(.*)(@)([^#]+)"
    },
    {
       defaultToken : "text",

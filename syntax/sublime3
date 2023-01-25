@@ -6,6 +6,36 @@ file_extensions: [ l2, lama2 ]
 
 contexts:
   main:
+    - include: emptyline
+    - include: separator
+    - match: '(^\s*(GET|POST|PUT|DELETE|get|post|put|delete))'
+      push: root_lama
+      captures:
+        0: keyword.lama2
+    - match: '(^\s*#.*)'
+      push: root_lama
+      captures:
+        0: comment.lama2
+    - match: '(?!(^\s*(#|GET|POST|PUT|DELETE|get|post|put|delete)))'
+      push: root_javascript
+      captures:
+        0: variable.lama2
+    - match: '(.)'
+      captures:
+        0: text.lama2
+  emptyline:
+    - match: '(^\s*$)'
+      captures:
+        0: none.lama2
+    - match: '(.)'
+      captures:
+        0: text.lama2
+  root_lama:
+    - match: '(^---$)'
+      pop: true
+      captures:
+        0: keyword.operator.lama2
+    - include: separator
     - match: '(#.*)'
       captures:
         0: comment.lama2
@@ -14,6 +44,164 @@ contexts:
     - include: headers
     - include: varjson
     - include: files
+    - match: '(.)'
+      captures:
+        0: text.lama2
+  separator:
+    - match: '(^---$)'
+      captures:
+        0: keyword.operator.lama2
+    - match: '(.)'
+      captures:
+        0: text.lama2
+  root_javascript:
+    - match: '(^---$)'
+      pop: true
+      captures:
+        0: keyword.operator.lama2
+    - include: js_keywords
+    - match: '(.)'
+      captures:
+        0: text.lama2
+  js_keywords:
+    - include: separator
+    - include: multi_line_comment
+    - include: js_comment
+    - include: js_string3
+    - include: js_string1
+    - include: js_string2
+    - include: js_punctuation
+    - include: js_call
+    - include: js_keyword_new
+    - include: js_storage_type
+    - include: js_keyword_control_flow
+    - include: js_variable
+    - include: js_operator
+    - include: numeric
+    - match: '(.)'
+      captures:
+        0: text.lama2
+  js_keyword_new:
+    - match: '(?:\b)(?:do|if|in|for|let|new|try|var|case|else|enum|eval|false|null|this|true|void|with|break|catch|class|const|super|throw|while|yield|delete|export|import|public|return|static|switch|typeof|default|extends|finally|package|private|continue|debugger|function|arguments|interface|protected|implements|instanceof)(?:\b)'
+      captures:
+        0: keyword.operator.new.lama2
+    - match: '(.)'
+      captures:
+        0: text.lama2
+  js_operator:
+    - match: '(\+|-|\*|\/|=|>|<|>=|<=|&|\||%|!|\^|\(|\))'
+      captures:
+        0: keyword.operator.lama2
+    - match: '(.)'
+      captures:
+        0: text.lama2
+  js_punctuation:
+    - match: '([.\x{002c}\/\x{0023}\x{0021}\x{0024}\x{0025}\^\x{0026}\*\x{003b}\x{003a}\x{007b}\x{007d}\x{003d}\-_\[\]\x{0060}\x{007e}\x{0028}\x{0029}])'
+      captures:
+        0: keyword.operator.lama2
+    - match: '(.)'
+      captures:
+        0: text.lama2
+  js_string1:
+    - match: '(")'
+      captures:
+        0: keyword.operator.lama2
+      push: 
+        - match: '(")'
+          pop: true
+          captures:
+            0: keyword.operator.lama2
+        - match: '(.)'
+          captures:
+            0: text.lama2
+    - match: '(.)'
+      captures:
+        0: text.lama2
+  js_string2:
+    - match: '('')'
+      captures:
+        0: keyword.operator.lama2
+      push: 
+        - match: '('')'
+          pop: true
+          captures:
+            0: keyword.operator.lama2
+        - match: '(.)'
+          captures:
+            0: text.lama2
+    - match: '(.)'
+      captures:
+        0: text.lama2
+  js_string3:
+    - match: '(\`)'
+      captures:
+        0: keyword.operator.lama2
+      push: 
+        - match: '(\`)'
+          pop: true
+          captures:
+            0: keyword.operator.lama2
+        - match: '(.)'
+          captures:
+            0: text.lama2
+    - match: '(.)'
+      captures:
+        0: text.lama2
+  js_variable:
+    - match: '(?:\b)([_\x{0024}a-zA-Z\xa0-\x{ffff}][_\x{0024}a-zA-Z0-9\xa0-\x{ffff}]*)(?:\b)'
+      captures:
+        0: variable.lama2
+    - match: '(.)'
+      captures:
+        0: text.lama2
+  js_comment:
+    - match: '(//.*$)'
+      captures:
+        0: comment.lama2
+    - match: '(.)'
+      captures:
+        0: text.lama2
+  js_storage_type:
+    - match: '(?:\b)(var|let|const)(?:\b)'
+      captures:
+        0: storage.type.js.lama2
+    - match: '(.)'
+      captures:
+        0: text.lama2
+  js_call:
+    - match: '(?:\b)(\.[_\x{0024}a-zA-Z\xa0-\x{ffff}][_\x{0024}a-zA-Z0-9\xa0-\x{ffff}]*)(\()'
+      captures:
+        0: entity.name.function.lama2
+        1: keyword.operator.lama2
+    - match: '(.)'
+      captures:
+        0: text.lama2
+  js_keyword_control_flow:
+    - match: '(?:\b)(return|yield)(?:\b)'
+      captures:
+        0: keyword.control.flow.lama2
+    - match: '(.)'
+      captures:
+        0: text.lama2
+  numeric:
+    - match: '(\b\d+)'
+      captures:
+        0: constant.numeric.lama2
+    - match: '(.)'
+      captures:
+        0: text.lama2
+  multi_line_comment:
+    - match: '(/\*)'
+      captures:
+        0: comment.lama2
+      push: 
+        - match: '(\*/)'
+          pop: true
+          captures:
+            0: comment.lama2
+        - match: '(.)'
+          captures:
+            0: comment.lama2
     - match: '(.)'
       captures:
         0: text.lama2
@@ -51,10 +239,13 @@ contexts:
     - match: '(MULTIPART|multipart)'
       captures:
         0: keyword.lama2
-    - match: '(https?|\$\{.*\})(.*)'
+    - match: '(https?|\$\{.*\})([^\s]+)(?:\b)'
       captures:
         0: variable.lama2
         1: keyword.operator.lama2
+    - match: '(\$\{.*\})(.*)(?:\b)'
+      captures:
+        0: keyword.operator.lama2
     - match: '(.)'
       captures:
         0: text.lama2
