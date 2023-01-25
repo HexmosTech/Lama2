@@ -738,24 +738,22 @@
 <p>The <code>l2</code> command provides some helpful options for
 extension developers. The options are:</p>
 <ol>
-<li><code>--nocolor</code> or <code>-n</code> disables colored output in HTTPie;</li>
-<li>
-<p><code>--output=&lt;target.json</code> or <code>-o</code> writes a structured JSON
-output to the target file. The following is the content
-structure:
+<li><code>--nocolor</code> or <code>-n</code> disables colored output in httpie-go (in CLI);</li>
+<li><code>--output=&lt;target.json</code> or <code>-o</code> writes a structured JSON
+output to the target file (without colors). The following is the content
+structure:</li>
+</ol>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
 <span class="w">    </span><span class="nt">&quot;logs&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">...</span><span class="p">,</span>
 <span class="w">    </span><span class="nt">&quot;headers&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">...</span><span class="p">,</span>
 <span class="w">    </span><span class="nt">&quot;body&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">...</span>
 <span class="p">}</span>
-</code></pre></div></p>
-</li>
-<li>
-<p><code>logs</code>: String value. Contains ASCII-color-coded log output. Control the logging level through <code>-v</code> option</p>
-</li>
+</code></pre></div>
+<ul>
+<li><code>logs</code>: String value. Contains ASCII-color-coded log output. Control the logging level through <code>-v</code> option</li>
 <li><code>headers</code>: A string consisting of <code>HTTP header: Value</code> pairs separated by newline.</li>
 <li><code>body</code>: A string containing the HTTP response. Usually a JSON or HTML response.</li>
-</ol>
+</ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Right now, all the three values in the JSON are strings. In the future, we may transform the values further to provide a more parse-friendly structure.</p>

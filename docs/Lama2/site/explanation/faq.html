@@ -466,6 +466,20 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#why-pick-javascript-as-the-scriptingglue-language" class="md-nav__link">
+    Why pick Javascript as the scripting/glue language?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-the-intern-test" class="md-nav__link">
+    What is the Intern Test?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#why-did-you-create-lama2" class="md-nav__link">
     Why did you create Lama2?
   </a>
@@ -684,6 +698,20 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#why-pick-javascript-as-the-scriptingglue-language" class="md-nav__link">
+    Why pick Javascript as the scripting/glue language?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-the-intern-test" class="md-nav__link">
+    What is the Intern Test?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#why-did-you-create-lama2" class="md-nav__link">
     Why did you create Lama2?
   </a>
@@ -711,6 +739,20 @@
 
 
 <h1 id="faqsraqs">FAQs/RAQs<a class="headerlink" href="#faqsraqs" title="Permanent link">&para;</a></h1>
+<h3 id="why-pick-javascript-as-the-scriptingglue-language">Why pick Javascript as the scripting/glue language?<a class="headerlink" href="#why-pick-javascript-as-the-scriptingglue-language" title="Permanent link">&para;</a></h3>
+<p>Lama2's <a href="reference/philosophy.md">design philosophy</a> advocates "delegate to mature and preferably open tools". </p>
+<p>After analysis, we finally picked JS due to following reasons:</p>
+<ul>
+<li>Most people working with APIs probably already know JS</li>
+<li>Easy to support XPath/JSONPath or even JQ clones right into JS</li>
+<li>Even if you don't know any of (2), simple JS object notation + good old loops will take you far</li>
+<li>Native support for JSON (and dom manipulation is common too, for xml type responses)</li>
+<li>Good amount of power for implementation effort exerted</li>
+<li>For simple use cases, one barely has to understand any serious JS. Object/map notation is quite intuitive.</li>
+</ul>
+<p>Ultimately, we believe JS passes our "Intern Test" for usability.</p>
+<h3 id="what-is-the-intern-test">What is the <em>Intern Test</em>?<a class="headerlink" href="#what-is-the-intern-test" title="Permanent link">&para;</a></h3>
+<p><em>Lama2</em> API files must remain easy for interns to get used with minimal handholding from more experienced engineers. If it doesn't work for interns, then it doesn't work for our teams at Hexmos as well.</p>
 <h3 id="why-did-you-create-lama2">Why did you create <em>Lama2</em>?<a class="headerlink" href="#why-did-you-create-lama2" title="Permanent link">&para;</a></h3>
 <p>At <a href="https://hexmos.com">Hexmos</a>, our engineering infrastructure
 is split into dozens of self-contained software services.
