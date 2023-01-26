@@ -10,7 +10,7 @@ debug:
 	echo "\033[31m(1) At localhost:8081, set gdbserver address as localhost:8082;\n(2) Also run "monitor exit" from gdb client to terminate the server\033[0m"
 	-pkill -9 gdbgui && true
 	gdbgui -p 8081&
-	gdbserver localhost:8082 ./lama2 examples/0009_processor_basic/0009_processor_basic.l2
+	gdbserver localhost:8082 ./lama2 -o blah.json -vvv elfparser/ElfTestSuite/n_0003_404.l2
 
 
 lint:
