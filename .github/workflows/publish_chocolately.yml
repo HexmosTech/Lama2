@@ -1,0 +1,96 @@
+name: Build on Windows
+on:
+  release:
+    types: [published]
+jobs:
+  build:
+    runs-on: windows-2019
+    steps:
+      -  run: |
+          $lamaUrl64 = python -c "
+          import struct
+          import json
+          import http.client
+
+          def get_file():
+              conn = http.client.HTTPSConnection('api.github.com')
+              payload = ''
+              headers = {
+                  'User-Agent': 'Hexmos'
+              }
+              conn.request('GET', '/repos/HexmosTech/Lama2/releases/latest', payload, headers)
+              res = conn.getresponse()
+              data = res.read()
+              return json.loads(data.decode('utf-8'))
+
+          def get_platform():
+              return 'amd64'
+
+          def search(files, platform):
+              search_string = 'windows-' + platform
+              for row in files['assets']:
+                  if search_string in row['name'] and 'md5' not in row['name']:
+                      return row['browser_download_url']            
+
+          def main():
+              files = get_file()
+              platform = get_platform()
+              download_link = search(files, platform)
+              return download_link
+
+          if __name__ == '__main__':
+              link = main()
+              print(link)
+          " | Out-String
+          
+          $lamaUrl = python -c "
+          import struct
+          import json
+          import http.client
+
+          def get_file():
+              conn = http.client.HTTPSConnection('api.github.com')
+              payload = ''
+              headers = {
+                  'User-Agent': 'Hexmos'
+              }
+              conn.request('GET', '/repos/HexmosTech/Lama2/releases/latest', payload, headers)
+              res = conn.getresponse()
+              data = res.read()
+              return json.loads(data.decode('utf-8'))
+
+          def get_platform():
+              return '386'
+
+          def search(files, platform):
+              search_string = 'windows-' + platform
+              for row in files['assets']:
+                  if search_string in row['name'] and 'md5' not in row['name']:
+                      return row['browser_download_url']            
+
+          def main():
+              files = get_file()
+              platform = get_platform()
+              download_link = search(files, platform)
+              return download_link
+
+          if __name__ == '__main__':
+              link = main()
+              print(link)
+          " | Out-String
+          choco install wget -y
+          wget $lamaUrl64 -o lama264.zip
+          wget $lamaUrl -o lama2.zip
+          $lamaUrlSHA =  Get-FileHash lama2.zip | Select-Object Hash  | ft -HideTableHeaders | Out-String
+          $lamaUrlSHA64 =  Get-FileHash lama264.zip | Select-Object Hash  | ft -HideTableHeaders | Out-String
+          git clone https://github.com/HexmosTech/Lama2-Chocolatey.git LamaChocolatey
+          cd LamaChocolatey
+          python3 updateChocolateyPS1.py $lamaUrl $lamaUrlSHA $lamaUrl64 $lamaUrlSHA64
+          python3 bumpVersion.py $lamaUrl
+          rm updateChocolateyPS1.py
+          rm bumpVersion.py
+          $version = $lamaUrl64.split('/')[-2].replace('v', '')
+          $filename = "lama2.${version}.nupkg"
+          choco pack
+          choco apikey --key  ${{ secrets.CHOCOLATELY_API_TOKEN }} --source https://push.chocolatey.org/
+          choco push ${filename} --source https://push.chocolatey.org/
