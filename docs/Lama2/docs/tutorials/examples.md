@@ -227,6 +227,7 @@ object through `JSON.parse()`. Otherwise,
 
 ```
 url = "http://google.com"
+REMOTE_COORD = "https://httpbing.org"
 ---
 # stage 1
 
