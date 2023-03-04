@@ -27,6 +27,7 @@ IDEs and text-editors as well. Think of *Lama2* as [**Markdown for APIs.**](http
 1. **Editor support:** Invoke *Lama2* from your [favorite text editor](https://hexmos.com/lama2/tutorials/installation.html#from-vs-code) or IDE. Helpful documentation and tool support to [build editor extensions](https://hexmos.com/lama2/tutorials/editor.html) included.
 1. **Longevity & track-ability:** Commit `.l2` files to `git` or other version control for long life & change tracking.
 1. **Collaboration:** Share [API repo](https://hexmos.com/lama2/tutorials/collaboration.html) with teammates and colleagues to collaborate
+1. **Code generation:** [Convert](https://hexmos.com/lama2/tutorials/codegen.html) `l2` API definitions into your preferred language/library, be it Python, Javascript, Java or many other options.
 1. **Powerful chaining:** Chain multiple `l2` requests through embedded [Javascript blocks](https://hexmos.com/lama2/tutorials/examples.html#chain-requests-using-javascript)
 1. **Documentation:** [Explore](https://hexmos.com/lama2/index.html) examples, how-tos, explanations, references, FAQ/RAQs, and diagrams. Documentation is a priority, so that you never have to get lost.
 1. **Extensibility:** `.l2` syntax is implemented as a *recursive descent parser*, based on a [formal grammar](https://hexmos.com/lama2/reference/grammar.html). [Dig into details](https://hexmos.com/lama2/reference/parser.html) and [implement](https://github.com/HexmosTech/Lama2/tree/main/parser) new syntax (ex: to support `websockets`)

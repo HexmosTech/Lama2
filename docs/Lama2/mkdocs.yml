@@ -7,6 +7,7 @@ nav:
       - Import Postman: tutorials/postman.md
       - Examples: tutorials/examples.md
       - Collaboration: tutorials/collaboration.md
+      - Code Generation: tutorials/codegen.md
     - Understand:
       - Syntax Guidance: explanation/syntax.md
       - The l2 Format: explanation/l2format.md
