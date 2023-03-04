@@ -3,25 +3,27 @@ package codegen
 import (
 	"bytes"
 	"fmt"
+	"strings"
 	"text/template"
 
 	"github.com/rs/zerolog/log"
 
+	"github.com/HexmosTech/gabs/v2"
 	"github.com/HexmosTech/lama2/cmdexec"
+	"github.com/HexmosTech/lama2/preprocess"
+	"github.com/atotto/clipboard"
 )
 
 type SnippetArgs struct {
-	Language string
-	Library  string
+	Language   string
+	Library    string
+	HARRequest string
 }
 
 func PrepareHTTPSnippetGenerator(snippetArgs SnippetArgs) string {
 	var templOutput bytes.Buffer
 	templStr := `var m = require('./codegen/httpsnippet.js'); 
-	const snippet = new window.HTTPSnippet({
-  		method: 'GET',
-  		url: 'http://mockbin.com/request',
-	});
+	const snippet = new window.HTTPSnippet({{.HARRequest}});
 	
 	let convertedSnippet = snippet.convert('{{.Language}}'{{if .Library }}, '{{.Library}}'{{end}});
 	`
@@ -30,11 +32,118 @@ func PrepareHTTPSnippetGenerator(snippetArgs SnippetArgs) string {
 	return templOutput.String()
 }
 
-func GenerateTargetCode(targetLangLib string) {
+// takes in the headers in L2 format, and generates
+// HAR compatible
+func GetHARHeadersCookies(headers *gabs.Container) (*gabs.Container, *gabs.Container) {
+
+	headersData := gabs.New()
+	headersData.Array()
+
+	cookiesData := gabs.New()
+	cookiesData.Array()
+	for key, val := range headers.Data().(*gabs.Container).ChildrenMap() {
+		if strings.ToLower(key) == "cookie" {
+			cookieList := strings.Split(val.Data().(*gabs.Container).Data().(string), ";")
+			for _, c := range cookieList {
+				r := strings.Split(c, "=")
+				ck := r[0]
+				cv := r[1]
+				cookie := gabs.New()
+				cookie.Set(ck, "name")
+				cookie.Set(cv, "value")
+				cookiesData.ArrayAppend(cookie)
+			}
+			continue
+		}
+		header := gabs.New()
+		header.Set(key, "name")
+		header.Set(val, "value")
+		headersData.ArrayAppend(header)
+	}
+
+	cookiesData.Array()
+	for key, val := range headers.Data().(*gabs.Container).ChildrenMap() {
+		if strings.ToLower(key) == "cookie" {
+			cookieList := strings.Split(val.Data().(*gabs.Container).Data().(string), ";")
+			for _, c := range cookieList {
+				r := strings.Split(c, "=")
+				ck := r[0]
+				cv := r[1]
+				cookie := gabs.New()
+				cookie.Set(ck, "name")
+				cookie.Set(cv, "value")
+				cookiesData.ArrayAppend(cookie)
+			}
+			continue
+		}
+		header := gabs.New()
+		header.Set(key, "name")
+		header.Set(val, "value")
+		headersData.ArrayAppend(header)
+	}
+	return headersData, cookiesData
+}
+
+func GetRequestHARString(parsedAPI *gabs.Container) string {
+	parsedAPIblocks := parsedAPI.S("value").Data().(*gabs.Container).Children()
+	vm := cmdexec.GetJSVm()
+	for i, block := range parsedAPIblocks {
+		log.Debug().Int("Block num", i).Msg("")
+		log.Debug().Str("Block getting processed", block.String()).Msg("")
+		blockType := block.S("type").Data().(string)
+		if blockType == "processor" {
+			fmt.Println("Skipping processor block")
+		} else if blockType == "Lama2File" {
+			preprocess.ProcessVarsInBlock(block, vm)
+			httpv := block.S("verb", "value")
+			url := block.S("url", "value")
+			jsonObj := block.S("details", "ip_data")
+			headers := block.S("details", "headers")
+			/*
+				TODO: Handle multipart case
+
+				multipart := block.S("multipart", "value")
+				multipartBool := false
+				if multipart != nil {
+					multipartBool = true
+				}
+			*/
+			harObj := gabs.New()
+
+			if jsonObj != nil {
+				postData := gabs.New()
+				postData.Set("application/json", "mimeType")
+				postData.Set(jsonObj.String(), "text")
+				harObj.Set(postData, "postData")
+			}
+
+			headersData, cookiesData := GetHARHeadersCookies(headers)
+			if headers != nil {
+				if cookiesData.String() != "[]" {
+					harObj.Set(cookiesData, "cookies")
+				}
+				harObj.Set(headersData, "headers")
+			}
+
+			harObj.Set(httpv, "method")
+			harObj.Set(url, "url")
+
+			res := harObj.String()
+			return res
+		}
+	}
+	// TODO: Handle multi-stage files properly
+	// Better exception handling
+	return ""
+}
+
+func GenerateTargetCode(targetLangLib string, parsedAPI *gabs.Container) {
+	harRequest := GetRequestHARString(parsedAPI)
 	snippetArgs := SnippetArgs{}
 	lang, lib := SplitLangLib(targetLangLib)
 	snippetArgs.Language = lang
 	snippetArgs.Library = lib
+	snippetArgs.HARRequest = harRequest
 	httpsnippetCode := PrepareHTTPSnippetGenerator(snippetArgs)
 	vm := cmdexec.GetJSVm()
 	_, e := vm.RunString(httpsnippetCode)
@@ -44,5 +153,9 @@ func GenerateTargetCode(targetLangLib string) {
 			Str("Error", e.Error()).
 			Msg(fmt.Sprint("Code generator error"))
 	}
-	fmt.Println(vm.Get("convertedSnippet"))
+	// Init returns an error if the package is not ready for use.
+	convertedSnippet := vm.Get("convertedSnippet").String()
+	fmt.Println(convertedSnippet)
+	clipboard.WriteAll(convertedSnippet)
+	fmt.Println("Code copied to clipboard")
 }
