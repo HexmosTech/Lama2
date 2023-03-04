@@ -2,7 +2,7 @@
 
 ### Why pick Javascript as the scripting/glue language?
 
-Lama2's [design philosophy](reference/philosophy.md) advocates "delegate to mature and preferably open tools". 
+Lama2's [design philosophy](/reference/philosophy.md) advocates "delegate to mature and preferably open tools". 
 
 After analysis, we finally picked JS due to following reasons:
 

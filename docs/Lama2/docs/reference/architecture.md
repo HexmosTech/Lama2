@@ -11,7 +11,7 @@ graph TD
 	F["Error Reporting (TODO)"]
 	G["Load input & environment vars <br/>(preprocess)"]
 	H["Request Command Generator <br/>(cmdgen)"]
-	I["Lama2 Prettifier (TODO)"]
+	I["Lama2 Prettifier"]
 	J["Data Importer (importer)"]
 	L["Iterate over blocks <br/>(controller)"]
 	M["Init Javascript processor VM <br/>(cmdexec)"]
