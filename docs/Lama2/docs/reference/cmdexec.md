@@ -46,7 +46,7 @@ GetJSVm creates a new goja runtime instance with console.log enabled
 func RunVMCode(jsCode string, vm *goja.Runtime)
 ```
 
-RunVMCode takes in a JS snipped as a string, executes the code in a JS VM, finally checks whether there are any errors, and if yes, logs the problem. Note: the vm runtime remains modified; so if you reuse the vm for other operations, the state from previous invocations carry over
+RunVMCode takes in a JS snippet as a string, executes the code in a JS VM, finally checks whether there are any errors, and if yes, logs the problem. Note: the vm runtime remains modified; so if you reuse the vm for other operations, the state from previous invocations carry over
 
 
 
