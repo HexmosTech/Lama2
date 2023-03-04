@@ -16,7 +16,7 @@ func GetJSVm() *goja.Runtime {
 	return vm
 }
 
-// RunVMCode takes in a JS snipped as a string,
+// RunVMCode takes in a JS snippet as a string,
 // executes the code in a JS VM, finally checks
 // whether there are any errors, and if yes,
 // logs the problem.

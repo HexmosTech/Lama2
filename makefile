@@ -12,6 +12,9 @@ debug:
 	gdbgui -p 8081&
 	gdbserver localhost:8082 ./lama2 -o blah.json -vvv elfparser/ElfTestSuite/n_0003_404.l2
 
+getsnippet:
+	wget https://raw.githubusercontent.com/HexmosTech/httpsnippet/cdn/build/httpsnippet-bundle.js -O codegen/httpsnippet.js
+
 
 lint:
 	golangci-lint run --disable-all -E revive ./...

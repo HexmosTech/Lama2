@@ -13,6 +13,7 @@ import (
 	"github.com/HexmosTech/httpie-go"
 	"github.com/HexmosTech/lama2/cmdexec"
 	"github.com/HexmosTech/lama2/cmdgen"
+	"github.com/HexmosTech/lama2/codegen"
 	"github.com/HexmosTech/lama2/lama2cmd"
 	outputmanager "github.com/HexmosTech/lama2/outputManager"
 	"github.com/HexmosTech/lama2/parser"
@@ -81,6 +82,11 @@ func HandleParsedFile(parsedAPI *gabs.Container, o *lama2cmd.Opts, dir string) {
 func Process(version string) {
 	o := lama2cmd.GetAndValidateCmd(os.Args)
 	lama2cmd.ArgParsing(o, version)
+	if o.Convert != "" {
+		codegen.GenerateTargetCode(o.Convert)
+		return
+	}
+
 	apiContent := preprocess.GetLamaFileAsString(o.Positional.LamaAPIFile)
 	_, dir, _ := utils.GetFilePathComponents(o.Positional.LamaAPIFile)
 	preprocess.LoadElfEnv(path.Join(dir, "l2.env"))
