@@ -6,6 +6,8 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
+var DataInputType string
+
 func (p *Lama2Parser) HeaderData() (*gabs.Container, error) {
 	headers, e := p.Match([]string{"Headers"})
 	log.Trace().Str("Headers", headers.String()).Msg("")
@@ -40,10 +42,16 @@ func (p *Lama2Parser) DataHeader() (*gabs.Container, error) {
 }
 
 func (p *Lama2Parser) DataInput() (*gabs.Container, error) {
+	p.MarkRange["DataStart"] = p.Pos + 1
 	s, e1 := p.Match([]string{"VarJSON"})
+	p.Context["JSON"] = false
 	if e1 != nil {
 		s, e1 = p.Match([]string{"AnyType"})
+		if e1 == nil {
+			p.Context["JSON"] = true
+		}
 	}
+	p.MarkRange["DataEnd"] = p.Pos + 1
 	return s, e1
 }
 

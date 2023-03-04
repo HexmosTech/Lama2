@@ -18,6 +18,7 @@ import (
 	outputmanager "github.com/HexmosTech/lama2/outputManager"
 	"github.com/HexmosTech/lama2/parser"
 	"github.com/HexmosTech/lama2/preprocess"
+	"github.com/HexmosTech/lama2/prettify"
 	"github.com/HexmosTech/lama2/utils"
 	"github.com/dop251/goja"
 	"github.com/rs/zerolog/log"
@@ -90,6 +91,11 @@ func Process(version string) {
 	parsedAPI, e := p.Parse(apiContent)
 	if o.Convert != "" {
 		codegen.GenerateTargetCode(o.Convert, parsedAPI)
+		return
+	}
+
+	if o.Prettify {
+		prettify.Prettify(parsedAPI, p.Context, p.MarkRange, apiContent, o.Positional.LamaAPIFile)
 		return
 	}
 

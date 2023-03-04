@@ -11,13 +11,14 @@ import (
 
 type Lama2Parser struct {
 	*Parser
-	Context map[string]bool
+	Context   map[string]bool
+	MarkRange map[string]int
 }
 
 // NewLama2Parser creates a new Lama2Parser
 // and initializes it properly
 func NewLama2Parser() *Lama2Parser {
-	p := &Lama2Parser{&Parser{}, make(map[string]bool)}
+	p := &Lama2Parser{&Parser{}, make(map[string]bool), make(map[string]int)}
 	p.Pm = p
 	p.Init()
 	return p
