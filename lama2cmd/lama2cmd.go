@@ -20,7 +20,7 @@ type Opts struct {
 	Verbose []bool `short:"v" long:"verbose" description:"Show verbose debug information"`
 	// Prettify bool   `short:"p" long:"prettify" description:"Prettify specified .lama file"`
 	// Sort     bool   `short:"s" long:"sort" description:"Sort specification into recommended order"`
-	Convert     string `short:"c" long:"convert" description:"Generate code in given language and library (ex: python.requests)"`
+	Convert     string `short:"c" long:"convert" description:"Generate code in given language and library (ex: python.requests); reference: tinyurl.com/l2codegen"`
 	Nocolor     bool   `short:"n" long:"nocolor" description:"Disable color in httpie output"`
 	Update      bool   `short:"u" long:"update" description:"Update l2 binary to the latest released version (Linux/MacOS only)"`
 	PostmanFile string `short:"p" long:"postmanfile" description:"JSON export from Postman (Settings -> Data -> Export Data)"`
