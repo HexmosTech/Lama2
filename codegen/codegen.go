@@ -2,6 +2,7 @@ package codegen
 
 import (
 	"bytes"
+	_ "embed"
 	"fmt"
 	"strings"
 	"text/template"
@@ -14,15 +15,22 @@ import (
 	"github.com/atotto/clipboard"
 )
 
+var (
+	//go:embed httpsnippet.js
+	snippetcore string
+)
+
 type SnippetArgs struct {
-	Language   string
-	Library    string
-	HARRequest string
+	Language    string
+	Library     string
+	HARRequest  string
+	SnippetCore string
 }
 
 func PrepareHTTPSnippetGenerator(snippetArgs SnippetArgs) string {
 	var templOutput bytes.Buffer
-	templStr := `var m = require('./codegen/httpsnippet.js'); 
+	templStr := `{{.SnippetCore}} 
+
 	const snippet = new window.HTTPSnippet({{.HARRequest}});
 	
 	let convertedSnippet = snippet.convert('{{.Language}}'{{if .Library }}, '{{.Library}}'{{end}});
@@ -117,8 +125,8 @@ func GetRequestHARString(parsedAPI *gabs.Container) string {
 				harObj.Set(postData, "postData")
 			}
 
-			headersData, cookiesData := GetHARHeadersCookies(headers)
 			if headers != nil {
+				headersData, cookiesData := GetHARHeadersCookies(headers)
 				if cookiesData.String() != "[]" {
 					harObj.Set(cookiesData, "cookies")
 				}
@@ -144,6 +152,7 @@ func GenerateTargetCode(targetLangLib string, parsedAPI *gabs.Container) {
 	snippetArgs.Language = lang
 	snippetArgs.Library = lib
 	snippetArgs.HARRequest = harRequest
+	snippetArgs.SnippetCore = snippetcore
 	httpsnippetCode := PrepareHTTPSnippetGenerator(snippetArgs)
 	vm := cmdexec.GetJSVm()
 	_, e := vm.RunString(httpsnippetCode)
