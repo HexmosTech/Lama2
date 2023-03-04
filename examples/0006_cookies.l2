@@ -4,5 +4,8 @@ https://httpbin.org/post
 # HEADERS
 Cookie:"sessionid=foo;another-cookie=bar"
 
+Header1:value1
+Header2: Value2
+
 # DATA
 hello=world

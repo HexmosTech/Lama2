@@ -82,16 +82,16 @@ func HandleParsedFile(parsedAPI *gabs.Container, o *lama2cmd.Opts, dir string) {
 func Process(version string) {
 	o := lama2cmd.GetAndValidateCmd(os.Args)
 	lama2cmd.ArgParsing(o, version)
-	if o.Convert != "" {
-		codegen.GenerateTargetCode(o.Convert)
-		return
-	}
 
 	apiContent := preprocess.GetLamaFileAsString(o.Positional.LamaAPIFile)
 	_, dir, _ := utils.GetFilePathComponents(o.Positional.LamaAPIFile)
 	preprocess.LoadElfEnv(path.Join(dir, "l2.env"))
 	p := parser.NewLama2Parser()
 	parsedAPI, e := p.Parse(apiContent)
+	if o.Convert != "" {
+		codegen.GenerateTargetCode(o.Convert, parsedAPI)
+		return
+	}
 
 	if e != nil {
 		log.Fatal().
