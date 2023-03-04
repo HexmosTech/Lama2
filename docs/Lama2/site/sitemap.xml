@@ -116,6 +116,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>http://hexmos.com/lama2/tutorials/misc.html</loc>
+         <lastmod>2023-03-04</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>http://hexmos.com/lama2/tutorials/postman.html</loc>
          <lastmod>2023-03-04</lastmod>
          <changefreq>daily</changefreq>
