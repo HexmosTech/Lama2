@@ -13,6 +13,8 @@
 *Quick Links: [Installation](#installationupdate) | [Demo](#terminal-demo-a-post-request) | [Full Documentation](https://hexmos.com/lama2)*
 </div>
 
+> **Note**
+> This is a note
 
 ## About
 
@@ -101,3 +103,11 @@ In particular, we strive to:
 1. [Full documentation @hexmos.com/lama2](https://hexmos.com/lama2/)
 1. Report issues and propose improvements at [Github issues](https://github.com/HexmosTech/Lama2/issues)
 1. Discuss with the community at [Discord](https://discord.gg/zTmxXA6F) and [Github Discussions](https://github.com/HexmosTech/Lama2/discussions)
+
+
+## Acknowledgements
+
+1. The excellent VSCode ecosystem helping us develop our [VSCode extension](https://github.com/HexmosTech/Lama2Code)
+1. httpie-go: A golang version of httpie which we have forked and integrated with Lama2. [Source](https://github.com/HexmosTech/httpie-go)
+1. httpsnippet: A HAR Request to multi-language converter; we use a custom fork of [httpsnippet](https://github.com/HexmosTech/httpsnippet) for code generation from l2 files.
+1. goja: A pure golang based JS interpreter with great, correct implementation of ECMA5. We use [goja](https://github.com/dop251/goja) for JS processor blocks in multi-stage API files.
