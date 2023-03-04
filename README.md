@@ -14,7 +14,8 @@
 </div>
 
 > **Note**
-> This is a note
+> The frontend part of the Lama2 project lives in [Lama2Code](https://github.com/HexmosTech/Lama2Code). The
+> extension tends to be updated along with the Lama2 core in this repo.
 
 ## About
 
