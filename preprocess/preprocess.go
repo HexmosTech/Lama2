@@ -4,14 +4,15 @@
 package preprocess
 
 import (
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"os"
 
 	"github.com/HexmosTech/gabs/v2"
+	"github.com/HexmosTech/godotenv"
 	"github.com/HexmosTech/lama2/utils"
 	"github.com/dop251/goja"
-	"github.com/joho/godotenv"
 	"github.com/rs/zerolog/log"
 )
 
@@ -49,6 +50,30 @@ func ExpandURL(block *gabs.Container, vm *goja.Runtime) {
 	block.Set(url, "url", "value")
 }
 
+func debugOp(str string) {
+	file, err := os.Create("output.txt")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	defer file.Close()
+	_, err = file.WriteString(str)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	fmt.Println("String written to file successfully.")
+}
+
+func escapeString(input string) string {
+	output, err := json.Marshal(input)
+	if err != nil {
+		// handle error
+	}
+	return string(output)
+}
+
 func ExpandJSON(block *gabs.Container, vm *goja.Runtime) {
 	log.Debug().Str("JSON block to be expanded", block.String()).Msg("")
 	dataBlock := block.S("details", "ip_data")
@@ -57,6 +82,7 @@ func ExpandJSON(block *gabs.Container, vm *goja.Runtime) {
 	}
 	dataBlockStr := dataBlock.String()
 	dataBlockStr = ExpandEnv(dataBlockStr, vm)
+	dataBlockStr = escapeString(dataBlockStr)
 	log.Debug().Str("Expanded JSON data block", dataBlockStr).Msg("")
 	processedBlock, err := gabs.ParseJSON([]byte(dataBlockStr))
 	if err != nil {

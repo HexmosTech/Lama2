@@ -2,6 +2,8 @@ code.cloudfoundry.org/bytefmt v0.0.0-20211005130812-5bb3c17173e5 h1:tM5+dn2C9xZw
 code.cloudfoundry.org/bytefmt v0.0.0-20211005130812-5bb3c17173e5/go.mod h1:v4VVB6oBMz/c9fRY6vZrwr5xKRWOH5NPDjQZlPk0Gbs=
 github.com/HexmosTech/gabs/v2 v2.6.5 h1:08ZCTfpH/ZxGwrjOfipdZ7x75t0svRDIw2qjlGyADLk=
 github.com/HexmosTech/gabs/v2 v2.6.5/go.mod h1:172vE+burNJgaTsFgfbzzqT4wF+FELkL3t2BCmxa2lo=
+github.com/HexmosTech/godotenv v0.0.0-20230327154318-72e1f3d32ed3 h1:erCSX5e8CH5f9HjQfpp9SMWuTJXD1ikmW9E9ns1DcwA=
+github.com/HexmosTech/godotenv v0.0.0-20230327154318-72e1f3d32ed3/go.mod h1:sln7CopgjyZgBSuIw7IkdpwIQf72vgZiy1kgYterloo=
 github.com/HexmosTech/httpie-go v1.0.8 h1:xeOFcfkeIIPg1604DRof9LT78AIcvIusqoxrdGZU094=
 github.com/HexmosTech/httpie-go v1.0.8/go.mod h1:U2lyp7l8mHMJUBR3DAsa79A2eY1b/FtuMOkUw1vKY8s=
 github.com/VividCortex/ewma v1.1.1/go.mod h1:2Tkkvm3sRDVXaiyucHiACn4cqf7DpdyLvmxzcbUokwA=
@@ -50,8 +52,6 @@ github.com/google/go-cmp v0.5.5/go.mod h1:v8dTdLbMG2kIc/vJvl+f65V22dbkXbowE6jgT/
 github.com/hpcloud/tail v1.0.0/go.mod h1:ab1qPbhIpdTxEkNHXyeSf5vhxWSCs/tWer42PpOxQnU=
 github.com/jessevdk/go-flags v1.5.0 h1:1jKYvbxEjfUl0fmqTCOfonvskHHXMjBySTLW4y9LFvc=
 github.com/jessevdk/go-flags v1.5.0/go.mod h1:Fw0T6WPc1dYxT4mKEZRfG5kJhaTDP9pj1c2EWnYs/m4=
-github.com/joho/godotenv v1.5.1 h1:7eLL/+HRGLY0ldzfGMeQkb7vMd0as4CfYvUVzLqw0N0=
-github.com/joho/godotenv v1.5.1/go.mod h1:f4LDr5Voq0i2e/R5DDNOoa2zzDfwtkZa6DnEwAbqwq4=
 github.com/kr/pretty v0.1.0/go.mod h1:dAy3ld7l9f0ibDNOQOHHMYYIIbhfbHSm3C4ZsoJORNo=
 github.com/kr/pretty v0.2.1/go.mod h1:ipq/a2n7PKx3OHsz4KJII5eveXtPO4qwEXGdVfWzfnI=
 github.com/kr/pretty v0.3.0/go.mod h1:640gp4NfQd8pI5XOwp5fnNeVWj67G7CFk/SaSQn7NBk=

@@ -189,7 +189,7 @@ up with the results of the `base64` command.
 **l2.env**
 
 ```
-export PHOTO=`base64 image.jpeg`
+export PHOTO=`base64 -w 0 image.jpeg`
 ```
 
 Next, we refer to the `PHOTO` variable in
