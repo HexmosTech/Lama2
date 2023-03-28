@@ -36,7 +36,7 @@ func TestBase64(t *testing.T) {
 		preprocess.ProcessVarsInBlock(block, vm)
 		b64Str := os.Getenv("PHOTO")
 		fmt.Println(len(b64Str))
-		if len(b64Str) >= 25000 {
+		if len(b64Str) <= 25000 {
 			t.Errorf("Base64 generation failed")
 		}
 		fmt.Println(block)
