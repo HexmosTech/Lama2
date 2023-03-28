@@ -1,6 +1,8 @@
 package tests
 
 import (
+	"fmt"
+	"os"
 	"testing"
 
 	"github.com/HexmosTech/lama2/cmdgen"
@@ -14,9 +16,11 @@ import (
 
 func TestConstruct(t *testing.T) {
 	fpath := "../elfparser/ElfTestSuite/y_0012_varjson_multipart.l2"
+	s, _ := FileToString(fpath)
 	cmd := []string{"l2", fpath}
 	opts := lama2cmd.GetAndValidateCmd(cmd)
-	s, _ := FileToString(fpath)
+	fmt.Println(os.Getwd())
+	fmt.Println("content", s)
 	lp := parser.NewLama2Parser()
 	res, e := lp.Parse(s)
 	if e != nil {

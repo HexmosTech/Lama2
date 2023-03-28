@@ -19,6 +19,7 @@ func TestBase64(t *testing.T) {
 	l2Path := "../examples/0008_base64_image/0008_base64_image.l2"
 	apiContent, _ := os.ReadFile(l2Path)
 	_, dir, _ := utils.GetFilePathComponents(l2Path)
+	nowPwd, _ := os.Getwd()
 	utils.ChangeWorkingDir(dir)
 	preprocess.LoadElfEnv(path.Join(dir, "l2.env"))
 	p := parser.NewLama2Parser()
@@ -41,5 +42,6 @@ func TestBase64(t *testing.T) {
 		}
 		fmt.Println(block)
 	}
+	utils.ChangeWorkingDir(nowPwd)
 
 }
