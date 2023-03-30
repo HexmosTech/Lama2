@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"strings"
 
 	"github.com/HexmosTech/gabs/v2"
 	"github.com/HexmosTech/godotenv"
@@ -82,7 +83,8 @@ func ExpandJSON(block *gabs.Container, vm *goja.Runtime) {
 	}
 	dataBlockStr := dataBlock.String()
 	dataBlockStr = ExpandEnv(dataBlockStr, vm)
-	dataBlockStr = escapeString(dataBlockStr)
+	// dataBlockStr = escapeString(dataBlockStr)
+	dataBlockStr = strings.ReplaceAll(dataBlockStr, "\n", "")
 	log.Debug().Str("Expanded JSON data block", dataBlockStr).Msg("")
 	processedBlock, err := gabs.ParseJSON([]byte(dataBlockStr))
 	if err != nil {
