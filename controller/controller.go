@@ -86,7 +86,10 @@ func Process(version string) {
 
 	apiContent := preprocess.GetLamaFileAsString(o.Positional.LamaAPIFile)
 	_, dir, _ := utils.GetFilePathComponents(o.Positional.LamaAPIFile)
+	oldDir, _ := os.Getwd()
+	utils.ChangeWorkingDir(dir)
 	preprocess.LoadElfEnv(path.Join(dir, "l2.env"))
+	utils.ChangeWorkingDir(oldDir)
 	p := parser.NewLama2Parser()
 	parsedAPI, e := p.Parse(apiContent)
 	if o.Convert != "" {

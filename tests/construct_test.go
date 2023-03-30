@@ -20,7 +20,6 @@ func TestConstruct(t *testing.T) {
 	cmd := []string{"l2", fpath}
 	opts := lama2cmd.GetAndValidateCmd(cmd)
 	fmt.Println(os.Getwd())
-	fmt.Println("content", s)
 	lp := parser.NewLama2Parser()
 	res, e := lp.Parse(s)
 	if e != nil {
