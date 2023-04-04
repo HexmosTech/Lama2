@@ -85,7 +85,7 @@ jobs:
           $lamaUrlSHA64 =  Get-FileHash lama264.zip | Select-Object Hash  | ft -HideTableHeaders | Out-String
           git clone https://github.com/HexmosTech/Lama2-Chocolatey.git LamaChocolatey
           cd LamaChocolatey
-          python3 updateChocolateyPS1.py $lamaUrl $lamaUrlSHA $lamaUrl64 $lamaUrlSHA64
+          python3 updateChocolateyPS1.py $lamaUrl $lamaUrlSHA.Trim() $lamaUrl64 $lamaUrlSHA64.Trim()
           python3 bumpVersion.py $lamaUrl
           rm updateChocolateyPS1.py
           rm bumpVersion.py
