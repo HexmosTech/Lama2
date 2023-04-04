@@ -1,7 +1,7 @@
 name: Build on Windows
 on:
   release:
-    types: [published]
+    types: [created]
 jobs:
   build:
     runs-on: windows-2019
