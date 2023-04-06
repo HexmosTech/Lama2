@@ -1,7 +1,9 @@
 name: Build on Windows
 on:
-  release:
-    types: [created]
+  workflow_run:
+    workflows: ["Lama2 Release"]
+    types:
+      - completed
 jobs:
   build:
     runs-on: windows-2019
