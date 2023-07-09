@@ -7,7 +7,6 @@ package contoller
 import (
 	"fmt"
 	"os"
-	"path"
 
 	"github.com/HexmosTech/gabs/v2"
 	"github.com/HexmosTech/httpie-go"
@@ -88,8 +87,7 @@ func Process(version string) {
 	_, dir, _ := utils.GetFilePathComponents(o.Positional.LamaAPIFile)
 	oldDir, _ := os.Getwd()
 	utils.ChangeWorkingDir(dir)
-	preprocess.LoadElfEnv(path.Join(dir, "l2.env"))
-	preprocess.LoadConfigEnv(path.Join(dir, "l2config.env"))
+	preprocess.LoadEnvironments(dir)
 	utils.ChangeWorkingDir(oldDir)
 	p := parser.NewLama2Parser()
 	parsedAPI, e := p.Parse(apiContent)

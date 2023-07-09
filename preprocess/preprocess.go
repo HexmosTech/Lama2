@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"path"
 	"path/filepath"
 	"strings"
 
@@ -104,7 +105,6 @@ func LoadElfEnv(l2path string) {
 	}
 }
 
-
 func LoadConfigEnv(l2ConfigPath string) {
 	err := godotenv.Load(l2ConfigPath)
 	if err != nil { 
@@ -122,6 +122,10 @@ func LoadConfigEnv(l2ConfigPath string) {
 	}
 }
 
+func LoadEnvironments(dir string) {
+	LoadElfEnv(path.Join(dir, "l2.env"))
+	LoadConfigEnv(path.Join(dir, "l2config.env"))
+}
 
 func GetLamaFileAsString(path string) string {
 	b, err := ioutil.ReadFile(path) // just pass the file name
