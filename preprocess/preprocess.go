@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"path/filepath"
 	"strings"
 
 	"github.com/HexmosTech/gabs/v2"
@@ -102,6 +103,25 @@ func LoadElfEnv(l2path string) {
 		log.Info().Str("Type", "Preprocess").Msg("Didn't find l2.env in the API directory")
 	}
 }
+
+
+func LoadConfigEnv(l2ConfigPath string) {
+	err := godotenv.Load(l2ConfigPath)
+	if err != nil { 
+		parentDir := filepath.Dir(l2ConfigPath)
+		for parentDir != string(filepath.Separator) {
+			l2ConfigPath = filepath.Join(parentDir, "l2config.env")
+			err = godotenv.Load(l2ConfigPath)
+			if err == nil {
+				log.Info().Str("Type", "Preprocess").Str("l2config.env found in", parentDir).Msg("")
+				return // Found the l2config.env file, exit the function
+			}
+			parentDir = filepath.Dir(parentDir)
+		}
+		log.Error().Str("Type", "Preprocess").Msg("Didn't find l2config.env in the API directory")
+	}
+}
+
 
 func GetLamaFileAsString(path string) string {
 	b, err := ioutil.ReadFile(path) // just pass the file name

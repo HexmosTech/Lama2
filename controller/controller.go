@@ -89,6 +89,7 @@ func Process(version string) {
 	oldDir, _ := os.Getwd()
 	utils.ChangeWorkingDir(dir)
 	preprocess.LoadElfEnv(path.Join(dir, "l2.env"))
+	preprocess.LoadConfigEnv(path.Join(dir, "l2config.env"))
 	utils.ChangeWorkingDir(oldDir)
 	p := parser.NewLama2Parser()
 	parsedAPI, e := p.Parse(apiContent)
