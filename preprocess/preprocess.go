@@ -123,8 +123,8 @@ func LoadConfigEnv(l2ConfigPath string) {
 }
 
 func LoadEnvironments(dir string) {
-	LoadElfEnv(path.Join(dir, "l2.env"))
-	LoadConfigEnv(path.Join(dir, "l2config.env"))
+	LoadConfigEnv(path.Join(dir, "l2config.env")) // Loads global variables from l2config.env
+	LoadElfEnv(path.Join(dir, "l2.env")) 					// Overwrites the global variables if declared again in l2.env
 }
 
 func GetLamaFileAsString(path string) string {
