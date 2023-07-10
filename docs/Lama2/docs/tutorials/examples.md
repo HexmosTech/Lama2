@@ -69,8 +69,18 @@ Get [Source File](https://github.com/HexmosTech/Lama2/tree/main/examples/0003_co
 
 ## Environment Variables: Switch base URL
 
-Specify variables in `l2.env` and then load
-them up in the API files. Presently, **the `l2.env` file should reside in the same directory as the `.l2` API file.**
+Specify global variables in `l2config.env` in parent directory. 
+**The global variables of `l2config.env` will be overwritten by local `l2.env` variables.** 
+
+Specify variables in `l2.env` and then load them up in the API files.
+Presently, **the `l2.env` file should reside in the same directory as the `.l2` API file.**
+
+**l2config.env**
+
+```
+export LOCAL="http://localhost:8001"
+export REMOTE="http://httpbin.in"
+```
 
 **l2.env**
 

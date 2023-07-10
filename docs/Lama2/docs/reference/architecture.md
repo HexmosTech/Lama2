@@ -5,7 +5,7 @@
 graph TD
 	K["Controller Entry <br/>(controller)"]
 	A["Parse CLI <br/>(lama2cmd)"]
-	B["Parser <br/>(parser)"]	
+	B["Parser <br/>(parser)"] 
 	D["Request Executor <br/>(cmdexec)"]
 	E["Output Format Manager <br/>(outputmanager)"]
 	F["Error Reporting (TODO)"]
@@ -48,7 +48,7 @@ From a high level, how does it work now?
 	2. Else if block is Requestor block
 		1. Replace variables with values in the following order
 			1. Try fetch variable from Javascript VM
-			2. If (1) fails, try fetch variable from `l2.env`
+			2. If (1) fails, try fetch variable from `l2config.env` and `l2.env`
 		2. Use the processed elements to create an httpie-go request
 		3. Fetch response
 5. If necessary, write the last transaction to `.json` file

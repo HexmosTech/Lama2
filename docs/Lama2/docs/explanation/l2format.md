@@ -83,6 +83,17 @@ Cookies are specified in a `Cookie` header as follows:
 Cookie:'sessionid=foo;another-cookie=bar'
 ```
 
+### Global Environments variables/commands can be defined in `/l2config.env/<requests_dir>`
+
+The *l2* loads up variables from `l2config.env` and then `l2.env`.
+If same variable is found in `l2.env` then overwrites the global variable.
+Example `l2config.env`:
+
+```
+export PHOTO=`base64 aadhaarsmall.jpg`
+export AHOST="http://localhost:8001"
+```
+
 ### Environments variables/commands can be defined in `<requests_dir>/l2.env`
 
 By default, *l2* looks for a `l2.env` file in the same directory as the given
