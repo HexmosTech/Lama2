@@ -1,0 +1,6 @@
+POST
+${REMOTE}/post
+
+{
+    "lorem": "ipsum"
+}

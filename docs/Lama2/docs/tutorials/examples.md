@@ -69,37 +69,38 @@ Get [Source File](https://github.com/HexmosTech/Lama2/tree/main/examples/0003_co
 
 ## Environment Variables: Switch base URL
 
-Specify global variables in `l2config.env` in parent directory. 
-**The global variables of `l2config.env` will be overwritten by local `l2.env` variables.** 
 
-Specify variables in `l2.env` and then load them up in the API files.
-Presently, **the `l2.env` file should reside in the same directory as the `.l2` API file.**
+### Case 1: `l2.env` adjacent to an API file
 
-**l2config.env**
-
-```
-export LOCAL="http://localhost:8001"
-export REMOTE="http://httpbin.in"
-```
-
+For any given `.l2` file, one can place an `l2.env` file to store relevant variables. 
+These variables will be available to be used within the API file
+ 
 **l2.env**
-
 ```
 export LOCAL="http://localhost:8000"
 export REMOTE="http://httpbin.org"
 ```
-
-**env_example.l2**
-```
-POST
-${REMOTE}/post
-
-{
-    "lorem": "ipsum"
-}
-```
-
 Get [Source Files](https://github.com/HexmosTech/Lama2/tree/main/examples/0004_env_switch_root)
+
+### Case 2: Project-level variables
+
+In Lama2, you can have a large number of API files stored in a hierarchical folder configuration. 
+The root of such a project can be signified through `l2config.env`:
+ 
+Within such a structure, you can have an API file anywhere, which can use variables defined in the project-level variables:
+**l2config.env**
+```
+export LOCAL="http://localhost:8000"
+export REMOTE="http://httpbin.org"
+```
+Get [Source Files](https://github.com/HexmosTech/Lama2/tree/main/examples/0019_env_switch_global_root)
+
+### Case 3: Override Project-level variable with local variable
+
+![Example of override of l2config.env variable with l2.env](image.png)
+
+Get [Source Files](https://github.com/HexmosTech/Lama2/tree/main/examples/0020_override_project_root_local)
+
 
 ## Headers
 
