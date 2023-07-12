@@ -83,18 +83,7 @@ Cookies are specified in a `Cookie` header as follows:
 Cookie:'sessionid=foo;another-cookie=bar'
 ```
 
-### Global Environments variables/commands can be defined in `/l2config.env/<requests_dir>`
-
-The *l2* loads up variables from `l2config.env` and then `l2.env`.
-If same variable is found in `l2.env` then overwrites the global variable.
-Example `l2config.env`:
-
-```
-export PHOTO=`base64 aadhaarsmall.jpg`
-export AHOST="http://localhost:8001"
-```
-
-### Environments variables/commands can be defined in `<requests_dir>/l2.env`
+### API environment variables can be defined locally in `l2.env`
 
 By default, *l2* looks for a `l2.env` file in the same directory as the given
 request file directory. Example `l2.env`:
@@ -102,6 +91,17 @@ request file directory. Example `l2.env`:
 ```
 export PHOTO=`base64 aadhaarlarge.jpg`
 export AHOST="http://localhost:8000"
+```
+
+### API environment variables can be defined at project level using `l2config.env`
+
+*l2* loads local variables from `l2.env`.
+If not found then uses variables from `l2config.env`.
+Example `l2config.env`:
+
+```
+export PHOTO=`base64 aadhaarsmall.jpg`
+export AHOST="http://localhost:8001"
 ```
 
 #### The environment file can load results of commands
