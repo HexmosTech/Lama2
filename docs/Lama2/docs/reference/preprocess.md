@@ -67,7 +67,9 @@ func GetLamaFileAsString(path string) string
 func LamaFile(inputFile string) (string, string)
 ```
 
-LamaFile takes in a path to an API file. It moves into the API file directory, reads the API contents, loads the \`l2config.env\` global variables file if available in any of parent directory and \`l2.env\` file if available in present directory , and finally substitutes environment vars in the API contents Once done, it reverts back to the original directory, and returns the processed l2 file.
+LamaFile takes in a path to an API file. It moves into the API file directory, reads the API contents, loads the \`l2config.env\` global variables file from the project directory.
+
+ Then loads the \`l2.env\` local variables file from the present directory, Variables which are already declared in \`l2config.env\` will be overwritten with local variable of \`l2.env\`. Once done, it reverts back to the original directory, and returns the processed l2 file.
 
 ## func [LoadElfEnv](<https://github.com/HexmosTech/Lama2/blob/master/preprocess/preprocess.go#L97>)
 
