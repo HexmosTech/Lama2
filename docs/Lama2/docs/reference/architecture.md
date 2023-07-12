@@ -48,7 +48,8 @@ From a high level, how does it work now?
 	2. Else if block is Requestor block
 		1. Replace variables with values in the following order
 			1. Try fetch variable from Javascript VM
-			2. If (1) fails, try fetch variable from `l2config.env` and `l2.env`
+			2. If (1) fails, try fetch Local env variable from `l2.env` 
+      3. Try fetch Project env variable from `l2config.env`
 		2. Use the processed elements to create an httpie-go request
 		3. Fetch response
 5. If necessary, write the last transaction to `.json` file
