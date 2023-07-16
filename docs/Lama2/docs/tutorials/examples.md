@@ -18,6 +18,7 @@ requests from there.
 GET
 https://httpbin.org/get
 ```
+
 Get [Source File](https://github.com/HexmosTech/Lama2/tree/main/examples/0000_sample_get.l2)
 
 ## JSON POST request
@@ -33,6 +34,7 @@ https://httpbin.org/post
     "c": "d"
 }
 ```
+
 Get [Source File](https://github.com/HexmosTech/Lama2/tree/main/examples/0002_sample_post.l2)
 
 ## JSON POST in VarJSON format
@@ -48,6 +50,7 @@ https://httpbin.org/post
 a=b
 c=d
 ```
+
 Get [Source File](https://github.com/HexmosTech/Lama2/tree/main/examples/0001_sample_post_varjson.l2)
 
 ## Comments
@@ -65,42 +68,39 @@ c=d
 
 # Comments work even after the payload
 ```
+
 Get [Source File](https://github.com/HexmosTech/Lama2/tree/main/examples/0003_comment.l2)
 
 ## Environment Variables: Switch base URL
 
-
 ### Case 1: `l2.env` adjacent to an API file
 
-For any given `.l2` file, one can place an `l2.env` file to store relevant variables. 
+For any given `.l2` file, one can place an `l2.env` file to store relevant variables.
 These variables will be available to be used within the API file
- 
+
 **l2.env**
+
 ```
 export LOCAL="http://localhost:8000"
 export REMOTE="http://httpbin.org"
 ```
-Get [Source Files](https://github.com/HexmosTech/Lama2/tree/main/examples/0004_env_switch_root)
 
 ### Case 2: Project-level variables
 
-In Lama2, you can have a large number of API files stored in a hierarchical folder configuration. 
+In Lama2, you can have a large number of API files stored in a hierarchical folder configuration.
 The root of such a project can be signified through `l2config.env`:
- 
+
 Within such a structure, you can have an API file anywhere, which can use variables defined in the project-level variables:
 **l2config.env**
+
 ```
 export LOCAL="http://localhost:8000"
 export REMOTE="http://httpbin.org"
 ```
-Get [Source Files](https://github.com/HexmosTech/Lama2/tree/main/examples/0019_env_switch_global_root)
 
 ### Case 3: Override Project-level variable with local variable
 
 ![Example of override of l2config.env variable with l2.env](image.png)
-
-Get [Source Files](https://github.com/HexmosTech/Lama2/tree/main/examples/0020_override_project_root_local)
-
 
 ## Headers
 
@@ -113,7 +113,7 @@ Specify strings for key/value in three ways:
 1. Unquoted (`hello`)
 
 ```
-POST 
+POST
 https://httpbin.org/post
 
 # HEADERS
@@ -130,8 +130,9 @@ Get [Source File](https://github.com/HexmosTech/Lama2/tree/main/examples/0005_he
 !!! Note
 
     The data section may appear *before* headers as well (see below)
+
 ```
-POST 
+POST
 https://httpbin.org/post
 
 
@@ -144,13 +145,13 @@ X-Parse-Application-Id:'helloworld'
 X-Parse-REST-API-Key:"byeworld"
 ```
 
-
 ## Send cookies in header
 
 Headers represent cookies in *Lama2*. Just specify cookie key value pairs separated by
 `=` within the header value as shown.
+
 ```
-POST 
+POST
 https://httpbin.org/post
 
 # HEADERS
@@ -159,6 +160,7 @@ Cookie:"sessionid=foo;another-cookie=bar"
 # DATA
 hello=world
 ```
+
 Get [Source File](https://github.com/HexmosTech/Lama2/tree/main/examples/0006_cookies.l2)
 
 ## Fill forms & attach files with MULTIPART
@@ -166,7 +168,7 @@ Get [Source File](https://github.com/HexmosTech/Lama2/tree/main/examples/0006_co
 Use the `MULTIPART` keyword after the HTTP
 verb to enable forms and file attachments.
 
-The data section may contain any number of 
+The data section may contain any number of
 form inputs using the `key=value` syntax.
 
 Following the data section, one can specify
@@ -178,7 +180,7 @@ POST
 MULTIPART
 http://httpbin.org/post
 
-'X-Parse-Application-Id':hello 
+'X-Parse-Application-Id':hello
 X-Parse-REST-API-Key:"world"
 
 # DATA
@@ -187,11 +189,12 @@ first=second
 # FILES
 myfile@./image.jpeg
 ```
+
 Get [Source Files](https://github.com/HexmosTech/Lama2/tree/main/examples/0007_multipart_file)
 
 ## Image as Base64 encoded JSON field
 
-We can embed images (or other files) as 
+We can embed images (or other files) as
 base64 strings in JSON using *Lama2*.
 
 First, we define a `PHOTO` variable, loaded
@@ -205,8 +208,7 @@ export PHOTO=`base64 -w 0 image.jpeg`
 
 Next, we refer to the `PHOTO` variable in
 the API file. Pay special attention to the
-quoting mechanism `"'{PHOTO}'"`. 
-
+quoting mechanism `"'{PHOTO}'"`.
 
 !!! warning
 
@@ -224,6 +226,7 @@ http://httpbin.org/post
 	"imageb64_field": "'${PHOTO}'",
 }
 ```
+
 Get [Source Files](https://github.com/HexmosTech/Lama2/tree/main/examples/0008_base64_image)
 
 ## Chain requests using Javascript
@@ -270,6 +273,5 @@ Authorization: 'Bearer ${TOKEN}'
 
 {}
 ```
-
 
 Get [Source Files](https://github.com/HexmosTech/Lama2/tree/main/examples/0009_processor_basic)
