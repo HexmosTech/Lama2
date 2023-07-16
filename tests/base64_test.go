@@ -21,7 +21,7 @@ func TestBase64(t *testing.T) {
 	_, dir, _ := utils.GetFilePathComponents(l2Path)
 	nowPwd, _ := os.Getwd()
 	utils.ChangeWorkingDir(dir)
-	preprocess.LoadElfEnv(path.Join(dir, "l2.env"))
+	preprocess.LoadEnvFile(path.Join(dir, "l2.env"))
 	p := parser.NewLama2Parser()
 	parsedAPI, _ := p.Parse(string(apiContent))
 	fmt.Println(parsedAPI)

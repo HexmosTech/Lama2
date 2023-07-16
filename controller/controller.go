@@ -87,6 +87,17 @@ func Process(version string) {
 	_, dir, _ := utils.GetFilePathComponents(o.Positional.LamaAPIFile)
 	oldDir, _ := os.Getwd()
 	utils.ChangeWorkingDir(dir)
+
+	if o.Env {
+		jsonEnvs,err := preprocess.GetL2EnvVariables(dir)
+		if err != nil {
+			log.Error().Str("Type", "Preprocess").Msg(err.Error())
+			return
+		}
+		log.Info().Str("Type", "Preprocess").Msg("Env Variables:\n" + string(jsonEnvs))
+    return 
+	}
+
 	preprocess.LoadEnvironments(dir)
 	utils.ChangeWorkingDir(oldDir)
 	p := parser.NewLama2Parser()
