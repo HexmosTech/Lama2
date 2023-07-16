@@ -5,6 +5,7 @@ package preprocess
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -98,33 +99,85 @@ func ExpandJSON(block *gabs.Container, vm *goja.Runtime) {
 	log.Debug().Str("Processed JSON block", block.String()).Msg("")
 }
 
-func LoadElfEnv(l2path string) {
-	err := godotenv.Load(l2path)
-	if err != nil {
-		log.Info().Str("Type", "Preprocess").Msg("Didn't find l2.env in the API directory")
+func SearchL2ConfigEnv(dir string) (string, error) {
+	parentDir := filepath.Dir(dir)
+	for parentDir != string(filepath.Separator) {
+		l2ConfigPath := filepath.Join(parentDir, "l2config.env")
+		_, err := os.Stat(l2ConfigPath)
+		if err == nil {
+			return l2ConfigPath, nil // Found the l2config.env file
+		}
+		parentDir = filepath.Dir(parentDir)
 	}
+	return "", errors.New("Didn't find l2config.env in the API directory")
 }
 
-func LoadConfigEnv(l2ConfigPath string) {
-	err := godotenv.Load(l2ConfigPath)
-	if err != nil { 
-		parentDir := filepath.Dir(l2ConfigPath)
-		for parentDir != string(filepath.Separator) {
-			l2ConfigPath = filepath.Join(parentDir, "l2config.env")
-			err = godotenv.Load(l2ConfigPath)
-			if err == nil {
-				log.Info().Str("Type", "Preprocess").Str("l2config.env found in", parentDir).Msg("")
-				return // Found the l2config.env file, exit the function
-			}
-			parentDir = filepath.Dir(parentDir)
-		}
-		log.Error().Str("Type", "Preprocess").Msg("Didn't find l2config.env in the API directory")
+func LoadEnvFile(l2path string) {
+	envFileName := filepath.Base(l2path)
+	err := godotenv.Load(l2path)
+	if err != nil {
+		log.Info().Str("Type", "Preprocess").Msg("Didn't find "+ envFileName +" in the API directory")
 	}
 }
 
 func LoadEnvironments(dir string) {
-	LoadConfigEnv(path.Join(dir, "l2config.env")) // Loads global variables from l2config.env
-	LoadElfEnv(path.Join(dir, "l2.env")) 					// Overwrites the global variables if declared again in l2.env
+	l2ConfigPath, err := SearchL2ConfigEnv(dir)
+	if err != nil {
+		log.Info().Str("Type", "Preprocess").Msg(err.Error())
+	} else {
+		LoadEnvFile(l2ConfigPath) // Loads global variables from l2config.env
+	}
+	LoadEnvFile(path.Join(dir, "l2.env")) // Overwrites the global variables if declared again in l2.env
+}
+
+func readFile(filename string) (envMap map[string]string, err error) {
+	file, err := os.Open(filename)
+	if err != nil {
+		return
+	}
+	defer file.Close()
+	return godotenv.Parse(file)
+}
+
+func populateEnvMap(envMap map[string]map[string]interface{}, envPath string, source string) error {
+	envs, err := readFile(envPath)
+	if err != nil {
+		return err
+	}
+	for key, value := range envs {
+		variable := make(map[string]interface{})
+		variable["val"] = value
+		variable["src"] = source
+		envMap[key] = variable
+	}
+	return nil
+}
+
+func GetL2EnvVariables(dir string) ([]byte, error) {
+	finalEnvMap := make(map[string]map[string]interface{})
+
+	l2ConfigPath, err := SearchL2ConfigEnv(dir)
+	if err != nil {
+			log.Error().Str("Type", "Preprocess").Msg(err.Error())
+	} else {
+			err = populateEnvMap(finalEnvMap, l2ConfigPath, "l2configenv")
+			if err != nil {
+					log.Error().Str("Type", "Preprocess").Msg(err.Error())
+			}
+	}
+
+	l2EnvPath := path.Join(dir, "l2.env")
+	err = populateEnvMap(finalEnvMap, l2EnvPath, "l2env")
+	if err != nil {
+			log.Error().Str("Type", "Preprocess").Msg(err.Error())
+	}
+
+	jsonEnvs, err := json.MarshalIndent(finalEnvMap, "", "  ")
+	if err != nil {
+			log.Error().Str("Type", "Preprocess").Msg("Failed to marshal map env's to JSON: " + err.Error())
+			return nil, err
+	}
+	return jsonEnvs, nil
 }
 
 func GetLamaFileAsString(path string) string {
@@ -147,7 +200,7 @@ func LamaFile(inputFile string) (string, string) {
 	oldDir, _ := os.Getwd()
 
 	utils.ChangeWorkingDir(dir)
-	LoadElfEnv("l2.env")
+	LoadEnvFile("l2.env")
 	content = os.ExpandEnv(content)
 	utils.ChangeWorkingDir(oldDir)
 
