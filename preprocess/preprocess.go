@@ -100,7 +100,7 @@ func ExpandJSON(block *gabs.Container, vm *goja.Runtime) {
 }
 
 func SearchL2ConfigEnv(dir string) (string, error) {
-	parentDir := filepath.Dir(dir)
+	parentDir := dir
 	for parentDir != string(filepath.Separator) {
 		l2ConfigPath := filepath.Join(parentDir, "l2config.env")
 		_, err := os.Stat(l2ConfigPath)
