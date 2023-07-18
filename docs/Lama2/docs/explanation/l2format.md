@@ -8,7 +8,7 @@ to [Examples](../tutorials/examples.md).
 On the
 other hand, if you are a developer and wish to
 learn more about the formal grammar underlying
-_l2_, visit the [Grammar](../reference/grammar.md)
+*l2*, visit the [Grammar](../reference/grammar.md)
 section.
 
 ### Comments start with `#`
@@ -82,8 +82,9 @@ Cookie:'sessionid=foo;another-cookie=bar'
 
 ### API environment variables can be defined locally in `l2.env`
 
-By default, *l2* looks for a `l2.env` file in the same directory as the given
-request file directory. Example `l2.env`:
+`l2.env` is searched for, from the present directory and variables(local) are loaded from this file.
+
+Example `l2.env`:
 
 ```
 export PHOTO=`base64 aadhaarlarge.jpg`
@@ -92,10 +93,9 @@ export AHOST="http://localhost:8000"
 
 Get [Source Files](https://github.com/HexmosTech/Lama2/tree/main/examples/0004_env_switch_root)
 
-### API environment variables can be defined at project level using `l2config.env`
-
-_l2_ loads local variables from `l2.env`.
-If not found then uses variables from `l2config.env`.
+### API environment variables can be defined at root using `l2config.env`
+`l2config.env` is searched for, from the present directory to all its ancestors (upto `/`) and 
+variables(root) are loaded from this file.
 Example `l2config.env`:
 
 ```
@@ -105,11 +105,14 @@ export AHOST="http://localhost:8001"
 
 Get [Source Files](https://github.com/HexmosTech/Lama2/tree/main/examples/0019_env_switch_global_root)
 
-### If API environment variables are locally and at project level
+### If `l2config.env`(root) variables are redeclared in `l2.env`(local)
 
-The local variable's value is taken into consideration
+The local variable's value is taken into consideration regardless of both files reside in same directory
 
 Get [Source Files](https://github.com/HexmosTech/Lama2/tree/main/examples/0020_override_project_root_local)
+
+![Override of l2config.env with l2.env variable](image.png)
+
 
 #### The environment file can load results of commands
 
@@ -124,7 +127,7 @@ One can load the `PHOTO` variable in API files.
 
 ### Chain requests through Javascript blocks
 
-_Lama2_ supports plain Javascript (JS) blocks
+*Lama2* supports plain Javascript (JS) blocks
 as a glue for manipulating responses and passing on
 values to later stages. At a higher
 level, a chain of requests may look like:

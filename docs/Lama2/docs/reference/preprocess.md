@@ -66,7 +66,7 @@ func GetLamaFileAsString(path string) string
 func LamaFile(inputFile string) (string, string)
 ```
 
-LamaFile takes in a path to an API file. It moves into the API file directory, reads the API contents, loads the \`l2config.env\` global variables file from the project directory.
+LamaFile takes in a path to an API file. It moves into the API file directory, reads the API contents, loads the \`l2config.env\` root variable file from the project directory.
 
 Then loads the \`l2.env\` local variables file from the present directory, Variables which are already declared in \`l2config.env\` will be overwritten with local variable of \`l2.env\`. Once done, it reverts back to the original directory, and returns the processed l2 file.
 

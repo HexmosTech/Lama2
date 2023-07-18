@@ -41,7 +41,7 @@ Get [Source File](https://github.com/HexmosTech/Lama2/tree/main/examples/0002_sa
 
 Make a POST request with JSON body specified
 as `key=value`. *Lama2* converts the input into
-a corresponding JSON value `{"a": "b", "c": "d"}`. We call the `key=value` format *VarJSON*. This example produces an effect identical to the [previous one](#basic-json-post)
+a corresponding JSON value `{"a": "b", "c": "d"}`. We call the `key=value` format _VarJSON_. This example produces an effect identical to the [previous one](#basic-json-post)
 
 ```
 POST
@@ -85,12 +85,12 @@ export LOCAL="http://localhost:8000"
 export REMOTE="http://httpbin.org"
 ```
 
-### Case 2: Project-level variables
+### Case 2: Root variables
 
 In Lama2, you can have a large number of API files stored in a hierarchical folder configuration.
 The root of such a project can be signified through `l2config.env`:
 
-Within such a structure, you can have an API file anywhere, which can use variables defined in the project-level variables:
+Within such a structure, you can have an API file anywhere, which can use variables defined in the root variables:
 **l2config.env**
 
 ```
@@ -98,9 +98,9 @@ export LOCAL="http://localhost:8000"
 export REMOTE="http://httpbin.org"
 ```
 
-### Case 3: Override Project-level variable with local variable
+### Case 3: Override Root variable with local variable
 
-![Example of override of l2config.env variable with l2.env](image.png)
+![Override of l2config.env with l2.env variable](image.png)
 
 ## Headers
 
@@ -147,7 +147,7 @@ X-Parse-REST-API-Key:"byeworld"
 
 ## Send cookies in header
 
-Headers represent cookies in *Lama2*. Just specify cookie key value pairs separated by
+Headers represent cookies in _Lama2_. Just specify cookie key value pairs separated by
 `=` within the header value as shown.
 
 ```
@@ -195,7 +195,7 @@ Get [Source Files](https://github.com/HexmosTech/Lama2/tree/main/examples/0007_m
 ## Image as Base64 encoded JSON field
 
 We can embed images (or other files) as
-base64 strings in JSON using *Lama2*.
+base64 strings in JSON using _Lama2_.
 
 First, we define a `PHOTO` variable, loaded
 up with the results of the `base64` command.
