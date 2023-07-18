@@ -14,7 +14,6 @@ import (
 )
 
 func TestBase64(t *testing.T) {
-
 	// parse file
 	l2Path := "../examples/0008_base64_image/0008_base64_image.l2"
 	apiContent, _ := os.ReadFile(l2Path)
@@ -43,5 +42,4 @@ func TestBase64(t *testing.T) {
 		fmt.Println(block)
 	}
 	utils.ChangeWorkingDir(nowPwd)
-
 }

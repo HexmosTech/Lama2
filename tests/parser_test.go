@@ -9,13 +9,13 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-func TestLama2Parser(t *testing.T) {
+func TestLama2Parser(_ *testing.T) {
 	p := parser.NewLama2Parser()
 	got, _ := p.Parse("GET http://google.com")
 	log.Debug().Str("Received", got.String()).Msg("")
 }
 
-func TestCharFunc(t *testing.T) {
+func TestCharFunc(_ *testing.T) {
 	p := parser.NewLama2Parser()
 	p.SetText("GET http://google.com")
 
@@ -127,7 +127,7 @@ func TestFailMatch(t *testing.T) {
 	// fmt.Println("===")
 }
 
-func TestLama2Start(t *testing.T) {
+func TestLama2Start(_ *testing.T) {
 	p := parser.NewLama2Parser()
 	p.SetText("GET http://google.com")
 	got, _ := p.Start()

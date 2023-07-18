@@ -88,14 +88,14 @@ func Process(version string) {
 	utils.ChangeWorkingDir(dir)
 
 	if o.Env {
-		jsonEnvs,err := preprocess.GetL2EnvVariables(dir)
+		jsonEnvs, err := preprocess.GetL2EnvVariables(dir)
 		if err != nil {
 			log.Error().Str("Type", "Preprocess").Msg(err.Error())
 			return
 		}
 		// Frontend can read the stdout for this command and get the JSON of all the env's
 		fmt.Println(string(jsonEnvs))
-    return 
+		return
 	}
 
 	preprocess.LoadEnvironments(dir)

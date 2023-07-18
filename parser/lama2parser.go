@@ -38,7 +38,6 @@ func (p *Lama2Parser) Start() (*gabs.Container, error) {
 }
 
 func (p *Lama2Parser) Lama2File() (*gabs.Container, error) {
-
 	// Trying to get:
 	// PSBlock? Requestor [SPSBlock Requestor]*
 

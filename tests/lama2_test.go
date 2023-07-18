@@ -70,7 +70,7 @@ func PerformParserMatch(text string) (*gabs.Container, error) {
 	return got, e
 }
 
-func TestValidFiles(t *testing.T) {
+func TestValidFiles(_ *testing.T) {
 	matchFiles, _ := getDataFiles("../elfparser/ElfTestSuite", "y_*")
 	// matchFiles, _ := getDataFiles("../elfparser/ElfTestSuite", "y_0009_varjson_basic.l2")
 	// matchFiles, _ := getDataFiles("../elfparser/ElfTestSuite", "y_0012_varjson_multipart.l2")
@@ -90,7 +90,7 @@ func TestValidFiles(t *testing.T) {
 	}
 }
 
-func TestInvalidFiles(t *testing.T) {
+func TestInvalidFiles(_ *testing.T) {
 	matchFiles, _ := getDataFiles("../elfparser/ElfTestSuite", "n_*")
 	for _, m := range matchFiles {
 		b, err := os.ReadFile(m) // just pass the file name
