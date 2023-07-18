@@ -80,6 +80,29 @@ Cookies are specified in a `Cookie` header as follows:
 Cookie:'sessionid=foo;another-cookie=bar'
 ```
 
+### API variables can be defined in `apirequest.l2`
+
+L2 uses the variables declared inside the `.l2` file and makes the request
+
+Example `login.l2`:
+
+```
+let REMOTE = "httpbin.org"
+let EMAIL = "customer1@gmail.com"
+
+---
+
+POST
+${REMOTE}/login
+{
+  "email": "${EMAIL}",
+  "password": "customer1@gmail.com"
+}
+```
+
+Get [Source Files](https://github.com/HexmosTech/Lama2/tree/main/examples/0021_varjson_variable/0021_varjson_variable.l2)
+
+
 ### API environment variables can be defined locally in `l2.env`
 
 `l2.env` is searched for, from the present directory and variables(local) are loaded from this file.
