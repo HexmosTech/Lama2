@@ -1,0 +1,24 @@
+let REMOTE = "httpbin.org"
+let EMAIL = "customer1@gmail.com"
+
+---
+
+POST
+${REMOTE}/login
+{
+  "email": "${EMAIL}",
+  "password": "customer1@gmail.com"
+}
+
+---
+
+let TOKEN = result['jwt']
+
+---
+
+POST 
+${REMOTE}/logout
+"Authorization": "Bearer ${TOKEN}"
+{
+  "email": "${EMAIL}",
+}
