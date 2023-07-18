@@ -15,10 +15,8 @@ import (
 	"github.com/atotto/clipboard"
 )
 
-var (
-	//go:embed httpsnippet.js
-	snippetcore string
-)
+//go:embed httpsnippet.js
+var snippetcore string
 
 type SnippetArgs struct {
 	Language    string
@@ -43,7 +41,6 @@ func PrepareHTTPSnippetGenerator(snippetArgs SnippetArgs) string {
 // takes in the headers in L2 format, and generates
 // HAR compatible
 func GetHARHeadersCookies(headers *gabs.Container) (*gabs.Container, *gabs.Container) {
-
 	headersData := gabs.New()
 	headersData.Array()
 

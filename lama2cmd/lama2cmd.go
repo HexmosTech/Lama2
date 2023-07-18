@@ -26,7 +26,7 @@ type Opts struct {
 	PostmanFile string `short:"p" long:"postmanfile" description:"JSON export from Postman (Settings -> Data -> Export Data)"`
 	LamaDir     string `short:"l" long:"lama2dir" description:"Output directory to put .l2 files after conversion from Postman format"`
 	Help        bool   `short:"h" long:"help" group:"AddHelp" description:"Usage help for Lama2"`
-	Env 				bool 	 `short:"e" long:"env" description:"Get a JSON of environment variables"`
+	Env         bool   `short:"e" long:"env" description:"Get a JSON of environment variables"`
 	Version     bool   `long:"version" description:"Print Lama2 binary version"`
 
 	Positional struct {
@@ -102,7 +102,6 @@ func ArgParsing(o *Opts, version string) {
 		log.Fatal().Msg("To convert Postman export to Lama2, try: l2 -p PostmanFile -l Lama2Dir")
 		os.Exit(1)
 	}
-
 }
 
 // GetAndValidateCmd takes in the user's CLI input, and checks

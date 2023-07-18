@@ -116,7 +116,7 @@ func LoadEnvFile(l2path string) {
 	envFileName := filepath.Base(l2path)
 	err := godotenv.Load(l2path)
 	if err != nil {
-		log.Info().Str("Type", "Preprocess").Msg("Didn't find "+ envFileName +" in the API directory")
+		log.Info().Str("Type", "Preprocess").Msg("Didn't find " + envFileName + " in the API directory")
 	}
 }
 
@@ -178,7 +178,6 @@ func combineEnvMaps(envMaps ...map[string]map[string]interface{}) map[string]map
 	return finalEnvMap
 }
 
-
 func GetL2EnvVariables(dir string) ([]byte, error) {
 	l2ConfigPath, err := SearchL2ConfigEnv(dir)
 	if err != nil {
@@ -212,7 +211,6 @@ func GetLamaFileAsString(path string) string {
 	}
 	return string(b)
 }
-
 
 // LamaFile takes in a path to an API file.
 // It moves into the API file directory, reads the

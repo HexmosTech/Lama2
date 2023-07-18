@@ -9,7 +9,7 @@ import (
 	"github.com/HexmosTech/lama2/importer"
 )
 
-func TestPostman(t *testing.T) {
+func TestPostman(_ *testing.T) {
 	path, _ := os.Getwd()
 	fmt.Println(path)
 	pJSON := importer.ReadPostmanFile(filepath.Join(".", "data", "Backup.postman_dump.json"))

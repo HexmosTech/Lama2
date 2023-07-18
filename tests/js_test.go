@@ -8,7 +8,7 @@ import (
 	"github.com/HexmosTech/lama2/cmdexec"
 )
 
-func TestRunVMCode(t *testing.T) {
+func TestRunVMCode(_ *testing.T) {
 	vm := cmdexec.GetJSVm()
 	cmdexec.RunVMCode("let meaning=42", vm)
 }
