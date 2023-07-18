@@ -68,7 +68,6 @@ func HandleParsedFile(parsedAPI *gabs.Container, o *lama2cmd.Opts, dir string) {
 	if o.Output != "" {
 		outputmanager.WriteJSONOutput(resp, o.Output)
 	}
-
 }
 
 // Process initiates the following tasks in the given order:
@@ -94,7 +93,8 @@ func Process(version string) {
 			log.Error().Str("Type", "Preprocess").Msg(err.Error())
 			return
 		}
-		log.Info().Str("Type", "Preprocess").Msg("Env Variables:\n" + string(jsonEnvs))
+		// Frontend can read the stdout for this command and get the JSON of all the env's
+		fmt.Println(string(jsonEnvs))
     return 
 	}
 
