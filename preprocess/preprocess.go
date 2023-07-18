@@ -153,30 +153,55 @@ func populateEnvMap(envMap map[string]map[string]interface{}, envPath string, so
 	return nil
 }
 
-func GetL2EnvVariables(dir string) ([]byte, error) {
-	finalEnvMap := make(map[string]map[string]interface{})
+func getEnvMap(envPath string, source string) (map[string]map[string]interface{}, error) {
+	envs, err := readFile(envPath)
+	if err != nil {
+		return nil, err
+	}
+	envMap := make(map[string]map[string]interface{})
+	for key, value := range envs {
+		variable := make(map[string]interface{})
+		variable["val"] = value
+		variable["src"] = source
+		envMap[key] = variable
+	}
+	return envMap, nil
+}
 
+func combineEnvMaps(envMaps ...map[string]map[string]interface{}) map[string]map[string]interface{} {
+	finalEnvMap := make(map[string]map[string]interface{})
+	for _, envMap := range envMaps {
+		for key, value := range envMap {
+			finalEnvMap[key] = value
+		}
+	}
+	return finalEnvMap
+}
+
+
+func GetL2EnvVariables(dir string) ([]byte, error) {
 	l2ConfigPath, err := SearchL2ConfigEnv(dir)
 	if err != nil {
-			log.Error().Str("Type", "Preprocess").Msg(err.Error())
-	} else {
-			err = populateEnvMap(finalEnvMap, l2ConfigPath, "l2configenv")
-			if err != nil {
-					log.Error().Str("Type", "Preprocess").Msg(err.Error())
-			}
+		return nil, err
+	}
+	l2ConfigEnvMap, err := getEnvMap(l2ConfigPath, "l2configenv")
+	if err != nil {
+		return nil, err
 	}
 
 	l2EnvPath := path.Join(dir, "l2.env")
-	err = populateEnvMap(finalEnvMap, l2EnvPath, "l2env")
+	l2EnvMap, err := getEnvMap(l2EnvPath, "l2env")
 	if err != nil {
-			log.Error().Str("Type", "Preprocess").Msg(err.Error())
+		return nil, err
 	}
+
+	finalEnvMap := combineEnvMaps(l2ConfigEnvMap, l2EnvMap)
 
 	jsonEnvs, err := json.MarshalIndent(finalEnvMap, "", "  ")
 	if err != nil {
-			log.Error().Str("Type", "Preprocess").Msg("Failed to marshal map env's to JSON: " + err.Error())
-			return nil, err
+		return nil, fmt.Errorf("Failed to marshal map env's to JSON: %v", err)
 	}
+
 	return jsonEnvs, nil
 }
 
@@ -187,6 +212,7 @@ func GetLamaFileAsString(path string) string {
 	}
 	return string(b)
 }
+
 
 // LamaFile takes in a path to an API file.
 // It moves into the API file directory, reads the
