@@ -169,6 +169,8 @@ func getEnvMap(envPath string, source string) (map[string]map[string]interface{}
 }
 
 func combineEnvMaps(envMaps ...map[string]map[string]interface{}) map[string]map[string]interface{} {
+	// First l2config varibales are added to the map.
+	// Then l2env varibales, so if a variable is redeclared in l2env then it will overwritten and taken to consideration.
 	finalEnvMap := make(map[string]map[string]interface{})
 	for _, envMap := range envMaps {
 		for key, value := range envMap {

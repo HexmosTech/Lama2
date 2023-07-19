@@ -130,7 +130,7 @@ Get [Source Files](https://github.com/HexmosTech/Lama2/tree/main/examples/0019_e
 
 ### If `l2config.env`(root) variables are redeclared in `l2.env`(local)
 
-The local variable's value is taken into consideration regardless of both files reside in same directory
+The local variable's value is taken into consideration regardless of both files residing in same directory
 
 Get [Source Files](https://github.com/HexmosTech/Lama2/tree/main/examples/0020_override_project_root_local)
 
