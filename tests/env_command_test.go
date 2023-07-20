@@ -16,7 +16,7 @@ type EnvData struct {
 }
 
 func runL2CommandAndParseJSON(t *testing.T, cmdArgs ...string) {
-	cmd := exec.Command("../build/l2", cmdArgs...)
+	cmd := exec.Command("../l2", cmdArgs...)
 	var stdout bytes.Buffer
 	cmd.Stdout = &stdout
 
@@ -76,11 +76,6 @@ if err != nil {
 
 // Print the current working directory
 fmt.Println("Current working directory:", wd)
-
-// Perform "ls" command on /home/runner/work/Lama2/
-lama2Dir := "/home/runner/work/Lama2/"
-fmt.Println("Contents of /home/runner/work/Lama2/:")
-listFilesInDir(lama2Dir)
 
 // Perform "ls" command on /home/runner/work/Lama2/Lama2/
 lama2Lama2Dir := "/home/runner/work/Lama2/Lama2/"
