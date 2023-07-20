@@ -16,48 +16,49 @@ type EnvData struct {
 }
 
 func runL2CommandAndParseJSON(t *testing.T, cmdArgs ...string) {
-	// Store the current working directory
-	originalPath, err := os.Getwd()
-	if err != nil {
-		fmt.Println("Error getting the current working directory:", err)
-		return
-	}
-
-	// Change the current working directory to lama2Path
-	l2BinPath := "/home/runner/work/Lama2/Lama2"
-	err = os.Chdir(l2BinPath)
-	if err != nil {
-		fmt.Println("Error changing the current working directory:", err)
-		return
-	}
-
-	listFilesInDir(l2BinPath)
-
-	cmd := exec.Command("./l2", cmdArgs...) // Use "./l2" as the executable name
-
-	var stdout bytes.Buffer
-	cmd.Stdout = &stdout
-
-	// Execute the command
-	// err := cmd.Run()
-	// if err != nil {
-	// 	// Handle the error if needed
-	// 	fmt.Printf("Error running l2 command: %v\n", err)
-	// }
-
-	// Retrieve the captured stdout
-	stdoutOutput := stdout.String()
-
-	fmt.Println(stdoutOutput)
-
-	// Convert the stdoutOutput string to []byte slice
-	outputBytes := []byte(stdoutOutput)
-
-	envMap := make(map[string]EnvData)
-	err = json.Unmarshal(outputBytes, &envMap)
-	if err != nil {
-		t.Fatalf("Error unmarshaling JSON: %v\nOutput:\n%s", err, stdoutOutput)
-	}
+		// Store the current working directory
+		originalPath, err := os.Getwd()
+		if err != nil {
+			fmt.Println("Error getting the current working directory:", err)
+			return
+		}
+	
+		// Change the current working directory to lama2Path
+		l2BinPath := "/home/runner/work/Lama2/Lama2"
+		err = os.Chdir(l2BinPath)
+		if err != nil {
+			fmt.Println("Error changing the current working directory:", err)
+			return
+		}
+	
+		listFilesInDir(l2BinPath)
+	
+		cmd := exec.Command("./l2", cmdArgs...) // Use "./l2" as the executable name
+	
+		var stdout bytes.Buffer
+		cmd.Stdout = &stdout
+	
+		// Execute the command
+		err = cmd.Run() // Uncomment this line to execute the "l2" command
+		if err != nil {
+			// Handle the error if needed
+			fmt.Printf("Error running l2 command: %v\n", err)
+		}
+	
+		// Retrieve the captured stdout
+		stdoutOutput := stdout.String()
+	
+		fmt.Println(stdoutOutput)
+	
+		// Convert the stdoutOutput string to []byte slice
+		outputBytes := []byte(stdoutOutput)
+	
+		envMap := make(map[string]EnvData)
+		err = json.Unmarshal(outputBytes, &envMap)
+		if err != nil {
+			t.Fatalf("Error unmarshaling JSON: %v\nOutput:\n%s", err, stdoutOutput)
+		}
+	
 	// Example assertion: Check the "AHOST" key
 	if ahost, ok := envMap["AHOST"]; !ok {
 		t.Error("Expected 'AHOST' key in the JSON, but it was not found")
