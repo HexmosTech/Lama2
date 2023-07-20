@@ -1,12 +1,13 @@
 package tests
 
 import (
-	// "encoding/json"
 	"bytes"
 	"encoding/json"
 	"fmt"
 	"os/exec"
 	"testing"
+	"os"
+
 )
 
 type EnvData struct {
@@ -15,15 +16,27 @@ type EnvData struct {
 }
 
 func runL2CommandAndParseJSON(t *testing.T, cmdArgs ...string) {
-	cmd := exec.Command("../build/l2", cmdArgs...)
+	// Get the full path to the l2 binary
+	l2BinPath := "/home/runner/work/Lama2/Lama2/build/l2"
+
+	// Check if the l2 binary file exists
+	if _, err := os.Stat(l2BinPath); os.IsNotExist(err) {
+		fmt.Printf("Error: l2 binary not found in the build folder %s, please change the path.\n", l2BinPath)
+		return
+	}
+
+	// Your existing code to run the l2 command and parse JSON
+	cmd := exec.Command(l2BinPath, cmdArgs...)
+	
 	var stdout bytes.Buffer
 	cmd.Stdout = &stdout
-
+	
 	// Execute the command
 	err := cmd.Run()
 	if err != nil {
-		// Handle the error if needed
+	// Handle the error if needed
 		fmt.Printf("Error running l2 command: %v\n", err)
+		return
 	}
 
 	// Retrieve the captured stdout
@@ -39,6 +52,7 @@ func runL2CommandAndParseJSON(t *testing.T, cmdArgs ...string) {
 	if err != nil {
 		t.Fatalf("Error unmarshaling JSON: %v\nOutput:\n%s", err, stdoutOutput)
 	}
+
 	// Example assertion: Check the "AHOST" key
 	if ahost, ok := envMap["AHOST"]; !ok {
 		t.Error("Expected 'AHOST' key in the JSON, but it was not found")
@@ -64,6 +78,7 @@ func runL2CommandAndParseJSON(t *testing.T, cmdArgs ...string) {
 		}
 	}
 }
+
 
 func TestL2EnvCommand(t *testing.T) {
 	cmdArgs := []string{"-e", "../elfparser/ElfTestSuite/root_variable_override/api/y_0020_root_override.l2"}
