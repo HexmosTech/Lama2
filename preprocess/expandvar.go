@@ -27,6 +27,7 @@ func Expand(s string, vm *goja.Runtime, mapping map[string]string) string {
 			}
 			buf = append(buf, s[i:j]...)
 			name, w := getShellName(s[j+1:])
+			//nolint:all
 			if name == "" && w > 0 {
 				// Encountered invalid syntax; eat the
 				// characters.
