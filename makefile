@@ -23,8 +23,9 @@ gofumpt:
 	gofumpt -w .
 
 test:
-	go test ./tests/ -count=1
-
+	make buildme
+	go test ./tests/ -count=1 
+	
 benchmark:
 	go test -bench=. -count 1 -run=^# -benchmem ./tests/
 
