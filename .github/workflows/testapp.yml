@@ -18,7 +18,7 @@ jobs:
       - name: Build
         run: go build -v ./...
       - name: Show Binary Directory
-        run: echo "Binary is present in: $PWD"
+        run: echo "$PWD"
       - name: Test with the Go CLI
         run: go test -v ./tests/
       - name: Deploy hexmos doc
