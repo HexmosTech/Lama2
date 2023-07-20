@@ -18,9 +18,8 @@ type EnvData struct {
 
 func runL2CommandAndParseJSON(t *testing.T, cmdArgs ...string) {
 	// Construct the relative path to the l2.go executable
-	l2Path := filepath.Join("..", "..", "l2")
+	cmd := exec.Command("./l2", cmdArgs...) // Use "./l2" as the executable name
 
-	cmd := exec.Command(l2Path, cmdArgs...)
 	var stdout bytes.Buffer
 	cmd.Stdout = &stdout
 
