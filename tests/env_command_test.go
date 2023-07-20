@@ -16,7 +16,7 @@ type EnvData struct {
 }
 
 func runL2CommandAndParseJSON(t *testing.T, cmdArgs ...string) {
-	cmd := exec.Command("./../build/l2", cmdArgs...)
+	cmd := exec.Command("./../l2", cmdArgs...)
 	var stdout bytes.Buffer
 	cmd.Stdout = &stdout
 
