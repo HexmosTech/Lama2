@@ -30,9 +30,9 @@ func TestMultiStageCount(t *testing.T) {
 	for _, block := range parsedAPIblocks {
 		blockType := block.S("type").Data().(string)
 		if blockType == "processor" {
-			procCount ++
+			procCount++
 		} else if blockType == "Lama2File" {
-			reqCount ++
+			reqCount++
 		}
 	}
 

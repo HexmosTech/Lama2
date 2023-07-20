@@ -2,11 +2,11 @@ package tests
 
 import (
 	// "encoding/json"
-	"os/exec"
-	"testing"
-	"fmt"
 	"bytes"
 	"encoding/json"
+	"fmt"
+	"os/exec"
+	"testing"
 )
 
 type EnvData struct {
@@ -14,7 +14,7 @@ type EnvData struct {
 	Val string `json:"val"`
 }
 
-func runL2CommandAndParseJSON(t *testing.T, cmdArgs ...string)  {
+func runL2CommandAndParseJSON(t *testing.T, cmdArgs ...string) {
 	cmd := exec.Command("../build/l2", cmdArgs...)
 	var stdout bytes.Buffer
 	cmd.Stdout = &stdout
@@ -63,17 +63,14 @@ func runL2CommandAndParseJSON(t *testing.T, cmdArgs ...string)  {
 			t.Errorf(`Expected "val" value to be "https://httpbin.org" for "BHOST", but got: %v`, bhost.Val)
 		}
 	}
-
 }
-
 
 func TestL2EnvCommand(t *testing.T) {
 	cmdArgs := []string{"-e", "../elfparser/ElfTestSuite/root_variable_override/api/y_0020_root_override.l2"}
 	runL2CommandAndParseJSON(t, cmdArgs...)
 }
 
-
 func TestL2EnvCommandVerbose(t *testing.T) {
 	cmdArgs := []string{"-ev", "../elfparser/ElfTestSuite/root_variable_override/api/y_0020_root_override.l2"}
-	 runL2CommandAndParseJSON(t, cmdArgs...)
+	runL2CommandAndParseJSON(t, cmdArgs...)
 }
