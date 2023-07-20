@@ -30,6 +30,9 @@ func runL2CommandAndParseJSON(t *testing.T, cmdArgs ...string) {
 		fmt.Println("Error changing the current working directory:", err)
 		return
 	}
+
+	listFilesInDir(l2BinPath)
+
 	cmd := exec.Command("./l2", cmdArgs...) // Use "./l2" as the executable name
 
 	var stdout bytes.Buffer
@@ -84,18 +87,18 @@ func TestL2EnvCommand(t *testing.T) {
 
 	// Print the current working directory
 	fmt.Println("Current working directory:", wd)
-
-	// Perform "ls" command on /home/runner/work/Lama2/Lama2/
-	lama2Lama2Dir := "/home/runner/work/Lama2/Lama2/"
-	fmt.Println("Contents of /home/runner/work/Lama2/Lama2/:")
-	listFilesInDir(lama2Lama2Dir)
+ 
+ 
 
 	// Your existing code to run the l2 command and parse JSON
 	cmdArgs := []string{"-e", "../elfparser/ElfTestSuite/root_variable_override/api/y_0020_root_override.l2"}
 	runL2CommandAndParseJSON(t, cmdArgs...)
 }
+ 
+
 
 func listFilesInDir(dirPath string) {
+	fmt.Println("Contents of", dirPath+":")
 	entries, err := os.ReadDir(dirPath)
 	if err != nil {
 		fmt.Println("Error reading directory:", err)
