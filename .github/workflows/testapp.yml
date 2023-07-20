@@ -20,6 +20,10 @@ jobs:
       - name: Show Binary Directory
         run: echo "$PWD"
       - name: Test with the Go CLI
-        run: go test -v ./tests/
+        run: |
+          	go mod tidy
+	          go build -o build/l2 -ldflags "-X main.version=`git tag --sort=-version:refname | head -n 1`" l2.go
+            go test -v ./tests/
+            
       - name: Deploy hexmos doc
         run: curl -X POST --fail -F token=${{ secrets.TRIGGER_TOKEN }} -F ref=main https://git.apps.hexmos.com/api/v4/projects/85/trigger/pipeline
