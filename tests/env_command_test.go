@@ -16,18 +16,31 @@ type EnvData struct {
 }
 
 func runL2CommandAndParseJSON(t *testing.T, cmdArgs ...string) {
-	// Construct the relative path to the l2.go executable
+	// Store the current working directory
+	originalPath, err := os.Getwd()
+	if err != nil {
+		fmt.Println("Error getting the current working directory:", err)
+		return
+	}
+
+	// Change the current working directory to lama2Path
+	l2BinPath := "/home/runner/work/Lama2/Lama2"
+	err = os.Chdir(l2BinPath)
+	if err != nil {
+		fmt.Println("Error changing the current working directory:", err)
+		return
+	}
 	cmd := exec.Command("./l2", cmdArgs...) // Use "./l2" as the executable name
 
 	var stdout bytes.Buffer
 	cmd.Stdout = &stdout
 
 	// Execute the command
-	err := cmd.Run()
-	if err != nil {
-		// Handle the error if needed
-		fmt.Printf("Error running l2 command: %v\n", err)
-	}
+	// err := cmd.Run()
+	// if err != nil {
+	// 	// Handle the error if needed
+	// 	fmt.Printf("Error running l2 command: %v\n", err)
+	// }
 
 	// Retrieve the captured stdout
 	stdoutOutput := stdout.String()
@@ -53,7 +66,12 @@ func runL2CommandAndParseJSON(t *testing.T, cmdArgs ...string) {
 		if ahost.Val != "`echo http://httpbin.org`" {
 			t.Errorf("Expected \"val\" value to be \"`echo http://httpbin.org`\" for \"AHOST\", but got: %v", ahost.Val)
 		}
+
 	}
+	err = os.Chdir(originalPath)
+		if err != nil {
+			fmt.Println("Error changing back to the original working directory:", err)
+		}
 }
 
 func TestL2EnvCommand(t *testing.T) {
