@@ -5,7 +5,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"os"
 	"os/exec"
 	"testing"
 )
@@ -60,34 +59,15 @@ func runL2CommandAndParseJSON(t *testing.T, cmdArgs ...string) {
 		}
 
 	}
-
 }
 
+
 func TestL2EnvCommand(t *testing.T) {
-	// Get the current working directory
-	wd, err := os.Getwd()
-	if err != nil {
-		fmt.Println("Error getting the current working directory:", err)
-		return
-	}
-
-	// Print the current working directory
-	fmt.Println("Current working directory:", wd)
-
-	// Your existing code to run the l2 command and parse JSON
 	cmdArgs := []string{"-e", "../elfparser/ElfTestSuite/root_variable_override/api/y_0020_root_override.l2"}
 	runL2CommandAndParseJSON(t, cmdArgs...)
 }
 
-func listFilesInDir(dirPath string) {
-	fmt.Println("Contents of", dirPath+":")
-	entries, err := os.ReadDir(dirPath)
-	if err != nil {
-		fmt.Println("Error reading directory:", err)
-		return
-	}
-
-	for _, entry := range entries {
-		fmt.Println(entry.Name())
-	}
+func TestL2EnvCommandVerbose(t *testing.T) {
+	cmdArgs := []string{"-ev", "../elfparser/ElfTestSuite/root_variable_override/api/y_0020_root_override.l2"}
+	runL2CommandAndParseJSON(t, cmdArgs...)
 }
