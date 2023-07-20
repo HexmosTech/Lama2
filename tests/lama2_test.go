@@ -63,9 +63,6 @@ func PerformParserMatch(text string) (*gabs.Container, error) {
 	got, e := p.Parse(text)
 	if e == nil {
 		log.Debug().Str("Got", got.String()).Msg("")
-	} else {
-		// t.Errorf("Error not expected")
-		// fmt.Println(e)
 	}
 	return got, e
 }

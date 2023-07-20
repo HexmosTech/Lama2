@@ -73,7 +73,7 @@ func debugOp(str string) {
 func escapeString(input string) string {
 	output, err := json.Marshal(input)
 	if err != nil {
-		// handle error
+		log.Error().Str("Error marshaling JSON:","escapeString()")
 	}
 	return string(output)
 }
