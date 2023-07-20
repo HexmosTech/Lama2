@@ -28,7 +28,7 @@ func TestL2EnvCommandVerbose(t *testing.T) {
 
 func runL2CommandAndParseJSON(t *testing.T, cmdArgs ...string) {
 	// Get the full path to the l2 binary
-	l2BinPath := "/home/runner/work/Lama2/Lama2/build/l2"
+	l2BinPath := "../build/l2"
 
 	// Check if the l2 binary file exists
 	if err := checkL2BinaryExists(l2BinPath); err != nil {
