@@ -20,7 +20,7 @@ import (
 var LogBuff bytes.Buffer
 
 func init() {
-	consoleWriter := zerolog.ConsoleWriter{Out: os.Stdout}
+	consoleWriter := zerolog.ConsoleWriter{Out: os.Stderr}
 	consoleWriter2 := zerolog.ConsoleWriter{Out: &LogBuff}
 	multi := zerolog.MultiLevelWriter(consoleWriter, consoleWriter2)
 	logger := zerolog.New(multi).With().Timestamp().Logger()
