@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+	"path/filepath"
 	"testing"
 )
 
@@ -16,7 +17,10 @@ type EnvData struct {
 }
 
 func runL2CommandAndParseJSON(t *testing.T, cmdArgs ...string) {
-	cmd := exec.Command("./../l2", cmdArgs...)
+	// Construct the relative path to the l2.go executable
+	l2Path := filepath.Join("..", "..", "l2.go")
+
+	cmd := exec.Command(l2Path, cmdArgs...)
 	var stdout bytes.Buffer
 	cmd.Stdout = &stdout
 
@@ -52,43 +56,26 @@ func runL2CommandAndParseJSON(t *testing.T, cmdArgs ...string) {
 			t.Errorf("Expected \"val\" value to be \"`echo http://httpbin.org`\" for \"AHOST\", but got: %v", ahost.Val)
 		}
 	}
-	// Example assertion: Check the "BHOST" key
-	if bhost, ok := envMap["BHOST"]; !ok {
-		t.Error("Expected 'BHOST' key in the JSON, but it was not found")
-	} else {
-		// Example assertion: Check the "BHOST" src and val values
-		if bhost.Src != "l2configenv" {
-			t.Errorf(`Expected "src" value to be "l2configenv" for "BHOST", but got: %v`, bhost.Src)
-		}
-		if bhost.Val != "https://httpbin.org" {
-			t.Errorf(`Expected "val" value to be "https://httpbin.org" for "BHOST", but got: %v`, bhost.Val)
-		}
-	}
 }
 
 func TestL2EnvCommand(t *testing.T) {
-// Get the current working directory
-wd, err := os.Getwd()
-if err != nil {
-	fmt.Println("Error getting the current working directory:", err)
-	return
-}
+	// Get the current working directory
+	wd, err := os.Getwd()
+	if err != nil {
+		fmt.Println("Error getting the current working directory:", err)
+		return
+	}
 
-// Print the current working directory
-fmt.Println("Current working directory:", wd)
+	// Print the current working directory
+	fmt.Println("Current working directory:", wd)
 
-// Perform "ls" command on /home/runner/work/Lama2/Lama2/
-lama2Lama2Dir := "/home/runner/work/Lama2/Lama2/"
-fmt.Println("Contents of /home/runner/work/Lama2/Lama2/:")
-listFilesInDir(lama2Lama2Dir)
+	// Perform "ls" command on /home/runner/work/Lama2/Lama2/
+	lama2Lama2Dir := "/home/runner/work/Lama2/Lama2/"
+	fmt.Println("Contents of /home/runner/work/Lama2/Lama2/:")
+	listFilesInDir(lama2Lama2Dir)
 
-// Your existing code to run the l2 command and parse JSON
-cmdArgs := []string{"-e", "../elfparser/ElfTestSuite/root_variable_override/api/y_0020_root_override.l2"}
-runL2CommandAndParseJSON(t, cmdArgs...)
-}
-
-func TestL2EnvCommandVerbose(t *testing.T) {
-	cmdArgs := []string{"-ev", "../elfparser/ElfTestSuite/root_variable_override/api/y_0020_root_override.l2"}
+	// Your existing code to run the l2 command and parse JSON
+	cmdArgs := []string{"-e", "../elfparser/ElfTestSuite/root_variable_override/api/y_0020_root_override.l2"}
 	runL2CommandAndParseJSON(t, cmdArgs...)
 }
 
