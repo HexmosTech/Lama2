@@ -139,19 +139,6 @@ func readFile(filename string) (envMap map[string]string, err error) {
 	return godotenv.Parse(file)
 }
 
-func populateEnvMap(envMap map[string]map[string]interface{}, envPath string, source string) error {
-	envs, err := readFile(envPath)
-	if err != nil {
-		return err
-	}
-	for key, value := range envs {
-		variable := make(map[string]interface{})
-		variable["val"] = value
-		variable["src"] = source
-		envMap[key] = variable
-	}
-	return nil
-}
 
 func getEnvMap(envPath string, source string) (map[string]map[string]interface{}, error) {
 	envs, err := readFile(envPath)
@@ -181,19 +168,25 @@ func combineEnvMaps(envMaps ...map[string]map[string]interface{}) map[string]map
 }
 
 func GetL2EnvVariables(dir string) ([]byte, error) {
+	l2ConfigEnvMap := make(map[string]map[string]interface{})
+
 	l2ConfigPath, err := SearchL2ConfigEnv(dir)
 	if err != nil {
-		return nil, err
-	}
-	l2ConfigEnvMap, err := getEnvMap(l2ConfigPath, "l2configenv")
-	if err != nil {
-		return nil, err
+		// If l2config file is not found, assign an empty map to l2EnvMap and continue
+		l2ConfigEnvMap = make(map[string]map[string]interface{})
+	}else{
+		l2ConfigEnvMap, err = getEnvMap(l2ConfigPath, "l2configenv")
+		if err != nil {
+			// If an error occurs, assign an empty map to l2EnvMap and continue
+			l2ConfigEnvMap = make(map[string]map[string]interface{})
+		}
 	}
 
 	l2EnvPath := path.Join(dir, "l2.env")
 	l2EnvMap, err := getEnvMap(l2EnvPath, "l2env")
 	if err != nil {
-		return nil, err
+		// If an error occurs, assign an empty map to l2EnvMap and continue
+		l2EnvMap = make(map[string]map[string]interface{})
 	}
 
 	finalEnvMap := combineEnvMaps(l2ConfigEnvMap, l2EnvMap)
@@ -202,7 +195,6 @@ func GetL2EnvVariables(dir string) ([]byte, error) {
 	if err != nil {
 		return nil, fmt.Errorf("Failed to marshal map env's to JSON: %v", err)
 	}
-
 	return jsonEnvs, nil
 }
 
