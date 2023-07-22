@@ -134,7 +134,7 @@ The local variable's value is taken into consideration regardless of both files 
 
 Get [Source Files](https://github.com/HexmosTech/Lama2/tree/main/examples/0020_override_project_root_local)
 
-![Override of l2config.env with l2.env variable](image.png)
+![Override of l2config.env with l2.env variable](l2envOverideL2config.png)
 
 
 #### The environment file can load results of commands

@@ -12,7 +12,7 @@
         <link rel="canonical" href="http://hexmos.com/lama2/reference/parser.html">
       
       <link rel="icon" href="../favicon.ico">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-8.5.10">
     
 
 <meta name="description" content="Hexmos Lama2: Plain-Text Powered REST API Client for Teams">
@@ -1130,235 +1130,283 @@
 <h2 id="index">Index<a class="headerlink" href="#index" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="#variables">Variables</a></li>
-<li><a href="#func-custompairmerge">func CustomPairMerge(destination, source interface{}) interface{}</a></li>
-<li><a href="#type-lama2parser">type Lama2Parser</a></li>
-<li><a href="#func-newlama2parser">func NewLama2Parser() *Lama2Parser</a></li>
-<li><a href="#func-lama2parser-anytype">func (p <em>Lama2Parser) AnyType() (</em>gabs.Container, error)</a></li>
-<li><a href="#func-lama2parser-boolean">func (p <em>Lama2Parser) Boolean() (</em>gabs.Container, error)</a></li>
-<li><a href="#func-lama2parser-complextype">func (p <em>Lama2Parser) ComplexType() (</em>gabs.Container, error)</a></li>
-<li><a href="#func-lama2parser-dataheader">func (p <em>Lama2Parser) DataHeader() (</em>gabs.Container, error)</a></li>
-<li><a href="#func-lama2parser-datainput">func (p <em>Lama2Parser) DataInput() (</em>gabs.Container, error)</a></li>
-<li><a href="#func-lama2parser-details">func (p <em>Lama2Parser) Details() (</em>gabs.Container, error)</a></li>
-<li><a href="#func-lama2parser-digit">func (p <em>Lama2Parser) Digit() (</em>gabs.Container, error)</a></li>
-<li><a href="#func-lama2parser-digits">func (p <em>Lama2Parser) Digits() (</em>gabs.Container, error)</a></li>
-<li><a href="#func-lama2parser-exponent">func (p <em>Lama2Parser) Exponent() (</em>gabs.Container, error)</a></li>
-<li><a href="#func-lama2parser-filespair">func (p <em>Lama2Parser) FilesPair() (</em>gabs.Container, error)</a></li>
-<li><a href="#func-lama2parser-filesunquoted">func (p <em>Lama2Parser) FilesUnquoted() (</em>gabs.Container, error)</a></li>
-<li><a href="#func-lama2parser-fraction">func (p <em>Lama2Parser) Fraction() (</em>gabs.Container, error)</a></li>
-<li><a href="#func-lama2parser-fractionrule1">func (p <em>Lama2Parser) FractionRule1() (</em>gabs.Container, error)</a></li>
-<li><a href="#func-lama2parser-httpverb">func (p <em>Lama2Parser) HTTPVerb() (</em>gabs.Container, error)</a></li>
-<li><a href="#func-lama2parser-headerdata">func (p <em>Lama2Parser) HeaderData() (</em>gabs.Container, error)</a></li>
-<li><a href="#func-lama2parser-headerpair">func (p <em>Lama2Parser) HeaderPair() (</em>gabs.Container, error)</a></li>
-<li><a href="#func-lama2parser-headers">func (p <em>Lama2Parser) Headers() (</em>gabs.Container, error)</a></li>
-<li><a href="#func-lama2parser-integer">func (p <em>Lama2Parser) Integer() (</em>gabs.Container, error)</a></li>
-<li><a href="#func-lama2parser-integerrule1">func (p <em>Lama2Parser) IntegerRule1() (</em>gabs.Container, error)</a></li>
-<li><a href="#func-lama2parser-integerrule2">func (p <em>Lama2Parser) IntegerRule2() (</em>gabs.Container, error)</a></li>
-<li><a href="#func-lama2parser-integerrule3">func (p <em>Lama2Parser) IntegerRule3() (</em>gabs.Container, error)</a></li>
-<li><a href="#func-lama2parser-integerrule4">func (p <em>Lama2Parser) IntegerRule4() (</em>gabs.Container, error)</a></li>
-<li><a href="#func-lama2parser-lama2file">func (p <em>Lama2Parser) Lama2File() (</em>gabs.Container, error)</a></li>
-<li><a href="#func-lama2parser-list">func (p <em>Lama2Parser) List() (</em>gabs.Container, error)</a></li>
-<li><a href="#func-lama2parser-map">func (p <em>Lama2Parser) Map() (</em>gabs.Container, error)</a></li>
-<li><a href="#func-lama2parser-multipart">func (p <em>Lama2Parser) Multipart() (</em>gabs.Container, error)</a></li>
-<li><a href="#func-lama2parser-null">func (p <em>Lama2Parser) Null() (</em>gabs.Container, error)</a></li>
-<li><a href="#func-lama2parser-number">func (p <em>Lama2Parser) Number() (</em>gabs.Container, error)</a></li>
-<li><a href="#func-lama2parser-onenine">func (p <em>Lama2Parser) OneNine() (</em>gabs.Container, error)</a></li>
-<li><a href="#func-lama2parser-pair">func (p <em>Lama2Parser) Pair() (</em>gabs.Container, error)</a></li>
-<li><a href="#func-lama2parser-primitivetype">func (p <em>Lama2Parser) PrimitiveType() (</em>gabs.Container, error)</a></li>
-<li><a href="#func-lama2parser-processor">func (p <em>Lama2Parser) Processor() (</em>gabs.Container, error)</a></li>
-<li><a href="#func-lama2parser-quotedstring">func (p <em>Lama2Parser) QuotedString() (</em>gabs.Container, error)</a></li>
-<li><a href="#func-lama2parser-requester">func (p <em>Lama2Parser) Requester() (</em>gabs.Container, error)</a></li>
-<li><a href="#func-lama2parser-separator">func (p <em>Lama2Parser) Separator() (</em>gabs.Container, error)</a></li>
-<li><a href="#func-lama2parser-sign">func (p <em>Lama2Parser) Sign() (</em>gabs.Container, error)</a></li>
-<li><a href="#func-lama2parser-start">func (p <em>Lama2Parser) Start() (</em>gabs.Container, error)</a></li>
-<li><a href="#func-lama2parser-theurl">func (p <em>Lama2Parser) TheURL() (</em>gabs.Container, error)</a></li>
-<li><a href="#func-lama2parser-unquoted">func (p <em>Lama2Parser) Unquoted() (</em>gabs.Container, error)</a></li>
-<li><a href="#func-lama2parser-varjson">func (p <em>Lama2Parser) VarJSON() (</em>gabs.Container, error)</a></li>
-<li><a href="#func-lama2parser-varjsonpair">func (p <em>Lama2Parser) VarJSONPair() (</em>gabs.Container, error)</a></li>
-<li><a href="#func-lama2parser-varjsonunquoted">func (p <em>Lama2Parser) VarJSONUnquoted() (</em>gabs.Container, error)</a></li>
-<li><a href="#type-minimalparser">type MinimalParser</a></li>
-<li><a href="#type-parser">type Parser</a></li>
-<li><a href="#func-parser-char">func (p *Parser) Char() (rune, error)</a></li>
-<li><a href="#func-parser-charclass">func (p *Parser) CharClass(charClass string) (rune, error)</a></li>
-<li><a href="#func-parser-init">func (p *Parser) Init()</a></li>
-<li><a href="#func-parser-keyword">func (p *Parser) Keyword(kw string, eatWsStart bool, eatWsEnd bool, caseInsensitive bool) ([]rune, error)</a></li>
-<li><a href="#func-parser-lookahead">func (p *Parser) LookAhead(rules []string) bool</a></li>
-<li><a href="#func-parser-match">func (p <em>Parser) Match(rules []string) (</em>gabs.Container, error)</a></li>
-<li><a href="#func-parser-matchuntil">func (p <em>Parser) MatchUntil(end string) (</em>gabs.Container, error)</a></li>
-<li><a href="#func-parser-parse">func (p <em>Parser) Parse(text string) (</em>gabs.Container, error)</a></li>
-<li><a href="#func-parser-settext">func (p *Parser) SetText(text string)</a></li>
-<li><a href="#func-parser-splitcharranges">func (p *Parser) SplitCharRanges(charClass string) ([]string, error)</a></li>
-<li><a href="#func-parser-start">func (p <em>Parser) Start() </em>gabs.Container</a></li>
+<li><a href="#CustomPairMerge">func CustomPairMerge(destination, source interface{}) interface{}</a></li>
+<li><a href="#Lama2Parser">type Lama2Parser</a></li>
+<li><a href="#NewLama2Parser">func NewLama2Parser() *Lama2Parser</a></li>
+<li><a href="#Lama2Parser.AnyType">func (p *Lama2Parser) AnyType() (*gabs.Container, error)</a></li>
+<li><a href="#Lama2Parser.Boolean">func (p *Lama2Parser) Boolean() (*gabs.Container, error)</a></li>
+<li><a href="#Lama2Parser.ComplexType">func (p *Lama2Parser) ComplexType() (*gabs.Container, error)</a></li>
+<li><a href="#Lama2Parser.DataHeader">func (p *Lama2Parser) DataHeader() (*gabs.Container, error)</a></li>
+<li><a href="#Lama2Parser.DataInput">func (p *Lama2Parser) DataInput() (*gabs.Container, error)</a></li>
+<li><a href="#Lama2Parser.Details">func (p *Lama2Parser) Details() (*gabs.Container, error)</a></li>
+<li><a href="#Lama2Parser.Digit">func (p *Lama2Parser) Digit() (*gabs.Container, error)</a></li>
+<li><a href="#Lama2Parser.Digits">func (p *Lama2Parser) Digits() (*gabs.Container, error)</a></li>
+<li><a href="#Lama2Parser.Exponent">func (p *Lama2Parser) Exponent() (*gabs.Container, error)</a></li>
+<li><a href="#Lama2Parser.FilesPair">func (p *Lama2Parser) FilesPair() (*gabs.Container, error)</a></li>
+<li><a href="#Lama2Parser.FilesUnquoted">func (p *Lama2Parser) FilesUnquoted() (*gabs.Container, error)</a></li>
+<li><a href="#Lama2Parser.Fraction">func (p *Lama2Parser) Fraction() (*gabs.Container, error)</a></li>
+<li><a href="#Lama2Parser.FractionRule1">func (p *Lama2Parser) FractionRule1() (*gabs.Container, error)</a></li>
+<li><a href="#Lama2Parser.HTTPVerb">func (p *Lama2Parser) HTTPVerb() (*gabs.Container, error)</a></li>
+<li><a href="#Lama2Parser.HeaderData">func (p *Lama2Parser) HeaderData() (*gabs.Container, error)</a></li>
+<li><a href="#Lama2Parser.HeaderPair">func (p *Lama2Parser) HeaderPair() (*gabs.Container, error)</a></li>
+<li><a href="#Lama2Parser.Headers">func (p *Lama2Parser) Headers() (*gabs.Container, error)</a></li>
+<li><a href="#Lama2Parser.Integer">func (p *Lama2Parser) Integer() (*gabs.Container, error)</a></li>
+<li><a href="#Lama2Parser.IntegerRule1">func (p *Lama2Parser) IntegerRule1() (*gabs.Container, error)</a></li>
+<li><a href="#Lama2Parser.IntegerRule2">func (p *Lama2Parser) IntegerRule2() (*gabs.Container, error)</a></li>
+<li><a href="#Lama2Parser.IntegerRule3">func (p *Lama2Parser) IntegerRule3() (*gabs.Container, error)</a></li>
+<li><a href="#Lama2Parser.IntegerRule4">func (p *Lama2Parser) IntegerRule4() (*gabs.Container, error)</a></li>
+<li><a href="#Lama2Parser.Lama2File">func (p *Lama2Parser) Lama2File() (*gabs.Container, error)</a></li>
+<li><a href="#Lama2Parser.List">func (p *Lama2Parser) List() (*gabs.Container, error)</a></li>
+<li><a href="#Lama2Parser.Map">func (p *Lama2Parser) Map() (*gabs.Container, error)</a></li>
+<li><a href="#Lama2Parser.Multipart">func (p *Lama2Parser) Multipart() (*gabs.Container, error)</a></li>
+<li><a href="#Lama2Parser.Null">func (p *Lama2Parser) Null() (*gabs.Container, error)</a></li>
+<li><a href="#Lama2Parser.Number">func (p *Lama2Parser) Number() (*gabs.Container, error)</a></li>
+<li><a href="#Lama2Parser.OneNine">func (p *Lama2Parser) OneNine() (*gabs.Container, error)</a></li>
+<li><a href="#Lama2Parser.Pair">func (p *Lama2Parser) Pair() (*gabs.Container, error)</a></li>
+<li><a href="#Lama2Parser.PrimitiveType">func (p *Lama2Parser) PrimitiveType() (*gabs.Container, error)</a></li>
+<li><a href="#Lama2Parser.Processor">func (p *Lama2Parser) Processor() (*gabs.Container, error)</a></li>
+<li><a href="#Lama2Parser.QuotedString">func (p *Lama2Parser) QuotedString() (*gabs.Container, error)</a></li>
+<li><a href="#Lama2Parser.Requester">func (p *Lama2Parser) Requester() (*gabs.Container, error)</a></li>
+<li><a href="#Lama2Parser.Separator">func (p *Lama2Parser) Separator() (*gabs.Container, error)</a></li>
+<li><a href="#Lama2Parser.Sign">func (p *Lama2Parser) Sign() (*gabs.Container, error)</a></li>
+<li><a href="#Lama2Parser.Start">func (p *Lama2Parser) Start() (*gabs.Container, error)</a></li>
+<li><a href="#Lama2Parser.TheURL">func (p *Lama2Parser) TheURL() (*gabs.Container, error)</a></li>
+<li><a href="#Lama2Parser.Unquoted">func (p *Lama2Parser) Unquoted() (*gabs.Container, error)</a></li>
+<li><a href="#Lama2Parser.VarJSON">func (p *Lama2Parser) VarJSON() (*gabs.Container, error)</a></li>
+<li><a href="#Lama2Parser.VarJSONPair">func (p *Lama2Parser) VarJSONPair() (*gabs.Container, error)</a></li>
+<li><a href="#Lama2Parser.VarJSONUnquoted">func (p *Lama2Parser) VarJSONUnquoted() (*gabs.Container, error)</a></li>
+<li><a href="#MinimalParser">type MinimalParser</a></li>
+<li><a href="#Parser">type Parser</a></li>
+<li><a href="#Parser.Char">func (p *Parser) Char() (rune, error)</a></li>
+<li><a href="#Parser.CharClass">func (p *Parser) CharClass(charClass string) (rune, error)</a></li>
+<li><a href="#Parser.Init">func (p *Parser) Init()</a></li>
+<li><a href="#Parser.Keyword">func (p *Parser) Keyword(kw string, eatWsStart bool, eatWsEnd bool, caseInsensitive bool) ([]rune, error)</a></li>
+<li><a href="#Parser.LookAhead">func (p *Parser) LookAhead(rules []string) bool</a></li>
+<li><a href="#Parser.Match">func (p *Parser) Match(rules []string) (*gabs.Container, error)</a></li>
+<li><a href="#Parser.MatchUntil">func (p *Parser) MatchUntil(end string) (*gabs.Container, error)</a></li>
+<li><a href="#Parser.Parse">func (p *Parser) Parse(text string) (*gabs.Container, error)</a></li>
+<li><a href="#Parser.SetText">func (p *Parser) SetText(text string)</a></li>
+<li><a href="#Parser.SplitCharRanges">func (p *Parser) SplitCharRanges(charClass string) ([]string, error)</a></li>
+<li><a href="#Parser.Start">func (p *Parser) Start() *gabs.Container</a></li>
 </ul>
 <h2 id="variables">Variables<a class="headerlink" href="#variables" title="Permanent link">&para;</a></h2>
+<p><a name="DataInputType"></a></p>
 <div class="highlight"><pre><span></span><code><span class="kd">var</span><span class="w"> </span><span class="nx">DataInputType</span><span class="w"> </span><span class="kt">string</span>
 </code></pre></div>
-<h2 id="func-custompairmerge">func <a href="https://github.com/HexmosTech/Lama2/blob/master/parser/jsonparser.go#L28">CustomPairMerge</a><a class="headerlink" href="#func-custompairmerge" title="Permanent link">&para;</a></h2>
+<p><a name="CustomPairMerge"></a></p>
+<h2 id="func-custompairmerge">func <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/jsonparser.go#L29">CustomPairMerge</a><a class="headerlink" href="#func-custompairmerge" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">CustomPairMerge</span><span class="p">(</span><span class="nx">destination</span><span class="p">,</span><span class="w"> </span><span class="nx">source</span><span class="w"> </span><span class="kd">interface</span><span class="p">{})</span><span class="w"> </span><span class="kd">interface</span><span class="p">{}</span>
 </code></pre></div>
 <p>CustomPairMerge uses a gabs feature to deal with merge conflicts. More here: https://github.com/HexmosTech/gabs/blob/master/gabs.go#L511</p>
-<h2 id="type-lama2parser">type <a href="https://github.com/HexmosTech/Lama2/blob/master/parser/lama2parser.go#L12-L16">Lama2Parser</a><a class="headerlink" href="#type-lama2parser" title="Permanent link">&para;</a></h2>
+<p><a name="Lama2Parser"></a></p>
+<h2 id="type-lama2parser">type <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/lama2parser.go#L12-L16">Lama2Parser</a><a class="headerlink" href="#type-lama2parser" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="kd">type</span><span class="w"> </span><span class="nx">Lama2Parser</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="o">*</span><span class="nx">Parser</span>
 <span class="w">    </span><span class="nx">Context</span><span class="w">   </span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">bool</span>
 <span class="w">    </span><span class="nx">MarkRange</span><span class="w"> </span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">int</span>
 <span class="p">}</span>
 </code></pre></div>
-<h3 id="func-newlama2parser">func <a href="https://github.com/HexmosTech/Lama2/blob/master/parser/lama2parser.go#L20">NewLama2Parser</a><a class="headerlink" href="#func-newlama2parser" title="Permanent link">&para;</a></h3>
+<p><a name="NewLama2Parser"></a></p>
+<h3 id="func-newlama2parser">func <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/lama2parser.go#L20">NewLama2Parser</a><a class="headerlink" href="#func-newlama2parser" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">NewLama2Parser</span><span class="p">()</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span>
 </code></pre></div>
 <p>NewLama2Parser creates a new Lama2Parser and initializes it properly</p>
-<h3 id="func-lama2parser-anytype">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/master/parser/jsonparser.go#L11">AnyType</a><a class="headerlink" href="#func-lama2parser-anytype" title="Permanent link">&para;</a></h3>
+<p><a name="Lama2Parser.AnyType"></a></p>
+<h3 id="func-lama2parser-anytype">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/jsonparser.go#L11">AnyType</a><a class="headerlink" href="#func-lama2parser-anytype" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">AnyType</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
 <p>AnyType is the top-most element of a JSON structure It consists of Complex and Primitive Types</p>
-<h3 id="func-lama2parser-boolean">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/master/parser/jsonparser.go#L125">Boolean</a><a class="headerlink" href="#func-lama2parser-boolean" title="Permanent link">&para;</a></h3>
+<p><a name="Lama2Parser.Boolean"></a></p>
+<h3 id="func-lama2parser-boolean">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/jsonparser.go#L126">Boolean</a><a class="headerlink" href="#func-lama2parser-boolean" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">Boolean</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
-<h3 id="func-lama2parser-complextype">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/master/parser/jsonparser.go#L16">ComplexType</a><a class="headerlink" href="#func-lama2parser-complextype" title="Permanent link">&para;</a></h3>
+<p><a name="Lama2Parser.ComplexType"></a></p>
+<h3 id="func-lama2parser-complextype">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/jsonparser.go#L16">ComplexType</a><a class="headerlink" href="#func-lama2parser-complextype" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">ComplexType</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
-<h3 id="func-lama2parser-dataheader">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/master/parser/headers.go#L28">DataHeader</a><a class="headerlink" href="#func-lama2parser-dataheader" title="Permanent link">&para;</a></h3>
+<p><a name="Lama2Parser.DataHeader"></a></p>
+<h3 id="func-lama2parser-dataheader">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/headers.go#L28">DataHeader</a><a class="headerlink" href="#func-lama2parser-dataheader" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">DataHeader</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
-<h3 id="func-lama2parser-datainput">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/master/parser/headers.go#L44">DataInput</a><a class="headerlink" href="#func-lama2parser-datainput" title="Permanent link">&para;</a></h3>
+<p><a name="Lama2Parser.DataInput"></a></p>
+<h3 id="func-lama2parser-datainput">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/headers.go#L44">DataInput</a><a class="headerlink" href="#func-lama2parser-datainput" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">DataInput</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
-<h3 id="func-lama2parser-details">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/master/parser/lama2parser.go#L243">Details</a><a class="headerlink" href="#func-lama2parser-details" title="Permanent link">&para;</a></h3>
+<p><a name="Lama2Parser.Details"></a></p>
+<h3 id="func-lama2parser-details">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/lama2parser.go#L242">Details</a><a class="headerlink" href="#func-lama2parser-details" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">Details</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
-<h3 id="func-lama2parser-digit">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/master/parser/numbers.go#L236">Digit</a><a class="headerlink" href="#func-lama2parser-digit" title="Permanent link">&para;</a></h3>
+<p><a name="Lama2Parser.Digit"></a></p>
+<h3 id="func-lama2parser-digit">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/numbers.go#L236">Digit</a><a class="headerlink" href="#func-lama2parser-digit" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">Digit</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
-<h3 id="func-lama2parser-digits">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/master/parser/numbers.go#L215">Digits</a><a class="headerlink" href="#func-lama2parser-digits" title="Permanent link">&para;</a></h3>
+<p><a name="Lama2Parser.Digits"></a></p>
+<h3 id="func-lama2parser-digits">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/numbers.go#L215">Digits</a><a class="headerlink" href="#func-lama2parser-digits" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">Digits</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
-<h3 id="func-lama2parser-exponent">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/master/parser/numbers.go#L52">Exponent</a><a class="headerlink" href="#func-lama2parser-exponent" title="Permanent link">&para;</a></h3>
+<p><a name="Lama2Parser.Exponent"></a></p>
+<h3 id="func-lama2parser-exponent">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/numbers.go#L52">Exponent</a><a class="headerlink" href="#func-lama2parser-exponent" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">Exponent</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
 <p>An Exponent consists of mandatory 'e' or 'E', optional Sign, followed by Digits</p>
-<h3 id="func-lama2parser-filespair">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/master/parser/varjson.go#L97">FilesPair</a><a class="headerlink" href="#func-lama2parser-filespair" title="Permanent link">&para;</a></h3>
+<p><a name="Lama2Parser.FilesPair"></a></p>
+<h3 id="func-lama2parser-filespair">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/varjson.go#L97">FilesPair</a><a class="headerlink" href="#func-lama2parser-filespair" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">FilesPair</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
 <p>FilesPair tries to match key and value separated by `@`. The key and value can either be a quoted string, or an unquoted Files Unquoted String. If there is no match for either, a ParseError is returned.</p>
-<h3 id="func-lama2parser-filesunquoted">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/master/parser/varjson.go#L152">FilesUnquoted</a><a class="headerlink" href="#func-lama2parser-filesunquoted" title="Permanent link">&para;</a></h3>
+<p><a name="Lama2Parser.FilesUnquoted"></a></p>
+<h3 id="func-lama2parser-filesunquoted">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/varjson.go#L152">FilesUnquoted</a><a class="headerlink" href="#func-lama2parser-filesunquoted" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">FilesUnquoted</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
 <p>FilesUnquoted matches a string of characters other than `@` and returns them as a String</p>
-<h3 id="func-lama2parser-fraction">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/master/parser/numbers.go#L75">Fraction</a><a class="headerlink" href="#func-lama2parser-fraction" title="Permanent link">&para;</a></h3>
+<p><a name="Lama2Parser.Fraction"></a></p>
+<h3 id="func-lama2parser-fraction">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/numbers.go#L75">Fraction</a><a class="headerlink" href="#func-lama2parser-fraction" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">Fraction</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
-<h3 id="func-lama2parser-fractionrule1">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/master/parser/numbers.go#L87">FractionRule1</a><a class="headerlink" href="#func-lama2parser-fractionrule1" title="Permanent link">&para;</a></h3>
+<p><a name="Lama2Parser.FractionRule1"></a></p>
+<h3 id="func-lama2parser-fractionrule1">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/numbers.go#L87">FractionRule1</a><a class="headerlink" href="#func-lama2parser-fractionrule1" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">FractionRule1</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
 <p>A Fraction consists of mandatory "." (dot), followed by Digits.</p>
-<h3 id="func-lama2parser-httpverb">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/master/parser/lama2parser.go#L210">HTTPVerb</a><a class="headerlink" href="#func-lama2parser-httpverb" title="Permanent link">&para;</a></h3>
+<p><a name="Lama2Parser.HTTPVerb"></a></p>
+<h3 id="func-lama2parser-httpverb">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/lama2parser.go#L209">HTTPVerb</a><a class="headerlink" href="#func-lama2parser-httpverb" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">HTTPVerb</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
-<h3 id="func-lama2parser-headerdata">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/master/parser/headers.go#L11">HeaderData</a><a class="headerlink" href="#func-lama2parser-headerdata" title="Permanent link">&para;</a></h3>
+<p><a name="Lama2Parser.HeaderData"></a></p>
+<h3 id="func-lama2parser-headerdata">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/headers.go#L11">HeaderData</a><a class="headerlink" href="#func-lama2parser-headerdata" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">HeaderData</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
-<h3 id="func-lama2parser-headerpair">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/master/parser/headers.go#L84">HeaderPair</a><a class="headerlink" href="#func-lama2parser-headerpair" title="Permanent link">&para;</a></h3>
+<p><a name="Lama2Parser.HeaderPair"></a></p>
+<h3 id="func-lama2parser-headerpair">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/headers.go#L84">HeaderPair</a><a class="headerlink" href="#func-lama2parser-headerpair" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">HeaderPair</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
-<h3 id="func-lama2parser-headers">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/master/parser/headers.go#L60">Headers</a><a class="headerlink" href="#func-lama2parser-headers" title="Permanent link">&para;</a></h3>
+<p><a name="Lama2Parser.Headers"></a></p>
+<h3 id="func-lama2parser-headers">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/headers.go#L60">Headers</a><a class="headerlink" href="#func-lama2parser-headers" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">Headers</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
 <p>Headers detects HTTP headers; essentially strings separated by ":" character</p>
-<h3 id="func-lama2parser-integer">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/master/parser/numbers.go#L106">Integer</a><a class="headerlink" href="#func-lama2parser-integer" title="Permanent link">&para;</a></h3>
+<p><a name="Lama2Parser.Integer"></a></p>
+<h3 id="func-lama2parser-integer">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/numbers.go#L106">Integer</a><a class="headerlink" href="#func-lama2parser-integer" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">Integer</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
-<h3 id="func-lama2parser-integerrule1">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/master/parser/numbers.go#L120">IntegerRule1</a><a class="headerlink" href="#func-lama2parser-integerrule1" title="Permanent link">&para;</a></h3>
+<p><a name="Lama2Parser.IntegerRule1"></a></p>
+<h3 id="func-lama2parser-integerrule1">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/numbers.go#L120">IntegerRule1</a><a class="headerlink" href="#func-lama2parser-integerrule1" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">IntegerRule1</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
 <p>InterRule1 matches a Digit</p>
-<h3 id="func-lama2parser-integerrule2">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/master/parser/numbers.go#L135">IntegerRule2</a><a class="headerlink" href="#func-lama2parser-integerrule2" title="Permanent link">&para;</a></h3>
+<p><a name="Lama2Parser.IntegerRule2"></a></p>
+<h3 id="func-lama2parser-integerrule2">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/numbers.go#L135">IntegerRule2</a><a class="headerlink" href="#func-lama2parser-integerrule2" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">IntegerRule2</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
 <p>IntegerRule2 matches 1-9 mandatorily, and then tries to follow it with Digits</p>
-<h3 id="func-lama2parser-integerrule3">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/master/parser/numbers.go#L156">IntegerRule3</a><a class="headerlink" href="#func-lama2parser-integerrule3" title="Permanent link">&para;</a></h3>
+<p><a name="Lama2Parser.IntegerRule3"></a></p>
+<h3 id="func-lama2parser-integerrule3">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/numbers.go#L156">IntegerRule3</a><a class="headerlink" href="#func-lama2parser-integerrule3" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">IntegerRule3</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
 <p>IntegerRule3 starts with a mandatory Sign, and follows with IntegerRule1 (Digit)</p>
-<h3 id="func-lama2parser-integerrule4">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/master/parser/numbers.go#L187">IntegerRule4</a><a class="headerlink" href="#func-lama2parser-integerrule4" title="Permanent link">&para;</a></h3>
+<p><a name="Lama2Parser.IntegerRule4"></a></p>
+<h3 id="func-lama2parser-integerrule4">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/numbers.go#L187">IntegerRule4</a><a class="headerlink" href="#func-lama2parser-integerrule4" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">IntegerRule4</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
 <p>IntegerRule4 starts with a mandatory Sign, and follows with IntegerRule2</p>
-<h3 id="func-lama2parser-lama2file">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/master/parser/lama2parser.go#L40">Lama2File</a><a class="headerlink" href="#func-lama2parser-lama2file" title="Permanent link">&para;</a></h3>
+<p><a name="Lama2Parser.Lama2File"></a></p>
+<h3 id="func-lama2parser-lama2file">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/lama2parser.go#L40">Lama2File</a><a class="headerlink" href="#func-lama2parser-lama2file" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">Lama2File</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
-<h3 id="func-lama2parser-list">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/master/parser/jsonparser.go#L68">List</a><a class="headerlink" href="#func-lama2parser-list" title="Permanent link">&para;</a></h3>
+<p><a name="Lama2Parser.List"></a></p>
+<h3 id="func-lama2parser-list">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/jsonparser.go#L69">List</a><a class="headerlink" href="#func-lama2parser-list" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">List</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
 <p>List is a slightly lenient version of standard JSON list. In Lama2 List, it is OK to have a trailing comma after the last element (whereas in strict JSON, it is not OK to have trailing comma)</p>
-<h3 id="func-lama2parser-map">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/master/parser/jsonparser.go#L36">Map</a><a class="headerlink" href="#func-lama2parser-map" title="Permanent link">&para;</a></h3>
+<p><a name="Lama2Parser.Map"></a></p>
+<h3 id="func-lama2parser-map">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/jsonparser.go#L37">Map</a><a class="headerlink" href="#func-lama2parser-map" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">Map</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
 <p>Map is a slightly lenient version of standard JSON map. In Lama2 Map, it is OK to have a trailing comma after the last element (whereas in strict JSON, it is not OK to have trailing comma)</p>
-<h3 id="func-lama2parser-multipart">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/master/parser/lama2parser.go#L230">Multipart</a><a class="headerlink" href="#func-lama2parser-multipart" title="Permanent link">&para;</a></h3>
+<p><a name="Lama2Parser.Multipart"></a></p>
+<h3 id="func-lama2parser-multipart">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/lama2parser.go#L229">Multipart</a><a class="headerlink" href="#func-lama2parser-multipart" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">Multipart</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
-<h3 id="func-lama2parser-null">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/master/parser/jsonparser.go#L141">Null</a><a class="headerlink" href="#func-lama2parser-null" title="Permanent link">&para;</a></h3>
+<p><a name="Lama2Parser.Null"></a></p>
+<h3 id="func-lama2parser-null">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/jsonparser.go#L142">Null</a><a class="headerlink" href="#func-lama2parser-null" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">Null</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
-<h3 id="func-lama2parser-number">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/master/parser/numbers.go#L16">Number</a><a class="headerlink" href="#func-lama2parser-number" title="Permanent link">&para;</a></h3>
+<p><a name="Lama2Parser.Number"></a></p>
+<h3 id="func-lama2parser-number">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/numbers.go#L16">Number</a><a class="headerlink" href="#func-lama2parser-number" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">Number</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
 <p>A Number consists of a mandatory integer part, and optional Fraction and Exponent parts. The Number method "collects" these three elements, converts them into a json.Number() type, and finally returns the Number wrapped within a gabs Container</p>
-<h3 id="func-lama2parser-onenine">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/master/parser/numbers.go#L248">OneNine</a><a class="headerlink" href="#func-lama2parser-onenine" title="Permanent link">&para;</a></h3>
+<p><a name="Lama2Parser.OneNine"></a></p>
+<h3 id="func-lama2parser-onenine">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/numbers.go#L248">OneNine</a><a class="headerlink" href="#func-lama2parser-onenine" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">OneNine</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
-<h3 id="func-lama2parser-pair">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/master/parser/jsonparser.go#L104">Pair</a><a class="headerlink" href="#func-lama2parser-pair" title="Permanent link">&para;</a></h3>
+<p><a name="Lama2Parser.Pair"></a></p>
+<h3 id="func-lama2parser-pair">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/jsonparser.go#L105">Pair</a><a class="headerlink" href="#func-lama2parser-pair" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">Pair</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
-<h3 id="func-lama2parser-primitivetype">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/master/parser/jsonparser.go#L21">PrimitiveType</a><a class="headerlink" href="#func-lama2parser-primitivetype" title="Permanent link">&para;</a></h3>
+<p><a name="Lama2Parser.PrimitiveType"></a></p>
+<h3 id="func-lama2parser-primitivetype">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/jsonparser.go#L21">PrimitiveType</a><a class="headerlink" href="#func-lama2parser-primitivetype" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">PrimitiveType</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
-<h3 id="func-lama2parser-processor">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/master/parser/lama2parser.go#L112">Processor</a><a class="headerlink" href="#func-lama2parser-processor" title="Permanent link">&para;</a></h3>
+<p><a name="Lama2Parser.Processor"></a></p>
+<h3 id="func-lama2parser-processor">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/lama2parser.go#L111">Processor</a><a class="headerlink" href="#func-lama2parser-processor" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">Processor</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
-<h3 id="func-lama2parser-quotedstring">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/master/parser/lama_strings.go#L31">QuotedString</a><a class="headerlink" href="#func-lama2parser-quotedstring" title="Permanent link">&para;</a></h3>
+<p><a name="Lama2Parser.QuotedString"></a></p>
+<h3 id="func-lama2parser-quotedstring">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/lama_strings.go#L31">QuotedString</a><a class="headerlink" href="#func-lama2parser-quotedstring" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">QuotedString</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
 <p>QuotedString accepts both single-quoted and double-quoted types of strings. Moreover, it can deal with unicode escape characters, control characters appropriately Ultimately, we get a string wrapped in a gabs container</p>
-<h3 id="func-lama2parser-requester">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/master/parser/lama2parser.go#L142">Requester</a><a class="headerlink" href="#func-lama2parser-requester" title="Permanent link">&para;</a></h3>
+<p><a name="Lama2Parser.Requester"></a></p>
+<h3 id="func-lama2parser-requester">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/lama2parser.go#L141">Requester</a><a class="headerlink" href="#func-lama2parser-requester" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">Requester</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
 <p>Requester applies the rule: HTTPVerb Multipart? TheURL Details?</p>
-<h3 id="func-lama2parser-separator">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/master/parser/lama2parser.go#L129">Separator</a><a class="headerlink" href="#func-lama2parser-separator" title="Permanent link">&para;</a></h3>
+<p><a name="Lama2Parser.Separator"></a></p>
+<h3 id="func-lama2parser-separator">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/lama2parser.go#L128">Separator</a><a class="headerlink" href="#func-lama2parser-separator" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">Separator</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
-<h3 id="func-lama2parser-sign">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/master/parser/numbers.go#L258">Sign</a><a class="headerlink" href="#func-lama2parser-sign" title="Permanent link">&para;</a></h3>
+<p><a name="Lama2Parser.Sign"></a></p>
+<h3 id="func-lama2parser-sign">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/numbers.go#L258">Sign</a><a class="headerlink" href="#func-lama2parser-sign" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">Sign</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
-<h3 id="func-lama2parser-start">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/master/parser/lama2parser.go#L28">Start</a><a class="headerlink" href="#func-lama2parser-start" title="Permanent link">&para;</a></h3>
+<p><a name="Lama2Parser.Start"></a></p>
+<h3 id="func-lama2parser-start">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/lama2parser.go#L28">Start</a><a class="headerlink" href="#func-lama2parser-start" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">Start</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
 <p>Start primarily calls the Lama2File method</p>
-<h3 id="func-lama2parser-theurl">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/master/parser/lama2parser.go#L171">TheURL</a><a class="headerlink" href="#func-lama2parser-theurl" title="Permanent link">&para;</a></h3>
+<p><a name="Lama2Parser.TheURL"></a></p>
+<h3 id="func-lama2parser-theurl">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/lama2parser.go#L170">TheURL</a><a class="headerlink" href="#func-lama2parser-theurl" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">TheURL</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
-<h3 id="func-lama2parser-unquoted">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/master/parser/lama_strings.go#L114">Unquoted</a><a class="headerlink" href="#func-lama2parser-unquoted" title="Permanent link">&para;</a></h3>
+<p><a name="Lama2Parser.Unquoted"></a></p>
+<h3 id="func-lama2parser-unquoted">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/lama_strings.go#L114">Unquoted</a><a class="headerlink" href="#func-lama2parser-unquoted" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">Unquoted</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
-<h3 id="func-lama2parser-varjson">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/master/parser/varjson.go#L19">VarJSON</a><a class="headerlink" href="#func-lama2parser-varjson" title="Permanent link">&para;</a></h3>
+<p><a name="Lama2Parser.VarJSON"></a></p>
+<h3 id="func-lama2parser-varjson">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/varjson.go#L19">VarJSON</a><a class="headerlink" href="#func-lama2parser-varjson" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">VarJSON</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
 <p>Method VarJSON behaves in two ways depending on whether `multipart` is true or not. If there is no multipart, then VarJSON tries to match one or more VarJSONPairs However, if there is multipart, we try to match zero or more VarJSON, followed by zero or more file fields (separated by `@`). If there is no match at all, we return a ParseError; otherwise the we return the parsed data.</p>
-<h3 id="func-lama2parser-varjsonpair">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/master/parser/varjson.go#L64">VarJSONPair</a><a class="headerlink" href="#func-lama2parser-varjsonpair" title="Permanent link">&para;</a></h3>
+<p><a name="Lama2Parser.VarJSONPair"></a></p>
+<h3 id="func-lama2parser-varjsonpair">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/varjson.go#L64">VarJSONPair</a><a class="headerlink" href="#func-lama2parser-varjsonpair" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">VarJSONPair</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
 <p>VarJSONPair tries to match key and value separated by `=`. The key and value can either be a quoted string, or an unquoted VarJSON unquoted string. If there is no match for either, a ParseError is returned.</p>
-<h3 id="func-lama2parser-varjsonunquoted">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/master/parser/varjson.go#L128">VarJSONUnquoted</a><a class="headerlink" href="#func-lama2parser-varjsonunquoted" title="Permanent link">&para;</a></h3>
+<p><a name="Lama2Parser.VarJSONUnquoted"></a></p>
+<h3 id="func-lama2parser-varjsonunquoted">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/varjson.go#L128">VarJSONUnquoted</a><a class="headerlink" href="#func-lama2parser-varjsonunquoted" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">VarJSONUnquoted</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
 <p>VarJSONUnquoted matches a string of characters other than `=` and returns them as a String</p>
-<h2 id="type-minimalparser">type <a href="https://github.com/HexmosTech/Lama2/blob/master/parser/parser.go#L27-L29">MinimalParser</a><a class="headerlink" href="#type-minimalparser" title="Permanent link">&para;</a></h2>
+<p><a name="MinimalParser"></a></p>
+<h2 id="type-minimalparser">type <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/parser.go#L27-L29">MinimalParser</a><a class="headerlink" href="#type-minimalparser" title="Permanent link">&para;</a></h2>
 <p>MinimalParser enforces concrete Types to have a Start() method, from which parsing process begins. In the present case, `Lama2Parser` adds up dozens of of methods to implement `.l2` syntax</p>
 <div class="highlight"><pre><span></span><code><span class="kd">type</span><span class="w"> </span><span class="nx">MinimalParser</span><span class="w"> </span><span class="kd">interface</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="nx">Start</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 <span class="p">}</span>
 </code></pre></div>
-<h2 id="type-parser">type <a href="https://github.com/HexmosTech/Lama2/blob/master/parser/parser.go#L46-L54">Parser</a><a class="headerlink" href="#type-parser" title="Permanent link">&para;</a></h2>
+<p><a name="Parser"></a></p>
+<h2 id="type-parser">type <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/parser.go#L46-L54">Parser</a><a class="headerlink" href="#type-parser" title="Permanent link">&para;</a></h2>
 <p>Struct Parser stores information about the parsing process throughout. 1. Text: Incoming text is stored as an array of runes, to correctly handle unicode characters 2. Pos: Indicates the index position in Text which has already been scanned; starts with -1 3. TotalLen: Number of runes in the input 4. Pm: Composing an external MinimalParser (such as Lama2Parser) which builds upon Parser to provide the new language recognition capabilities 5. ruleMethodMap: Scans through Pm, and creates a mapping from method name to method value through reflection 6. LineNum: Number of normalized newlines found till now. Used in providing useful context in error messages</p>
 <div class="highlight"><pre><span></span><code><span class="kd">type</span><span class="w"> </span><span class="nx">Parser</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="nx">Text</span><span class="w">     </span><span class="p">[]</span><span class="kt">rune</span>
@@ -1371,43 +1419,54 @@
 <span class="w">    </span><span class="c1">// contains filtered or unexported fields</span>
 <span class="p">}</span>
 </code></pre></div>
-<h3 id="func-parser-char">func (*Parser) <a href="https://github.com/HexmosTech/Lama2/blob/master/parser/char_handle.go#L10">Char</a><a class="headerlink" href="#func-parser-char" title="Permanent link">&para;</a></h3>
+<p><a name="Parser.Char"></a></p>
+<h3 id="func-parser-char">func (*Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/char_handle.go#L10">Char</a><a class="headerlink" href="#func-parser-char" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">Char</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="kt">rune</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
-<h3 id="func-parser-charclass">func (*Parser) <a href="https://github.com/HexmosTech/Lama2/blob/master/parser/char_handle.go#L28">CharClass</a><a class="headerlink" href="#func-parser-charclass" title="Permanent link">&para;</a></h3>
+<p><a name="Parser.CharClass"></a></p>
+<h3 id="func-parser-charclass">func (*Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/char_handle.go#L28">CharClass</a><a class="headerlink" href="#func-parser-charclass" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">CharClass</span><span class="p">(</span><span class="nx">charClass</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="kt">rune</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
 <p>CharClass implements the familiar regex syntax for specifying ranges of characters that are deemed acceptable. A good description of CharClass is available here: Read the section "Processing Character Ranges" at https://www.booleanworld.com/building-recursive-descent-parsers-definitive-guide/</p>
-<h3 id="func-parser-init">func (*Parser) <a href="https://github.com/HexmosTech/Lama2/blob/master/parser/parser.go#L68">Init</a><a class="headerlink" href="#func-parser-init" title="Permanent link">&para;</a></h3>
+<p><a name="Parser.Init"></a></p>
+<h3 id="func-parser-init">func (*Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/parser.go#L68">Init</a><a class="headerlink" href="#func-parser-init" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">Init</span><span class="p">()</span>
 </code></pre></div>
 <p>Method Init creates the most important data stucture for parsing: ruleMethodMap. We use reflection to create a mapping of each Pm.\&lt;method_name> to \&lt;method_value></p>
-<h3 id="func-parser-keyword">func (*Parser) <a href="https://github.com/HexmosTech/Lama2/blob/master/parser/keyword.go#L13">Keyword</a><a class="headerlink" href="#func-parser-keyword" title="Permanent link">&para;</a></h3>
+<p><a name="Parser.Keyword"></a></p>
+<h3 id="func-parser-keyword">func (*Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/keyword.go#L13">Keyword</a><a class="headerlink" href="#func-parser-keyword" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">Keyword</span><span class="p">(</span><span class="nx">kw</span><span class="w"> </span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="nx">eatWsStart</span><span class="w"> </span><span class="kt">bool</span><span class="p">,</span><span class="w"> </span><span class="nx">eatWsEnd</span><span class="w"> </span><span class="kt">bool</span><span class="p">,</span><span class="w"> </span><span class="nx">caseInsensitive</span><span class="w"> </span><span class="kt">bool</span><span class="p">)</span><span class="w"> </span><span class="p">([]</span><span class="kt">rune</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
 <p>Method Keyword is a versatile; it can eat whitespace before/after the expected string, and it can do an optionally case insensitive match for the keyword</p>
-<h3 id="func-parser-lookahead">func (*Parser) <a href="https://github.com/HexmosTech/Lama2/blob/master/parser/match.go#L68">LookAhead</a><a class="headerlink" href="#func-parser-lookahead" title="Permanent link">&para;</a></h3>
+<p><a name="Parser.LookAhead"></a></p>
+<h3 id="func-parser-lookahead">func (*Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/match.go#L68">LookAhead</a><a class="headerlink" href="#func-parser-lookahead" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">LookAhead</span><span class="p">(</span><span class="nx">rules</span><span class="w"> </span><span class="p">[]</span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="kt">bool</span>
 </code></pre></div>
-<h3 id="func-parser-match">func (*Parser) <a href="https://github.com/HexmosTech/Lama2/blob/master/parser/match.go#L25">Match</a><a class="headerlink" href="#func-parser-match" title="Permanent link">&para;</a></h3>
+<p><a name="Parser.Match"></a></p>
+<h3 id="func-parser-match">func (*Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/match.go#L25">Match</a><a class="headerlink" href="#func-parser-match" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">Match</span><span class="p">(</span><span class="nx">rules</span><span class="w"> </span><span class="p">[]</span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
 <p>Method Match is the most important of all in the parser package. Match takes in a slice of rules (essentially method names), and then executes them one by one. On successful match, we return a gabs Container with `error` set to `nil` When a rule fails to match, we reset the scan position to initial position; moreover, we keep a continuous track of the farthest/longest match till present. The farthest match error is potentially the most useful error message to the user; thus, for error report, Match returns the farthest matching error</p>
-<h3 id="func-parser-matchuntil">func (*Parser) <a href="https://github.com/HexmosTech/Lama2/blob/master/parser/match.go#L89">MatchUntil</a><a class="headerlink" href="#func-parser-matchuntil" title="Permanent link">&para;</a></h3>
+<p><a name="Parser.MatchUntil"></a></p>
+<h3 id="func-parser-matchuntil">func (*Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/match.go#L89">MatchUntil</a><a class="headerlink" href="#func-parser-matchuntil" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">MatchUntil</span><span class="p">(</span><span class="nx">end</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
-<h3 id="func-parser-parse">func (*Parser) <a href="https://github.com/HexmosTech/Lama2/blob/master/parser/parser.go#L83">Parse</a><a class="headerlink" href="#func-parser-parse" title="Permanent link">&para;</a></h3>
+<p><a name="Parser.Parse"></a></p>
+<h3 id="func-parser-parse">func (*Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/parser.go#L83">Parse</a><a class="headerlink" href="#func-parser-parse" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">Parse</span><span class="p">(</span><span class="nx">text</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
 <p>Method Parse normalizes newlines and then creates a rune version of the input data. The Start() method proceeds to process the rune version of data</p>
-<h3 id="func-parser-settext">func (*Parser) <a href="https://github.com/HexmosTech/Lama2/blob/master/parser/parser.go#L126">SetText</a><a class="headerlink" href="#func-parser-settext" title="Permanent link">&para;</a></h3>
+<p><a name="Parser.SetText"></a></p>
+<h3 id="func-parser-settext">func (*Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/parser.go#L126">SetText</a><a class="headerlink" href="#func-parser-settext" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">SetText</span><span class="p">(</span><span class="nx">text</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span>
 </code></pre></div>
 <p>Method SetText is a utility used primarily in testing, when we don't want to call Start() automatically as in Parse</p>
-<h3 id="func-parser-splitcharranges">func (*Parser) <a href="https://github.com/HexmosTech/Lama2/blob/master/parser/char_handle.go#L62">SplitCharRanges</a><a class="headerlink" href="#func-parser-splitcharranges" title="Permanent link">&para;</a></h3>
+<p><a name="Parser.SplitCharRanges"></a></p>
+<h3 id="func-parser-splitcharranges">func (*Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/char_handle.go#L62">SplitCharRanges</a><a class="headerlink" href="#func-parser-splitcharranges" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">SplitCharRanges</span><span class="p">(</span><span class="nx">charClass</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="p">([]</span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
-<h3 id="func-parser-start">func (*Parser) <a href="https://github.com/HexmosTech/Lama2/blob/master/parser/parser.go#L60">Start</a><a class="headerlink" href="#func-parser-start" title="Permanent link">&para;</a></h3>
+<p><a name="Parser.Start"></a></p>
+<h3 id="func-parser-start">func (*Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/parser.go#L60">Start</a><a class="headerlink" href="#func-parser-start" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">Start</span><span class="p">()</span><span class="w"> </span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span>
 </code></pre></div>
 <p>Start() in Parser provides a dummy default implementation; the expectation is that the higher level Struct (Pm) will implement its own version</p>
