@@ -975,16 +975,22 @@ These variables will be available to be used within the API file</p>
 <div class="highlight"><pre><span></span><code>export LOCAL=&quot;http://localhost:8000&quot;
 export REMOTE=&quot;http://httpbin.org&quot;
 </code></pre></div>
+<p><img alt="l2.env at API level" src="l2env.png" /></p>
+<p>Get <a href="https://github.com/HexmosTech/Lama2/tree/main/examples/0023_l2env_declare">Source File</a></p>
 <h3 id="case-2-root-variables">Case 2: Root variables<a class="headerlink" href="#case-2-root-variables" title="Permanent link">&para;</a></h3>
 <p>In Lama2, you can have a large number of API files stored in a hierarchical folder configuration.
 The root of such a project can be signified through <code>l2config.env</code>:</p>
 <p>Within such a structure, you can have an API file anywhere, which can use variables defined in the root variables:
 <strong>l2config.env</strong></p>
-<div class="highlight"><pre><span></span><code>export LOCAL=&quot;http://localhost:8000&quot;
+<p><div class="highlight"><pre><span></span><code>export LOCAL=&quot;http://localhost:8000&quot;
 export REMOTE=&quot;http://httpbin.org&quot;
 </code></pre></div>
+<img alt="l2config.env at Project root level" src="l2configAtRoot.png" /></p>
+<p>Get <a href="https://github.com/HexmosTech/Lama2/tree/main/examples/0022_l2config_declare">Source File</a></p>
 <h3 id="case-3-override-root-variable-with-local-variable">Case 3: Override Root variable with local variable<a class="headerlink" href="#case-3-override-root-variable-with-local-variable" title="Permanent link">&para;</a></h3>
+<p>In this structure, if a variable is declared in both l2config.env and l2.env, the value from l2.env takes precedence.</p>
 <p><img alt="Override of l2config.env with l2.env variable" src="l2envOverideL2config.png" /></p>
+<p>Get <a href="https://github.com/HexmosTech/Lama2/tree/main/examples/0020_override_project_root_local">Source File</a></p>
 <h2 id="headers">Headers<a class="headerlink" href="#headers" title="Permanent link">&para;</a></h2>
 <p>Use <code>key:value</code> format to specify headers.</p>
 <p>Specify strings for key/value in three ways:</p>
