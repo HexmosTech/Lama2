@@ -25,8 +25,9 @@ func (p *Lama2Parser) PrimitiveType() (*gabs.Container, error) {
 
 // CustomPairMerge uses a gabs feature to deal with merge conflicts.
 // More here: https://github.com/HexmosTech/gabs/blob/master/gabs.go#L511
+//
 //nolint:all
-func CustomPairMerge(destination, source interface{}) interface{} { 
+func CustomPairMerge(destination, source interface{}) interface{} {
 	return source
 }
 
