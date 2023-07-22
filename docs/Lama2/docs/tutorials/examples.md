@@ -85,6 +85,10 @@ export LOCAL="http://localhost:8000"
 export REMOTE="http://httpbin.org"
 ```
 
+![l2.env at API level](l2env.png)
+
+Get [Source File](https://github.com/HexmosTech/Lama2/tree/main/examples/0023_l2env_declare)
+
 ### Case 2: Root variables
 
 In Lama2, you can have a large number of API files stored in a hierarchical folder configuration.
@@ -97,10 +101,16 @@ Within such a structure, you can have an API file anywhere, which can use variab
 export LOCAL="http://localhost:8000"
 export REMOTE="http://httpbin.org"
 ```
+![l2config.env at Project root level](l2configAtRoot.png)
+
+Get [Source File](https://github.com/HexmosTech/Lama2/tree/main/examples/0022_l2config_declare)
 
 ### Case 3: Override Root variable with local variable
 
+In this structure, if a variable is declared in both l2config.env and l2.env, the value from l2.env takes precedence.
 ![Override of l2config.env with l2.env variable](l2envOverideL2config.png)
+
+Get [Source File](https://github.com/HexmosTech/Lama2/tree/main/examples/0020_override_project_root_local)
 
 ## Headers
 
