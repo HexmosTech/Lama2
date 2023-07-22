@@ -138,7 +138,7 @@ Get [Source File](https://github.com/HexmosTech/Lama2/tree/main/examples/0022_l2
 
 The local variable's value is taken into consideration regardless of both files residing in same directory
 
-![l2config.env at Project root level](l2configAtRoot.png)
+![l2config.env at Project root level](l2envOverideL2config.png)
 
 Get [Source File](https://github.com/HexmosTech/Lama2/tree/main/examples/0020_override_project_root_local)
 
