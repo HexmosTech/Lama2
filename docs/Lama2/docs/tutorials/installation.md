@@ -90,6 +90,7 @@ Application Options:
   -o, --output=      Path to output JSON file to store logs, headers and result
   -v, --verbose      Show verbose debug information
   -n, --nocolor      Disable color in httpie output
+  -e  --env          Get a JSON of environment variables
   -h, --help         Usage help for Lama2
       --version      Print Lama2 binary version
 
