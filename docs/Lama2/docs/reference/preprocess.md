@@ -70,7 +70,7 @@ func ExpandURL(block *gabs.Container, vm *goja.Runtime)
 
 
 <a name="GetL2EnvVariables"></a>
-## func [GetL2EnvVariables](<https://github.com/HexmosTech/Lama2/blob/main/preprocess/preprocess.go#L170>)
+## func [GetL2EnvVariables](<https://github.com/HexmosTech/Lama2/blob/main/preprocess/preprocess.go#L169>)
 
 ```go
 func GetL2EnvVariables(dir string) ([]byte, error)
@@ -79,7 +79,7 @@ func GetL2EnvVariables(dir string) ([]byte, error)
 
 
 <a name="GetLamaFileAsString"></a>
-## func [GetLamaFileAsString](<https://github.com/HexmosTech/Lama2/blob/main/preprocess/preprocess.go#L201>)
+## func [GetLamaFileAsString](<https://github.com/HexmosTech/Lama2/blob/main/preprocess/preprocess.go#L200>)
 
 ```go
 func GetLamaFileAsString(path string) string
@@ -88,7 +88,7 @@ func GetLamaFileAsString(path string) string
 
 
 <a name="LamaFile"></a>
-## func [LamaFile](<https://github.com/HexmosTech/Lama2/blob/main/preprocess/preprocess.go#L215>)
+## func [LamaFile](<https://github.com/HexmosTech/Lama2/blob/main/preprocess/preprocess.go#L214>)
 
 ```go
 func LamaFile(inputFile string) (string, string)
