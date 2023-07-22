@@ -12,7 +12,7 @@
         <link rel="canonical" href="http://hexmos.com/lama2/tutorials/examples.html">
       
       <link rel="icon" href="../favicon.ico">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-8.5.10">
     
 
 <meta name="description" content="Hexmos Lama2: Plain-Text Powered REST API Client for Teams">
@@ -405,6 +405,33 @@
   <a href="#environment-variables-switch-base-url" class="md-nav__link">
     Environment Variables: Switch base URL
   </a>
+  
+    <nav class="md-nav" aria-label="Environment Variables: Switch base URL">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#case-1-l2env-adjacent-to-an-api-file" class="md-nav__link">
+    Case 1: l2.env adjacent to an API file
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#case-2-root-variables" class="md-nav__link">
+    Case 2: Root variables
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#case-3-override-root-variable-with-local-variable" class="md-nav__link">
+    Case 3: Override Root variable with local variable
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -807,6 +834,33 @@
     Environment Variables: Switch base URL
   </a>
   
+    <nav class="md-nav" aria-label="Environment Variables: Switch base URL">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#case-1-l2env-adjacent-to-an-api-file" class="md-nav__link">
+    Case 1: l2.env adjacent to an API file
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#case-2-root-variables" class="md-nav__link">
+    Case 2: Root variables
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#case-3-override-root-variable-with-local-variable" class="md-nav__link">
+    Case 3: Override Root variable with local variable
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -874,13 +928,13 @@ presently. Execute each file as:</p>
 VSCode, install the <em>Lama2</em> extension and fire
 requests from there.</p>
 <h2 id="get-request">GET request<a class="headerlink" href="#get-request" title="Permanent link">&para;</a></h2>
-<p><div class="highlight"><pre><span></span><code>GET
+<div class="highlight"><pre><span></span><code>GET
 https://httpbin.org/get
 </code></pre></div>
-Get <a href="https://github.com/HexmosTech/Lama2/tree/main/examples/0000_sample_get.l2">Source File</a></p>
+<p>Get <a href="https://github.com/HexmosTech/Lama2/tree/main/examples/0000_sample_get.l2">Source File</a></p>
 <h2 id="json-post-request">JSON POST request<a class="headerlink" href="#json-post-request" title="Permanent link">&para;</a></h2>
 <p>One can dump the JSON body at the end of an <code>.l2</code> file to create a POST request:</p>
-<p><div class="highlight"><pre><span></span><code>POST
+<div class="highlight"><pre><span></span><code>POST
 https://httpbin.org/post
 
 {
@@ -888,22 +942,22 @@ https://httpbin.org/post
     &quot;c&quot;: &quot;d&quot;
 }
 </code></pre></div>
-Get <a href="https://github.com/HexmosTech/Lama2/tree/main/examples/0002_sample_post.l2">Source File</a></p>
+<p>Get <a href="https://github.com/HexmosTech/Lama2/tree/main/examples/0002_sample_post.l2">Source File</a></p>
 <h2 id="json-post-in-varjson-format">JSON POST in VarJSON format<a class="headerlink" href="#json-post-in-varjson-format" title="Permanent link">&para;</a></h2>
 <p>Make a POST request with JSON body specified
 as <code>key=value</code>. <em>Lama2</em> converts the input into
 a corresponding JSON value <code>{"a": "b", "c": "d"}</code>. We call the <code>key=value</code> format <em>VarJSON</em>. This example produces an effect identical to the <a href="#basic-json-post">previous one</a></p>
-<p><div class="highlight"><pre><span></span><code>POST
+<div class="highlight"><pre><span></span><code>POST
 https://httpbin.org/post
 
 a=b
 c=d
 </code></pre></div>
-Get <a href="https://github.com/HexmosTech/Lama2/tree/main/examples/0001_sample_post_varjson.l2">Source File</a></p>
+<p>Get <a href="https://github.com/HexmosTech/Lama2/tree/main/examples/0001_sample_post_varjson.l2">Source File</a></p>
 <h2 id="comments">Comments<a class="headerlink" href="#comments" title="Permanent link">&para;</a></h2>
 <p>One can start a comment anywhere in the file
 with the <code>#</code> character.</p>
-<p><div class="highlight"><pre><span></span><code># Pound symbol signifies a comment
+<div class="highlight"><pre><span></span><code># Pound symbol signifies a comment
 POST
 https://httpbin.org/post
 
@@ -912,23 +966,25 @@ c=d
 
 # Comments work even after the payload
 </code></pre></div>
-Get <a href="https://github.com/HexmosTech/Lama2/tree/main/examples/0003_comment.l2">Source File</a></p>
+<p>Get <a href="https://github.com/HexmosTech/Lama2/tree/main/examples/0003_comment.l2">Source File</a></p>
 <h2 id="environment-variables-switch-base-url">Environment Variables: Switch base URL<a class="headerlink" href="#environment-variables-switch-base-url" title="Permanent link">&para;</a></h2>
-<p>Specify variables in <code>l2.env</code> and then load
-them up in the API files. Presently, <strong>the <code>l2.env</code> file should reside in the same directory as the <code>.l2</code> API file.</strong></p>
+<h3 id="case-1-l2env-adjacent-to-an-api-file">Case 1: <code>l2.env</code> adjacent to an API file<a class="headerlink" href="#case-1-l2env-adjacent-to-an-api-file" title="Permanent link">&para;</a></h3>
+<p>For any given <code>.l2</code> file, one can place an <code>l2.env</code> file to store relevant variables.
+These variables will be available to be used within the API file</p>
 <p><strong>l2.env</strong></p>
 <div class="highlight"><pre><span></span><code>export LOCAL=&quot;http://localhost:8000&quot;
 export REMOTE=&quot;http://httpbin.org&quot;
 </code></pre></div>
-<p><strong>env_example.l2</strong>
-<div class="highlight"><pre><span></span><code>POST
-${REMOTE}/post
-
-{
-    &quot;lorem&quot;: &quot;ipsum&quot;
-}
-</code></pre></div></p>
-<p>Get <a href="https://github.com/HexmosTech/Lama2/tree/main/examples/0004_env_switch_root">Source Files</a></p>
+<h3 id="case-2-root-variables">Case 2: Root variables<a class="headerlink" href="#case-2-root-variables" title="Permanent link">&para;</a></h3>
+<p>In Lama2, you can have a large number of API files stored in a hierarchical folder configuration.
+The root of such a project can be signified through <code>l2config.env</code>:</p>
+<p>Within such a structure, you can have an API file anywhere, which can use variables defined in the root variables:
+<strong>l2config.env</strong></p>
+<div class="highlight"><pre><span></span><code>export LOCAL=&quot;http://localhost:8000&quot;
+export REMOTE=&quot;http://httpbin.org&quot;
+</code></pre></div>
+<h3 id="case-3-override-root-variable-with-local-variable">Case 3: Override Root variable with local variable<a class="headerlink" href="#case-3-override-root-variable-with-local-variable" title="Permanent link">&para;</a></h3>
+<p><img alt="Override of l2config.env with l2.env variable" src="l2envOverideL2config.png" /></p>
 <h2 id="headers">Headers<a class="headerlink" href="#headers" title="Permanent link">&para;</a></h2>
 <p>Use <code>key:value</code> format to specify headers.</p>
 <p>Specify strings for key/value in three ways:</p>
@@ -937,7 +993,7 @@ ${REMOTE}/post
 <li>Single quoted (<code>'hello'</code>)</li>
 <li>Unquoted (<code>hello</code>)</li>
 </ol>
-<div class="highlight"><pre><span></span><code>POST 
+<div class="highlight"><pre><span></span><code>POST
 https://httpbin.org/post
 
 # HEADERS
@@ -953,7 +1009,7 @@ a=&quot;b&quot;  # double-quoted string
 <p class="admonition-title">Note</p>
 <p>The data section may appear <em>before</em> headers as well (see below)</p>
 </div>
-<div class="highlight"><pre><span></span><code>POST 
+<div class="highlight"><pre><span></span><code>POST
 https://httpbin.org/post
 
 
@@ -967,8 +1023,8 @@ X-Parse-REST-API-Key:&quot;byeworld&quot;
 </code></pre></div>
 <h2 id="send-cookies-in-header">Send cookies in header<a class="headerlink" href="#send-cookies-in-header" title="Permanent link">&para;</a></h2>
 <p>Headers represent cookies in <em>Lama2</em>. Just specify cookie key value pairs separated by
-<code>=</code> within the header value as shown.
-<div class="highlight"><pre><span></span><code>POST 
+<code>=</code> within the header value as shown.</p>
+<div class="highlight"><pre><span></span><code>POST
 https://httpbin.org/post
 
 # HEADERS
@@ -977,20 +1033,20 @@ Cookie:&quot;sessionid=foo;another-cookie=bar&quot;
 # DATA
 hello=world
 </code></pre></div>
-Get <a href="https://github.com/HexmosTech/Lama2/tree/main/examples/0006_cookies.l2">Source File</a></p>
+<p>Get <a href="https://github.com/HexmosTech/Lama2/tree/main/examples/0006_cookies.l2">Source File</a></p>
 <h2 id="fill-forms-attach-files-with-multipart">Fill forms &amp; attach files with MULTIPART<a class="headerlink" href="#fill-forms-attach-files-with-multipart" title="Permanent link">&para;</a></h2>
 <p>Use the <code>MULTIPART</code> keyword after the HTTP
 verb to enable forms and file attachments.</p>
-<p>The data section may contain any number of 
+<p>The data section may contain any number of
 form inputs using the <code>key=value</code> syntax.</p>
 <p>Following the data section, one can specify
 any number of files in the form of <code>&lt;field_name&gt;@&lt;file_path&gt;</code>. The file path is
 relative to the API file.</p>
-<p><div class="highlight"><pre><span></span><code>POST
+<div class="highlight"><pre><span></span><code>POST
 MULTIPART
 http://httpbin.org/post
 
-&#39;X-Parse-Application-Id&#39;:hello 
+&#39;X-Parse-Application-Id&#39;:hello
 X-Parse-REST-API-Key:&quot;world&quot;
 
 # DATA
@@ -999,9 +1055,9 @@ first=second
 # FILES
 myfile@./image.jpeg
 </code></pre></div>
-Get <a href="https://github.com/HexmosTech/Lama2/tree/main/examples/0007_multipart_file">Source Files</a></p>
+<p>Get <a href="https://github.com/HexmosTech/Lama2/tree/main/examples/0007_multipart_file">Source Files</a></p>
 <h2 id="image-as-base64-encoded-json-field">Image as Base64 encoded JSON field<a class="headerlink" href="#image-as-base64-encoded-json-field" title="Permanent link">&para;</a></h2>
-<p>We can embed images (or other files) as 
+<p>We can embed images (or other files) as
 base64 strings in JSON using <em>Lama2</em>.</p>
 <p>First, we define a <code>PHOTO</code> variable, loaded
 up with the results of the <code>base64</code> command.</p>
@@ -1010,7 +1066,7 @@ up with the results of the <code>base64</code> command.</p>
 </code></pre></div>
 <p>Next, we refer to the <code>PHOTO</code> variable in
 the API file. Pay special attention to the
-quoting mechanism <code>"'{PHOTO}'"</code>. </p>
+quoting mechanism <code>"'{PHOTO}'"</code>.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p><strong>The quoting
@@ -1018,14 +1074,14 @@ must look exactly as shown in the following
 template for the request to work correctly.</strong></p>
 </div>
 <p><strong>base64_embed.l2</strong></p>
-<p><div class="highlight"><pre><span></span><code>POST
+<div class="highlight"><pre><span></span><code>POST
 http://httpbin.org/post
 
 {
     &quot;imageb64_field&quot;: &quot;&#39;${PHOTO}&#39;&quot;,
 }
 </code></pre></div>
-Get <a href="https://github.com/HexmosTech/Lama2/tree/main/examples/0008_base64_image">Source Files</a></p>
+<p>Get <a href="https://github.com/HexmosTech/Lama2/tree/main/examples/0008_base64_image">Source Files</a></p>
 <h2 id="chain-requests-using-javascript">Chain requests using Javascript<a class="headerlink" href="#chain-requests-using-javascript" title="Permanent link">&para;</a></h2>
 <p>In Lama2, we have alternating requestor and processor (JS) blocks, separated by <code>---</code>.</p>
 <p>Each processor (JS) block has a special variable <code>result</code>, storing the response

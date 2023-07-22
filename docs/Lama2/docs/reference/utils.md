@@ -10,21 +10,22 @@ Package \`utils\` provides useful functions for simplifying various programming 
 
 ## Index
 
-- [func ChangeWorkingDir(dir string)](<#func-changeworkingdir>)
-- [func ContainsRune(s []rune, e rune) bool](<#func-containsrune>)
-- [func ContainsString(s []string, e string) bool](<#func-containsstring>)
-- [func ContainsStringPartial(s []string, e string) bool](<#func-containsstringpartial>)
-- [func GetFilePathComponents(name string) (string, string, string)](<#func-getfilepathcomponents>)
-- [func PrettyPrint(i interface{}) string](<#func-prettyprint>)
-- [func SetJSON(parentObj *gabs.Container, childObj *gabs.Container, key string) *gabs.Container](<#func-setjson>)
-- [func UnicodeCategory(r rune) string](<#func-unicodecategory>)
-- [func UpdateSelf()](<#func-updateself>)
-- [type ParseError](<#type-parseerror>)
-  - [func NewParseError(pos int, line int, msg string, args []string) *ParseError](<#func-newparseerror>)
-  - [func (p ParseError) Error() string](<#func-parseerror-error>)
+- [func ChangeWorkingDir\(dir string\)](<#ChangeWorkingDir>)
+- [func ContainsRune\(s \[\]rune, e rune\) bool](<#ContainsRune>)
+- [func ContainsString\(s \[\]string, e string\) bool](<#ContainsString>)
+- [func ContainsStringPartial\(s \[\]string, e string\) bool](<#ContainsStringPartial>)
+- [func GetFilePathComponents\(name string\) \(string, string, string\)](<#GetFilePathComponents>)
+- [func PrettyPrint\(i interface\{\}\) string](<#PrettyPrint>)
+- [func SetJSON\(parentObj \*gabs.Container, childObj \*gabs.Container, key string\) \*gabs.Container](<#SetJSON>)
+- [func UnicodeCategory\(r rune\) string](<#UnicodeCategory>)
+- [func UpdateSelf\(\)](<#UpdateSelf>)
+- [type ParseError](<#ParseError>)
+  - [func NewParseError\(pos int, line int, msg string, args \[\]string\) \*ParseError](<#NewParseError>)
+  - [func \(p ParseError\) Error\(\) string](<#ParseError.Error>)
 
 
-## func [ChangeWorkingDir](<https://github.com/HexmosTech/Lama2/blob/master/utils/utils.go#L93>)
+<a name="ChangeWorkingDir"></a>
+## func [ChangeWorkingDir](<https://github.com/HexmosTech/Lama2/blob/main/utils/utils.go#L93>)
 
 ```go
 func ChangeWorkingDir(dir string)
@@ -32,7 +33,8 @@ func ChangeWorkingDir(dir string)
 
 ChangeWorkingDirectory tries to set the CWD; on failure it exits with a log error message
 
-## func [ContainsRune](<https://github.com/HexmosTech/Lama2/blob/master/utils/utils.go#L41>)
+<a name="ContainsRune"></a>
+## func [ContainsRune](<https://github.com/HexmosTech/Lama2/blob/main/utils/utils.go#L41>)
 
 ```go
 func ContainsRune(s []rune, e rune) bool
@@ -40,7 +42,8 @@ func ContainsRune(s []rune, e rune) bool
 
 ContainsRune searches for rune \`e\` in a slice of runes \`s\`; returns a boolean
 
-## func [ContainsString](<https://github.com/HexmosTech/Lama2/blob/master/utils/utils.go#L52>)
+<a name="ContainsString"></a>
+## func [ContainsString](<https://github.com/HexmosTech/Lama2/blob/main/utils/utils.go#L52>)
 
 ```go
 func ContainsString(s []string, e string) bool
@@ -48,7 +51,8 @@ func ContainsString(s []string, e string) bool
 
 ContainsString searches for string \`e\` in a slice of strings \`s\`; returns a boolean
 
-## func [ContainsStringPartial](<https://github.com/HexmosTech/Lama2/blob/master/utils/utils.go#L63>)
+<a name="ContainsStringPartial"></a>
+## func [ContainsStringPartial](<https://github.com/HexmosTech/Lama2/blob/main/utils/utils.go#L63>)
 
 ```go
 func ContainsStringPartial(s []string, e string) bool
@@ -56,7 +60,8 @@ func ContainsStringPartial(s []string, e string) bool
 
 ContainsStringPartial substring\-searches for string \`e\` in a slice of strings \`s\`; returns a boolean
 
-## func [GetFilePathComponents](<https://github.com/HexmosTech/Lama2/blob/master/utils/utils.go#L84>)
+<a name="GetFilePathComponents"></a>
+## func [GetFilePathComponents](<https://github.com/HexmosTech/Lama2/blob/main/utils/utils.go#L84>)
 
 ```go
 func GetFilePathComponents(name string) (string, string, string)
@@ -64,7 +69,8 @@ func GetFilePathComponents(name string) (string, string, string)
 
 GetFilePathComponent returns absolute path, directory, and filename given a filepath
 
-## func [PrettyPrint](<https://github.com/HexmosTech/Lama2/blob/master/utils/utils.go#L34>)
+<a name="PrettyPrint"></a>
+## func [PrettyPrint](<https://github.com/HexmosTech/Lama2/blob/main/utils/utils.go#L34>)
 
 ```go
 func PrettyPrint(i interface{}) string
@@ -72,7 +78,8 @@ func PrettyPrint(i interface{}) string
 
 PrettyPrint takes in a generic interface\{\} objects and uses standard JSON capabilities to try to print with indentation
 
-## func [SetJSON](<https://github.com/HexmosTech/Lama2/blob/master/utils/utils.go#L24>)
+<a name="SetJSON"></a>
+## func [SetJSON](<https://github.com/HexmosTech/Lama2/blob/main/utils/utils.go#L24>)
 
 ```go
 func SetJSON(parentObj *gabs.Container, childObj *gabs.Container, key string) *gabs.Container
@@ -80,7 +87,8 @@ func SetJSON(parentObj *gabs.Container, childObj *gabs.Container, key string) *g
 
 SetJSON is a helper function to work with the \`gabs\` library, which in turn is an API on top of the standard JSON library The function helps us create \`parentObj.key = childObj\` through using the \`Merge\` primitive available in \`gabs\`
 
-## func [UnicodeCategory](<https://github.com/HexmosTech/Lama2/blob/master/utils/utils.go#L73>)
+<a name="UnicodeCategory"></a>
+## func [UnicodeCategory](<https://github.com/HexmosTech/Lama2/blob/main/utils/utils.go#L73>)
 
 ```go
 func UnicodeCategory(r rune) string
@@ -88,7 +96,8 @@ func UnicodeCategory(r rune) string
 
 UnicodeCategory returns the Unicode Character Category of the given rune.
 
-## func [UpdateSelf](<https://github.com/HexmosTech/Lama2/blob/master/utils/utils.go#L130>)
+<a name="UpdateSelf"></a>
+## func [UpdateSelf](<https://github.com/HexmosTech/Lama2/blob/main/utils/utils.go#L130>)
 
 ```go
 func UpdateSelf()
@@ -96,7 +105,10 @@ func UpdateSelf()
 
 UpdateSelf downloads the installation script from the official repository, and executes it to update the l2 binary to the latest version
 
-## type [ParseError](<https://github.com/HexmosTech/Lama2/blob/master/utils/errors.go#L5-L10>)
+<a name="ParseError"></a>
+## type [ParseError](<https://github.com/HexmosTech/Lama2/blob/main/utils/errors.go#L5-L10>)
+
+
 
 ```go
 type ParseError struct {
@@ -106,13 +118,17 @@ type ParseError struct {
 }
 ```
 
-### func [NewParseError](<https://github.com/HexmosTech/Lama2/blob/master/utils/errors.go#L12>)
+<a name="NewParseError"></a>
+### func [NewParseError](<https://github.com/HexmosTech/Lama2/blob/main/utils/errors.go#L12>)
 
 ```go
 func NewParseError(pos int, line int, msg string, args []string) *ParseError
 ```
 
-### func \(ParseError\) [Error](<https://github.com/HexmosTech/Lama2/blob/master/utils/errors.go#L20>)
+
+
+<a name="ParseError.Error"></a>
+### func \(ParseError\) [Error](<https://github.com/HexmosTech/Lama2/blob/main/utils/errors.go#L20>)
 
 ```go
 func (p ParseError) Error() string

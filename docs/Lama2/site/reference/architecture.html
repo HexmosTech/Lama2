@@ -12,7 +12,7 @@
         <link rel="canonical" href="http://hexmos.com/lama2/reference/architecture.html">
       
       <link rel="icon" href="../favicon.ico">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-8.5.10">
     
 
 <meta name="description" content="Hexmos Lama2: Plain-Text Powered REST API Client for Teams">
@@ -753,7 +753,7 @@
 graph TD
     K["Controller Entry &lt;br/&gt;(controller)"]
     A["Parse CLI &lt;br/&gt;(lama2cmd)"]
-    B["Parser &lt;br/&gt;(parser)"]   
+    B["Parser &lt;br/&gt;(parser)"] 
     D["Request Executor &lt;br/&gt;(cmdexec)"]
     E["Output Format Manager &lt;br/&gt;(outputmanager)"]
     F["Error Reporting (TODO)"]
@@ -794,9 +794,12 @@ graph TD
 <li>Else if block is Requestor block<ol>
 <li>Replace variables with values in the following order<ol>
 <li>Try fetch variable from Javascript VM</li>
-<li>If (1) fails, try fetch variable from <code>l2.env</code></li>
+<li>If (1) fails, try fetch Local env variable from <code>l2.env</code> </li>
 </ol>
 </li>
+</ol>
+</li>
+<li>Try fetch root env variable from <code>l2config.env</code><ol>
 <li>Use the processed elements to create an httpie-go request</li>
 <li>Fetch response</li>
 </ol>

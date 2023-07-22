@@ -12,7 +12,7 @@
         <link rel="canonical" href="http://hexmos.com/lama2/reference/outputmanager.html">
       
       <link rel="icon" href="../favicon.ico">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-8.5.10">
     
 
 <meta name="description" content="Hexmos Lama2: Plain-Text Powered REST API Client for Teams">
@@ -732,22 +732,25 @@
 <h2 id="index">Index<a class="headerlink" href="#index" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="#variables">Variables</a></li>
-<li><a href="#func-configurezerolog">func ConfigureZeroLog(level string)</a></li>
-<li><a href="#func-responsetojson">func ResponseToJSON(resp httpie.ExResponse) (*gabs.Container, error)</a></li>
-<li><a href="#func-writejsonoutput">func WriteJSONOutput(resp httpie.ExResponse, targetPath string)</a></li>
+<li><a href="#ConfigureZeroLog">func ConfigureZeroLog(level string)</a></li>
+<li><a href="#ResponseToJSON">func ResponseToJSON(resp httpie.ExResponse) (*gabs.Container, error)</a></li>
+<li><a href="#WriteJSONOutput">func WriteJSONOutput(resp httpie.ExResponse, targetPath string)</a></li>
 </ul>
 <h2 id="variables">Variables<a class="headerlink" href="#variables" title="Permanent link">&para;</a></h2>
-<p>LogBuff is used to append various log statements into memory. If the user toggles the `Output (-o)` option, then the contents of LogBuff is pushed into a JSON file</p>
+<p><a name="LogBuff"></a>LogBuff is used to append various log statements into memory. If the user toggles the `Output (-o)` option, then the contents of LogBuff is pushed into a JSON file</p>
 <div class="highlight"><pre><span></span><code><span class="kd">var</span><span class="w"> </span><span class="nx">LogBuff</span><span class="w"> </span><span class="nx">bytes</span><span class="p">.</span><span class="nx">Buffer</span>
 </code></pre></div>
-<h2 id="func-configurezerolog">func <a href="https://github.com/HexmosTech/Lama2/blob/master/outputManager/output_manager.go#L33">ConfigureZeroLog</a><a class="headerlink" href="#func-configurezerolog" title="Permanent link">&para;</a></h2>
+<p><a name="ConfigureZeroLog"></a></p>
+<h2 id="func-configurezerolog">func <a href="https://github.com/HexmosTech/Lama2/blob/main/outputManager/output_manager.go#L33">ConfigureZeroLog</a><a class="headerlink" href="#func-configurezerolog" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">ConfigureZeroLog</span><span class="p">(</span><span class="nx">level</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span>
 </code></pre></div>
 <p>ConfigureZeroLog provides global log level setting. By default, ZeroLog uses the DEBUG level; however, the function makes the desired level more explicit</p>
-<h2 id="func-responsetojson">func <a href="https://github.com/HexmosTech/Lama2/blob/master/outputManager/output_manager.go#L49">ResponseToJSON</a><a class="headerlink" href="#func-responsetojson" title="Permanent link">&para;</a></h2>
+<p><a name="ResponseToJSON"></a></p>
+<h2 id="func-responsetojson">func <a href="https://github.com/HexmosTech/Lama2/blob/main/outputManager/output_manager.go#L49">ResponseToJSON</a><a class="headerlink" href="#func-responsetojson" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">ResponseToJSON</span><span class="p">(</span><span class="nx">resp</span><span class="w"> </span><span class="nx">httpie</span><span class="p">.</span><span class="nx">ExResponse</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
-<h2 id="func-writejsonoutput">func <a href="https://github.com/HexmosTech/Lama2/blob/master/outputManager/output_manager.go#L70">WriteJSONOutput</a><a class="headerlink" href="#func-writejsonoutput" title="Permanent link">&para;</a></h2>
+<p><a name="WriteJSONOutput"></a></p>
+<h2 id="func-writejsonoutput">func <a href="https://github.com/HexmosTech/Lama2/blob/main/outputManager/output_manager.go#L70">WriteJSONOutput</a><a class="headerlink" href="#func-writejsonoutput" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">WriteJSONOutput</span><span class="p">(</span><span class="nx">resp</span><span class="w"> </span><span class="nx">httpie</span><span class="p">.</span><span class="nx">ExResponse</span><span class="p">,</span><span class="w"> </span><span class="nx">targetPath</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span>
 </code></pre></div>
 <p>WriteJSONOutput is primarily built for helping with Extension/Integration building with external tools. Extension writers may simply call `l2 -n -o /tmp/lama2.json ...` to invoke WriteJSONOutput; the generated json file contains three keys: `logs`, `headers`, `body`</p>

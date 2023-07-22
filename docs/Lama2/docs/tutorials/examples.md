@@ -100,7 +100,7 @@ export REMOTE="http://httpbin.org"
 
 ### Case 3: Override Root variable with local variable
 
-![Override of l2config.env with l2.env variable](image.png)
+![Override of l2config.env with l2.env variable](l2envOverideL2config.png)
 
 ## Headers
 

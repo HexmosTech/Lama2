@@ -12,7 +12,7 @@
         <link rel="canonical" href="http://hexmos.com/lama2/reference/preprocess.html">
       
       <link rel="icon" href="../favicon.ico">
-      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-8.5.10">
     
 
 <meta name="description" content="Hexmos Lama2: Plain-Text Powered REST API Client for Teams">
@@ -711,6 +711,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#func-getl2envvariables" class="md-nav__link">
+    func GetL2EnvVariables
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#func-getlamafileasstring" class="md-nav__link">
     func GetLamaFileAsString
   </a>
@@ -725,8 +732,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#func-loadelfenv" class="md-nav__link">
-    func LoadElfEnv
+  <a href="#func-loadenvfile" class="md-nav__link">
+    func LoadEnvFile
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#func-loadenvironments" class="md-nav__link">
+    func LoadEnvironments
   </a>
   
 </li>
@@ -734,6 +748,13 @@
         <li class="md-nav__item">
   <a href="#func-processvarsinblock" class="md-nav__link">
     func ProcessVarsInBlock
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#func-searchl2configenv" class="md-nav__link">
+    func SearchL2ConfigEnv
   </a>
   
 </li>
@@ -766,45 +787,69 @@
 <p>Package preprocess provides facilities to expand environment variables in `.l2` API files and return the contents</p>
 <h2 id="index">Index<a class="headerlink" href="#index" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="#func-expand">func Expand(s string, vm *goja.Runtime, mapping map[string]string) string</a></li>
-<li><a href="#func-expandenv">func ExpandEnv(s string, vm *goja.Runtime) string</a></li>
-<li><a href="#func-expandheaders">func ExpandHeaders(block <em>gabs.Container, vm </em>goja.Runtime)</a></li>
-<li><a href="#func-expandjson">func ExpandJSON(block <em>gabs.Container, vm </em>goja.Runtime)</a></li>
-<li><a href="#func-expandurl">func ExpandURL(block <em>gabs.Container, vm </em>goja.Runtime)</a></li>
-<li><a href="#func-getlamafileasstring">func GetLamaFileAsString(path string) string</a></li>
-<li><a href="#func-lamafile">func LamaFile(inputFile string) (string, string)</a></li>
-<li><a href="#func-loadelfenv">func LoadElfEnv(l2path string)</a></li>
-<li><a href="#func-processvarsinblock">func ProcessVarsInBlock(block <em>gabs.Container, vm </em>goja.Runtime)</a></li>
+<li><a href="#Expand">func Expand(s string, vm *goja.Runtime, mapping map[string]string) string</a></li>
+<li><a href="#ExpandEnv">func ExpandEnv(s string, vm *goja.Runtime) string</a></li>
+<li><a href="#ExpandHeaders">func ExpandHeaders(block *gabs.Container, vm *goja.Runtime)</a></li>
+<li><a href="#ExpandJSON">func ExpandJSON(block *gabs.Container, vm *goja.Runtime)</a></li>
+<li><a href="#ExpandURL">func ExpandURL(block *gabs.Container, vm *goja.Runtime)</a></li>
+<li><a href="#GetL2EnvVariables">func GetL2EnvVariables(dir string) ([]byte, error)</a></li>
+<li><a href="#GetLamaFileAsString">func GetLamaFileAsString(path string) string</a></li>
+<li><a href="#LamaFile">func LamaFile(inputFile string) (string, string)</a></li>
+<li><a href="#LoadEnvFile">func LoadEnvFile(l2path string)</a></li>
+<li><a href="#LoadEnvironments">func LoadEnvironments(dir string)</a></li>
+<li><a href="#ProcessVarsInBlock">func ProcessVarsInBlock(block *gabs.Container, vm *goja.Runtime)</a></li>
+<li><a href="#SearchL2ConfigEnv">func SearchL2ConfigEnv(dir string) (string, error)</a></li>
 </ul>
-<h2 id="func-expand">func <a href="https://github.com/HexmosTech/Lama2/blob/master/preprocess/expandvar.go#L19">Expand</a><a class="headerlink" href="#func-expand" title="Permanent link">&para;</a></h2>
+<p><a name="Expand"></a></p>
+<h2 id="func-expand">func <a href="https://github.com/HexmosTech/Lama2/blob/main/preprocess/expandvar.go#L19">Expand</a><a class="headerlink" href="#func-expand" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">Expand</span><span class="p">(</span><span class="nx">s</span><span class="w"> </span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="nx">vm</span><span class="w"> </span><span class="o">*</span><span class="nx">goja</span><span class="p">.</span><span class="nx">Runtime</span><span class="p">,</span><span class="w"> </span><span class="nx">mapping</span><span class="w"> </span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="kt">string</span>
 </code></pre></div>
 <p>Expand replaces ${var} or $var in the string based on the mapping function. For example, os.ExpandEnv(s) is equivalent to os.Expand(s, os.Getenv).</p>
-<h2 id="func-expandenv">func <a href="https://github.com/HexmosTech/Lama2/blob/master/preprocess/expandvar.go#L74">ExpandEnv</a><a class="headerlink" href="#func-expandenv" title="Permanent link">&para;</a></h2>
+<p><a name="ExpandEnv"></a></p>
+<h2 id="func-expandenv">func <a href="https://github.com/HexmosTech/Lama2/blob/main/preprocess/expandvar.go#L75">ExpandEnv</a><a class="headerlink" href="#func-expandenv" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">ExpandEnv</span><span class="p">(</span><span class="nx">s</span><span class="w"> </span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="nx">vm</span><span class="w"> </span><span class="o">*</span><span class="nx">goja</span><span class="p">.</span><span class="nx">Runtime</span><span class="p">)</span><span class="w"> </span><span class="kt">string</span>
 </code></pre></div>
 <p>ExpandEnv replaces ${var} or $var in the string according to the values of the current environment variables. References to undefined variables are replaced by the empty string.</p>
-<h2 id="func-expandheaders">func <a href="https://github.com/HexmosTech/Lama2/blob/master/preprocess/preprocess.go#L25">ExpandHeaders</a><a class="headerlink" href="#func-expandheaders" title="Permanent link">&para;</a></h2>
+<p><a name="ExpandHeaders"></a></p>
+<h2 id="func-expandheaders">func <a href="https://github.com/HexmosTech/Lama2/blob/main/preprocess/preprocess.go#L29">ExpandHeaders</a><a class="headerlink" href="#func-expandheaders" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">ExpandHeaders</span><span class="p">(</span><span class="nx">block</span><span class="w"> </span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="nx">vm</span><span class="w"> </span><span class="o">*</span><span class="nx">goja</span><span class="p">.</span><span class="nx">Runtime</span><span class="p">)</span>
 </code></pre></div>
-<h2 id="func-expandjson">func <a href="https://github.com/HexmosTech/Lama2/blob/master/preprocess/preprocess.go#L77">ExpandJSON</a><a class="headerlink" href="#func-expandjson" title="Permanent link">&para;</a></h2>
+<p><a name="ExpandJSON"></a></p>
+<h2 id="func-expandjson">func <a href="https://github.com/HexmosTech/Lama2/blob/main/preprocess/preprocess.go#L81">ExpandJSON</a><a class="headerlink" href="#func-expandjson" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">ExpandJSON</span><span class="p">(</span><span class="nx">block</span><span class="w"> </span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="nx">vm</span><span class="w"> </span><span class="o">*</span><span class="nx">goja</span><span class="p">.</span><span class="nx">Runtime</span><span class="p">)</span>
 </code></pre></div>
-<h2 id="func-expandurl">func <a href="https://github.com/HexmosTech/Lama2/blob/master/preprocess/preprocess.go#L45">ExpandURL</a><a class="headerlink" href="#func-expandurl" title="Permanent link">&para;</a></h2>
+<p><a name="ExpandURL"></a></p>
+<h2 id="func-expandurl">func <a href="https://github.com/HexmosTech/Lama2/blob/main/preprocess/preprocess.go#L49">ExpandURL</a><a class="headerlink" href="#func-expandurl" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">ExpandURL</span><span class="p">(</span><span class="nx">block</span><span class="w"> </span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="nx">vm</span><span class="w"> </span><span class="o">*</span><span class="nx">goja</span><span class="p">.</span><span class="nx">Runtime</span><span class="p">)</span>
 </code></pre></div>
-<h2 id="func-getlamafileasstring">func <a href="https://github.com/HexmosTech/Lama2/blob/master/preprocess/preprocess.go#L104">GetLamaFileAsString</a><a class="headerlink" href="#func-getlamafileasstring" title="Permanent link">&para;</a></h2>
+<p><a name="GetL2EnvVariables"></a></p>
+<h2 id="func-getl2envvariables">func <a href="https://github.com/HexmosTech/Lama2/blob/main/preprocess/preprocess.go#L170">GetL2EnvVariables</a><a class="headerlink" href="#func-getl2envvariables" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">GetL2EnvVariables</span><span class="p">(</span><span class="nx">dir</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="p">([]</span><span class="kt">byte</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
+</code></pre></div>
+<p><a name="GetLamaFileAsString"></a></p>
+<h2 id="func-getlamafileasstring">func <a href="https://github.com/HexmosTech/Lama2/blob/main/preprocess/preprocess.go#L201">GetLamaFileAsString</a><a class="headerlink" href="#func-getlamafileasstring" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">GetLamaFileAsString</span><span class="p">(</span><span class="nx">path</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="kt">string</span>
 </code></pre></div>
-<h2 id="func-lamafile">func <a href="https://github.com/HexmosTech/Lama2/blob/master/preprocess/preprocess.go#L118">LamaFile</a><a class="headerlink" href="#func-lamafile" title="Permanent link">&para;</a></h2>
+<p><a name="LamaFile"></a></p>
+<h2 id="func-lamafile">func <a href="https://github.com/HexmosTech/Lama2/blob/main/preprocess/preprocess.go#L215">LamaFile</a><a class="headerlink" href="#func-lamafile" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">LamaFile</span><span class="p">(</span><span class="nx">inputFile</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span>
 </code></pre></div>
 <p>LamaFile takes in a path to an API file. It moves into the API file directory, reads the API contents, loads the `l2.env` file if available, and finally substitutes environment vars in the API contents Once done, it reverts back to the original directory, and returns the processed l2 file.</p>
-<h2 id="func-loadelfenv">func <a href="https://github.com/HexmosTech/Lama2/blob/master/preprocess/preprocess.go#L97">LoadElfEnv</a><a class="headerlink" href="#func-loadelfenv" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">LoadElfEnv</span><span class="p">(</span><span class="nx">l2path</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span>
+<p><a name="LoadEnvFile"></a></p>
+<h2 id="func-loadenvfile">func <a href="https://github.com/HexmosTech/Lama2/blob/main/preprocess/preprocess.go#L115">LoadEnvFile</a><a class="headerlink" href="#func-loadenvfile" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">LoadEnvFile</span><span class="p">(</span><span class="nx">l2path</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span>
 </code></pre></div>
-<h2 id="func-processvarsinblock">func <a href="https://github.com/HexmosTech/Lama2/blob/master/preprocess/preprocess.go#L19">ProcessVarsInBlock</a><a class="headerlink" href="#func-processvarsinblock" title="Permanent link">&para;</a></h2>
+<p><a name="LoadEnvironments"></a></p>
+<h2 id="func-loadenvironments">func <a href="https://github.com/HexmosTech/Lama2/blob/main/preprocess/preprocess.go#L123">LoadEnvironments</a><a class="headerlink" href="#func-loadenvironments" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">LoadEnvironments</span><span class="p">(</span><span class="nx">dir</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span>
+</code></pre></div>
+<p><a name="ProcessVarsInBlock"></a></p>
+<h2 id="func-processvarsinblock">func <a href="https://github.com/HexmosTech/Lama2/blob/main/preprocess/preprocess.go#L23">ProcessVarsInBlock</a><a class="headerlink" href="#func-processvarsinblock" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">ProcessVarsInBlock</span><span class="p">(</span><span class="nx">block</span><span class="w"> </span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="nx">vm</span><span class="w"> </span><span class="o">*</span><span class="nx">goja</span><span class="p">.</span><span class="nx">Runtime</span><span class="p">)</span>
+</code></pre></div>
+<p><a name="SearchL2ConfigEnv"></a></p>
+<h2 id="func-searchl2configenv">func <a href="https://github.com/HexmosTech/Lama2/blob/main/preprocess/preprocess.go#L102">SearchL2ConfigEnv</a><a class="headerlink" href="#func-searchl2configenv" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">SearchL2ConfigEnv</span><span class="p">(</span><span class="nx">dir</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
 <p>Generated by <a href="https://github.com/princjef/gomarkdoc">gomarkdoc</a></p>
 
