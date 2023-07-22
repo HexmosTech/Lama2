@@ -34,11 +34,13 @@ This MR [adds/removes/fixes/replaces] the [feature/bug/etc].
 - [x] 🙅 no, because they aren't needed
 - [ ] 🙋 no, because I need help
 
-## Added to documentation?
+## Added to documentation? 
+## If documentation update is there then run `make mkdocs` once PR is in acceptable state.
 
-- [ ] 📓 WIKI
+- [ ] 📓 make mkdocs
 - [x] 📜 README.md
 - [ ] 🙅 no documentation needed
+
 
 ## [optional] Are there any post-deployment tasks we need to perform?
 
