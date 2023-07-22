@@ -108,6 +108,7 @@ Get [Source File](https://github.com/HexmosTech/Lama2/tree/main/examples/0022_l2
 ### Case 3: Override Root variable with local variable
 
 In this structure, if a variable is declared in both l2config.env and l2.env, the value from l2.env takes precedence.
+
 ![Override of l2config.env with l2.env variable](l2envOverideL2config.png)
 
 Get [Source File](https://github.com/HexmosTech/Lama2/tree/main/examples/0020_override_project_root_local)
