@@ -80,7 +80,9 @@ Cookies are specified in a `Cookie` header as follows:
 Cookie:'sessionid=foo;another-cookie=bar'
 ```
 
-### API variables can be defined in `apirequest.l2`
+### Environment Variables: Switch base URL
+
+#### API variables can be defined in `apirequest.l2`
 
 L2 uses the variables declared inside the `.l2` file and makes the request
 
@@ -103,7 +105,7 @@ ${REMOTE}/login
 Get [Source Files](https://github.com/HexmosTech/Lama2/tree/main/examples/0021_varjson_variable/0021_varjson_variable.l2)
 
 
-### API environment variables can be defined locally in `l2.env`
+#### API environment variables can be defined locally in `l2.env`
 
 `l2.env` is searched for, from the present directory and variables(local) are loaded from this file.
 
@@ -114,9 +116,11 @@ export PHOTO=`base64 aadhaarlarge.jpg`
 export AHOST="http://localhost:8000"
 ```
 
-Get [Source Files](https://github.com/HexmosTech/Lama2/tree/main/examples/0004_env_switch_root)
+![l2.env at API level](l2env.png)
 
-### API environment variables can be defined at root using `l2config.env`
+Get [Source File](https://github.com/HexmosTech/Lama2/tree/main/examples/0023_l2env_declare)
+
+#### API environment variables can be defined at project root using `l2config.env`
 `l2config.env` is searched for, from the present directory to all its ancestors (upto `/`) and 
 variables(root) are loaded from this file.
 Example `l2config.env`:
@@ -126,18 +130,19 @@ export PHOTO=`base64 aadhaarsmall.jpg`
 export AHOST="http://localhost:8001"
 ```
 
-Get [Source Files](https://github.com/HexmosTech/Lama2/tree/main/examples/0019_env_switch_global_root)
+![l2config.env at Project root level](l2configAtRoot.png)
 
-### If `l2config.env`(root) variables are redeclared in `l2.env`(local)
+Get [Source File](https://github.com/HexmosTech/Lama2/tree/main/examples/0022_l2config_declare)
+
+#### If `l2config.env`(root) variables are redeclared in `l2.env`(local)
 
 The local variable's value is taken into consideration regardless of both files residing in same directory
 
-Get [Source Files](https://github.com/HexmosTech/Lama2/tree/main/examples/0020_override_project_root_local)
+![l2config.env at Project root level](l2configAtRoot.png)
 
-![Override of l2config.env with l2.env variable](l2envOverideL2config.png)
+Get [Source File](https://github.com/HexmosTech/Lama2/tree/main/examples/0020_override_project_root_local)
 
-
-#### The environment file can load results of commands
+### The environment file can load results of commands
 
 Use the backtick notation `\`command\`` to place the results of
 commands into environment variables:
