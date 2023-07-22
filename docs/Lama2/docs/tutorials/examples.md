@@ -71,23 +71,27 @@ c=d
 
 Get [Source File](https://github.com/HexmosTech/Lama2/tree/main/examples/0003_comment.l2)
 
-## Environment Variables: Switch base URL
-
+## Environment Variables:
 ### Case 1: `l2.env` adjacent to an API file
 
 For any given `.l2` file, one can place an `l2.env` file to store relevant variables.
 These variables will be available to be used within the API file
 
-**l2.env**
-
+**project_folder/api/l2.env**
 ```
-export LOCAL="http://localhost:8000"
-export REMOTE="http://httpbin.org"
+export AHOST="http://127.0.0.1:8000"
+```
+
+**project_folder/api/get_users.l2**
+```
+GET
+${AHOST}/users
 ```
 
 ![l2.env at API level](l2env.png)
 
 Get [Source File](https://github.com/HexmosTech/Lama2/tree/main/examples/0023_l2env_declare)
+
 
 ### Case 2: Root variables
 
@@ -95,19 +99,43 @@ In Lama2, you can have a large number of API files stored in a hierarchical fold
 The root of such a project can be signified through `l2config.env`:
 
 Within such a structure, you can have an API file anywhere, which can use variables defined in the root variables:
-**l2config.env**
 
+**project_folder/l2config.env**
 ```
-export LOCAL="http://localhost:8000"
-export REMOTE="http://httpbin.org"
+export AHOST="https://httpbin.org"
+export BHOST="https://google.com"
 ```
+
+**project_folder/api/get_users.l2**
+```
+GET
+${AHOST}/users
+```
+
 ![l2config.env at Project root level](l2configAtRoot.png)
 
 Get [Source File](https://github.com/HexmosTech/Lama2/tree/main/examples/0022_l2config_declare)
 
-### Case 3: Override Root variable with local variable
 
+### Case 3: Override Root variable with local variable
 In this structure, if a variable is declared in both l2config.env and l2.env, the value from l2.env takes precedence.
+
+**project_folder/l2config.env**
+```
+export AHOST=`echo NO URL`
+export BHOST="https://httpbin.org"
+```
+
+**project_folder/api/l2.env**
+```
+export AHOST="http://127.0.0.1:8000"
+```
+
+**project_folder/api/get_users.l2**
+```
+GET
+${AHOST}/users
+```
 
 ![Override of l2config.env with l2.env variable](l2envOverideL2config.png)
 
