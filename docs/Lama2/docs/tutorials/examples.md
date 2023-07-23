@@ -71,7 +71,7 @@ c=d
 
 Get [Source File](https://github.com/HexmosTech/Lama2/tree/main/examples/0003_comment.l2)
 
-## Environment Variables:
+## Environment Variables: Switch base URL
 ### Case 1: `l2.env` adjacent to an API file
 
 For any given `.l2` file, one can place an `l2.env` file to store relevant variables.
@@ -138,6 +138,10 @@ ${AHOST}/users
 ```
 
 ![Override of l2config.env with l2.env variable](l2envOverideL2config.png)
+
+![l2envvariable variable](l2envvariable.png)
+
+![l2configvariable variable](l2configvariable.png)
 
 Get [Source File](https://github.com/HexmosTech/Lama2/tree/main/examples/0020_override_project_root_local)
 
