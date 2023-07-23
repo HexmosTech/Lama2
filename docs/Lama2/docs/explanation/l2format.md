@@ -81,7 +81,7 @@ Cookie:'sessionid=foo;another-cookie=bar'
 ```
 
 
-### Environment Variables: Switch base URL
+### Environment Variables
 
 #### API variables can be defined in `apirequest.l2`
 Variables are declared within the JS processor block and serve as dynamic placeholders for data used in API requests. 
@@ -109,13 +109,13 @@ Get [Source Files](https://github.com/HexmosTech/Lama2/tree/main/examples/0021_v
 #### API environment variables can be defined locally in `l2.env`
 L2 provides a convenient way to define environment variables through the l2.env file. 
 This file is automatically searched for in the present directory, 
-and its contents are loaded to create a set of variables(local).
+and its contents are loaded to create a set of variables (local).
 
 In the `l2.env` file, you can specify environment-specific values for variables used in your L2 scripts, such as URLs, authentication tokens, or any other data that may vary depending on the environment in which the API requests are executed.
 
 ![l2.env at API level](l2env.png)
 
-Go to [Example](https://hexmos.com/lama2/tutorials/examples.html#case-1-l2env-adjacent-to-an-api-file)
+Go to [Example](../tutorials/examples.md#case-1-l2env-adjacent-to-an-api-file)
 
 Get [Source File](https://github.com/HexmosTech/Lama2/tree/main/examples/0023_l2env_declare)
 
@@ -127,17 +127,19 @@ The search for `l2config.env` extends from the present directory up to the root 
 
 ![l2config.env at Project root level](l2configAtRoot.png)
 
-Go to [Example](https://hexmos.com/lama2/tutorials/examples.html#case-2-root-variables)
+Go to [Example](../tutorials/examples.html#case-2-root-variables)
 
 Get [Source File](https://github.com/HexmosTech/Lama2/tree/main/examples/0022_l2config_declare)
 
 
 #### If `l2config.env`(root) variables are redeclared in `l2.env`(local)
-In situations where both root and local variables share the same variable name, the local variable takes precedence over the root variable. This behavior remains consistent, even if both `l2config.env` (root) and `l2.env` (local) files reside in the same directory. The local variable's value will always be considered over the root variable, ensuring that specific configurations defined at the local level effectively override any corresponding settings present in the root file. This approach provides developers with granular control and flexibility in tailoring environment variables to suit specific needs within different parts of the project while maintaining the overall structure and organization of configuration settings.
+In situations where both root and local variables share the same variable name, the local variable takes precedence over the root variable. This behavior remains consistent, even if both `l2config.env` (root) and `l2.env` (local) files reside in the same directory. 
+
+The local variable's value will always be considered over the root variable, ensuring that specific configurations defined at the local level effectively override any corresponding settings present in the root file. This approach provides developers with granular control and flexibility in tailoring environment variables to suit specific needs within different parts of the project while maintaining the overall structure and organization of configuration settings.
 
 ![l2config.env at Project root level](l2envOverideL2config.png)
 
-Go to [Example](https://hexmos.com/lama2/tutorials/examples.html#case-3-override-root-variable-with-local-variable)
+Go to [Example](..g/tutorials/examples.html#case-3-override-root-variable-with-local-variable)
 
 Get [Source File](https://github.com/HexmosTech/Lama2/tree/main/examples/0020_override_project_root_local)
 
