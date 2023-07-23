@@ -575,9 +575,29 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#the-command" class="md-nav__link">
-    The Command
+  <a href="#the-commands" class="md-nav__link">
+    The Commands
   </a>
+  
+    <nav class="md-nav" aria-label="The Commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#execute-current-file" class="md-nav__link">
+    Execute current file
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#providing-environment-variable-autocompletion" class="md-nav__link">
+    Providing environment variable autocompletion
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -727,9 +747,29 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#the-command" class="md-nav__link">
-    The Command
+  <a href="#the-commands" class="md-nav__link">
+    The Commands
   </a>
+  
+    <nav class="md-nav" aria-label="The Commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#execute-current-file" class="md-nav__link">
+    Execute current file
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#providing-environment-variable-autocompletion" class="md-nav__link">
+    Providing environment variable autocompletion
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -766,6 +806,7 @@
 <p>The <code>l2</code> command provides some helpful options for
 extension developers. The options are:</p>
 <ol>
+<li><code>--env</code> or <code>-e</code> outputs a JSON of environment variables (in CLI);</li>
 <li><code>--nocolor</code> or <code>-n</code> disables colored output in httpie-go (in CLI);</li>
 <li><code>--output=&lt;target.json</code> or <code>-o</code> writes a structured JSON
 output to the target file (without colors). The following is the content
@@ -786,8 +827,9 @@ structure:</li>
 <p class="admonition-title">Note</p>
 <p>Right now, all the three values in the JSON are strings. In the future, we may transform the values further to provide a more parse-friendly structure.</p>
 </div>
-<h2 id="the-command">The Command<a class="headerlink" href="#the-command" title="Permanent link">&para;</a></h2>
-<p>Combining the above two options, we get:</p>
+<h2 id="the-commands">The Commands<a class="headerlink" href="#the-commands" title="Permanent link">&para;</a></h2>
+<h3 id="execute-current-file">Execute current file<a class="headerlink" href="#execute-current-file" title="Permanent link">&para;</a></h3>
+<p>Combining the options <code>-n</code> and <code>-o</code>, we get:</p>
 <div class="highlight"><pre><span></span><code>l2<span class="w"> </span>-n<span class="w"> </span>-o<span class="w"> </span>/tmp/lama2.json<span class="w"> </span>my_api.l2
 </code></pre></div>
 <p>The command mentioned above disables HTTPie colors,
@@ -797,6 +839,25 @@ while also printing details into <code>stdout</code>.</p>
 display the contents to users appropriately. For an
 example, see <a href="https://github.com/HexmosTech/Lama2Code">Lama2 for VSCode</a>
 (also see <a href="https://marketplace.visualstudio.com/items?itemName=hexmos.Lama2">Marketplace page</a>).</p>
+<h3 id="providing-environment-variable-autocompletion">Providing environment variable autocompletion<a class="headerlink" href="#providing-environment-variable-autocompletion" title="Permanent link">&para;</a></h3>
+<p>To obtain a combined JSON representation of environment variables from <code>l2.env</code> and <code>l2config.env</code>, use option <code>-e</code> or <code>--env</code>. This will output the result to <code>stdout</code>.
+<div class="highlight"><pre><span></span><code>l2<span class="w"> </span>-e<span class="w">  </span>/path/to/my_api.l2
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;AHOST&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;src&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;l2env&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;val&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://127.0.0.1:8000&quot;</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;BHOST&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;src&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;l2configenv&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;val&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://httpbin.org&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+The extension author can simply read the <code>stdout</code> after executing the command, and display the variables to users appropriately.</p>
+<p><img alt="l2envvariable variable" src="l2envvariable.png" /></p>
+<p><img alt="l2configvariable variable" src="l2configvariable.png" /></p>
+<p>Go to <a href="examples.html#case-3-override-root-variable-with-local-variable">Example</a></p>
 <h2 id="syntax-highlighting">Syntax Highlighting<a class="headerlink" href="#syntax-highlighting" title="Permanent link">&para;</a></h2>
 <p>The VSCode plugin implements a rudimentary syntax highlighting for <code>.l2</code> files. We use <a href="https://eeyo.io/iro/documentation/">Iro</a> for syntax grammar generation. Find <a href="https://github.com/HexmosTech/Lama2/tree/main/syntax/README.md">more details</a> if interested.</p>
 
