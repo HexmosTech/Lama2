@@ -127,7 +127,7 @@ The search for `l2config.env` extends from the present directory up to the root 
 
 ![l2config.env at Project root level](l2configAtRoot.png)
 
-Go to [Example](../tutorials/examples.html#case-2-root-variables)
+Go to [Example](../tutorials/examples.md#case-2-root-variables)
 
 Get [Source File](https://github.com/HexmosTech/Lama2/tree/main/examples/0022_l2config_declare)
 
@@ -139,7 +139,7 @@ The local variable's value will always be considered over the root variable, ens
 
 ![l2config.env at Project root level](l2envOverideL2config.png)
 
-Go to [Example](..g/tutorials/examples.html#case-3-override-root-variable-with-local-variable)
+Go to [Example](../tutorials/examples.md#case-3-override-root-variable-with-local-variable)
 
 Get [Source File](https://github.com/HexmosTech/Lama2/tree/main/examples/0020_override_project_root_local)
 

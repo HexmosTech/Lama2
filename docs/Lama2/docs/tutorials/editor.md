@@ -66,7 +66,7 @@ The extension author can simply read the `stdout` after executing the command, a
 
 ![l2configvariable variable](l2configvariable.png)
 
-Go to [Example](../tutorials/examples.html#case-3-override-root-variable-with-local-variable)
+Go to [Example](../tutorials/examples.md#case-3-override-root-variable-with-local-variable)
 
 ## Syntax Highlighting
 
