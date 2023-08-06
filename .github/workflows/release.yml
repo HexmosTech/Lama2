@@ -28,4 +28,4 @@ jobs:
         goversion: "https://dl.google.com/go/go1.19.3.linux-amd64.tar.gz"
         binary_name: "l2"
         extra_files: LICENSE README.md
-        ldflags: -X main.version=${{ github.event.release.tag_name }}
+        ldflags: -X main.version=${{  github.ref_name }}
