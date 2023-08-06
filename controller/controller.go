@@ -99,7 +99,7 @@ func Process(version string) {
 	}
 
 	preprocess.LoadEnvironments(dir)
-	utils.ChangeWorkingDir(oldDir)
+	defer utils.ChangeWorkingDir(oldDir)
 	p := parser.NewLama2Parser()
 	parsedAPI, e := p.Parse(apiContent)
 	if o.Convert != "" {
@@ -117,7 +117,7 @@ func Process(version string) {
 			Str("Type", "Controller").
 			Str("LamaFile", o.Positional.LamaAPIFile).
 			Str("Error", e.Error()).
-			Msg(fmt.Sprint("Parse Error"))
+			Msg("Parse Error")
 	}
 	log.Debug().Str("Parsed API", parsedAPI.String()).Msg("")
 	HandleParsedFile(parsedAPI, o, dir)
