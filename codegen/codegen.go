@@ -26,10 +26,10 @@ type SnippetArgs struct {
 	SnippetCore string
 }
 
-var globalVm *goja.Runtime
+var globalVM *goja.Runtime
 
 func initialize() {
-	globalVm = cmdexec.GetJSVm()
+	globalVM = cmdexec.GetJSVm()
 }
 
 func PrepareHTTPSnippetGenerator(snippetArgs SnippetArgs) string {
@@ -97,7 +97,7 @@ func GetHARHeadersCookies(headers *gabs.Container) (*gabs.Container, *gabs.Conta
 }
 
 func GetRequestHARString(block *gabs.Container) string {
-	preprocess.ProcessVarsInBlock(block, globalVm)
+	preprocess.ProcessVarsInBlock(block, globalVM)
 	httpv := block.S("verb", "value")
 	url := block.S("url", "value")
 	jsonObj := block.S("details", "ip_data")
