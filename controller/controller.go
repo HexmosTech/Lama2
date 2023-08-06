@@ -99,7 +99,7 @@ func Process(version string) {
 	}
 
 	preprocess.LoadEnvironments(dir)
-	defer utils.ChangeWorkingDir(oldDir)
+	utils.ChangeWorkingDir(oldDir)
 	p := parser.NewLama2Parser()
 	parsedAPI, e := p.Parse(apiContent)
 	if o.Convert != "" {
