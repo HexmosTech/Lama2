@@ -166,7 +166,7 @@ func combineEnvMaps(envMaps ...map[string]map[string]interface{}) map[string]map
 	return finalEnvMap
 }
 
-func GetL2EnvVariables(dir string) ([]byte, error) {
+func GetL2EnvVariables(dir string) (map[string]map[string]interface{}, error) {
 	l2ConfigEnvMap := make(map[string]map[string]interface{})
 
 	l2ConfigPath, err := SearchL2ConfigEnv(dir)
@@ -190,11 +190,7 @@ func GetL2EnvVariables(dir string) ([]byte, error) {
 
 	finalEnvMap := combineEnvMaps(l2ConfigEnvMap, l2EnvMap)
 
-	jsonEnvs, err := json.MarshalIndent(finalEnvMap, "", "  ")
-	if err != nil {
-		return nil, fmt.Errorf("Failed to marshal map env's to JSON: %v", err)
-	}
-	return jsonEnvs, nil
+	return finalEnvMap, nil
 }
 
 func GetLamaFileAsString(path string) string {

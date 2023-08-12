@@ -6,6 +6,7 @@ require (
 	github.com/HexmosTech/gabs/v2 v2.6.5
 	github.com/HexmosTech/godotenv v0.0.0-20230327154318-72e1f3d32ed3
 	github.com/HexmosTech/httpie-go v1.0.8
+	github.com/Vivino/go-autocomplete-trie v0.0.0-20230301121706-da951497d081
 	github.com/atotto/clipboard v0.1.4
 	github.com/dop251/goja v0.0.0-20230216180835-5937a312edda
 	github.com/dop251/goja_nodejs v0.0.0-20230207183254-2229640ea097
