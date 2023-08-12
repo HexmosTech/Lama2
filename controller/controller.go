@@ -5,6 +5,7 @@
 package contoller
 
 import (
+	"encoding/json"
 	"fmt"
 	"os"
 
@@ -19,6 +20,7 @@ import (
 	"github.com/HexmosTech/lama2/preprocess"
 	"github.com/HexmosTech/lama2/prettify"
 	"github.com/HexmosTech/lama2/utils"
+	trie "github.com/Vivino/go-autocomplete-trie"
 	"github.com/dop251/goja"
 	"github.com/rs/zerolog/log"
 )
@@ -87,14 +89,34 @@ func Process(version string) {
 	oldDir, _ := os.Getwd()
 	utils.ChangeWorkingDir(dir)
 
-	if o.Env {
-		jsonEnvs, err := preprocess.GetL2EnvVariables(dir)
+	if len(o.Env) > 0 {
+		envMap, err := preprocess.GetL2EnvVariables(dir)
 		if err != nil {
 			log.Error().Str("Type", "Preprocess").Msg(err.Error())
 			return
 		}
-		// Frontend can read the stdout for this command and get the JSON of all the env's
-		fmt.Println(string(jsonEnvs))
+
+		envTrie := trie.New()
+		for key := range envMap {
+			envTrie.Insert(key)
+		}
+
+		searchQuery := o.Env
+		suggestions := envTrie.SearchAll(searchQuery)
+		filteredEnvs := make(map[string]interface{})
+		for _, suggestion := range suggestions {
+			if env, found := envMap[suggestion]; found {
+				filteredEnvs[suggestion] = env
+			}
+		}
+
+		filteredJSON, err := json.MarshalIndent(filteredEnvs, "", "  ")
+		if err != nil {
+			log.Error().Str("Type", "Preprocess").Msg(fmt.Sprintf("Failed to marshal filtered env's to JSON: %v", err))
+			return
+		}
+
+		fmt.Println(string(filteredJSON))
 		return
 	}
 

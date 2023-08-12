@@ -26,7 +26,7 @@ type Opts struct {
 	PostmanFile string `short:"p" long:"postmanfile" description:"JSON export from Postman (Settings -> Data -> Export Data)"`
 	LamaDir     string `short:"l" long:"lama2dir" description:"Output directory to put .l2 files after conversion from Postman format"`
 	Help        bool   `short:"h" long:"help" group:"AddHelp" description:"Usage help for Lama2"`
-	Env         bool   `short:"e" long:"env" description:"Get a JSON of environment variables"`
+	Env         string `short:"e" long:"env" description:"Get a JSON of environment variables revelant to input arg"`
 	Version     bool   `long:"version" description:"Print Lama2 binary version"`
 
 	Positional struct {
@@ -51,7 +51,7 @@ func getParsedInput(argList []string) (Opts, []string) {
 		log.Fatal().
 			Str("Type", "Preprocess").
 			Strs("arglist", argList).
-			Msg(fmt.Sprint("Couldn't parse argument list"))
+			Msg("Couldn't parse argument list")
 	}
 
 	switch len(o.Verbose) {
