@@ -89,6 +89,16 @@ func Process(version string) {
 	oldDir, _ := os.Getwd()
 	utils.ChangeWorkingDir(dir)
 
+	if (o.Env) == "" {
+		envMap, err := preprocess.GetL2EnvVariables(dir)
+		if err != nil {
+			log.Error().Str("Type", "Preprocess").Msg(err.Error())
+			return
+		}
+		marshalAndPrintJSON(envMap)
+		return
+	}
+
 	if len(o.Env) > 0 {
 		envMap, err := preprocess.GetL2EnvVariables(dir)
 		if err != nil {
@@ -96,27 +106,8 @@ func Process(version string) {
 			return
 		}
 
-		envTrie := trie.New()
-		for key := range envMap {
-			envTrie.Insert(key)
-		}
-
-		searchQuery := o.Env
-		suggestions := envTrie.SearchAll(searchQuery)
-		filteredEnvs := make(map[string]interface{})
-		for _, suggestion := range suggestions {
-			if env, found := envMap[suggestion]; found {
-				filteredEnvs[suggestion] = env
-			}
-		}
-
-		filteredJSON, err := json.MarshalIndent(filteredEnvs, "", "  ")
-		if err != nil {
-			log.Error().Str("Type", "Preprocess").Msg(fmt.Sprintf("Failed to marshal filtered env's to JSON: %v", err))
-			return
-		}
-
-		fmt.Println(string(filteredJSON))
+		filteredEnvs := getRelevantEnvs(envMap, o)
+		marshalAndPrintJSON(filteredEnvs)
 		return
 	}
 
@@ -143,4 +134,30 @@ func Process(version string) {
 	}
 	log.Debug().Str("Parsed API", parsedAPI.String()).Msg("")
 	HandleParsedFile(parsedAPI, o, dir)
+}
+
+func marshalAndPrintJSON(data interface{}) {
+	filteredJSON, err := json.MarshalIndent(data, "", "  ")
+	if err != nil {
+		log.Error().Str("Type", "Preprocess").Msg(fmt.Sprintf("Failed to marshal JSON: %v", err))
+		return
+	}
+	fmt.Println(string(filteredJSON))
+}
+
+func getRelevantEnvs(envMap map[string]map[string]interface{}, o *lama2cmd.Opts) map[string]interface{} {
+	envTrie := trie.New()
+	for key := range envMap {
+		envTrie.Insert(key)
+	}
+
+	searchQuery := o.Env
+	suggestions := envTrie.SearchAll(searchQuery)
+	filteredEnvs := make(map[string]interface{})
+	for _, suggestion := range suggestions {
+		if env, found := envMap[suggestion]; found {
+			filteredEnvs[suggestion] = env
+		}
+	}
+	return filteredEnvs
 }
