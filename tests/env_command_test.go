@@ -18,22 +18,47 @@ type EnvData struct {
 
 func TestL2EnvCommand(t *testing.T) {
 	cmdArgs := []string{"-e", "../elfparser/ElfTestSuite/root_variable_override/api/y_0020_root_override.l2"}
-	runL2CommandAndParseJSON(t, cmdArgs...)
+	envMap := runL2CommandAndParseJSON(t, cmdArgs...)
+	// Check the "AHOST" key
+	checkAHost(t, envMap)
+
+	// Check the "BHOST" key
+	checkBHost(t, envMap)
 }
 
 func TestL2EnvCommandVerbose(t *testing.T) {
 	cmdArgs := []string{"-ev", "../elfparser/ElfTestSuite/root_variable_override/api/y_0020_root_override.l2"}
-	runL2CommandAndParseJSON(t, cmdArgs...)
+	envMap := runL2CommandAndParseJSON(t, cmdArgs...)
+	// Check the "AHOST" key
+	checkAHost(t, envMap)
+
+	// Check the "BHOST" key
+	checkBHost(t, envMap)
 }
 
-func runL2CommandAndParseJSON(t *testing.T, cmdArgs ...string) {
+func TestL2EnvWithoutL2config(t *testing.T) {
+	cmdArgs := []string{"-ev", "../elfparser/ElfTestSuite/no_l2config/api/y_0021_no_l2config.l2"}
+	envMap := runL2CommandAndParseJSON(t, cmdArgs...)
+	// Check the "AHOST" key
+	checkAHost(t, envMap)
+}
+
+func TestL2EnvWithoutL2env(t *testing.T) {
+	cmdArgs := []string{"-ev", "../elfparser/ElfTestSuite/no_l2env/api/y_0022_no_l2env.l2"}
+	envMap := runL2CommandAndParseJSON(t, cmdArgs...)
+
+	// Check the "BHOST" key
+	checkBHost(t, envMap)
+}
+
+func runL2CommandAndParseJSON(t *testing.T, cmdArgs ...string) map[string]EnvData {
 	// Get the full path to the l2 binary
 	l2BinPath := "../build/l2"
 
 	// Check if the l2 binary file exists
 	if err := checkL2BinaryExists(l2BinPath); err != nil {
 		t.Error(err)
-		return
+		return make(map[string]EnvData)
 	}
 
 	// Your existing code to run the l2 command and parse JSON
@@ -47,7 +72,7 @@ func runL2CommandAndParseJSON(t *testing.T, cmdArgs ...string) {
 	if err != nil {
 		// Handle the error if needed
 		t.Errorf("Error running l2 command: %v\n", err)
-		return
+		return make(map[string]EnvData)
 	}
 
 	// Retrieve the captured stdout
@@ -64,11 +89,7 @@ func runL2CommandAndParseJSON(t *testing.T, cmdArgs ...string) {
 		t.Fatalf("Error unmarshaling JSON env: %v\nOutput:\n%s", err, stdoutOutput)
 	}
 
-	// Check the "AHOST" key
-	checkAHost(t, envMap)
-
-	// Check the "BHOST" key
-	checkBHost(t, envMap)
+	return envMap
 }
 
 // checkL2BinaryExists checks if the l2 binary file exists in the specified path

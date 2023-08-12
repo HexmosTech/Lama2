@@ -73,7 +73,7 @@ func debugOp(str string) {
 func escapeString(input string) string {
 	output, err := json.Marshal(input)
 	if err != nil {
-		log.Error().Str("Error marshaling JSON:","escapeString()")
+		log.Error().Str("Error marshaling JSON:", "escapeString()")
 	}
 	return string(output)
 }
@@ -139,7 +139,6 @@ func readFile(filename string) (envMap map[string]string, err error) {
 	return godotenv.Parse(file)
 }
 
-
 func getEnvMap(envPath string, source string) (map[string]map[string]interface{}, error) {
 	envs, err := readFile(envPath)
 	if err != nil {
@@ -174,7 +173,7 @@ func GetL2EnvVariables(dir string) (map[string]map[string]interface{}, error) {
 	if err != nil {
 		// If l2config file is not found, assign an empty map to l2EnvMap and continue
 		l2ConfigEnvMap = make(map[string]map[string]interface{})
-	}else{
+	} else {
 		l2ConfigEnvMap, err = getEnvMap(l2ConfigPath, "l2configenv")
 		if err != nil {
 			// If an error occurs, assign an empty map to l2EnvMap and continue

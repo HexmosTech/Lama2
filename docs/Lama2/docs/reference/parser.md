@@ -82,7 +82,7 @@ var DataInputType string
 ```
 
 <a name="CustomPairMerge"></a>
-## func [CustomPairMerge](<https://github.com/HexmosTech/Lama2/blob/main/parser/jsonparser.go#L29>)
+## func [CustomPairMerge](<https://github.com/HexmosTech/Lama2/blob/main/parser/jsonparser.go#L30>)
 
 ```go
 func CustomPairMerge(destination, source interface{}) interface{}
@@ -122,7 +122,7 @@ func (p *Lama2Parser) AnyType() (*gabs.Container, error)
 AnyType is the top\-most element of a JSON structure It consists of Complex and Primitive Types
 
 <a name="Lama2Parser.Boolean"></a>
-### func \(\*Lama2Parser\) [Boolean](<https://github.com/HexmosTech/Lama2/blob/main/parser/jsonparser.go#L126>)
+### func \(\*Lama2Parser\) [Boolean](<https://github.com/HexmosTech/Lama2/blob/main/parser/jsonparser.go#L127>)
 
 ```go
 func (p *Lama2Parser) Boolean() (*gabs.Container, error)
@@ -320,7 +320,7 @@ func (p *Lama2Parser) Lama2File() (*gabs.Container, error)
 
 
 <a name="Lama2Parser.List"></a>
-### func \(\*Lama2Parser\) [List](<https://github.com/HexmosTech/Lama2/blob/main/parser/jsonparser.go#L69>)
+### func \(\*Lama2Parser\) [List](<https://github.com/HexmosTech/Lama2/blob/main/parser/jsonparser.go#L70>)
 
 ```go
 func (p *Lama2Parser) List() (*gabs.Container, error)
@@ -329,7 +329,7 @@ func (p *Lama2Parser) List() (*gabs.Container, error)
 List is a slightly lenient version of standard JSON list. In Lama2 List, it is OK to have a trailing comma after the last element \(whereas in strict JSON, it is not OK to have trailing comma\)
 
 <a name="Lama2Parser.Map"></a>
-### func \(\*Lama2Parser\) [Map](<https://github.com/HexmosTech/Lama2/blob/main/parser/jsonparser.go#L37>)
+### func \(\*Lama2Parser\) [Map](<https://github.com/HexmosTech/Lama2/blob/main/parser/jsonparser.go#L38>)
 
 ```go
 func (p *Lama2Parser) Map() (*gabs.Container, error)
@@ -347,7 +347,7 @@ func (p *Lama2Parser) Multipart() (*gabs.Container, error)
 
 
 <a name="Lama2Parser.Null"></a>
-### func \(\*Lama2Parser\) [Null](<https://github.com/HexmosTech/Lama2/blob/main/parser/jsonparser.go#L142>)
+### func \(\*Lama2Parser\) [Null](<https://github.com/HexmosTech/Lama2/blob/main/parser/jsonparser.go#L143>)
 
 ```go
 func (p *Lama2Parser) Null() (*gabs.Container, error)
@@ -374,7 +374,7 @@ func (p *Lama2Parser) OneNine() (*gabs.Container, error)
 
 
 <a name="Lama2Parser.Pair"></a>
-### func \(\*Lama2Parser\) [Pair](<https://github.com/HexmosTech/Lama2/blob/main/parser/jsonparser.go#L105>)
+### func \(\*Lama2Parser\) [Pair](<https://github.com/HexmosTech/Lama2/blob/main/parser/jsonparser.go#L106>)
 
 ```go
 func (p *Lama2Parser) Pair() (*gabs.Container, error)

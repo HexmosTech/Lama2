@@ -139,7 +139,7 @@ func Process(version string) {
 			Str("Type", "Controller").
 			Str("LamaFile", o.Positional.LamaAPIFile).
 			Str("Error", e.Error()).
-			Msg(fmt.Sprint("Parse Error"))
+			Msg("Parse Error")
 	}
 	log.Debug().Str("Parsed API", parsedAPI.String()).Msg("")
 	HandleParsedFile(parsedAPI, o, dir)
