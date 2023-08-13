@@ -89,7 +89,7 @@ func Process(version string) {
 	oldDir, _ := os.Getwd()
 	utils.ChangeWorkingDir(dir)
 
-	if (o.Env) == "" {
+	if (o.Env) == "" && len(o.Output) == 0 {
 		envMap, err := preprocess.GetL2EnvVariables(dir)
 		if err != nil {
 			log.Error().Str("Type", "Preprocess").Msg(err.Error())
