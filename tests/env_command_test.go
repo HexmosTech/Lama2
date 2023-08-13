@@ -17,37 +17,68 @@ type EnvData struct {
 }
 
 func TestL2EnvCommand(t *testing.T) {
-	cmdArgs := []string{"-e", "../elfparser/ElfTestSuite/root_variable_override/api/y_0020_root_override.l2"}
+	fpath := "../elfparser/ElfTestSuite/root_variable_override/api/y_0020_root_override.l2"
+	cmdArgs := []string{"-e=", fpath}
 	envMap := runL2CommandAndParseJSON(t, cmdArgs...)
-	// Check the "AHOST" key
+
+	// Check the "AHOST" key is present
 	checkAHost(t, envMap)
 
 	// Check the "BHOST" key
 	checkBHost(t, envMap)
 }
 
-func TestL2EnvCommandVerbose(t *testing.T) {
-	cmdArgs := []string{"-ev", "../elfparser/ElfTestSuite/root_variable_override/api/y_0020_root_override.l2"}
+func TestL2EnvForAHOenv(t *testing.T) {
+	fpath := "../elfparser/ElfTestSuite/root_variable_override/api/y_0020_root_override.l2"
+	cmdArgs := []string{"-e=A", fpath}
 	envMap := runL2CommandAndParseJSON(t, cmdArgs...)
-	// Check the "AHOST" key
+
+	// Check the "AHOST" key is present
 	checkAHost(t, envMap)
 
-	// Check the "BHOST" key
+	// Check the "BHOST" key is absent
+	checkBHostDoesNotExist(t, envMap)
+}
+
+func TestL2EnvForBHOenv(t *testing.T) {
+	fpath := "../elfparser/ElfTestSuite/root_variable_override/api/y_0020_root_override.l2"
+	cmdArgs := []string{"-e=B", fpath}
+	envMap := runL2CommandAndParseJSON(t, cmdArgs...)
+
+	// Check the "BHOST" key is present
+	checkBHost(t, envMap)
+
+	// Check the "AHOST" key is absent
+	checkAHostDoesNotExist(t, envMap)
+}
+
+func TestL2EnvCommandVerbose(t *testing.T) {
+	fpath := "../elfparser/ElfTestSuite/root_variable_override/api/y_0020_root_override.l2"
+	cmdArgs := []string{"-e=", "-v", fpath}
+	envMap := runL2CommandAndParseJSON(t, cmdArgs...)
+
+	// Check the "AHOST" key is present
+	checkAHost(t, envMap)
+
+	// Check the "BHOST" key is present
 	checkBHost(t, envMap)
 }
 
 func TestL2EnvWithoutL2config(t *testing.T) {
-	cmdArgs := []string{"-ev", "../elfparser/ElfTestSuite/no_l2config/api/y_0021_no_l2config.l2"}
+	fpath := "../elfparser/ElfTestSuite/no_l2config/api/y_0021_no_l2config.l2"
+	cmdArgs := []string{"-e=", fpath}
 	envMap := runL2CommandAndParseJSON(t, cmdArgs...)
-	// Check the "AHOST" key
+
+	// Check the "AHOST" key is present
 	checkAHost(t, envMap)
 }
 
 func TestL2EnvWithoutL2env(t *testing.T) {
-	cmdArgs := []string{"-ev", "../elfparser/ElfTestSuite/no_l2env/api/y_0022_no_l2env.l2"}
+	fpath := "../elfparser/ElfTestSuite/no_l2env/api/y_0022_no_l2env.l2"
+	cmdArgs := []string{"-e=", fpath}
 	envMap := runL2CommandAndParseJSON(t, cmdArgs...)
 
-	// Check the "BHOST" key
+	// Check the "BHOST" key is present
 	checkBHost(t, envMap)
 }
 
@@ -128,5 +159,17 @@ func checkBHost(t *testing.T, envMap map[string]EnvData) {
 		if bhost.Val != "https://httpbin.org" {
 			t.Errorf(`Expected "val" value to be "https://httpbin.org" for "BHOST", but got: %v`, bhost.Val)
 		}
+	}
+}
+
+func checkBHostDoesNotExist(t *testing.T, envMap map[string]EnvData) {
+	if _, ok := envMap["BHOST"]; ok {
+		t.Error("Expected 'BHOST' key not to be present in the JSON, but it was found")
+	}
+}
+
+func checkAHostDoesNotExist(t *testing.T, envMap map[string]EnvData) {
+	if _, ok := envMap["AHOST"]; ok {
+		t.Error("Expected 'AHOST' key not to be present in the JSON, but it was found")
 	}
 }
