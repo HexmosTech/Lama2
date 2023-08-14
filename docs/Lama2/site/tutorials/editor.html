@@ -806,11 +806,11 @@
 <p>The <code>l2</code> command provides some helpful options for
 extension developers. The options are:</p>
 <ol>
-<li><code>--env</code> or <code>-e</code> outputs a JSON of environment variables (in CLI);</li>
+<li><code>--env=&lt;string to get relevant env&gt;</code> or <code>-e</code> outputs a JSON of environment variables (in CLI);</li>
 <li><code>--nocolor</code> or <code>-n</code> disables colored output in httpie-go (in CLI);</li>
 <li><code>--output=&lt;target.json</code> or <code>-o</code> writes a structured JSON
-output to the target file (without colors). The following is the content
-structure:</li>
+   output to the target file (without colors). The following is the content
+   structure:</li>
 </ol>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
 <span class="w">    </span><span class="nt">&quot;logs&quot;</span><span class="p">:</span><span class="w"> </span><span class="err">...</span><span class="p">,</span>
@@ -833,15 +833,15 @@ structure:</li>
 <div class="highlight"><pre><span></span><code>l2<span class="w"> </span>-n<span class="w"> </span>-o<span class="w"> </span>/tmp/lama2.json<span class="w"> </span>my_api.l2
 </code></pre></div>
 <p>The command mentioned above disables HTTPie colors,
-writes the whole transaction to a structured JSON, 
+writes the whole transaction to a structured JSON,
 while also printing details into <code>stdout</code>.</p>
 <p>The extension author can simply read the file, and
 display the contents to users appropriately. For an
 example, see <a href="https://github.com/HexmosTech/Lama2Code">Lama2 for VSCode</a>
 (also see <a href="https://marketplace.visualstudio.com/items?itemName=hexmos.Lama2">Marketplace page</a>).</p>
 <h3 id="providing-environment-variable-autocompletion">Providing environment variable autocompletion<a class="headerlink" href="#providing-environment-variable-autocompletion" title="Permanent link">&para;</a></h3>
-<p>To obtain a combined JSON representation of environment variables from <code>l2.env</code> and <code>l2config.env</code>, use option <code>-e</code> or <code>--env</code>. This will output the result to <code>stdout</code>.
-<div class="highlight"><pre><span></span><code>l2<span class="w"> </span>-e<span class="w">  </span>/path/to/my_api.l2
+<p>To obtain a combined JSON representation of environment variables from <code>l2.env</code> and <code>l2config.env</code>, use option <code>-e</code> or <code>--env</code>. This will output the result to <code>stdout</code>.</p>
+<div class="highlight"><pre><span></span><code>l2<span class="w"> </span>-e<span class="o">=</span><span class="s1">&#39;&#39;</span><span class="w">  </span>/path/to/my_api.l2
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
 <span class="w">  </span><span class="nt">&quot;AHOST&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -854,7 +854,7 @@ example, see <a href="https://github.com/HexmosTech/Lama2Code">Lama2 for VSCode<
 <span class="w">  </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
-The extension author can simply read the <code>stdout</code> after executing the command, and display the variables to users appropriately.</p>
+<p>The extension author can simply read the <code>stdout</code> after executing the command, and display the variables to users appropriately.</p>
 <p><img alt="l2envvariable variable" src="l2envvariable.png" /></p>
 <p><img alt="l2configvariable variable" src="l2configvariable.png" /></p>
 <p>Go to <a href="examples.html#case-3-override-root-variable-with-local-variable">Example</a></p>
