@@ -16,12 +16,15 @@ func TestCmdBasic(t *testing.T) {
 	o := *lama2cmd.GetAndValidateCmd(ipArgs)
 
 	expected := lama2cmd.Opts{
-		Verbose: []bool{true}, Nocolor: false, Positional: struct {
+		Verbose: []bool{true},
+		Nocolor: false,
+		Env:     "UNSET",
+		Positional: struct {
 			LamaAPIFile string
 		}{LamaAPIFile: "../elfparser/ElfTestSuite/y_0000_basic_get.l2"},
 	}
 
 	if !reflect.DeepEqual(o, expected) {
-		t.Errorf("Unsuccessful parsing basic CLI options")
+		t.Errorf("Unsuccessful parsing basic CLI options.\nExpected:\n%v\nGot:\n%v", expected, o)
 	}
 }
