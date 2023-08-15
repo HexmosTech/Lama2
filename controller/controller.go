@@ -89,27 +89,7 @@ func Process(version string) {
 	oldDir, _ := os.Getwd()
 	utils.ChangeWorkingDir(dir)
 
-	if (o.Env) == "" && len(o.Output) == 0 {
-		envMap, err := preprocess.GetL2EnvVariables(dir)
-		if err != nil {
-			log.Error().Str("Type", "Preprocess").Msg(err.Error())
-			return
-		}
-		marshalAndPrintJSON(envMap)
-		return
-	}
-
-	if len(o.Env) > 0 {
-		envMap, err := preprocess.GetL2EnvVariables(dir)
-		if err != nil {
-			log.Error().Str("Type", "Preprocess").Msg(err.Error())
-			return
-		}
-
-		filteredEnvs := getRelevantEnvs(envMap, o)
-		marshalAndPrintJSON(filteredEnvs)
-		return
-	}
+	processEnvironmentVariables(o, dir)
 
 	preprocess.LoadEnvironments(dir)
 	utils.ChangeWorkingDir(oldDir)
@@ -136,13 +116,28 @@ func Process(version string) {
 	HandleParsedFile(parsedAPI, o, dir)
 }
 
+func processEnvironmentVariables(o *lama2cmd.Opts, directory string) {
+	envMap, err := preprocess.GetL2EnvVariables(directory)
+	if err != nil {
+		log.Error().Str("Type", "Preprocess").Msg(err.Error())
+		os.Exit(0)
+	}
+	if o.Env == "" { // -e=''
+		marshalAndPrintJSON(envMap)
+	} else if o.Env != "UNSET" { // -e=any non-empty string
+		relevantEnvs := getRelevantEnvs(envMap, o)
+		marshalAndPrintJSON(relevantEnvs)
+	}
+}
+
 func marshalAndPrintJSON(data interface{}) {
 	filteredJSON, err := json.MarshalIndent(data, "", "  ")
 	if err != nil {
 		log.Error().Str("Type", "Preprocess").Msg(fmt.Sprintf("Failed to marshal JSON: %v", err))
-		return
+		os.Exit(0)
 	}
 	fmt.Println(string(filteredJSON))
+	os.Exit(0)
 }
 
 func getRelevantEnvs(envMap map[string]map[string]interface{}, o *lama2cmd.Opts) map[string]interface{} {
