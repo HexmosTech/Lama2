@@ -1,3 +1,4 @@
+// env_command_test.go
 package tests
 
 import (
@@ -28,7 +29,7 @@ func TestL2EnvCommand(t *testing.T) {
 	checkBHost(t, envMap)
 }
 
-func TestL2EnvForAHOenv(t *testing.T) {
+func TestL2RelevantEnvForAString(t *testing.T) {
 	fpath := "../elfparser/ElfTestSuite/root_variable_override/api/y_0020_root_override.l2"
 	cmdArgs := []string{"-e=A", fpath}
 	envMap := runL2CommandAndParseJSON(t, cmdArgs...)
@@ -40,7 +41,7 @@ func TestL2EnvForAHOenv(t *testing.T) {
 	checkBHostDoesNotExist(t, envMap)
 }
 
-func TestL2EnvForBHOenv(t *testing.T) {
+func TestL2RelevantEnvForBString(t *testing.T) {
 	fpath := "../elfparser/ElfTestSuite/root_variable_override/api/y_0020_root_override.l2"
 	cmdArgs := []string{"-e=B", fpath}
 	envMap := runL2CommandAndParseJSON(t, cmdArgs...)
