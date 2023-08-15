@@ -1,2 +1,2 @@
 GET
-https://google.com
+http://httpbin.org/get
