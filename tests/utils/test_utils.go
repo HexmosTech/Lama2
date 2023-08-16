@@ -15,16 +15,16 @@ type EnvData struct {
 	Val string `json:"val"`
 }
 
-func checkL2BinaryExists(l2BinPath string) error {
+func checkLocalL2BinaryExists(l2BinPath string) error {
 	if _, err := os.Stat(l2BinPath); os.IsNotExist(err) {
 		return fmt.Errorf("l2 binary not found in the build folder %s, please change the path", l2BinPath)
 	}
 	return nil
 }
 
-func getL2BinaryPath() (string, error) {
+func getLocalL2BinaryPath() (string, error) {
 	l2BinPath := "../build/l2"
-	err := checkL2BinaryExists(l2BinPath)
+	err := checkLocalL2BinaryExists(l2BinPath)
 	if err != nil {
 		return "", err
 	}
@@ -50,7 +50,7 @@ func runCommand(binPath string, cmdArgs ...string) (string, error) {
 }
 
 func RunL2CommandAndGetOutput(cmdArgs ...string) (string, error) {
-	l2BinPath, err := getL2BinaryPath()
+	l2BinPath, err := getLocalL2BinaryPath()
 	if err != nil {
 		return "", err
 	}
@@ -59,7 +59,7 @@ func RunL2CommandAndGetOutput(cmdArgs ...string) (string, error) {
 }
 
 func RunL2CommandAndParseJSON(cmdArgs ...string) (map[string]EnvData, error) {
-	l2BinPath, err := getL2BinaryPath()
+	l2BinPath, err := getLocalL2BinaryPath()
 	if err != nil {
 		return nil, err
 	}
@@ -72,7 +72,7 @@ func RunL2CommandAndParseJSON(cmdArgs ...string) (map[string]EnvData, error) {
 	envMap := make(map[string]EnvData)
 	err = json.Unmarshal([]byte(output), &envMap)
 	if err != nil {
-		return nil, fmt.Errorf("Error unmarshaling JSON env: %v\nOutput:\n%s", err, output)
+		return nil, fmt.Errorf("error unmarshaling JSON env: %v\nOutput:\n%s", err, output)
 	}
 
 	return envMap, nil
