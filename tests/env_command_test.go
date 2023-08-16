@@ -2,25 +2,15 @@
 package tests
 
 import (
-	"bytes"
-	"encoding/json"
-	"fmt"
-	"os"
-	"os/exec"
 	"testing"
 
-	"github.com/rs/zerolog/log"
+	testutils "github.com/HexmosTech/lama2/tests/utils"
 )
-
-type EnvData struct {
-	Src string `json:"src"`
-	Val string `json:"val"`
-}
 
 func TestL2EnvCommand(t *testing.T) {
 	fpath := "../elfparser/ElfTestSuite/root_variable_override/api/y_0020_root_override.l2"
 	cmdArgs := []string{"-e=", fpath}
-	envMap := runL2CommandAndParseJSON(t, cmdArgs...)
+	envMap := testutils.RunL2CommandAndParseJSON(t, cmdArgs...)
 
 	// Check the "AHOST" key is present
 	checkAHost(t, envMap)
@@ -32,7 +22,7 @@ func TestL2EnvCommand(t *testing.T) {
 func TestL2RelevantEnvForAString(t *testing.T) {
 	fpath := "../elfparser/ElfTestSuite/root_variable_override/api/y_0020_root_override.l2"
 	cmdArgs := []string{"-e=A", fpath}
-	envMap := runL2CommandAndParseJSON(t, cmdArgs...)
+	envMap := testutils.RunL2CommandAndParseJSON(t, cmdArgs...)
 
 	// Check the "AHOST" key is present
 	checkAHost(t, envMap)
@@ -44,7 +34,7 @@ func TestL2RelevantEnvForAString(t *testing.T) {
 func TestL2RelevantEnvForBString(t *testing.T) {
 	fpath := "../elfparser/ElfTestSuite/root_variable_override/api/y_0020_root_override.l2"
 	cmdArgs := []string{"-e=B", fpath}
-	envMap := runL2CommandAndParseJSON(t, cmdArgs...)
+	envMap := testutils.RunL2CommandAndParseJSON(t, cmdArgs...)
 
 	// Check the "BHOST" key is present
 	checkBHost(t, envMap)
@@ -56,7 +46,7 @@ func TestL2RelevantEnvForBString(t *testing.T) {
 func TestL2EnvCommandVerbose(t *testing.T) {
 	fpath := "../elfparser/ElfTestSuite/root_variable_override/api/y_0020_root_override.l2"
 	cmdArgs := []string{"-e=", "-v", fpath}
-	envMap := runL2CommandAndParseJSON(t, cmdArgs...)
+	envMap := testutils.RunL2CommandAndParseJSON(t, cmdArgs...)
 
 	// Check the "AHOST" key is present
 	checkAHost(t, envMap)
@@ -68,7 +58,7 @@ func TestL2EnvCommandVerbose(t *testing.T) {
 func TestL2EnvWithoutL2config(t *testing.T) {
 	fpath := "../elfparser/ElfTestSuite/no_l2config/api/y_0021_no_l2config.l2"
 	cmdArgs := []string{"-e=", fpath}
-	envMap := runL2CommandAndParseJSON(t, cmdArgs...)
+	envMap := testutils.RunL2CommandAndParseJSON(t, cmdArgs...)
 
 	// Check the "AHOST" key is present
 	checkAHost(t, envMap)
@@ -77,64 +67,14 @@ func TestL2EnvWithoutL2config(t *testing.T) {
 func TestL2EnvWithoutL2env(t *testing.T) {
 	fpath := "../elfparser/ElfTestSuite/no_l2env/api/y_0022_no_l2env.l2"
 	cmdArgs := []string{"-e=", fpath}
-	envMap := runL2CommandAndParseJSON(t, cmdArgs...)
+	envMap := testutils.RunL2CommandAndParseJSON(t, cmdArgs...)
 
 	// Check the "BHOST" key is present
 	checkBHost(t, envMap)
 }
 
-func runL2CommandAndParseJSON(t *testing.T, cmdArgs ...string) map[string]EnvData {
-	// Get the full path to the l2 binary
-	l2BinPath := "../build/l2"
-
-	// Check if the l2 binary file exists
-	if err := checkL2BinaryExists(l2BinPath); err != nil {
-		t.Error(err)
-		return make(map[string]EnvData)
-	}
-
-	// Your existing code to run the l2 command and parse JSON
-	cmd := exec.Command(l2BinPath, cmdArgs...)
-
-	var stdout bytes.Buffer
-	cmd.Stdout = &stdout
-
-	// Execute the command
-	err := cmd.Run()
-	if err != nil {
-		// Handle the error if needed
-		t.Errorf("Error running l2 command: %v\n", err)
-		return make(map[string]EnvData)
-	}
-
-	// Retrieve the captured stdout
-	stdoutOutput := stdout.String()
-
-	log.Debug().Str("Test env_command", stdoutOutput).Msg("output from command")
-
-	// Convert the stdoutOutput string to []byte slice
-	outputBytes := []byte(stdoutOutput)
-
-	envMap := make(map[string]EnvData)
-	err = json.Unmarshal(outputBytes, &envMap)
-	if err != nil {
-		t.Fatalf("Error unmarshaling JSON env: %v\nOutput:\n%s", err, stdoutOutput)
-	}
-
-	return envMap
-}
-
-// checkL2BinaryExists checks if the l2 binary file exists in the specified path
-func checkL2BinaryExists(l2BinPath string) error {
-	// Check if the l2 binary file exists
-	if _, err := os.Stat(l2BinPath); os.IsNotExist(err) {
-		return fmt.Errorf("l2 binary not found in the build folder %s, please change the path", l2BinPath)
-	}
-	return nil
-}
-
 // checkAHost checks the "AHOST" key in the JSON map
-func checkAHost(t *testing.T, envMap map[string]EnvData) {
+func checkAHost(t *testing.T, envMap map[string]testutils.EnvData) {
 	if ahost, ok := envMap["AHOST"]; !ok {
 		t.Error("Expected 'AHOST' key in the JSON, but it was not found")
 	} else {
@@ -149,7 +89,7 @@ func checkAHost(t *testing.T, envMap map[string]EnvData) {
 }
 
 // checkBHost checks the "BHOST" key in the JSON map
-func checkBHost(t *testing.T, envMap map[string]EnvData) {
+func checkBHost(t *testing.T, envMap map[string]testutils.EnvData) {
 	if bhost, ok := envMap["BHOST"]; !ok {
 		t.Error("Expected 'BHOST' key in the JSON, but it was not found")
 	} else {
@@ -163,13 +103,13 @@ func checkBHost(t *testing.T, envMap map[string]EnvData) {
 	}
 }
 
-func checkBHostDoesNotExist(t *testing.T, envMap map[string]EnvData) {
+func checkBHostDoesNotExist(t *testing.T, envMap map[string]testutils.EnvData) {
 	if _, ok := envMap["BHOST"]; ok {
 		t.Error("Expected 'BHOST' key not to be present in the JSON, but it was found")
 	}
 }
 
-func checkAHostDoesNotExist(t *testing.T, envMap map[string]EnvData) {
+func checkAHostDoesNotExist(t *testing.T, envMap map[string]testutils.EnvData) {
 	if _, ok := envMap["AHOST"]; ok {
 		t.Error("Expected 'AHOST' key not to be present in the JSON, but it was found")
 	}
