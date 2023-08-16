@@ -5,12 +5,11 @@
 package contoller
 
 import (
-	"encoding/json"
-	"fmt"
 	"os"
 
 	"github.com/HexmosTech/gabs/v2"
 	"github.com/HexmosTech/httpie-go"
+	env "github.com/HexmosTech/lama2/Env"
 	"github.com/HexmosTech/lama2/cmdexec"
 	"github.com/HexmosTech/lama2/cmdgen"
 	"github.com/HexmosTech/lama2/codegen"
@@ -20,7 +19,6 @@ import (
 	"github.com/HexmosTech/lama2/preprocess"
 	"github.com/HexmosTech/lama2/prettify"
 	"github.com/HexmosTech/lama2/utils"
-	trie "github.com/Vivino/go-autocomplete-trie"
 	"github.com/dop251/goja"
 	"github.com/rs/zerolog/log"
 )
@@ -89,7 +87,7 @@ func Process(version string) {
 	oldDir, _ := os.Getwd()
 	utils.ChangeWorkingDir(dir)
 
-	processEnvironmentVariables(o, dir)
+	env.ProcessEnvironmentVariables(o, dir)
 
 	preprocess.LoadEnvironments(dir)
 	utils.ChangeWorkingDir(oldDir)
@@ -114,45 +112,4 @@ func Process(version string) {
 	}
 	log.Debug().Str("Parsed API", parsedAPI.String()).Msg("")
 	HandleParsedFile(parsedAPI, o, dir)
-}
-
-func processEnvironmentVariables(o *lama2cmd.Opts, directory string) {
-	envMap, err := preprocess.GetL2EnvVariables(directory)
-	if err != nil {
-		log.Error().Str("Type", "Preprocess").Msg(err.Error())
-		os.Exit(0)
-	}
-	if o.Env == "" { // -e=''
-		marshalAndPrintJSON(envMap)
-	} else if o.Env != "UNSET" { // -e=any non-empty string
-		relevantEnvs := getRelevantEnvs(envMap, o)
-		marshalAndPrintJSON(relevantEnvs)
-	}
-}
-
-func marshalAndPrintJSON(data interface{}) {
-	filteredJSON, err := json.MarshalIndent(data, "", "  ")
-	if err != nil {
-		log.Error().Str("Type", "Preprocess").Msg(fmt.Sprintf("Failed to marshal JSON: %v", err))
-		os.Exit(0)
-	}
-	fmt.Println(string(filteredJSON))
-	os.Exit(0)
-}
-
-func getRelevantEnvs(envMap map[string]map[string]interface{}, o *lama2cmd.Opts) map[string]interface{} {
-	envTrie := trie.New()
-	for key := range envMap {
-		envTrie.Insert(key)
-	}
-
-	searchQuery := o.Env
-	suggestions := envTrie.SearchAll(searchQuery)
-	filteredEnvs := make(map[string]interface{})
-	for _, suggestion := range suggestions {
-		if env, found := envMap[suggestion]; found {
-			filteredEnvs[suggestion] = env
-		}
-	}
-	return filteredEnvs
 }
