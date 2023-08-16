@@ -26,6 +26,7 @@ func ProcessEnvironmentVariables(o *lama2cmd.Opts, directory string) {
 			relevantEnvs := GetRelevantEnvs(envMap, o)
 			utils.MarshalAndPrintJSON(relevantEnvs)
 		}
+		os.Exit(0)
 	}
 	// If not an -e invocation, the function just continues.
 }

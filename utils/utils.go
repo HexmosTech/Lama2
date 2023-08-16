@@ -146,5 +146,4 @@ func MarshalAndPrintJSON(data interface{}) {
 		os.Exit(0)
 	}
 	fmt.Println(string(filteredJSON))
-	os.Exit(0)
 }
