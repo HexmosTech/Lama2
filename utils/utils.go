@@ -138,3 +138,13 @@ func UpdateSelf() {
 	cmd.Stderr = os.Stderr
 	_ = cmd.Run()
 }
+
+func MarshalAndPrintJSON(data interface{}) {
+	filteredJSON, err := json.MarshalIndent(data, "", "  ")
+	if err != nil {
+		log.Error().Str("Type", "Preprocess").Msg(fmt.Sprintf("Failed to marshal JSON: %v", err))
+		os.Exit(0)
+	}
+	fmt.Println(string(filteredJSON))
+	os.Exit(0)
+}
