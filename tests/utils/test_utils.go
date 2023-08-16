@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
-	"testing"
 
 	"github.com/rs/zerolog/log"
 )
@@ -16,85 +15,65 @@ type EnvData struct {
 	Val string `json:"val"`
 }
 
-func RunL2CommandAndGetOutput(t *testing.T, cmdArgs ...string) string {
-
-	// Get the full path to the l2 binary
-	l2BinPath := "../build/l2"
-
-	// Check if the l2 binary file exists
-	if err := checkL2BinaryExists(l2BinPath); err != nil {
-		t.Error(err)
-		return ""
-	}
-
-	// Code to run the l2 command
-	cmd := exec.Command(l2BinPath, cmdArgs...)
-
-	var stdout bytes.Buffer
-	cmd.Stdout = &stdout
-
-	var stderr bytes.Buffer
-	cmd.Stderr = &stderr
-
-	// Execute the command
-	err := cmd.Run()
-	if err != nil {
-		log.Error().Str("Error", stderr.String()).Msg("Error running l2 command")
-		t.Errorf("Error running l2 command: %v\n", err)
-		return ""
-	}
-
-	// Retrieve the captured stdout
-	stdoutOutput := stdout.String()
-	log.Info().Str("Test env_command", stdoutOutput).Msg("output from command")
-	return stdoutOutput
-}
-
-func RunL2CommandAndParseJSON(t *testing.T, cmdArgs ...string) map[string]EnvData {
-	// Get the full path to the l2 binary
-	l2BinPath := "../build/l2"
-
-	// Check if the l2 binary file exists
-	if err := checkL2BinaryExists(l2BinPath); err != nil {
-		t.Error(err)
-		return make(map[string]EnvData)
-	}
-
-	// Your existing code to run the l2 command and parse JSON
-	cmd := exec.Command(l2BinPath, cmdArgs...)
-
-	var stdout bytes.Buffer
-	cmd.Stdout = &stdout
-
-	// Execute the command
-	err := cmd.Run()
-	if err != nil {
-		// Handle the error if needed
-		t.Errorf("Error running l2 command: %v\n", err)
-		return make(map[string]EnvData)
-	}
-
-	// Retrieve the captured stdout
-	stdoutOutput := stdout.String()
-
-	log.Debug().Str("Test env_command", stdoutOutput).Msg("output from command")
-
-	// Convert the stdoutOutput string to []byte slice
-	outputBytes := []byte(stdoutOutput)
-
-	envMap := make(map[string]EnvData)
-	err = json.Unmarshal(outputBytes, &envMap)
-	if err != nil {
-		t.Fatalf("Error unmarshaling JSON env: %v\nOutput:\n%s", err, stdoutOutput)
-	}
-
-	return envMap
-}
-
 func checkL2BinaryExists(l2BinPath string) error {
-	// Check if the l2 binary file exists
 	if _, err := os.Stat(l2BinPath); os.IsNotExist(err) {
 		return fmt.Errorf("l2 binary not found in the build folder %s, please change the path", l2BinPath)
 	}
 	return nil
+}
+
+func getL2BinaryPath() (string, error) {
+	l2BinPath := "../build/l2"
+	err := checkL2BinaryExists(l2BinPath)
+	if err != nil {
+		return "", err
+	}
+	return l2BinPath, nil
+}
+
+func runCommand(binPath string, cmdArgs ...string) (string, error) {
+	cmd := exec.Command(binPath, cmdArgs...)
+
+	var stdout, stderr bytes.Buffer
+	cmd.Stdout = &stdout
+	cmd.Stderr = &stderr
+
+	err := cmd.Run()
+	if err != nil {
+		log.Error().Str("Error", stderr.String()).Msg("Error running command")
+		return "", fmt.Errorf("error running command: %v", err)
+	}
+
+	output := stdout.String()
+	log.Debug().Str("Test env_command", output).Msg("Output from command")
+	return output, nil
+}
+
+func RunL2CommandAndGetOutput(cmdArgs ...string) (string, error) {
+	l2BinPath, err := getL2BinaryPath()
+	if err != nil {
+		return "", err
+	}
+
+	return runCommand(l2BinPath, cmdArgs...)
+}
+
+func RunL2CommandAndParseJSON(cmdArgs ...string) (map[string]EnvData, error) {
+	l2BinPath, err := getL2BinaryPath()
+	if err != nil {
+		return nil, err
+	}
+
+	output, err := runCommand(l2BinPath, cmdArgs...)
+	if err != nil {
+		return nil, err
+	}
+
+	envMap := make(map[string]EnvData)
+	err = json.Unmarshal([]byte(output), &envMap)
+	if err != nil {
+		return nil, fmt.Errorf("Error unmarshaling JSON env: %v\nOutput:\n%s", err, output)
+	}
+
+	return envMap, nil
 }

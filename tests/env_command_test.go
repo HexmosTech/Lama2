@@ -1,4 +1,3 @@
-// env_command_test.go
 package tests
 
 import (
@@ -7,10 +6,18 @@ import (
 	testutils "github.com/HexmosTech/lama2/tests/utils"
 )
 
+func runL2Command(t *testing.T, cmdArgs ...string) map[string]testutils.EnvData {
+	envMap, err := testutils.RunL2CommandAndParseJSON(cmdArgs...)
+	if err != nil {
+		t.Fatalf("Error running L2 command: %v", err)
+	}
+	return envMap
+}
+
 func TestL2EnvCommand(t *testing.T) {
 	fpath := "../elfparser/ElfTestSuite/root_variable_override/api/y_0020_root_override.l2"
 	cmdArgs := []string{"-e=", fpath}
-	envMap := testutils.RunL2CommandAndParseJSON(t, cmdArgs...)
+	envMap := runL2Command(t, cmdArgs...)
 
 	// Check the "AHOST" key is present
 	checkAHost(t, envMap)
@@ -22,7 +29,7 @@ func TestL2EnvCommand(t *testing.T) {
 func TestL2RelevantEnvForAString(t *testing.T) {
 	fpath := "../elfparser/ElfTestSuite/root_variable_override/api/y_0020_root_override.l2"
 	cmdArgs := []string{"-e=A", fpath}
-	envMap := testutils.RunL2CommandAndParseJSON(t, cmdArgs...)
+	envMap := runL2Command(t, cmdArgs...)
 
 	// Check the "AHOST" key is present
 	checkAHost(t, envMap)
@@ -34,7 +41,7 @@ func TestL2RelevantEnvForAString(t *testing.T) {
 func TestL2RelevantEnvForBString(t *testing.T) {
 	fpath := "../elfparser/ElfTestSuite/root_variable_override/api/y_0020_root_override.l2"
 	cmdArgs := []string{"-e=B", fpath}
-	envMap := testutils.RunL2CommandAndParseJSON(t, cmdArgs...)
+	envMap := runL2Command(t, cmdArgs...)
 
 	// Check the "BHOST" key is present
 	checkBHost(t, envMap)
@@ -46,7 +53,7 @@ func TestL2RelevantEnvForBString(t *testing.T) {
 func TestL2EnvCommandVerbose(t *testing.T) {
 	fpath := "../elfparser/ElfTestSuite/root_variable_override/api/y_0020_root_override.l2"
 	cmdArgs := []string{"-e=", "-v", fpath}
-	envMap := testutils.RunL2CommandAndParseJSON(t, cmdArgs...)
+	envMap := runL2Command(t, cmdArgs...)
 
 	// Check the "AHOST" key is present
 	checkAHost(t, envMap)
@@ -58,7 +65,7 @@ func TestL2EnvCommandVerbose(t *testing.T) {
 func TestL2EnvWithoutL2config(t *testing.T) {
 	fpath := "../elfparser/ElfTestSuite/no_l2config/api/y_0021_no_l2config.l2"
 	cmdArgs := []string{"-e=", fpath}
-	envMap := testutils.RunL2CommandAndParseJSON(t, cmdArgs...)
+	envMap := runL2Command(t, cmdArgs...)
 
 	// Check the "AHOST" key is present
 	checkAHost(t, envMap)
@@ -67,7 +74,7 @@ func TestL2EnvWithoutL2config(t *testing.T) {
 func TestL2EnvWithoutL2env(t *testing.T) {
 	fpath := "../elfparser/ElfTestSuite/no_l2env/api/y_0022_no_l2env.l2"
 	cmdArgs := []string{"-e=", fpath}
-	envMap := testutils.RunL2CommandAndParseJSON(t, cmdArgs...)
+	envMap := runL2Command(t, cmdArgs...)
 
 	// Check the "BHOST" key is present
 	checkBHost(t, envMap)
