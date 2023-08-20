@@ -12,7 +12,7 @@
         <link rel="canonical" href="http://hexmos.com/lama2/reference/utils.html">
       
       <link rel="icon" href="../favicon.ico">
-      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-8.5.10">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
     
 
 <meta name="description" content="Hexmos Lama2: Plain-Text Powered REST API Client for Teams">
@@ -711,6 +711,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#func-marshalandprintjson" class="md-nav__link">
+    func MarshalAndPrintJSON
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#func-prettyprint" class="md-nav__link">
     func PrettyPrint
   </a>
@@ -798,6 +805,7 @@
 <li><a href="#ContainsString">func ContainsString(s []string, e string) bool</a></li>
 <li><a href="#ContainsStringPartial">func ContainsStringPartial(s []string, e string) bool</a></li>
 <li><a href="#GetFilePathComponents">func GetFilePathComponents(name string) (string, string, string)</a></li>
+<li><a href="#MarshalAndPrintJSON">func MarshalAndPrintJSON(data interface{})</a></li>
 <li><a href="#PrettyPrint">func PrettyPrint(i interface{}) string</a></li>
 <li><a href="#SetJSON">func SetJSON(parentObj *gabs.Container, childObj *gabs.Container, key string) *gabs.Container</a></li>
 <li><a href="#UnicodeCategory">func UnicodeCategory(r rune) string</a></li>
@@ -831,6 +839,10 @@
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">GetFilePathComponents</span><span class="p">(</span><span class="nx">name</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span>
 </code></pre></div>
 <p>GetFilePathComponent returns absolute path, directory, and filename given a filepath</p>
+<p><a name="MarshalAndPrintJSON"></a></p>
+<h2 id="func-marshalandprintjson">func <a href="https://github.com/HexmosTech/Lama2/blob/main/utils/utils.go#L142">MarshalAndPrintJSON</a><a class="headerlink" href="#func-marshalandprintjson" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">MarshalAndPrintJSON</span><span class="p">(</span><span class="nx">data</span><span class="w"> </span><span class="kd">interface</span><span class="p">{})</span>
+</code></pre></div>
 <p><a name="PrettyPrint"></a></p>
 <h2 id="func-prettyprint">func <a href="https://github.com/HexmosTech/Lama2/blob/main/utils/utils.go#L34">PrettyPrint</a><a class="headerlink" href="#func-prettyprint" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">PrettyPrint</span><span class="p">(</span><span class="nx">i</span><span class="w"> </span><span class="kd">interface</span><span class="p">{})</span><span class="w"> </span><span class="kt">string</span>

@@ -65,6 +65,19 @@ l2 -e=''  /path/to/my_api.l2
 }
 ```
 
+```bash
+l2 -e=BH  /path/to/my_api.l2
+```
+
+```json
+{
+  "BHOST": {
+    "src": "l2configenv",
+    "val": "https://httpbin.org"
+  }
+}
+```
+
 The extension author can simply read the `stdout` after executing the command, and display the variables to users appropriately.
 
 ![l2envvariable variable](l2envvariable.png)

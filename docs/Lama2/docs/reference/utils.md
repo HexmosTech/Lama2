@@ -15,6 +15,7 @@ Package \`utils\` provides useful functions for simplifying various programming 
 - [func ContainsString\(s \[\]string, e string\) bool](<#ContainsString>)
 - [func ContainsStringPartial\(s \[\]string, e string\) bool](<#ContainsStringPartial>)
 - [func GetFilePathComponents\(name string\) \(string, string, string\)](<#GetFilePathComponents>)
+- [func MarshalAndPrintJSON\(data interface\{\}\)](<#MarshalAndPrintJSON>)
 - [func PrettyPrint\(i interface\{\}\) string](<#PrettyPrint>)
 - [func SetJSON\(parentObj \*gabs.Container, childObj \*gabs.Container, key string\) \*gabs.Container](<#SetJSON>)
 - [func UnicodeCategory\(r rune\) string](<#UnicodeCategory>)
@@ -68,6 +69,15 @@ func GetFilePathComponents(name string) (string, string, string)
 ```
 
 GetFilePathComponent returns absolute path, directory, and filename given a filepath
+
+<a name="MarshalAndPrintJSON"></a>
+## func [MarshalAndPrintJSON](<https://github.com/HexmosTech/Lama2/blob/main/utils/utils.go#L142>)
+
+```go
+func MarshalAndPrintJSON(data interface{})
+```
+
+
 
 <a name="PrettyPrint"></a>
 ## func [PrettyPrint](<https://github.com/HexmosTech/Lama2/blob/main/utils/utils.go#L34>)

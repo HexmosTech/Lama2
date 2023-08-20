@@ -18,7 +18,7 @@ Package controller coordinates all the other components in the \`Lama2\` project
 
 
 <a name="ExecuteProcessorBlock"></a>
-## func [ExecuteProcessorBlock](<https://github.com/HexmosTech/Lama2/blob/main/controller/controller.go#L32>)
+## func [ExecuteProcessorBlock](<https://github.com/HexmosTech/Lama2/blob/main/controller/controller.go#L30>)
 
 ```go
 func ExecuteProcessorBlock(block *gabs.Container, vm *goja.Runtime)
@@ -27,7 +27,7 @@ func ExecuteProcessorBlock(block *gabs.Container, vm *goja.Runtime)
 
 
 <a name="ExecuteRequestorBlock"></a>
-## func [ExecuteRequestorBlock](<https://github.com/HexmosTech/Lama2/blob/main/controller/controller.go#L39>)
+## func [ExecuteRequestorBlock](<https://github.com/HexmosTech/Lama2/blob/main/controller/controller.go#L37>)
 
 ```go
 func ExecuteRequestorBlock(block *gabs.Container, vm *goja.Runtime, opts *lama2cmd.Opts, dir string) httpie.ExResponse
@@ -36,7 +36,7 @@ func ExecuteRequestorBlock(block *gabs.Container, vm *goja.Runtime, opts *lama2c
 
 
 <a name="GetParsedAPIBlocks"></a>
-## func [GetParsedAPIBlocks](<https://github.com/HexmosTech/Lama2/blob/main/controller/controller.go#L28>)
+## func [GetParsedAPIBlocks](<https://github.com/HexmosTech/Lama2/blob/main/controller/controller.go#L26>)
 
 ```go
 func GetParsedAPIBlocks(parsedAPI *gabs.Container) []*gabs.Container
@@ -45,7 +45,7 @@ func GetParsedAPIBlocks(parsedAPI *gabs.Container) []*gabs.Container
 
 
 <a name="HandleParsedFile"></a>
-## func [HandleParsedFile](<https://github.com/HexmosTech/Lama2/blob/main/controller/controller.go#L56>)
+## func [HandleParsedFile](<https://github.com/HexmosTech/Lama2/blob/main/controller/controller.go#L54>)
 
 ```go
 func HandleParsedFile(parsedAPI *gabs.Container, o *lama2cmd.Opts, dir string)
@@ -54,7 +54,7 @@ func HandleParsedFile(parsedAPI *gabs.Container, o *lama2cmd.Opts, dir string)
 
 
 <a name="Process"></a>
-## func [Process](<https://github.com/HexmosTech/Lama2/blob/main/controller/controller.go#L83>)
+## func [Process](<https://github.com/HexmosTech/Lama2/blob/main/controller/controller.go#L81>)
 
 ```go
 func Process(version string)
