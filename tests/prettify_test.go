@@ -1,7 +1,6 @@
 package tests
 
 import (
-	"fmt"
 	"os"
 	"testing"
 
@@ -14,10 +13,8 @@ func TestPrettifyMultiStage(t *testing.T) {
 	lamaOutputAPIFile := "../examples/0010_ugly_json/ugly_json_target1.l2"
 	lamaOutputVerifyFile := "../examples/0010_ugly_json/ugly_json_target1_verify.l2"
 	apiContent, _ := os.ReadFile(lamaInputAPIFile)
-	fmt.Println(apiContent)
 	p := parser.NewLama2Parser()
 	parsedAPI, _ := p.Parse(string(apiContent))
-	fmt.Println(parsedAPI)
 	prettify.Prettify(parsedAPI, p.Context, p.MarkRange, string(apiContent), lamaOutputAPIFile)
 
 	outputByte, _ := os.ReadFile(lamaOutputAPIFile)
@@ -40,10 +37,8 @@ func TestPrettifySingleStage(t *testing.T) {
 	lamaOutputAPIFile := "../examples/0010_ugly_json/ugly_json_target2.l2"
 	lamaOutputVerifyFile := "../examples/0010_ugly_json/ugly_json_target2_verify.l2"
 	apiContent, _ := os.ReadFile(lamaInputAPIFile)
-	fmt.Println(apiContent)
 	p := parser.NewLama2Parser()
 	parsedAPI, _ := p.Parse(string(apiContent))
-	fmt.Println(parsedAPI)
 	prettify.Prettify(parsedAPI, p.Context, p.MarkRange, string(apiContent), lamaOutputAPIFile)
 
 	outputByte, _ := os.ReadFile(lamaOutputAPIFile)
@@ -57,6 +52,6 @@ func TestPrettifySingleStage(t *testing.T) {
 	}
 
 	if verifyStr != outputStr {
-		t.Errorf("Multistage prettification output not as expected")
+		t.Errorf("Singlestage prettification output not as expected")
 	}
 }

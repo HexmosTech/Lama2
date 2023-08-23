@@ -9,7 +9,6 @@ import (
 )
 
 func Prettify(parsedAPI *gabs.Container, context map[string]bool, markRange map[string]int, content string, fPath string) {
-	fmt.Println(markRange)
 	parsedAPIblocks := parsedAPI.S("value").Data().(*gabs.Container).Children()
 	// Prettification procedure:
 	// 1. Scan from bottom of contents
