@@ -6,14 +6,10 @@ import (
 	"fmt"
 	"os"
 
-	"net/http"
-
 	"github.com/HexmosTech/lama2/importer"
 	"github.com/HexmosTech/lama2/l2lsp"
 	outputmanager "github.com/HexmosTech/lama2/outputManager"
 	"github.com/HexmosTech/lama2/utils"
-	"github.com/gorilla/rpc/v2"
-	json2 "github.com/gorilla/rpc/v2/json2"
 	"github.com/jessevdk/go-flags"
 	"github.com/rs/zerolog/log"
 )
@@ -93,13 +89,7 @@ func ArgParsing(o *Opts, version string) {
 		os.Exit(0)
 	}
 	if o.Lsp {
-		fmt.Println("JSON-RPC server starting on port 9999")
-		s := rpc.NewServer()
-		s.RegisterCodec(json2.NewCodec(), "application/json")
-		s.RegisterService(new(l2lsp.LSPService), "")
-
-		http.Handle("/lsp", s)
-		http.ListenAndServe(":9999", nil)
+		l2lsp.StartLspServer()
 		// Incoming requests to the LSP will be handled by l2lsp.Process()
 	}
 	if len(o.PostmanFile) > 0 {
