@@ -1,16 +1,16 @@
-package env
+package l2envpackege
 
 import (
+	"encoding/json"
+	"fmt"
 	"os"
 
-	"github.com/HexmosTech/lama2/lama2cmd"
 	"github.com/HexmosTech/lama2/preprocess"
-	"github.com/HexmosTech/lama2/utils"
 	trie "github.com/Vivino/go-autocomplete-trie"
 	"github.com/rs/zerolog/log"
 )
 
-func ProcessEnvironmentVariables(o *lama2cmd.Opts, directory string) {
+func ProcessEnvironmentVariables(relevantSearchString, directory string) interface{} {
 	envMap, err := preprocess.GetL2EnvVariables(directory)
 	if err != nil {
 		// Potential Errors:
@@ -18,26 +18,22 @@ func ProcessEnvironmentVariables(o *lama2cmd.Opts, directory string) {
 		log.Error().Str("Type", "Preprocess").Msg(err.Error())
 		os.Exit(0)
 	}
-	// Check if it's an -e invocation
-	if o.Env != "UNSET_VU5TRVQ" {
-		if o.Env == "" { // Handle empty -e=''
-			utils.MarshalAndPrintJSON(envMap)
-		} else { // Handle non-empty -e
-			relevantEnvs := GetRelevantEnvs(envMap, o)
-			utils.MarshalAndPrintJSON(relevantEnvs)
-		}
-		os.Exit(0)
+	if relevantSearchString == "" { // Handle empty -e=''
+		return envMap
+	} else { // Handle non-empty -e
+		relevantEnvs := GetRelevantEnvs(envMap, relevantSearchString)
+		return relevantEnvs
 	}
-	// If not an -e invocation, the function just continues.
+
 }
 
-func GetRelevantEnvs(envMap map[string]map[string]interface{}, o *lama2cmd.Opts) map[string]interface{} {
+func GetRelevantEnvs(envMap map[string]map[string]interface{}, relevantSearchString string) map[string]interface{} {
 	envTrie := trie.New()
 	for key := range envMap {
 		envTrie.Insert(key)
 	}
 
-	searchQuery := o.Env
+	searchQuery := relevantSearchString
 	suggestions := envTrie.SearchAll(searchQuery)
 	filteredEnvs := make(map[string]interface{})
 	for _, suggestion := range suggestions {
@@ -46,4 +42,13 @@ func GetRelevantEnvs(envMap map[string]map[string]interface{}, o *lama2cmd.Opts)
 		}
 	}
 	return filteredEnvs
+}
+
+func createJsonENv(data interface{}) []byte {
+	filteredJSON, err := json.MarshalIndent(data, "", "  ")
+	if err != nil {
+		log.Error().Str("Type", "Preprocess").Msg(fmt.Sprintf("Failed to marshal JSON: %v", err))
+		os.Exit(0)
+	}
+	return filteredJSON
 }

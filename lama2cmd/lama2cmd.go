@@ -27,8 +27,7 @@ type Opts struct {
 	PostmanFile string `short:"p" long:"postmanfile" description:"JSON export from Postman (Settings -> Data -> Export Data)"`
 	LamaDir     string `short:"l" long:"lama2dir" description:"Output directory to put .l2 files after conversion from Postman format"`
 	Help        bool   `short:"h" long:"help" group:"AddHelp" description:"Usage help for Lama2"`
-	Env         string `short:"e" long:"env" default:"UNSET_VU5TRVQ" description:"Get a JSON of environment variables revelant to input arg"`
-	Lsp         bool   `short:"z" long:"lsp" description:"Start the server in 9999"`
+	Lsp         bool   `short:"z" long:"lsp" description:"Start the lsp server"`
 	Version     bool   `long:"version" description:"Print Lama2 binary version"`
 
 	Positional struct {

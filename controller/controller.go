@@ -12,7 +12,6 @@ import (
 	"github.com/HexmosTech/lama2/cmdexec"
 	"github.com/HexmosTech/lama2/cmdgen"
 	"github.com/HexmosTech/lama2/codegen"
-	env "github.com/HexmosTech/lama2/l2env"
 	"github.com/HexmosTech/lama2/lama2cmd"
 	outputmanager "github.com/HexmosTech/lama2/outputManager"
 	"github.com/HexmosTech/lama2/parser"
@@ -86,8 +85,6 @@ func Process(version string) {
 	_, dir, _ := utils.GetFilePathComponents(o.Positional.LamaAPIFile)
 	oldDir, _ := os.Getwd()
 	utils.ChangeWorkingDir(dir)
-
-	env.ProcessEnvironmentVariables(o, dir)
 
 	preprocess.LoadEnvironments(dir)
 	utils.ChangeWorkingDir(oldDir)
