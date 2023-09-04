@@ -10,7 +10,6 @@ require (
 	github.com/atotto/clipboard v0.1.4
 	github.com/dop251/goja v0.0.0-20230216180835-5937a312edda
 	github.com/dop251/goja_nodejs v0.0.0-20230207183254-2229640ea097
-	github.com/gorilla/rpc v1.2.0
 	github.com/jessevdk/go-flags v1.5.0
 	github.com/rs/zerolog v1.29.0
 )
