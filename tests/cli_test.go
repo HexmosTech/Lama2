@@ -18,7 +18,6 @@ func TestCmdBasic(t *testing.T) {
 	expected := lama2cmd.Opts{
 		Verbose: []bool{true},
 		Nocolor: false,
-		Env:     "UNSET_VU5TRVQ",
 		Positional: struct {
 			LamaAPIFile string
 		}{LamaAPIFile: "../elfparser/ElfTestSuite/y_0000_basic_get.l2"},
