@@ -22,7 +22,7 @@ func checkLocalL2BinaryExists(l2BinPath string) error {
 	return nil
 }
 
-func getLocalL2BinaryPath() (string, error) {
+func GetLocalL2BinaryPath() (string, error) {
 	l2BinPath := "../build/l2"
 	err := checkLocalL2BinaryExists(l2BinPath)
 	if err != nil {
@@ -50,7 +50,7 @@ func runCommand(binPath string, cmdArgs ...string) (string, error) {
 }
 
 func RunL2CommandAndGetOutput(cmdArgs ...string) (string, error) {
-	l2BinPath, err := getLocalL2BinaryPath()
+	l2BinPath, err := GetLocalL2BinaryPath()
 	if err != nil {
 		return "", err
 	}
@@ -59,7 +59,7 @@ func RunL2CommandAndGetOutput(cmdArgs ...string) (string, error) {
 }
 
 func RunL2CommandAndParseJSON(cmdArgs ...string) (map[string]EnvData, error) {
-	l2BinPath, err := getLocalL2BinaryPath()
+	l2BinPath, err := GetLocalL2BinaryPath()
 	if err != nil {
 		return nil, err
 	}
