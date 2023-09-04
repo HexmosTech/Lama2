@@ -1,3 +1,4 @@
+// lsp.go
 package l2lsp
 
 import (
@@ -15,6 +16,10 @@ import (
 var isShutdownRequested bool
 
 func init() {
+	setupLogging()
+}
+
+func setupLogging() {
 	zerolog.TimeFieldFormat = zerolog.TimeFormatUnix
 	log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stderr})
 }
@@ -26,95 +31,66 @@ func StartLspServer() {
 	writer := bufio.NewWriter(os.Stdout)
 
 	for scanner.Scan() {
-		input := scanner.Text()
-		log.Info().Msg("Received input: " + input)
+		handleInput(scanner.Text(), writer)
+	}
+}
 
-		var rpcRequest JSONRPCRequest
-		err := json.Unmarshal([]byte(input), &rpcRequest)
-		if err != nil {
-			log.Error().Err(err).Msg("Error decoding JSON-RPC request")
-			continue
-		}
+func handleInput(input string, writer *bufio.Writer) {
+	log.Info().Msgf("Received input: %s", input)
 
-		// Handle request and prepare response
-		rpcResponse := handleRequest(rpcRequest)
+	var rpcRequest JSONRPCRequest
+	if err := json.Unmarshal([]byte(input), &rpcRequest); err != nil {
+		log.Error().Err(err).Msg("Error decoding JSON-RPC request")
+		return
+	}
 
-		responseData, err := json.Marshal(rpcResponse)
-		if err != nil {
-			log.Error().Err(err).Msg("Error encoding JSON-RPC response")
-			continue
-		}
-
-		// Write response to stdout
+	rpcResponse := handleRequest(rpcRequest)
+	if responseData, err := json.Marshal(rpcResponse); err != nil {
+		log.Error().Err(err).Msg("Error encoding JSON-RPC response")
+	} else {
 		writer.WriteString(string(responseData) + "\n")
 		writer.Flush()
 	}
 }
 
 func handleRequest(request JSONRPCRequest) JSONRPCResponse {
-	var response JSONRPCResponse
-
 	if isShutdownRequested && request.Method != "exit" {
-		// Invalid Request
 		return InvalidReqAfterShutdown(request)
 	}
 
 	switch request.Method {
-
 	case "initialize":
-		// 1 indicates full synchronization
-		response = Initilize(request)
-
+		return Initialize(request)
 	case "shutdown":
-		response = ShutDown(request)
-
+		return Shutdown(request)
 	case "exit":
-		if isShutdownRequested {
-			os.Exit(0)
-		} else {
-			os.Exit(1)
-		}
+		return handleExit()
 	case "suggest/environmentVariables":
-		log.Info().Str("Method", request.Method).Interface("Params", request.Params)
-
-		// Check if relevantSearchString is present in params and get the value if available
-		var relevantSearchString string
-		if request.Params.RelevantSearchString != nil {
-			relevantSearchString = *request.Params.RelevantSearchString
-		} else {
-			relevantSearchString = ""
-		}
-		log.Info().Str("Method", request.Method).Msg("relevantSearchString: " + relevantSearchString)
-
-		var uri string
-		if request.Params.TextDocument.Uri == nil {
-			msg := "No document uri found"
-			return ErrorResp(request, msg)
-		} else {
-			uri = *request.Params.TextDocument.Uri
-			if strings.HasPrefix(uri, "file://") {
-				uri = uri[len("file://"):]
-			} else {
-				msg := "Document uri is improper. Ex: 'file:///path/to/workspace/myapi.l2' "
-				return ErrorResp(request, msg)
-			}
-		}
-
-		res := l2envpackege.ProcessEnvironmentVariables(relevantSearchString, uri)
-		// log.Info().Msgf("Processed Environment Variables Result: %v", res)
-
-		return JSONRPCResponse{
-			ID:      request.ID,
-			JSONRPC: "1555.0",
-			Result:  res,
-		}
+		return suggestEnvironmentVariables(request)
 	default:
-		// Respond with an error for unhandled methods
-		// Method not found
-		response = DefaultResp(request)
+		return DefaultResp(request)
+	}
+}
+func handleExit() JSONRPCResponse {
+	exitCode := 1
+	if isShutdownRequested {
+		exitCode = 0
+	}
+	os.Exit(exitCode)
+	return JSONRPCResponse{} // This line will not be reached but is added for completeness
+}
+
+func suggestEnvironmentVariables(request JSONRPCRequest) JSONRPCResponse {
+	log.Info().Str("Method", request.Method).Interface("Params", request.Params)
+
+	relevantSearchString := getRequestSearchString(request)
+	uri := getRequestURI(request)
+	if uri == "" {
+		return ErrorResp(request, "Document uri is improper. Ex: 'file:///path/to/workspace/myapi.l2'")
 	}
 
-	return response
+	res := l2envpackege.ProcessEnvironmentVariables(relevantSearchString, uri)
+	return createEnvironmentVariablesResponse(request, res)
 }
 
 func InvalidReqAfterShutdown(request JSONRPCRequest) JSONRPCResponse {
@@ -125,6 +101,30 @@ func InvalidReqAfterShutdown(request JSONRPCRequest) JSONRPCResponse {
 			"code":    "-32600",
 			"message": "Invalid request after shutdown.",
 		},
+	}
+}
+
+func getRequestSearchString(request JSONRPCRequest) string {
+	if request.Params.RelevantSearchString != nil {
+		return *request.Params.RelevantSearchString
+	}
+	return ""
+}
+func getRequestURI(request JSONRPCRequest) string {
+	if request.Params.TextDocument.Uri == nil {
+		return ""
+	}
+	uri := *request.Params.TextDocument.Uri
+	if strings.HasPrefix(uri, "file://") {
+		return uri[len("file://"):]
+	}
+	return ""
+}
+func createEnvironmentVariablesResponse(request JSONRPCRequest, res interface{}) JSONRPCResponse {
+	return JSONRPCResponse{
+		ID:      request.ID,
+		JSONRPC: "1555.0",
+		Result:  res,
 	}
 }
 
@@ -150,7 +150,7 @@ func DefaultResp(request JSONRPCRequest) JSONRPCResponse {
 	}
 }
 
-func ShutDown(request JSONRPCRequest) JSONRPCResponse {
+func Shutdown(request JSONRPCRequest) JSONRPCResponse {
 	isShutdownRequested = true
 	return JSONRPCResponse{
 		ID:      request.ID,
@@ -159,7 +159,7 @@ func ShutDown(request JSONRPCRequest) JSONRPCResponse {
 	}
 }
 
-func Initilize(request JSONRPCRequest) JSONRPCResponse {
+func Initialize(request JSONRPCRequest) JSONRPCResponse {
 	log.Info().Msg("L2 LSP initialized")
 
 	serverCapabilities := ServerCapabilities{
