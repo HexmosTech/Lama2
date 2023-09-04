@@ -3,16 +3,18 @@ package l2lsp
 import (
 	"bufio"
 	"encoding/json"
+	"strings"
 
 	"os"
 
+	l2envpackege "github.com/HexmosTech/lama2/l2env"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 )
 
 var isShutdownRequested bool
 
-type InitializeParams struct {
+type Params struct {
 	ProcessID             *int64             `json:"processId"`
 	ClientInfo            *ClientInfo        `json:"clientInfo,omitempty"`
 	Locale                *string            `json:"locale,omitempty"`
@@ -22,6 +24,8 @@ type InitializeParams struct {
 	Capabilities          ClientCapabilities `json:"capabilities"`
 	Trace                 *string            `json:"trace,omitempty"`
 	WorkspaceFolders      *[]WorkspaceFolder `json:"workspaceFolders,omitempty"`
+	RelevantSearchString  *string            `json:"relevantSearchString,omitempty"`
+	TextDocument          *Uri               `json:"textDocument,omitempty"`
 }
 
 type LSPServer struct {
@@ -38,11 +42,13 @@ type TextDocumentClientCapabilities struct {
 	Hover      *HoverClientCapabilities      `json:"hover,omitempty"`
 	// ... Add other text document capabilities as needed
 }
- 
+
 type CompletionClientCapabilities struct {
 	DynamicRegistration bool `json:"dynamicRegistration,omitempty"`
 }
-
+type Uri struct {
+	Uri *string `json:"uri,omitempty"`
+}
 type HoverClientCapabilities struct {
 	DynamicRegistration bool `json:"dynamicRegistration,omitempty"`
 }
@@ -73,10 +79,17 @@ type CompletionOptions struct {
 }
 
 type JSONRPCRequest struct {
-	ID      int               `json:"id"`
-	Method  string            `json:"method"`
-	Params  *InitializeParams `json:"params,omitempty"`
-	JSONRPC string            `json:"jsonrpc"`
+	ID      int    `json:"id"`
+	Method  string `json:"method"`
+	Params  Params `json:"params,omitempty"`
+	JSONRPC string `json:"jsonrpc"`
+}
+
+type JSONRPCSuggestEnvRequest struct {
+	ID      int         `json:"id"`
+	Method  string      `json:"method"`
+	Params  interface{} `json:"params,omitempty"`
+	JSONRPC string      `json:"jsonrpc"`
 }
 
 type JSONRPCResponse struct {
@@ -99,6 +112,7 @@ func StartLspServer() {
 
 	for scanner.Scan() {
 		input := scanner.Text()
+		log.Info().Msg("Received input: " + input)
 
 		var rpcRequest JSONRPCRequest
 		err := json.Unmarshal([]byte(input), &rpcRequest)
@@ -106,9 +120,6 @@ func StartLspServer() {
 			log.Error().Err(err).Msg("Error decoding JSON-RPC request")
 			continue
 		}
-
-		// Log the received method
-		log.Info().Str("Method", rpcRequest.Method).Msg("Received JSON-RPC method")
 
 		// Handle request and prepare response
 		rpcResponse := handleRequest(rpcRequest)
@@ -148,7 +159,40 @@ func handleRequest(request JSONRPCRequest) JSONRPCResponse {
 		} else {
 			os.Exit(1)
 		}
+	case "suggest/environmentVariables":
+		log.Info().Str("Method", request.Method).Interface("Params", request.Params)
 
+		// Check if relevantSearchString is present in params and get the value if available
+		var relevantSearchString string
+		if request.Params.RelevantSearchString != nil {
+			relevantSearchString = *request.Params.RelevantSearchString
+		} else {
+			relevantSearchString = ""
+		}
+		log.Info().Str("Method", request.Method).Msg("relevantSearchString: " + relevantSearchString)
+
+		var uri string
+		if request.Params.TextDocument.Uri == nil {
+			msg := "No document uri found"
+			return ErrorResp(request, msg)
+		} else {
+			uri = *request.Params.TextDocument.Uri
+			if strings.HasPrefix(uri, "file://") {
+				uri = uri[len("file://"):]
+			} else {
+				msg := "Document uri is improper. Ex: 'file:///path/to/workspace/myapi.l2' "
+				return ErrorResp(request, msg)
+			}
+		}
+
+		res := l2envpackege.ProcessEnvironmentVariables(relevantSearchString, uri)
+		// log.Info().Msgf("Processed Environment Variables Result: %v", res)
+
+		return JSONRPCResponse{
+			ID:      request.ID,
+			JSONRPC: "1555.0",
+			Result:  res,
+		}
 	default:
 		// Respond with an error for unhandled methods
 		// Method not found
@@ -169,13 +213,24 @@ func InvalidReqAfterShutdown(request JSONRPCRequest) JSONRPCResponse {
 	}
 }
 
+func ErrorResp(request JSONRPCRequest, msg string) JSONRPCResponse {
+	return JSONRPCResponse{
+		ID:      request.ID,
+		JSONRPC: "2.0",
+		Error: map[string]string{
+			"code":    "-32601",
+			"message": msg,
+		},
+	}
+}
+
 func DefaultResp(request JSONRPCRequest) JSONRPCResponse {
 	return JSONRPCResponse{
 		ID:      request.ID,
 		JSONRPC: "2.0",
 		Error: map[string]string{
 			"code":    "-32601",
-			"message": "Method not supported by the server.",
+			"message": "Method not supported by the server. Method: " + request.Method,
 		},
 	}
 }
@@ -189,24 +244,11 @@ func ShutDown(request JSONRPCRequest) JSONRPCResponse {
 	}
 }
 
-
 func Initilize(request JSONRPCRequest) JSONRPCResponse {
 	log.Info().Msg("LSP initialized")
 
 	serverCapabilities := ServerCapabilities{
-		TextDocumentSync: ,
-	}
-
-	if request.Params != nil && request.Params.Capabilities.TextDocument != nil {
-		if request.Params.Capabilities.TextDocument.Completion != nil {
-			serverCapabilities.Completion = &CompletionOptions{
-				TriggerCharacters: []string{".", ",", "("},
-				ResolveProvider:   true,
-			}
-		}
-		if request.Params.Capabilities.TextDocument.Hover != nil {
-			serverCapabilities.HoverProvider = true
-		}
+		TextDocumentSync: 1,
 	}
 
 	return JSONRPCResponse{
@@ -218,8 +260,7 @@ func Initilize(request JSONRPCRequest) JSONRPCResponse {
 	}
 }
 
-// {"id": 1, "method": "sayHi", "params": {}, "jsonrpc": "2.0"}
 // {"jsonrpc": "2.0","id": 1,"method": "initialize","params": {  "processId": null,  "clientInfo": {    "name": "MyEditor",    "version": "1.0.0"  },  "rootUri": "file:///path/to/workspace",  "capabilities": {    "workspace": {      "applyEdit": true,      "workspaceEdit": {        "documentChanges": true      },      "didChangeConfiguration": {        "dynamicRegistration": true      }    },    "textDocument": {      "publishDiagnostics": {        "relatedInformation": true      }    }  }}}
-//  All the events come in between these things.
+// {"jsonrpc":"2.0","id":1,"method":"suggest/environmentVariables","params":{"textDocument":{"uri":"file:////home/lovestaco/repos/apihub/karma/karma_admin/login/one_logout.l2"},"position":{"line":1,"character":45},"relevantSearchString":"karma"}}
 // {  "jsonrpc": "2.0",  "id": 1,  "method": "shutdown"}
 // {  "jsonrpc": "2.0",  "method": "exit"}
