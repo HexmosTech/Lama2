@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+	"path/filepath"
 
 	"github.com/rs/zerolog/log"
 )
@@ -76,4 +77,13 @@ func RunL2CommandAndParseJSON(cmdArgs ...string) (map[string]EnvData, error) {
 	}
 
 	return envMap, nil
+}
+
+func GetAbsolutePath(relPath string) (string, error) {
+	// GetAbsolutePath takes a relative path and returns its absolute path.
+	absPath, err := filepath.Abs(relPath)
+	if err != nil {
+		return "", err
+	}
+	return absPath, nil
 }
