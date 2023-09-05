@@ -123,7 +123,7 @@ func getRequestURI(request JSONRPCRequest) string {
 func createEnvironmentVariablesResponse(request JSONRPCRequest, res interface{}) JSONRPCResponse {
 	return JSONRPCResponse{
 		ID:      request.ID,
-		JSONRPC: "1555.0",
+		JSONRPC: "2.0",
 		Result:  res,
 	}
 }
