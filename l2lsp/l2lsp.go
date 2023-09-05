@@ -4,17 +4,12 @@ package l2lsp
 import (
 	"bufio"
 	"encoding/json"
-	"path/filepath"
-	"strings"
 
 	"os"
 
-	l2envpackege "github.com/HexmosTech/lama2/l2env"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 )
-
-var isShutdownRequested bool
 
 func init() {
 	setupLogging()
@@ -65,33 +60,12 @@ func handleRequest(request JSONRPCRequest) JSONRPCResponse {
 	case "shutdown":
 		return Shutdown(request)
 	case "exit":
-		return handleExit()
+		return Exit()
 	case "suggest/environmentVariables":
 		return suggestEnvironmentVariables(request)
 	default:
 		return DefaultResp(request)
 	}
-}
-func handleExit() JSONRPCResponse {
-	exitCode := 1
-	if isShutdownRequested {
-		exitCode = 0
-	}
-	os.Exit(exitCode)
-	return JSONRPCResponse{} // This line will not be reached but is added for completeness
-}
-
-func suggestEnvironmentVariables(request JSONRPCRequest) JSONRPCResponse {
-	log.Info().Str("Method", request.Method).Interface("Params", request.Params)
-
-	relevantSearchString := getRequestSearchString(request)
-	uri := getRequestURI(request)
-	if uri == "" {
-		return ErrorResp(request, "Document uri is improper. Ex: 'file:///path/to/workspace/myapi.l2'")
-	}
-	parentFolder := filepath.Dir(uri)
-	res := l2envpackege.ProcessEnvironmentVariables(relevantSearchString, parentFolder)
-	return createEnvironmentVariablesResponse(request, res)
 }
 
 func InvalidReqAfterShutdown(request JSONRPCRequest) JSONRPCResponse {
@@ -105,22 +79,6 @@ func InvalidReqAfterShutdown(request JSONRPCRequest) JSONRPCResponse {
 	}
 }
 
-func getRequestSearchString(request JSONRPCRequest) string {
-	if request.Params.RelevantSearchString != nil {
-		return *request.Params.RelevantSearchString
-	}
-	return ""
-}
-func getRequestURI(request JSONRPCRequest) string {
-	if request.Params.TextDocument.Uri == nil {
-		return ""
-	}
-	uri := *request.Params.TextDocument.Uri
-	if strings.HasPrefix(uri, "file://") {
-		return uri[len("file://"):]
-	}
-	return ""
-}
 func createEnvironmentVariablesResponse(request JSONRPCRequest, res interface{}) JSONRPCResponse {
 	return JSONRPCResponse{
 		ID:      request.ID,
@@ -150,34 +108,3 @@ func DefaultResp(request JSONRPCRequest) JSONRPCResponse {
 		},
 	}
 }
-
-func Shutdown(request JSONRPCRequest) JSONRPCResponse {
-	isShutdownRequested = true
-	return JSONRPCResponse{
-		ID:      request.ID,
-		Result:  nil,
-		JSONRPC: "2.0",
-	}
-}
-
-func Initialize(request JSONRPCRequest) JSONRPCResponse {
-	log.Info().Msg("L2 LSP initialized")
-
-	serverCapabilities := ServerCapabilities{
-		TextDocumentSync: 0,
-		SuggestL2Envs:    true,
-	}
-
-	return JSONRPCResponse{
-		ID: request.ID,
-		Result: map[string]interface{}{
-			"capabilities": serverCapabilities,
-		},
-		JSONRPC: "2.0",
-	}
-}
-
-// {"jsonrpc": "2.0","id": 1,"method": "initialize","params": {  "processId": null,  "clientInfo": {    "name": "MyEditor",    "version": "1.0.0"  },  "rootUri": "file:///path/to/workspace",  "capabilities": {    "workspace": {      "applyEdit": true,      "workspaceEdit": {        "documentChanges": true      },      "didChangeConfiguration": {        "dynamicRegistration": true      }    },    "textDocument": {      "publishDiagnostics": {        "relatedInformation": true      }    }  }}}
-// {"jsonrpc":"2.0","id":1,"method":"suggest/environmentVariables","params":{"textDocument":{"uri":"file:////home/lovestaco/repos/apihub/karma/karma_admin/login/one_logout.l2"},"position":{"line":1,"character":45},"relevantSearchString":"karma"}}
-// {  "jsonrpc": "2.0",  "id": 1,  "method": "shutdown"}
-// {  "jsonrpc": "2.0",  "method": "exit"}
