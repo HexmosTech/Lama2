@@ -1,4 +1,4 @@
-// lsp_shutdown.go
+// lsp_lifecycle.go
 package l2lsp
 
 import (

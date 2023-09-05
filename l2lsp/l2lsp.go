@@ -62,7 +62,7 @@ func handleRequest(request JSONRPCRequest) JSONRPCResponse {
 	case "exit":
 		return Exit()
 	case "suggest/environmentVariables":
-		return suggestEnvironmentVariables(request)
+		return SuggestEnvironmentVariables(request)
 	default:
 		return DefaultResp(request)
 	}
