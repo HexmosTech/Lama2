@@ -4,6 +4,7 @@ package l2lsp
 import (
 	"bufio"
 	"encoding/json"
+	"path/filepath"
 	"strings"
 
 	"os"
@@ -88,8 +89,8 @@ func suggestEnvironmentVariables(request JSONRPCRequest) JSONRPCResponse {
 	if uri == "" {
 		return ErrorResp(request, "Document uri is improper. Ex: 'file:///path/to/workspace/myapi.l2'")
 	}
-
-	res := l2envpackege.ProcessEnvironmentVariables(relevantSearchString, uri)
+	parentFolder := filepath.Dir(uri)
+	res := l2envpackege.ProcessEnvironmentVariables(relevantSearchString, parentFolder)
 	return createEnvironmentVariablesResponse(request, res)
 }
 

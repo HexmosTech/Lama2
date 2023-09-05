@@ -5,12 +5,53 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"os"
 	"os/exec"
 	"testing"
 
 	"github.com/HexmosTech/lama2/l2lsp"
 	testutils "github.com/HexmosTech/lama2/tests/utils"
 )
+
+type LSPResponse struct {
+	Id      int    `json:"id"`
+	Jsonrpc string `json:"jsonrpc"`
+	Result  struct {
+		Capabilities struct {
+			TextDocumentSync int  `json:"textDocumentSync"`
+			SuggestL2Env     bool `json:"suggestL2Env"`
+		} `json:"capabilities"`
+	} `json:"result"`
+}
+
+type RawJSONRPCResponse struct {
+	ID      int             `json:"id"`
+	Result  json.RawMessage `json:"result"`
+	JSONRPC string          `json:"jsonrpc"`
+	Error   interface{}     `json:"error,omitempty"`
+}
+
+var stdin io.WriteCloser
+var stdout io.ReadCloser
+
+func TestMain(m *testing.M) {
+	// Setup: Start the LSP server
+	var err error
+	stdin, stdout, err = startLSPServer()
+	if err != nil {
+		panic(err)
+	}
+
+	// Run all tests
+	exitVal := m.Run()
+
+	// Teardown: Close the server (this will send an "exit" to your LSP server)
+	stdin.Write([]byte(`{ "jsonrpc": "2.0", "method": "exit" }` + "\n"))
+	stdin.Close()
+
+	// Exit with the result of the tests
+	os.Exit(exitVal)
+}
 
 func startLSPServer() (io.WriteCloser, io.ReadCloser, error) {
 	l2BinPath, err := testutils.GetLocalL2BinaryPath()
@@ -35,33 +76,20 @@ func startLSPServer() (io.WriteCloser, io.ReadCloser, error) {
 	return stdin, stdout, nil
 }
 
-type LSPResponse struct {
-	Id      int    `json:"id"`
-	Jsonrpc string `json:"jsonrpc"`
-	Result  struct {
-		Capabilities struct {
-			TextDocumentSync int  `json:"textDocumentSync"`
-			SuggestL2Env     bool `json:"suggestL2Env"`
-		} `json:"capabilities"`
-	} `json:"result"`
-}
+// func TestAbsolutePathUtility(t *testing.T) {
+// 	relPath := "../elfparser/ElfTestSuite/root_variable_override/api/y_0020_root_override.l2"
+// 	absPath, err := testutils.GetAbsolutePath(relPath)
+// 	if err != nil {
+// 		t.Fatalf("Failed to get absolute path: %v", err)
+// 	}
 
-type RawJSONRPCResponse struct {
-	ID      int             `json:"id"`
-	Result  json.RawMessage `json:"result"`
-	JSONRPC string          `json:"jsonrpc"`
-	Error   interface{}     `json:"error,omitempty"`
-}
+// 	// To view the result in logs, intentionally fail the test
+// 	t.Fatalf("Absolute path: %s", absPath)
+// }
 
 func TestLSPInitialization(t *testing.T) {
-	stdin, stdout, err := startLSPServer()
-	if err != nil {
-		t.Fatalf("Failed to start LSP server: %v", err)
-	}
-	defer stdin.Close()
-
 	request := `{ "jsonrpc": "2.0", "id": 1, "method": "initialize", "params": { "processId": 449931, "rootUri": "file:///home/lovestaco/repos/apihub", "workspace": { "workspaceFolders": { "supported": false, "changeNotifications": false } }, "clientInfo": { "name": "Visual Studio Code", "version": "1.81.1" } } }`
-	_, err = stdin.Write([]byte(request + "\n"))
+	_, err := stdin.Write([]byte(request + "\n"))
 	if err != nil {
 		t.Fatalf("Failed to write to LSP server stdin: %v", err)
 	}
@@ -100,15 +128,9 @@ func TestLSPInitialization(t *testing.T) {
 }
 
 func TestLSPShutdown(t *testing.T) {
-	stdin, stdout, err := startLSPServer()
-	if err != nil {
-		t.Fatalf("Failed to start LSP server: %v", err)
-	}
-	defer stdin.Close()
-
 	// Constructing the shutdown request
 	request := `{ "jsonrpc": "2.0", "id": 1, "method": "shutdown" }`
-	_, err = stdin.Write([]byte(request + "\n"))
+	_, err := stdin.Write([]byte(request + "\n"))
 	if err != nil {
 		t.Fatalf("Failed to write to LSP server stdin: %v", err)
 	}
@@ -136,16 +158,11 @@ func TestLSPShutdown(t *testing.T) {
 		t.Fatalf("Expected result to be 'null', got %v", string(rawResponse.Result))
 	}
 }
-func TestLSPExit(t *testing.T) {
-	stdin, stdout, err := startLSPServer()
-	if err != nil {
-		t.Fatalf("Failed to start LSP server: %v", err)
-	}
-	defer stdin.Close()
 
+func TestLSPExit(t *testing.T) {
 	// Constructing the exit request
 	request := `{ "jsonrpc": "2.0", "method": "exit" }`
-	_, err = stdin.Write([]byte(request + "\n"))
+	_, err := stdin.Write([]byte(request + "\n"))
 	if err != nil {
 		t.Fatalf("Failed to write to LSP server stdin: %v", err)
 	}
