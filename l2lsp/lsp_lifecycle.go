@@ -10,7 +10,37 @@ import (
 var isShutdownRequested bool
 
 func Initialize(request JSONRPCRequest) JSONRPCResponse {
-	// {"jsonrpc": "2.0","id": 1,"method": "initialize","params": { "processId": null, "clientInfo": { "name": "MyEditor", "version": "1.0.0" }, "rootUri": "file:///path/to/workspace", "capabilities": { "workspace": { "applyEdit": true, "workspaceEdit": { "documentChanges": true },didChangeConfiguration": { "dynamicRegistration": true } }, "textDocument": { "publishDiagnostics": { "relatedInformation": true }}}}}
+	/*
+		{
+			"jsonrpc": "2.0",
+			"id": 1,
+			"method": "initialize",
+			"params": {
+				"processId": null,
+				"clientInfo": {
+					"name": "MyEditor",
+					"version": "1.0.0"
+				},
+				"rootUri": "file:///path/to/workspace",
+				"capabilities": {
+					"workspace": {
+						"applyEdit": true,
+						"workspaceEdit": {
+							"documentChanges": true
+						},
+						"didChangeConfiguration": {
+							"dynamicRegistration": true
+						}
+					},
+					"textDocument": {
+						"publishDiagnostics": {
+							"relatedInformation": true
+						}
+					}
+				}
+			}
+		}
+	*/
 	log.Info().Msg("L2 LSP initialized")
 
 	serverCapabilities := ServerCapabilities{
@@ -28,7 +58,16 @@ func Initialize(request JSONRPCRequest) JSONRPCResponse {
 }
 
 func Shutdown(request JSONRPCRequest) JSONRPCResponse {
-	// { "jsonrpc": "2.0", "id": 1, "method": "shutdown"}
+	/*
+		{
+			"jsonrpc": "2.0",
+			"id": 1,
+			"method": "shutdown"
+		}
+	*/
+
+	log.Info().Msg("L2 LSP shutdown requested")
+
 	isShutdownRequested = true
 	return JSONRPCResponse{
 		ID:      request.ID,
@@ -38,7 +77,15 @@ func Shutdown(request JSONRPCRequest) JSONRPCResponse {
 }
 
 func Exit() JSONRPCResponse {
-	// { "jsonrpc": "2.0", "method": "exit"}
+	/*
+		{
+			"jsonrpc": "2.0",
+			"method": "exit"
+		}
+	*/
+
+	log.Info().Msg("L2 LSP exit requested")
+
 	exitCode := 1
 	if isShutdownRequested {
 		exitCode = 0

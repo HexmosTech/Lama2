@@ -28,7 +28,25 @@ func getRequestURI(request JSONRPCRequest) string {
 }
 
 func SuggestEnvironmentVariables(request JSONRPCRequest) JSONRPCResponse {
-	// { "jsonrpc": "2.0", "id": 2, "method": "suggest/environmentVariables", "params": { "textDocument": { "uri": "file:///home/lovestaco/repos/Lama2/elfparser/ElfTestSuite/root_variable_override/api/y_0020_root_override.l2" }, "position": { "line": 1, "character": 2 }, "relevantSearchString": "" } }
+	/*
+		{
+			"jsonrpc": "2.0",
+			"id": 2,
+			"method": "suggest/environmentVariables",
+			"params": {
+				"textDocument": {
+					"uri": "file:///home/lovestaco/repos/Lama2/elfparser/ElfTestSuite/root_variable_override/api/y_0020_root_override.l2"
+				},
+				"position": {
+					"line": 1,
+					"character": 2
+				},
+				"relevantSearchString": ""
+			}
+		}
+	*/
+
+	log.Info().Msg("L2 LSP environment variables suggestion requested")
 	log.Info().Str("Method", request.Method).Interface("Params", request.Params)
 
 	relevantSearchString := getSearchQueryString(request)

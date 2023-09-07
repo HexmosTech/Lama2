@@ -4,6 +4,7 @@ package tests
 import (
 	"encoding/json"
 	"fmt"
+	"path/filepath"
 	"testing"
 
 	testutils "github.com/HexmosTech/lama2/tests/utils"
@@ -16,7 +17,7 @@ func TestForEmptyRelevantString(t *testing.T) {
 	}
 	defer stdin.Close()
 	fpath := "../elfparser/ElfTestSuite/root_variable_override/api/y_0020_root_override.l2"
-	absPath, err := testutils.GetAbsolutePath(fpath)
+	absPath, err := filepath.Abs(fpath)
 	if err != nil {
 		t.Fatalf("Failed to get the absolute path: %v", err)
 	}
@@ -68,7 +69,7 @@ func TestL2SuggestEnvForNoL2Config(t *testing.T) {
 	}
 	defer stdin.Close()
 	fpath := "../elfparser/ElfTestSuite/no_l2config/api/y_0021_no_l2config.l2"
-	absPath, err := testutils.GetAbsolutePath(fpath)
+	absPath, err := filepath.Abs(fpath)
 
 	if err != nil {
 		t.Fatalf("Failed to get the absolute path: %v", err)
@@ -118,7 +119,7 @@ func TestL2RelevantEnvForAString(t *testing.T) {
 	}
 	defer stdin.Close()
 	fpath := "../elfparser/ElfTestSuite/root_variable_override/api/y_0020_root_override.l2"
-	absPath, err := testutils.GetAbsolutePath(fpath)
+	absPath, err := filepath.Abs(fpath)
 	if err != nil {
 		t.Fatalf("Failed to get the absolute path: %v", err)
 	}
@@ -171,7 +172,7 @@ func TestL2RelevantEnvForBString(t *testing.T) {
 	}
 	defer stdin.Close()
 	fpath := "../elfparser/ElfTestSuite/root_variable_override/api/y_0020_root_override.l2"
-	absPath, err := testutils.GetAbsolutePath(fpath)
+	absPath, err := filepath.Abs(fpath)
 	if err != nil {
 		t.Fatalf("Failed to get the absolute path: %v", err)
 	}
@@ -225,7 +226,7 @@ func TestL2EnvWithoutL2config(t *testing.T) {
 	defer stdin.Close()
 	fpath := "../elfparser/ElfTestSuite/no_l2env/api/y_0022_no_l2env.l2"
 
-	absPath, err := testutils.GetAbsolutePath(fpath)
+	absPath, err := filepath.Abs(fpath)
 	// t.Fatalf(string(absPath))
 
 	if err != nil {
