@@ -7,17 +7,12 @@ import (
 
 	"os"
 
-	"github.com/rs/zerolog"
+	outputmanager "github.com/HexmosTech/lama2/outputManager"
 	"github.com/rs/zerolog/log"
 )
 
 func init() {
-	setupLogging()
-}
-
-func setupLogging() {
-	zerolog.TimeFieldFormat = zerolog.TimeFormatUnix
-	log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stderr})
+	outputmanager.ConfigureZeroLog("INFO")
 }
 
 func StartLspServer() {
