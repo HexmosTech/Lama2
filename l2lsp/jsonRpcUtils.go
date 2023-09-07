@@ -11,7 +11,7 @@ type Params struct {
 	Capabilities          ClientCapabilities `json:"capabilities"`
 	Trace                 *string            `json:"trace,omitempty"`
 	WorkspaceFolders      *[]WorkspaceFolder `json:"workspaceFolders,omitempty"`
-	RelevantSearchString  *string            `json:"relevantSearchString,omitempty"`
+	SearchQuery           *string            `json:"searchQuery,omitempty"`
 	TextDocument          *Uri               `json:"textDocument,omitempty"`
 }
 

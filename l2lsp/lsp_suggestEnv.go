@@ -9,9 +9,9 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-func getRelevantSearchString(request JSONRPCRequest) string {
-	if request.Params.RelevantSearchString != nil {
-		return *request.Params.RelevantSearchString
+func getSearchQueryString(request JSONRPCRequest) string {
+	if request.Params.SearchQuery != nil {
+		return *request.Params.SearchQuery
 	}
 	return ""
 }
@@ -31,7 +31,7 @@ func SuggestEnvironmentVariables(request JSONRPCRequest) JSONRPCResponse {
 	// { "jsonrpc": "2.0", "id": 2, "method": "suggest/environmentVariables", "params": { "textDocument": { "uri": "file:///home/lovestaco/repos/Lama2/elfparser/ElfTestSuite/root_variable_override/api/y_0020_root_override.l2" }, "position": { "line": 1, "character": 2 }, "relevantSearchString": "" } }
 	log.Info().Str("Method", request.Method).Interface("Params", request.Params)
 
-	relevantSearchString := getRelevantSearchString(request)
+	relevantSearchString := getSearchQueryString(request)
 	uri := getRequestURI(request)
 	if uri == "" {
 		return ErrorResp(request, "Document uri is improper. Ex: 'file:///path/to/workspace/myapi.l2'")
