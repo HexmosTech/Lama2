@@ -10,7 +10,7 @@ import (
 	testutils "github.com/HexmosTech/lama2/tests/utils"
 )
 
-func TestForEmptyRelevantString(t *testing.T) {
+func TestForEmptySearchQuery(t *testing.T) {
 	stdin, stdout, err := startLSPServer()
 	if err != nil {
 		t.Fatalf("Failed to start LSP server: %v", err)
@@ -23,9 +23,9 @@ func TestForEmptyRelevantString(t *testing.T) {
 	}
 	// t.Fatalf("  absolute path: %v", absPath)
 
-	relevantSearchString := ""
+	searchQuery := ""
 
-	request := fmt.Sprintf(`{"jsonrpc":"2.0","id":1,"method":"suggest/environmentVariables","params":{"textDocument":{"uri":"file://%s"},"position":{"line":1,"character":45},"relevantSearchString":"%s"}}`, absPath, relevantSearchString)
+	request := fmt.Sprintf(`{"jsonrpc":"2.0","id":1,"method":"suggest/environmentVariables","params":{"textDocument":{"uri":"file://%s"},"position":{"line":1,"character":45},"searchQuery":"%s"}}`, absPath, searchQuery)
 	_, err = stdin.Write([]byte(request + "\n"))
 	if err != nil {
 		t.Fatalf("Failed to write to LSP server stdin: %v", err)
@@ -74,9 +74,9 @@ func TestL2SuggestEnvForNoL2Config(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Failed to get the absolute path: %v", err)
 	}
-	relevantSearchString := ""
+	searchQuery := ""
 
-	request := fmt.Sprintf(`{"jsonrpc":"2.0","id":1,"method":"suggest/environmentVariables","params":{"textDocument":{"uri":"file://%s"},"position":{"line":1,"character":45},"relevantSearchString":"%s"}}`, absPath, relevantSearchString)
+	request := fmt.Sprintf(`{"jsonrpc":"2.0","id":1,"method":"suggest/environmentVariables","params":{"textDocument":{"uri":"file://%s"},"position":{"line":1,"character":45},"searchQuery":"%s"}}`, absPath, searchQuery)
 	_, err = stdin.Write([]byte(request + "\n"))
 	if err != nil {
 		t.Fatalf("Failed to write to LSP server stdin: %v", err)
@@ -123,31 +123,36 @@ func TestL2RelevantEnvForAString(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Failed to get the absolute path: %v", err)
 	}
-	relevantSearchString := "A"
-
-	request := fmt.Sprintf(`{"jsonrpc":"2.0","id":1,"method":"suggest/environmentVariables","params":{"textDocument":{"uri":"file://%s"},"position":{"line":1,"character":45},"relevantSearchString":"%s"}}`, absPath, relevantSearchString)
+	searchQuery := "A"
+	jreq := `{"jsonrpc":"2.0","id":1,"method":"suggest/environmentVariables","params":{"textDocument":{"uri":"file://%s"},"position":{"line":1,"character":45},"searchQuery":"%s"}}`
+	request := fmt.Sprintf(jreq, absPath, searchQuery)
 	_, err = stdin.Write([]byte(request + "\n"))
 	if err != nil {
 		t.Fatalf("Failed to write to LSP server stdin: %v", err)
+		t.Fatalf("JSON-RPC request: %v", request)
 	}
 
 	buffer := make([]byte, 2048)
 	n, err := stdout.Read(buffer)
 	if err != nil {
 		t.Fatalf("Failed to read from LSP server stdout: %v", err)
+		t.Fatalf("JSON-RPC request: %v", request)
 	}
 
 	var rawResponse RawJSONRPCResponse
 	err = json.Unmarshal(buffer[:n], &rawResponse)
 	if err != nil {
 		t.Fatalf("Failed to unmarshal LSP raw response: %v", err)
+		t.Fatalf("JSON-RPC request: %v", request)
 	}
 
 	if rawResponse.ID != 1 {
 		t.Fatalf("Expected response ID to be 1, got %v", rawResponse.ID)
+		t.Fatalf("JSON-RPC request: %v", request)
 	}
 	if rawResponse.JSONRPC != "2.0" {
 		t.Fatalf("Expected jsonrpc version to be 2.0, got %v", rawResponse.JSONRPC)
+		t.Fatalf("JSON-RPC request: %v", request)
 	}
 
 	// Parse the Result into a map
@@ -155,6 +160,7 @@ func TestL2RelevantEnvForAString(t *testing.T) {
 	err = json.Unmarshal(rawResponse.Result, &envMap)
 	if err != nil {
 		t.Fatalf("Failed to unmarshal LSP response result: %v", err)
+		t.Fatalf("JSON-RPC request: %v", request)
 	}
 
 	// Use the helper functions to check the AHOST and BHOST values
@@ -176,9 +182,9 @@ func TestL2RelevantEnvForBString(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Failed to get the absolute path: %v", err)
 	}
-	relevantSearchString := "B"
+	searchQuery := "B"
 
-	request := fmt.Sprintf(`{"jsonrpc":"2.0","id":1,"method":"suggest/environmentVariables","params":{"textDocument":{"uri":"file://%s"},"position":{"line":1,"character":45},"relevantSearchString":"%s"}}`, absPath, relevantSearchString)
+	request := fmt.Sprintf(`{"jsonrpc":"2.0","id":1,"method":"suggest/environmentVariables","params":{"textDocument":{"uri":"file://%s"},"position":{"line":1,"character":45},"searchQuery":"%s"}}`, absPath, searchQuery)
 	_, err = stdin.Write([]byte(request + "\n"))
 	if err != nil {
 		t.Fatalf("Failed to write to LSP server stdin: %v", err)
@@ -232,9 +238,9 @@ func TestL2EnvWithoutL2config(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Failed to get the absolute path: %v", err)
 	}
-	relevantSearchString := ""
+	searchQuery := ""
 
-	request := fmt.Sprintf(`{"jsonrpc":"2.0","id":1,"method":"suggest/environmentVariables","params":{"textDocument":{"uri":"file://%s"},"position":{"line":1,"character":45},"relevantSearchString":"%s"}}`, absPath, relevantSearchString)
+	request := fmt.Sprintf(`{"jsonrpc":"2.0","id":1,"method":"suggest/environmentVariables","params":{"textDocument":{"uri":"file://%s"},"position":{"line":1,"character":45},"searchQuery":"%s"}}`, absPath, searchQuery)
 	_, err = stdin.Write([]byte(request + "\n"))
 	if err != nil {
 		t.Fatalf("Failed to write to LSP server stdin: %v", err)
