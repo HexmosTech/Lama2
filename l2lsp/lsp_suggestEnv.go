@@ -2,6 +2,7 @@
 package l2lsp
 
 import (
+	"errors"
 	"path/filepath"
 	"strings"
 
@@ -16,33 +17,33 @@ func getSearchQueryString(request JSONRPCRequest) string {
 	return ""
 }
 
-func getRequestURI(request JSONRPCRequest) string {
+func getRequestURI(request JSONRPCRequest) (string, int, error) {
 	if request.Params.TextDocument.Uri == nil {
-		return ""
+		return "", ErrInvalidURI, errors.New("URI cannot be empty. Ex: 'file:///path/to/workspace/myapi.l2'")
 	}
 	uri := *request.Params.TextDocument.Uri
 
 	// Handle local files
 	if strings.HasPrefix(uri, "file://") {
-		return uri[len("file://"):]
+		return uri[len("file://"):], 0, nil
 
 		// Handle remote files (example for SSH)
 	} else if strings.HasPrefix(uri, "ssh://") {
-		// Extract and return the path after the SSH scheme
-		// You might need additional logic to handle SSH URIs properly
-		return uri[len("ssh://"):]
+		return uri[len("ssh://"):], 0, nil
 
 		// Handle WSL files
 	} else if strings.HasPrefix(uri, "wsl://") {
-		// Extract and return the path after the WSL scheme
-		// Additional logic might be needed for WSL URIs
-		return uri[len("wsl://"):]
+		return uri[len("wsl://"):], 0, nil
+
+		// Handle Windows files
+	} else if strings.Contains(uri, "\\") {
+		return "", ErrUnsupportedFeature, errors.New("windows is not supported as of now. To contribute visit here: https://github.com/HexmosTech/Lama2")
 
 	} else {
 		// Log the unexpected URI scheme
 		log.Warn().Str("URI", uri).Msg("Encountered unexpected URI scheme.")
+		return "", ErrUnexpectedURIScheme, errors.New("encountered unexpected URI scheme. Ex: 'file:///path/to/workspace/myapi.l2'")
 	}
-	return ""
 }
 
 func SuggestEnvironmentVariables(request JSONRPCRequest) JSONRPCResponse {
@@ -68,11 +69,11 @@ func SuggestEnvironmentVariables(request JSONRPCRequest) JSONRPCResponse {
 	log.Info().Str("Method", request.Method).Interface("Params", request.Params)
 
 	relevantSearchString := getSearchQueryString(request)
-	uri := getRequestURI(request)
-	if uri == "" {
-		return ErrorResp(request, "Document uri is improper. Ex: 'file:///path/to/workspace/myapi.l2'")
+	uri, errorCode, err := getRequestURI(request)
+	if err != nil {
+		return ErrorResp(request, errorCode, err.Error())
 	}
 	parentFolder := filepath.Dir(uri)
 	res := l2envpackege.ProcessEnvironmentVariables(relevantSearchString, parentFolder)
-	return createEnvironmentVariablesResponse(request, res)
+	return createEnvironmentVariablesResp(request, res)
 }

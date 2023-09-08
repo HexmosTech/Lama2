@@ -40,3 +40,7 @@ rnotes:
 
 clean:
 	rm -rf build/*
+
+setbuild:
+	make buildme
+	sudo cp build/l2 /usr/local/bin/l2
