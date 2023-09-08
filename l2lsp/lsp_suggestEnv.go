@@ -21,8 +21,26 @@ func getRequestURI(request JSONRPCRequest) string {
 		return ""
 	}
 	uri := *request.Params.TextDocument.Uri
+
+	// Handle local files
 	if strings.HasPrefix(uri, "file://") {
 		return uri[len("file://"):]
+
+		// Handle remote files (example for SSH)
+	} else if strings.HasPrefix(uri, "ssh://") {
+		// Extract and return the path after the SSH scheme
+		// You might need additional logic to handle SSH URIs properly
+		return uri[len("ssh://"):]
+
+		// Handle WSL files
+	} else if strings.HasPrefix(uri, "wsl://") {
+		// Extract and return the path after the WSL scheme
+		// Additional logic might be needed for WSL URIs
+		return uri[len("wsl://"):]
+
+	} else {
+		// Log the unexpected URI scheme
+		log.Warn().Str("URI", uri).Msg("Encountered unexpected URI scheme.")
 	}
 	return ""
 }
