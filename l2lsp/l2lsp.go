@@ -67,14 +67,14 @@ func InvalidReqAfterShutdown(request JSONRPCRequest) JSONRPCResponse {
 	return JSONRPCResponse{
 		ID:      request.ID,
 		JSONRPC: "2.0",
-		Error: map[string]string{
-			"code":    "-32600",
-			"message": "Invalid request after shutdown.",
+		Error: &JSONRPCError{
+			Code:    ErrInvalidAfterShutdown,
+			Message: "Invalid request after shutdown.",
 		},
 	}
 }
 
-func createEnvironmentVariablesResponse(request JSONRPCRequest, res interface{}) JSONRPCResponse {
+func createEnvironmentVariablesResp(request JSONRPCRequest, res interface{}) JSONRPCResponse {
 	return JSONRPCResponse{
 		ID:      request.ID,
 		JSONRPC: "2.0",
@@ -82,13 +82,13 @@ func createEnvironmentVariablesResponse(request JSONRPCRequest, res interface{})
 	}
 }
 
-func ErrorResp(request JSONRPCRequest, msg string) JSONRPCResponse {
+func ErrorResp(request JSONRPCRequest, errorCode int, errorMsg string) JSONRPCResponse {
 	return JSONRPCResponse{
 		ID:      request.ID,
 		JSONRPC: "2.0",
-		Error: map[string]string{
-			"code":    "-32601",
-			"message": msg,
+		Error: &JSONRPCError{
+			Code:    errorCode,
+			Message: errorMsg,
 		},
 	}
 }
@@ -97,9 +97,9 @@ func DefaultResp(request JSONRPCRequest) JSONRPCResponse {
 	return JSONRPCResponse{
 		ID:      request.ID,
 		JSONRPC: "2.0",
-		Error: map[string]string{
-			"code":    "-32601",
-			"message": "Method not supported by the server. Method: " + request.Method,
+		Error: &JSONRPCError{
+			Code:    ErrMethodNotFound,
+			Message: "Method not supported by the server. Method: " + request.Method,
 		},
 	}
 }
