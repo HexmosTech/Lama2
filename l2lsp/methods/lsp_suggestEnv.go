@@ -1,5 +1,5 @@
 // lsp_suggestEnv.go
-package l2lsp
+package methods
 
 import (
 	"errors"
@@ -7,19 +7,21 @@ import (
 	"strings"
 
 	l2envpackege "github.com/HexmosTech/lama2/l2env"
+	"github.com/HexmosTech/lama2/l2lsp/lsp_req"
+	"github.com/HexmosTech/lama2/l2lsp/lsp_res"
 	"github.com/rs/zerolog/log"
 )
 
-func getSearchQueryString(request JSONRPCRequest) string {
+func getSearchQueryString(request lsp_req.JSONRPCRequest) string {
 	if request.Params.SearchQuery != nil {
 		return *request.Params.SearchQuery
 	}
 	return ""
 }
 
-func getRequestURI(request JSONRPCRequest) (string, int, error) {
+func getRequestURI(request lsp_req.JSONRPCRequest) (string, int, error) {
 	if request.Params.TextDocument.Uri == nil {
-		return "", ErrInvalidURI, errors.New("URI cannot be empty. Ex: 'file:///path/to/workspace/myapi.l2'")
+		return "", lsp_res.ErrInvalidURI, errors.New("URI cannot be empty. Ex: 'file:///path/to/workspace/myapi.l2'")
 	}
 	uri := *request.Params.TextDocument.Uri
 
@@ -37,16 +39,16 @@ func getRequestURI(request JSONRPCRequest) (string, int, error) {
 
 		// Handle Windows files
 	} else if strings.Contains(uri, "\\") {
-		return "", ErrUnsupportedFeature, errors.New("windows is not supported as of now. To contribute visit here: https://github.com/HexmosTech/Lama2")
+		return "", lsp_res.ErrUnsupportedFeature, errors.New("windows is not supported as of now. To contribute visit here: https://github.com/HexmosTech/Lama2")
 
 	} else {
 		// Log the unexpected URI scheme
 		log.Warn().Str("URI", uri).Msg("Encountered unexpected URI scheme.")
-		return "", ErrUnexpectedURIScheme, errors.New("encountered unexpected URI scheme. Ex: 'file:///path/to/workspace/myapi.l2'")
+		return "", lsp_res.ErrUnexpectedURIScheme, errors.New("encountered unexpected URI scheme. Ex: 'file:///path/to/workspace/myapi.l2'")
 	}
 }
 
-func SuggestEnvironmentVariables(request JSONRPCRequest) JSONRPCResponse {
+func SuggestEnvironmentVariables(request lsp_req.JSONRPCRequest) lsp_res.JSONRPCResponse {
 	/*
 		{
 			"jsonrpc": "2.0",
@@ -71,9 +73,9 @@ func SuggestEnvironmentVariables(request JSONRPCRequest) JSONRPCResponse {
 	relevantSearchString := getSearchQueryString(request)
 	uri, errorCode, err := getRequestURI(request)
 	if err != nil {
-		return ErrorResp(request, errorCode, err.Error())
+		return lsp_res.ErrorResp(request, errorCode, err.Error())
 	}
 	parentFolder := filepath.Dir(uri)
 	res := l2envpackege.ProcessEnvironmentVariables(relevantSearchString, parentFolder)
-	return createEnvironmentVariablesResp(request, res)
+	return lsp_res.CreateEnvironmentVariablesResp(request, res)
 }
