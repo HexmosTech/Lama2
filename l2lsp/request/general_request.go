@@ -1,4 +1,4 @@
-package lsp_req
+package request
 
 type Params struct {
 	ProcessID             *int64             `json:"processId"`

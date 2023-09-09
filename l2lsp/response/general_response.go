@@ -1,4 +1,4 @@
-package lsp_res
+package response
 
 type JSONRPCError struct {
 	Code    int    `json:"code"`

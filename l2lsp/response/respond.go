@@ -1,6 +1,6 @@
-package lsp_res
+package response
 
-import "github.com/HexmosTech/lama2/l2lsp/lsp_req"
+import "github.com/HexmosTech/lama2/l2lsp/request"
 
 // Utility function to create a general success response
 func CreateSuccessResponse(requestID int, result interface{}) JSONRPCResponse {
@@ -11,21 +11,21 @@ func CreateSuccessResponse(requestID int, result interface{}) JSONRPCResponse {
 	}
 }
 
-func DefaultResp(request lsp_req.JSONRPCRequest) JSONRPCResponse {
+func DefaultResp(req request.JSONRPCRequest) JSONRPCResponse {
 	return JSONRPCResponse{
-		ID:      request.ID,
+		ID:      req.ID,
 		JSONRPC: "2.0",
 		Error: &JSONRPCError{
 			Code:    ErrMethodNotFound,
-			Message: "Method not supported by the server. Method: " + request.Method,
+			Message: "Method not supported by the server. Method: " + req.Method,
 		},
 	}
 }
 
 // Utility function to create a general error response
-func ErrorResp(request lsp_req.JSONRPCRequest, errorCode int, errorMsg string) JSONRPCResponse {
+func ErrorResp(req request.JSONRPCRequest, errorCode int, errorMsg string) JSONRPCResponse {
 	return JSONRPCResponse{
-		ID:      request.ID,
+		ID:      req.ID,
 		JSONRPC: "2.0",
 		Error: &JSONRPCError{
 			Code:    errorCode,
