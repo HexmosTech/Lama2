@@ -76,17 +76,6 @@ func startLSPServer() (io.WriteCloser, io.ReadCloser, error) {
 	return stdin, stdout, nil
 }
 
-// func TestAbsolutePathUtility(t *testing.T) {
-// 	relPath := "../elfparser/ElfTestSuite/root_variable_override/api/y_0020_root_override.l2"
-// 	absPath, err := testutils.GetAbsolutePath(relPath)
-// 	if err != nil {
-// 		t.Fatalf("Failed to get absolute path: %v", err)
-// 	}
-
-// 	// To view the result in logs, intentionally fail the test
-// 	t.Fatalf("Absolute path: %s", absPath)
-// }
-
 func TestLSPInitialization(t *testing.T) {
 	req := `{ "jsonrpc": "2.0", "id": 1, "method": "initialize", "params": { "processId": 449931, "rootUri": "file:///home/lovestaco/repos/apihub", "workspace": { "workspaceFolders": { "supported": false, "changeNotifications": false } }, "clientInfo": { "name": "Visual Studio Code", "version": "1.81.1" } } }`
 	_, err := stdin.Write([]byte(req + "\n"))
