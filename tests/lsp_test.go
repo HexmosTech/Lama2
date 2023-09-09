@@ -9,7 +9,7 @@ import (
 	"os/exec"
 	"testing"
 
-	"github.com/HexmosTech/lama2/l2lsp/lsp_res"
+	"github.com/HexmosTech/lama2/l2lsp/response"
 	testutils "github.com/HexmosTech/lama2/tests/utils"
 )
 
@@ -88,8 +88,8 @@ func startLSPServer() (io.WriteCloser, io.ReadCloser, error) {
 // }
 
 func TestLSPInitialization(t *testing.T) {
-	request := `{ "jsonrpc": "2.0", "id": 1, "method": "initialize", "params": { "processId": 449931, "rootUri": "file:///home/lovestaco/repos/apihub", "workspace": { "workspaceFolders": { "supported": false, "changeNotifications": false } }, "clientInfo": { "name": "Visual Studio Code", "version": "1.81.1" } } }`
-	_, err := stdin.Write([]byte(request + "\n"))
+	req := `{ "jsonrpc": "2.0", "id": 1, "method": "initialize", "params": { "processId": 449931, "rootUri": "file:///home/lovestaco/repos/apihub", "workspace": { "workspaceFolders": { "supported": false, "changeNotifications": false } }, "clientInfo": { "name": "Visual Studio Code", "version": "1.81.1" } } }`
+	_, err := stdin.Write([]byte(req + "\n"))
 	if err != nil {
 		t.Fatalf("Failed to write to LSP server stdin: %v", err)
 	}
@@ -107,7 +107,7 @@ func TestLSPInitialization(t *testing.T) {
 	}
 
 	// Now unmarshal the raw Result into InitializeResult
-	var initResult lsp_res.InitializeResult
+	var initResult response.InitializeResult
 	err = json.Unmarshal(rawResponse.Result, &initResult)
 	if err != nil {
 		t.Fatalf("Failed to unmarshal LSP result: %v", err)
@@ -128,9 +128,9 @@ func TestLSPInitialization(t *testing.T) {
 }
 
 func TestLSPShutdown(t *testing.T) {
-	// Constructing the shutdown request
-	request := `{ "jsonrpc": "2.0", "id": 1, "method": "shutdown" }`
-	_, err := stdin.Write([]byte(request + "\n"))
+	// Constructing the shutdown req
+	req := `{ "jsonrpc": "2.0", "id": 1, "method": "shutdown" }`
+	_, err := stdin.Write([]byte(req + "\n"))
 	if err != nil {
 		t.Fatalf("Failed to write to LSP server stdin: %v", err)
 	}
@@ -160,9 +160,9 @@ func TestLSPShutdown(t *testing.T) {
 }
 
 func TestLSPExit(t *testing.T) {
-	// Constructing the exit request
-	request := `{ "jsonrpc": "2.0", "method": "exit" }`
-	_, err := stdin.Write([]byte(request + "\n"))
+	// Constructing the exit req
+	req := `{ "jsonrpc": "2.0", "method": "exit" }`
+	_, err := stdin.Write([]byte(req + "\n"))
 	if err != nil {
 		t.Fatalf("Failed to write to LSP server stdin: %v", err)
 	}

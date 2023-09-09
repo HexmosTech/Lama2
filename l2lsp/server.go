@@ -6,7 +6,7 @@ import (
 	"encoding/json"
 	"os"
 
-	"github.com/HexmosTech/lama2/l2lsp/lsp_req"
+	"github.com/HexmosTech/lama2/l2lsp/request"
 	outputmanager "github.com/HexmosTech/lama2/outputManager"
 	"github.com/rs/zerolog/log"
 )
@@ -29,7 +29,7 @@ func StartLspServer() {
 func handleInput(input string, writer *bufio.Writer) {
 	log.Info().Msgf("Received input: %s", input)
 
-	var rpcRequest lsp_req.JSONRPCRequest
+	var rpcRequest request.JSONRPCRequest
 	if err := json.Unmarshal([]byte(input), &rpcRequest); err != nil {
 		log.Error().Err(err).Msg("Error decoding JSON-RPC request")
 		return

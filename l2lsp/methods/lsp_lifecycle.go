@@ -4,12 +4,12 @@ package methods
 import (
 	"os"
 
-	"github.com/HexmosTech/lama2/l2lsp/lsp_req"
-	"github.com/HexmosTech/lama2/l2lsp/lsp_res"
+	"github.com/HexmosTech/lama2/l2lsp/request"
+	"github.com/HexmosTech/lama2/l2lsp/response"
 	"github.com/rs/zerolog/log"
 )
 
-func Initialize(request lsp_req.JSONRPCRequest) lsp_res.JSONRPCResponse {
+func Initialize(req request.JSONRPCRequest) response.JSONRPCResponse {
 	/*
 		{
 			"jsonrpc": "2.0",
@@ -43,7 +43,7 @@ func Initialize(request lsp_req.JSONRPCRequest) lsp_res.JSONRPCResponse {
 	*/
 	log.Info().Msg("L2 LSP initialized")
 
-	serverCapabilities := lsp_res.ServerCapabilities{
+	serverCapabilities := response.ServerCapabilities{
 		TextDocumentSync: 0,
 		SuggestL2Envs:    true,
 		HoverProvider:    false,
@@ -51,10 +51,12 @@ func Initialize(request lsp_req.JSONRPCRequest) lsp_res.JSONRPCResponse {
 	res := map[string]interface{}{
 		"capabilities": serverCapabilities,
 	}
-	return lsp_res.CreateSuccessResponse(request.ID, res)
+	return response.CreateSuccessResponse(req.ID, res)
 }
 
-func Shutdown(request lsp_req.JSONRPCRequest, isShutdownRequested bool) lsp_res.JSONRPCResponse {
+// Shutdown is a way to gracefully terminate the server.
+// The server can perform cleanup operations, like closing open files, releasing resources, or saving state.
+func Shutdown(req request.JSONRPCRequest, isShutdownRequested bool) response.JSONRPCResponse {
 	/*
 		{
 			"jsonrpc": "2.0",
@@ -66,10 +68,11 @@ func Shutdown(request lsp_req.JSONRPCRequest, isShutdownRequested bool) lsp_res.
 	log.Info().Msg("L2 LSP shutdown requested")
 
 	isShutdownRequested = true
-	return lsp_res.CreateSuccessResponse(request.ID, nil)
+	return response.CreateSuccessResponse(req.ID, nil)
 }
 
-func Exit(isShutdownRequested bool) lsp_res.JSONRPCResponse {
+// Exit terminates the server process, with the exit code depending on whether a shutdown was requested.
+func Exit(isShutdownRequested bool) response.JSONRPCResponse {
 	/*
 		{
 			"jsonrpc": "2.0",
@@ -84,5 +87,5 @@ func Exit(isShutdownRequested bool) lsp_res.JSONRPCResponse {
 		exitCode = 0
 	}
 	os.Exit(exitCode)
-	return lsp_res.JSONRPCResponse{}
+	return response.JSONRPCResponse{}
 }

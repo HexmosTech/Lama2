@@ -1,32 +1,32 @@
 package l2lsp
 
 import (
-	"github.com/HexmosTech/lama2/l2lsp/lsp_req"
-	"github.com/HexmosTech/lama2/l2lsp/lsp_res"
 	"github.com/HexmosTech/lama2/l2lsp/methods"
+	"github.com/HexmosTech/lama2/l2lsp/request"
+	"github.com/HexmosTech/lama2/l2lsp/response"
 )
 
 var isShutdownRequested bool
 
-func HandleMethod(request lsp_req.JSONRPCRequest) lsp_res.JSONRPCResponse {
-	if isShutdownRequested && request.Method != "exit" {
-		return lsp_res.InvalidReqAfterShutdown(request)
+func HandleMethod(req request.JSONRPCRequest) response.JSONRPCResponse {
+	if isShutdownRequested && req.Method != "exit" {
+		return response.InvalidReqAfterShutdown(req)
 	}
 
-	switch request.Method {
+	switch req.Method {
 	case "initialize":
-		return methods.Initialize(request)
+		return methods.Initialize(req)
 
 	case "shutdown":
-		return methods.Shutdown(request, isShutdownRequested)
+		return methods.Shutdown(req, isShutdownRequested)
 
 	case "exit":
 		return methods.Exit(isShutdownRequested)
 
 	case "suggest/environmentVariables":
-		return methods.SuggestEnvironmentVariables(request)
+		return methods.SuggestEnvironmentVariables(req)
 
 	default:
-		return lsp_res.DefaultResp(request)
+		return response.DefaultResp(req)
 	}
 }

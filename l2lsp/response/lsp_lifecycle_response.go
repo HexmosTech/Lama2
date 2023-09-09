@@ -1,6 +1,6 @@
-package lsp_res
+package response
 
-import "github.com/HexmosTech/lama2/l2lsp/lsp_req"
+import "github.com/HexmosTech/lama2/l2lsp/request"
 
 type InitializeResult struct {
 	Capabilities ServerCapabilities `json:"capabilities"`
@@ -18,9 +18,9 @@ type CompletionOptions struct {
 	ResolveProvider   bool     `json:"resolveProvider,omitempty"`
 }
 
-func InvalidReqAfterShutdown(request lsp_req.JSONRPCRequest) JSONRPCResponse {
+func InvalidReqAfterShutdown(req request.JSONRPCRequest) JSONRPCResponse {
 	return JSONRPCResponse{
-		ID:      request.ID,
+		ID:      req.ID,
 		JSONRPC: "2.0",
 		Error: &JSONRPCError{
 			Code:    ErrInvalidAfterShutdown,
