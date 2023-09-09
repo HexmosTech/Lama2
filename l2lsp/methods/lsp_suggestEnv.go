@@ -31,15 +31,15 @@ func getRequestURI(request lsp_req.JSONRPCRequest) (string, int, error) {
 
 		// Handle remote files (example for SSH)
 	} else if strings.HasPrefix(uri, "ssh://") {
-		return uri[len("ssh://"):], 0, nil
+		return "", lsp_res.ErrUnsupportedFeature, errors.New("SSH is not supported as of now. To contribute visit here: https://github.com/HexmosTech/Lama2")
 
 		// Handle WSL files
 	} else if strings.HasPrefix(uri, "wsl://") {
-		return uri[len("wsl://"):], 0, nil
+		return "", lsp_res.ErrUnsupportedFeature, errors.New("WSL is not supported as of now. To contribute visit here: https://github.com/HexmosTech/Lama2")
 
 		// Handle Windows files
 	} else if strings.Contains(uri, "\\") {
-		return "", lsp_res.ErrUnsupportedFeature, errors.New("windows is not supported as of now. To contribute visit here: https://github.com/HexmosTech/Lama2")
+		return "", lsp_res.ErrUnsupportedFeature, errors.New("Windows is not supported as of now. To contribute visit here: https://github.com/HexmosTech/Lama2")
 
 	} else {
 		// Log the unexpected URI scheme
@@ -70,12 +70,12 @@ func SuggestEnvironmentVariables(request lsp_req.JSONRPCRequest) lsp_res.JSONRPC
 	log.Info().Msg("L2 LSP environment variables suggestion requested")
 	log.Info().Str("Method", request.Method).Interface("Params", request.Params)
 
-	relevantSearchString := getSearchQueryString(request)
+	searchQuery := getSearchQueryString(request)
 	uri, errorCode, err := getRequestURI(request)
 	if err != nil {
 		return lsp_res.ErrorResp(request, errorCode, err.Error())
 	}
 	parentFolder := filepath.Dir(uri)
-	res := l2envpackege.ProcessEnvironmentVariables(relevantSearchString, parentFolder)
+	res := l2envpackege.ProcessEnvironmentVariables(searchQuery, parentFolder)
 	return lsp_res.CreateEnvironmentVariablesResp(request, res)
 }
