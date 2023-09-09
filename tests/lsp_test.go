@@ -9,7 +9,7 @@ import (
 	"os/exec"
 	"testing"
 
-	"github.com/HexmosTech/lama2/l2lsp"
+	"github.com/HexmosTech/lama2/l2lsp/lsp_res"
 	testutils "github.com/HexmosTech/lama2/tests/utils"
 )
 
@@ -107,7 +107,7 @@ func TestLSPInitialization(t *testing.T) {
 	}
 
 	// Now unmarshal the raw Result into InitializeResult
-	var initResult l2lsp.InitializeResult
+	var initResult lsp_res.InitializeResult
 	err = json.Unmarshal(rawResponse.Result, &initResult)
 	if err != nil {
 		t.Fatalf("Failed to unmarshal LSP result: %v", err)

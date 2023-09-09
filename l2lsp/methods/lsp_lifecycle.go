@@ -1,15 +1,15 @@
 // lsp_lifecycle.go
-package l2lsp
+package methods
 
 import (
 	"os"
 
+	"github.com/HexmosTech/lama2/l2lsp/lsp_req"
+	"github.com/HexmosTech/lama2/l2lsp/lsp_res"
 	"github.com/rs/zerolog/log"
 )
 
-var isShutdownRequested bool
-
-func Initialize(request JSONRPCRequest) JSONRPCResponse {
+func Initialize(request lsp_req.JSONRPCRequest) lsp_res.JSONRPCResponse {
 	/*
 		{
 			"jsonrpc": "2.0",
@@ -43,21 +43,18 @@ func Initialize(request JSONRPCRequest) JSONRPCResponse {
 	*/
 	log.Info().Msg("L2 LSP initialized")
 
-	serverCapabilities := ServerCapabilities{
+	serverCapabilities := lsp_res.ServerCapabilities{
 		TextDocumentSync: 0,
 		SuggestL2Envs:    true,
+		HoverProvider:    false,
 	}
-
-	return JSONRPCResponse{
-		ID: request.ID,
-		Result: map[string]interface{}{
-			"capabilities": serverCapabilities,
-		},
-		JSONRPC: "2.0",
+	res := map[string]interface{}{
+		"capabilities": serverCapabilities,
 	}
+	return lsp_res.CreateSuccessResponse(request.ID, res)
 }
 
-func Shutdown(request JSONRPCRequest) JSONRPCResponse {
+func Shutdown(request lsp_req.JSONRPCRequest, isShutdownRequested bool) lsp_res.JSONRPCResponse {
 	/*
 		{
 			"jsonrpc": "2.0",
@@ -69,14 +66,10 @@ func Shutdown(request JSONRPCRequest) JSONRPCResponse {
 	log.Info().Msg("L2 LSP shutdown requested")
 
 	isShutdownRequested = true
-	return JSONRPCResponse{
-		ID:      request.ID,
-		Result:  nil,
-		JSONRPC: "2.0",
-	}
+	return lsp_res.CreateSuccessResponse(request.ID, nil)
 }
 
-func Exit() JSONRPCResponse {
+func Exit(isShutdownRequested bool) lsp_res.JSONRPCResponse {
 	/*
 		{
 			"jsonrpc": "2.0",
@@ -91,5 +84,5 @@ func Exit() JSONRPCResponse {
 		exitCode = 0
 	}
 	os.Exit(exitCode)
-	return JSONRPCResponse{}
+	return lsp_res.JSONRPCResponse{}
 }
