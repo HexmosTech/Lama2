@@ -70,7 +70,6 @@ func TestL2SuggestEnvForNoL2Config(t *testing.T) {
 	defer stdin.Close()
 	fpath := "../elfparser/ElfTestSuite/no_l2config/api/y_0021_no_l2config.l2"
 	absPath, err := filepath.Abs(fpath)
-
 	if err != nil {
 		t.Fatalf("Failed to get the absolute path: %v", err)
 	}
@@ -128,39 +127,33 @@ func TestL2RelevantEnvForAString(t *testing.T) {
 	req := fmt.Sprintf(jreq, absPath, searchQuery)
 	_, err = stdin.Write([]byte(req + "\n"))
 	if err != nil {
-		t.Fatalf("Failed to write to LSP server stdin: %v", err)
-		t.Fatalf("JSON-RPC request: %v", req)
+		t.Fatalf("JSON-RPC request: %v   LSP Err: %v", req, err)
 	}
 
 	buffer := make([]byte, 2048)
 	n, err := stdout.Read(buffer)
 	if err != nil {
-		t.Fatalf("Failed to read from LSP server stdout: %v", err)
-		t.Fatalf("JSON-RPC request: %v", req)
+		t.Fatalf("JSON-RPC request: %v   LSP Err: %v", req, err)
 	}
 
 	var rawResponse RawJSONRPCResponse
 	err = json.Unmarshal(buffer[:n], &rawResponse)
 	if err != nil {
-		t.Fatalf("Failed to unmarshal LSP raw response: %v", err)
-		t.Fatalf("JSON-RPC request: %v", req)
+		t.Fatalf("JSON-RPC request: %v   LSP Err: %v", req, err)
 	}
 
 	if rawResponse.ID != 1 {
-		t.Fatalf("Expected response ID to be 1, got %v", rawResponse.ID)
-		t.Fatalf("JSON-RPC request: %v", req)
+		t.Fatalf("Expected response ID to be 1, got %v JSON-RPC request: %v", rawResponse.ID, req)
 	}
 	if rawResponse.JSONRPC != "2.0" {
-		t.Fatalf("Expected jsonrpc version to be 2.0, got %v", rawResponse.JSONRPC)
-		t.Fatalf("JSON-RPC request: %v", req)
+		t.Fatalf("Expected jsonrpc version to be 2.0, got %v JSON-RPC request: %v", rawResponse.JSONRPC, req)
 	}
 
 	// Parse the Result into a map
 	var envMap map[string]testutils.EnvData
 	err = json.Unmarshal(rawResponse.Result, &envMap)
 	if err != nil {
-		t.Fatalf("Failed to unmarshal LSP response result: %v", err)
-		t.Fatalf("JSON-RPC request: %v", req)
+		t.Fatalf("Failed to unmarshal LSP response result: %v JSON-RPC request: %v", err, req)
 	}
 
 	// Use the helper functions to check the AHOST and BHOST values
@@ -234,7 +227,6 @@ func TestL2EnvWithoutL2config(t *testing.T) {
 
 	absPath, err := filepath.Abs(fpath)
 	// t.Fatalf(string(absPath))
-
 	if err != nil {
 		t.Fatalf("Failed to get the absolute path: %v", err)
 	}

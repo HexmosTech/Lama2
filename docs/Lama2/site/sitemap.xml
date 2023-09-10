@@ -2,127 +2,132 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>http://hexmos.com/lama2/index.html</loc>
-         <lastmod>2023-08-20</lastmod>
+         <lastmod>2023-09-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://hexmos.com/lama2/about/contact.html</loc>
-         <lastmod>2023-08-20</lastmod>
+         <lastmod>2023-09-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://hexmos.com/lama2/about/hexmos.html</loc>
-         <lastmod>2023-08-20</lastmod>
+         <lastmod>2023-09-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://hexmos.com/lama2/explanation/faq.html</loc>
-         <lastmod>2023-08-20</lastmod>
+         <lastmod>2023-09-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://hexmos.com/lama2/explanation/l2format.html</loc>
-         <lastmod>2023-08-20</lastmod>
+         <lastmod>2023-09-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://hexmos.com/lama2/explanation/syntax.html</loc>
-         <lastmod>2023-08-20</lastmod>
+         <lastmod>2023-09-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://hexmos.com/lama2/reference/api.html</loc>
-         <lastmod>2023-08-20</lastmod>
+         <lastmod>2023-09-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://hexmos.com/lama2/reference/architecture.html</loc>
-         <lastmod>2023-08-20</lastmod>
+         <lastmod>2023-09-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://hexmos.com/lama2/reference/cmdexec.html</loc>
-         <lastmod>2023-08-20</lastmod>
+         <lastmod>2023-09-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://hexmos.com/lama2/reference/cmdgen.html</loc>
-         <lastmod>2023-08-20</lastmod>
+         <lastmod>2023-09-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://hexmos.com/lama2/reference/controller.html</loc>
-         <lastmod>2023-08-20</lastmod>
+         <lastmod>2023-09-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://hexmos.com/lama2/reference/grammar.html</loc>
-         <lastmod>2023-08-20</lastmod>
+         <lastmod>2023-09-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://hexmos.com/lama2/reference/lama2cmd.html</loc>
-         <lastmod>2023-08-20</lastmod>
+         <lastmod>2023-09-10</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>http://hexmos.com/lama2/reference/lsp.html</loc>
+         <lastmod>2023-09-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://hexmos.com/lama2/reference/outputmanager.html</loc>
-         <lastmod>2023-08-20</lastmod>
+         <lastmod>2023-09-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://hexmos.com/lama2/reference/parser.html</loc>
-         <lastmod>2023-08-20</lastmod>
+         <lastmod>2023-09-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://hexmos.com/lama2/reference/philosophy.html</loc>
-         <lastmod>2023-08-20</lastmod>
+         <lastmod>2023-09-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://hexmos.com/lama2/reference/preprocess.html</loc>
-         <lastmod>2023-08-20</lastmod>
+         <lastmod>2023-09-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://hexmos.com/lama2/reference/utils.html</loc>
-         <lastmod>2023-08-20</lastmod>
+         <lastmod>2023-09-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://hexmos.com/lama2/tutorials/codegen.html</loc>
-         <lastmod>2023-08-20</lastmod>
+         <lastmod>2023-09-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://hexmos.com/lama2/tutorials/collaboration.html</loc>
-         <lastmod>2023-08-20</lastmod>
+         <lastmod>2023-09-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://hexmos.com/lama2/tutorials/editor.html</loc>
-         <lastmod>2023-08-20</lastmod>
+         <lastmod>2023-09-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://hexmos.com/lama2/tutorials/examples.html</loc>
-         <lastmod>2023-08-20</lastmod>
+         <lastmod>2023-09-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://hexmos.com/lama2/tutorials/installation.html</loc>
-         <lastmod>2023-08-20</lastmod>
+         <lastmod>2023-09-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://hexmos.com/lama2/tutorials/misc.html</loc>
-         <lastmod>2023-08-20</lastmod>
+         <lastmod>2023-09-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://hexmos.com/lama2/tutorials/postman.html</loc>
-         <lastmod>2023-08-20</lastmod>
+         <lastmod>2023-09-10</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>

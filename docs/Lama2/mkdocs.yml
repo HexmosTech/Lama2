@@ -1,25 +1,26 @@
 site_name: Hexmos Lama2
 site_url: http://hexmos.com/lama2/
 nav:
-    - Home: index.md
-    - Get Started: 
+  - Home: index.md
+  - Get Started:
       - Installation: tutorials/installation.md
       - Import Postman: tutorials/postman.md
       - Examples: tutorials/examples.md
       - Collaboration: tutorials/collaboration.md
       - Code Generation: tutorials/codegen.md
       - Misc: tutorials/misc.md
-    - Understand:
+  - Understand:
       - Syntax Guidance: explanation/syntax.md
       - The l2 Format: explanation/l2format.md
       - FAQ/RAQ: explanation/faq.md
-    - Develop:
+  - Develop:
       - Design Philosophy: reference/philosophy.md
       - Architecture: reference/architecture.md
       - IDE/Editor Support: tutorials/editor.md
       - Formal Grammar: reference/grammar.md
       - API Reference: reference/api.md
-    - About: 
+      - Contribute to LSP: reference/lsp.md
+  - About:
       - Hexmos: about/hexmos.md
       - Talk to us: about/contact.md
 markdown_extensions:
@@ -45,15 +46,14 @@ theme:
     # - navigation.tabs.sticky
     - navigation.sections
     - toc.follow
-    - navigation.top 
+    - navigation.top
   logo: logo.png
   favicon: favicon.ico
-  palette: 
-
+  palette:
     # Palette toggle for light mode
     - scheme: default
       toggle:
-        icon: material/brightness-7 
+        icon: material/brightness-7
         name: Switch to dark mode
 
     # Palette toggle for dark mode

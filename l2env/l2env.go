@@ -16,11 +16,11 @@ func ProcessEnvironmentVariables(searchQuery, directory string) interface{} {
 		log.Error().Str("Type", "Preprocess").Msg(err.Error())
 		os.Exit(0)
 	}
-	if searchQuery == "" { // Handle empty -e=''
+	if searchQuery == "" { // Handle empty searchQuery: ""
 		return envMap
-	} else { // Handle non-empty -e
-		return GetRelevantEnvs(envMap, searchQuery)
 	}
+	// Handle non-empty searchQuery: "query"
+	return GetRelevantEnvs(envMap, searchQuery)
 }
 
 func GetRelevantEnvs(envMap map[string]map[string]interface{}, searchQuery string) map[string]interface{} {

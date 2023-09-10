@@ -14,7 +14,7 @@ import (
 )
 
 type LSPResponse struct {
-	Id      int    `json:"id"`
+	ID      int    `json:"id"`
 	Jsonrpc string `json:"jsonrpc"`
 	Result  struct {
 		Capabilities struct {
@@ -31,8 +31,10 @@ type RawJSONRPCResponse struct {
 	Error   interface{}     `json:"error,omitempty"`
 }
 
-var stdin io.WriteCloser
-var stdout io.ReadCloser
+var (
+	stdin  io.WriteCloser
+	stdout io.ReadCloser
+)
 
 func TestMain(m *testing.M) {
 	// Setup: Start the LSP server

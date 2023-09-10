@@ -140,7 +140,7 @@ func (p *Lama2Parser) ComplexType() (*gabs.Container, error)
 
 
 <a name="Lama2Parser.DataHeader"></a>
-### func \(\*Lama2Parser\) [DataHeader](<https://github.com/HexmosTech/Lama2/blob/main/parser/headers.go#L28>)
+### func \(\*Lama2Parser\) [DataHeader](<https://github.com/HexmosTech/Lama2/blob/main/parser/headers.go#L30>)
 
 ```go
 func (p *Lama2Parser) DataHeader() (*gabs.Container, error)
@@ -149,7 +149,7 @@ func (p *Lama2Parser) DataHeader() (*gabs.Container, error)
 
 
 <a name="Lama2Parser.DataInput"></a>
-### func \(\*Lama2Parser\) [DataInput](<https://github.com/HexmosTech/Lama2/blob/main/parser/headers.go#L44>)
+### func \(\*Lama2Parser\) [DataInput](<https://github.com/HexmosTech/Lama2/blob/main/parser/headers.go#L46>)
 
 ```go
 func (p *Lama2Parser) DataInput() (*gabs.Container, error)
@@ -239,7 +239,7 @@ func (p *Lama2Parser) HTTPVerb() (*gabs.Container, error)
 
 
 <a name="Lama2Parser.HeaderData"></a>
-### func \(\*Lama2Parser\) [HeaderData](<https://github.com/HexmosTech/Lama2/blob/main/parser/headers.go#L11>)
+### func \(\*Lama2Parser\) [HeaderData](<https://github.com/HexmosTech/Lama2/blob/main/parser/headers.go#L13>)
 
 ```go
 func (p *Lama2Parser) HeaderData() (*gabs.Container, error)
@@ -248,7 +248,7 @@ func (p *Lama2Parser) HeaderData() (*gabs.Container, error)
 
 
 <a name="Lama2Parser.HeaderPair"></a>
-### func \(\*Lama2Parser\) [HeaderPair](<https://github.com/HexmosTech/Lama2/blob/main/parser/headers.go#L84>)
+### func \(\*Lama2Parser\) [HeaderPair](<https://github.com/HexmosTech/Lama2/blob/main/parser/headers.go#L89>)
 
 ```go
 func (p *Lama2Parser) HeaderPair() (*gabs.Container, error)
@@ -257,7 +257,7 @@ func (p *Lama2Parser) HeaderPair() (*gabs.Container, error)
 
 
 <a name="Lama2Parser.Headers"></a>
-### func \(\*Lama2Parser\) [Headers](<https://github.com/HexmosTech/Lama2/blob/main/parser/headers.go#L60>)
+### func \(\*Lama2Parser\) [Headers](<https://github.com/HexmosTech/Lama2/blob/main/parser/headers.go#L65>)
 
 ```go
 func (p *Lama2Parser) Headers() (*gabs.Container, error)

@@ -20,7 +20,7 @@ type ClientInfo struct {
 }
 
 type Uri struct {
-	Uri *string `json:"uri,omitempty"`
+	URI *string `json:"uri,omitempty"`
 }
 
 type WorkspaceFolder struct {
