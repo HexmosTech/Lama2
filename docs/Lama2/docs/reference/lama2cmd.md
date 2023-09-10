@@ -16,7 +16,7 @@ Package \`lama2cmd\` provides CLI argument parsing facilities. It hosts the \`Op
 
 
 <a name="ArgParsing"></a>
-## func [ArgParsing](<https://github.com/HexmosTech/Lama2/blob/main/lama2cmd/lama2cmd.go#L80>)
+## func [ArgParsing](<https://github.com/HexmosTech/Lama2/blob/main/lama2cmd/lama2cmd.go#L81>)
 
 ```go
 func ArgParsing(o *Opts, version string)
@@ -25,7 +25,7 @@ func ArgParsing(o *Opts, version string)
 
 
 <a name="Opts"></a>
-## type [Opts](<https://github.com/HexmosTech/Lama2/blob/main/lama2cmd/lama2cmd.go#L18-L35>)
+## type [Opts](<https://github.com/HexmosTech/Lama2/blob/main/lama2cmd/lama2cmd.go#L19-L36>)
 
 The Opts structure stores user preferences, and is used throughout the module to make various decisions.
 
@@ -41,7 +41,7 @@ type Opts struct {
     PostmanFile string `short:"p" long:"postmanfile" description:"JSON export from Postman (Settings -> Data -> Export Data)"`
     LamaDir     string `short:"l" long:"lama2dir" description:"Output directory to put .l2 files after conversion from Postman format"`
     Help        bool   `short:"h" long:"help" group:"AddHelp" description:"Usage help for Lama2"`
-    Env         string `short:"e" long:"env" default:"UNSET_VU5TRVQ" description:"Get a JSON of environment variables revelant to input arg"`
+    Lsp         bool   `short:"z" long:"lsp" description:"Start the lsp server"`
     Version     bool   `long:"version" description:"Print Lama2 binary version"`
 
     Positional struct {
@@ -51,7 +51,7 @@ type Opts struct {
 ```
 
 <a name="GetAndValidateCmd"></a>
-### func [GetAndValidateCmd](<https://github.com/HexmosTech/Lama2/blob/main/lama2cmd/lama2cmd.go#L112>)
+### func [GetAndValidateCmd](<https://github.com/HexmosTech/Lama2/blob/main/lama2cmd/lama2cmd.go#L117>)
 
 ```go
 func GetAndValidateCmd(ipArgs []string) *Opts

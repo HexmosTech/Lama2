@@ -3,9 +3,8 @@
 The `l2` command provides some helpful options for
 extension developers. The options are:
 
-1. `--env=<string to get relevant env>` or `-e` outputs a JSON of environment variables (in CLI);
-2. `--nocolor` or `-n` disables colored output in httpie-go (in CLI);
-3. `--output=<target.json` or `-o` writes a structured JSON
+1. `--nocolor` or `-n` disables colored output in httpie-go (in CLI);
+2. `--output=<target.json` or `-o` writes a structured JSON
    output to the target file (without colors). The following is the content
    structure:
 
@@ -44,44 +43,115 @@ display the contents to users appropriately. For an
 example, see [Lama2 for VSCode](https://github.com/HexmosTech/Lama2Code)
 (also see [Marketplace page](https://marketplace.visualstudio.com/items?itemName=hexmos.Lama2)).
 
-### Providing environment variable autocompletion
+# The LSP Methods
 
-To obtain a combined JSON representation of environment variables from `l2.env` and `l2config.env`, use option `-e` or `--env`. This will output the result to `stdout`.
+## Initilize server
+
+**Overview:**
+
+The server initialization is the first step to establish communication with the LSP.
+This process involves starting a server that listens for incoming JSON RPC 2.0 requests.
+
+**Steps:**
+
+### 1. Starting the Server:
+
+Launch the server using the following command:
 
 ```bash
-l2 -e=''  /path/to/my_api.l2
+l2 --lsp
 ```
+
+### 2. Making a Request:
+
+Send a JSON RPC 2.0 request to the server's stdin. Here's an example of an initialization request:
 
 ```json
 {
-  "AHOST": {
-    "src": "l2env",
-    "val": "http://127.0.0.1:8000"
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "initialize",
+  "params": {
+    "processId": null,
+    "clientInfo": {
+      "name": "MyEditor",
+      "version": "1.0.0"
+    },
+    "rootUri": "file:///path/to/workspace"
+  }
+}
+```
+
+### 3. Receiving a Response:
+
+After processing, the server will send a response back. This response can be read from the server's stdout.
+
+### Environment variable autocompletion
+
+**Overview:**
+
+The LSP server offers a custom method, `suggest/environmentVariables``, which provides autocompletion suggestions for environment variables.
+This method combines data from both l2.env and l2config.env to present a unified JSON representation of the environment variables.
+
+**Steps:**
+
+### 1. Making a Request
+
+Here's an example request to obtain all environment variables:
+
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "method": "suggest/environmentVariables",
+  "params": {
+    "textDocument": {
+      "uri": "file:///home/Lama2/elfparser/ElfTestSuite/root_variable_override/api/y_0020_root_override.l2"
+    },
+    "position": {
+      "line": 1,
+      "character": 2
+    },
+    "searchQuery": ""
+  }
+}
+```
+
+### 2. Receiving a Response:
+
+The server will respond with a JSON object containing the environment variables.
+Extension authors can then read this response from the server's stdout and present the variables to users in a suitable format.
+
+```json
+{
+  "id": 2,
+  "result": {
+    "AHOST": {
+      "src": "l2env",
+      "val": "http://127.0.0.1:8000"
+    },
+    "BHOST": {
+      "src": "l2configenv",
+      "val": "https://httpbin.org"
+    }
   },
-  "BHOST": {
-    "src": "l2configenv",
-    "val": "https://httpbin.org"
-  }
+  "jsonrpc": "2.0"
 }
 ```
 
-```bash
-l2 -e=BH  /path/to/my_api.l2
-```
+To filter the results based on a specific prefix, modify the searchQuery parameter. For instance, to retrieve variables relevant to "BH":
 
 ```json
 {
-  "BHOST": {
-    "src": "l2configenv",
-    "val": "https://httpbin.org"
-  }
+  "searchQuery": "BH"
 }
 ```
 
-The extension author can simply read the `stdout` after executing the command, and display the variables to users appropriately.
+When `l2.env` is present
 
 ![l2envvariable variable](l2envvariable.png)
 
+When both `l2.env` and `l2condig.env` is present
 ![l2configvariable variable](l2configvariable.png)
 
 Go to [Example](../tutorials/examples.md#case-3-override-root-variable-with-local-variable)

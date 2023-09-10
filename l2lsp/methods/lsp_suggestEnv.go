@@ -20,10 +20,10 @@ func getSearchQueryString(req request.JSONRPCRequest) string {
 }
 
 func getRequestURI(req request.JSONRPCRequest) (string, int, error) {
-	if req.Params.TextDocument.Uri == nil {
+	if req.Params.TextDocument.URI == nil {
 		return "", response.ErrInvalidURI, errors.New("URI cannot be empty. Ex: 'file:///path/to/workspace/myapi.l2'")
 	}
-	uri := *req.Params.TextDocument.Uri
+	uri := *req.Params.TextDocument.URI
 
 	// Handle local files
 	if strings.HasPrefix(uri, "file://") {
@@ -40,7 +40,6 @@ func getRequestURI(req request.JSONRPCRequest) (string, int, error) {
 		// Handle Windows files
 	} else if strings.Contains(uri, "\\") {
 		return "", response.ErrUnsupportedFeature, errors.New("Windows is not supported as of now. To contribute visit here: https://github.com/HexmosTech/Lama2")
-
 	} else {
 		// Log the unexpected URI scheme
 		log.Warn().Str("URI", uri).Msg("Encountered unexpected URI scheme.")
@@ -71,11 +70,14 @@ func SuggestEnvironmentVariables(req request.JSONRPCRequest) response.JSONRPCRes
 	log.Info().Str("Method", req.Method).Interface("Params", req.Params)
 
 	searchQuery := getSearchQueryString(req)
+	log.Debug().Str("Method", req.Method).Interface("searchQuery", searchQuery)
 	uri, errorCode, err := getRequestURI(req)
 	if err != nil {
 		return response.ErrorResp(req, errorCode, err.Error())
 	}
+	log.Debug().Str("Method", req.Method).Interface("uri", uri)
 	parentFolder := filepath.Dir(uri)
+	log.Debug().Str("Method", req.Method).Interface("parentFolder", parentFolder)
 	res := l2envpackege.ProcessEnvironmentVariables(searchQuery, parentFolder)
 	return response.CreateEnvironmentVariablesResp(req, res)
 }
