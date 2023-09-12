@@ -1,3 +1,5 @@
+# Programmatic ally Executing an l2 file
+
 ## Useful Options
 
 The `l2` command provides some helpful options for
@@ -43,7 +45,7 @@ display the contents to users appropriately. For an
 example, see [Lama2 for VSCode](https://github.com/HexmosTech/Lama2Code)
 (also see [Marketplace page](https://marketplace.visualstudio.com/items?itemName=hexmos.Lama2)).
 
-# The LSP Methods
+# LSP Language services for L2 extension
 
 ## Initilize server
 
@@ -61,6 +63,14 @@ Launch the server using the following command:
 ```bash
 l2 --lsp
 ```
+
+<sub>**Separate Process for Persistence:** Typically, language servers run as a separate process to ensure they remain active and responsive. Our implementation follows [this](https://code.visualstudio.com/api/language-extensions/language-server-extension-guide#why-language-server) best practice, ensuring the server remains available for the duration of your coding session.<sub/>
+
+<sub>**Interaction via stdin/stdout:** Communication with our server is facilitated through stdin (standard input) and stdout (standard output). This approach is in line with the [Microsoft Language Server Protocol](https://microsoft.github.io/language-server-protocol/) guidelines, ensuring compatibility and seamless integration with various editors and IDEs.<sub/>
+
+<sub>**Reference Implementation:** For a deeper dive into how we've implemented the server initialization in our extension, check out this section of our codebase. This will provide you with a hands-on understanding of our approach and might serve as a valuable reference if you're looking to extend or adapt the functionality.<sub/>
+
+See how Lama2Code [initializes](https://github.com/HexmosTech/Lama2Code/blob/main/src/lsp/methods/lspLifecycles.ts#L7) the server
 
 ### 2. Making a Request:
 
@@ -82,6 +92,8 @@ Send a JSON RPC 2.0 request to the server's stdin. Here's an example of an initi
 }
 ```
 
+See how Lama2Code makes a [request](https://github.com/HexmosTech/Lama2Code/blob/main/src/lsp/request/generalRequest.ts#L77)
+
 ### 3. Receiving a Response:
 
 After processing, the server will send a response back. This response can be read from the server's stdout.
@@ -90,7 +102,7 @@ After processing, the server will send a response back. This response can be rea
 
 **Overview:**
 
-The LSP server offers a custom method, `suggest/environmentVariables``, which provides autocompletion suggestions for environment variables.
+The LSP server offers a custom method, `suggest/environmentVariables`, which provides autocompletion suggestions for environment variables.
 This method combines data from both l2.env and l2config.env to present a unified JSON representation of the environment variables.
 
 **Steps:**
@@ -117,6 +129,8 @@ Here's an example request to obtain all environment variables:
 }
 ```
 
+Checkout how Lama2Code [requests](https://github.com/HexmosTech/Lama2Code/blob/main/src/lsp/methods/suggestEnvironmentVars.ts#L119) for environment variables
+
 ### 2. Receiving a Response:
 
 The server will respond with a JSON object containing the environment variables.
@@ -139,13 +153,19 @@ Extension authors can then read this response from the server's stdout and prese
 }
 ```
 
-To filter the results based on a specific prefix, modify the searchQuery parameter. For instance, to retrieve variables relevant to "BH":
+**Filtering Results:**
+
+To narrow down the environment variables based on a specific prefix, you can modify the `searchQuery` parameter in the previous request. This doesn't represent a new request but rather showcases how to adjust the existing one for more specific results.
+
+For instance, to retrieve variables relevant to "BH", adjust the `searchQuery` parameter as follows:
 
 ```json
 {
   "searchQuery": "BH"
 }
 ```
+
+This will filter the results to only include environment variables that contain "BH".
 
 When `l2.env` is present
 
