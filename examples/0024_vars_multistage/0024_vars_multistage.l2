@@ -1,0 +1,20 @@
+GET
+${ZAP_LOCAL}/guestJWT
+
+---
+let jwt = result["jwt"]
+let uid = result["uid"]
+let blah = "random"
+---
+
+
+POST
+${ZAP_LOCAL}/feed
+
+Authorization: "Bearer ${jwt}"
+
+{
+  "BookURL": "https://www.gutenberg.org/ebooks/2680",
+  "InputType": "PG_LINK",
+  "UserPtr": ${uid}
+}

@@ -3,12 +3,20 @@ package prettify
 import (
 	"fmt"
 	"os"
+	"regexp"
 	"strconv"
 
 	"github.com/HexmosTech/gabs/v2"
+	"github.com/rs/zerolog/log"
 )
 
 func Prettify(parsedAPI *gabs.Container, context map[string]bool, markRange map[string]int, content string, fPath string) {
+	defer func() {
+		if err := recover(); err != nil { //catch
+			log.Debug().Msg("Potential issue with prettify")
+			// os.Exit(0)
+		}
+	}()
 	parsedAPIblocks := parsedAPI.S("value").Data().(*gabs.Container).Children()
 	// Prettification procedure:
 	// 1. Scan from bottom of contents
@@ -43,6 +51,11 @@ func Prettify(parsedAPI *gabs.Container, context map[string]bool, markRange map[
 			content = content[:markRange["DataStart"+idxStr]] + jsonObj.StringIndent("", "  ") + "\n" + content[markRange["DataEnd"+idxStr]:]
 			markMax -= 1
 		}
-		os.WriteFile(fPath, []byte(content), 0644)
+
+		var re = regexp.MustCompile(`(?m)"626f4c60-([^"]+)"`)
+		var substitution = "$1"
+		res2 := re.ReplaceAllString(content, substitution)
+
+		os.WriteFile(fPath, []byte(res2), 0644)
 	}
 }
