@@ -12,7 +12,6 @@ import (
 	"github.com/HexmosTech/gabs/v2"
 	"github.com/HexmosTech/lama2/cmdexec"
 	"github.com/HexmosTech/lama2/preprocess"
-	"github.com/atotto/clipboard"
 )
 
 var (
@@ -165,6 +164,5 @@ func GenerateTargetCode(targetLangLib string, parsedAPI *gabs.Container) {
 	// Init returns an error if the package is not ready for use.
 	convertedSnippet := vm.Get("convertedSnippet").String()
 	fmt.Println(convertedSnippet)
-	clipboard.WriteAll(convertedSnippet)
-	fmt.Println("Code copied to clipboard")
+	
 }
