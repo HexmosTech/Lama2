@@ -6,10 +6,12 @@ POST
 ${REMOTE_COORD}/anything
 
 {
-    "username": "admin", "password": "Password@123", "from": "${LOCAL_COORD}/anything",
-        "url": "${url}",
-"Token": "MySuperSecretToken" }
-
+  "Token": "MySuperSecretToken",
+  "from": "${LOCAL_COORD}/anything",
+  "password": "Password@123",
+  "url": "${url}",
+  "username": "admin"
+}
 ---
 
 // filtering, store in var
@@ -25,6 +27,13 @@ ${REMOTE_COORD}/bearer
 
 Authorization: 'Bearer ${TOKEN}'
 
-[  {"name":"Ram", "email":"Ram@gmail.com"},  
-            {"name":"Bob", "email":"bob32@gmail.com"}  
+[
+  {
+    "email": "Ram@gmail.com",
+    "name": "Ram"
+  },
+  {
+    "email": "bob32@gmail.com",
+    "name": "Bob"
+  }
 ]

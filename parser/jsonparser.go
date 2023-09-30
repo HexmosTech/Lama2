@@ -19,8 +19,34 @@ func (p *Lama2Parser) ComplexType() (*gabs.Container, error) {
 }
 
 func (p *Lama2Parser) PrimitiveType() (*gabs.Container, error) {
-	r, e := p.Match([]string{"Null", "Boolean", "QuotedString", "Number"})
+	r, e := p.Match([]string{"Null", "Boolean", "QuotedString", "Number", "L2Variable"})
 	return r, e
+}
+
+func (p *Lama2Parser) L2Variable() (*gabs.Container, error) {
+	temp := gabs.New()
+	_, e := p.Keyword("${", true, true, true)
+	if e != nil {
+		return nil, e
+	}
+	res := ""
+	for {
+		item, err := p.CharClass("a-zA-Z0-9")
+		if err != nil {
+			break
+		}
+		res += string(item)
+	}
+	_, e = p.Keyword("}", true, true, true)
+	if e != nil {
+		return nil, e
+	}
+
+	// hack to deal with unquoted variables
+	// in files
+	temp.Set("626f4c60-${" + res + "}")
+
+	return temp, nil
 }
 
 // CustomPairMerge uses a gabs feature to deal with merge conflicts.

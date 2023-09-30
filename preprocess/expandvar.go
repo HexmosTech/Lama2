@@ -7,7 +7,9 @@
 package preprocess
 
 import (
+	"fmt"
 	"os"
+	"regexp"
 	"strings"
 
 	"github.com/dop251/goja"
@@ -37,7 +39,9 @@ func Expand(s string, vm *goja.Runtime, mapping map[string]string) string {
 				buf = append(buf, s[j])
 			} else {
 				jsVal := vm.Get(name)
+				fmt.Println(">>> jsVal = ", jsVal)
 				if jsVal != nil {
+					fmt.Println("### buf", string(buf))
 					buf = append(buf, []byte(jsVal.String())...)
 				} else {
 					val, ok := mapping[name]
@@ -56,7 +60,11 @@ func Expand(s string, vm *goja.Runtime, mapping map[string]string) string {
 	if buf == nil {
 		return s
 	}
-	return string(buf) + s[i:]
+	res := string(buf) + s[i:]
+	var re = regexp.MustCompile(`(?m)"626f4c60-([^"]+)"`)
+	var substitution = "$1"
+	res2 := re.ReplaceAllString(res, substitution)
+	return res2
 }
 
 func getEnvironMap() map[string]string {
