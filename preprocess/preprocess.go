@@ -85,8 +85,9 @@ func ExpandJSON(block *gabs.Container, vm *goja.Runtime) {
 		return
 	}
 	dataBlockStr := dataBlock.String()
-	fmt.Println("@@@ dataBlockStr", dataBlockStr)
+	fmt.Println("!@! dataBlock before", dataBlockStr)
 	dataBlockStr = ExpandEnv(dataBlockStr, vm)
+	fmt.Println("@@@ dataBlockStr", dataBlockStr)
 	// dataBlockStr = escapeString(dataBlockStr)
 	dataBlockStr = strings.ReplaceAll(dataBlockStr, "\n", "")
 	log.Debug().Str("Expanded JSON data block", dataBlockStr).Msg("")

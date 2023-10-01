@@ -3,10 +3,10 @@ package prettify
 import (
 	"fmt"
 	"os"
-	"regexp"
 	"strconv"
 
 	"github.com/HexmosTech/gabs/v2"
+	"github.com/HexmosTech/lama2/utils"
 	"github.com/rs/zerolog/log"
 )
 
@@ -43,7 +43,6 @@ func Prettify(parsedAPI *gabs.Container, context map[string]bool, markRange map[
 				return
 			}
 
-			fmt.Println("Prettifying JSON in the l2 file")
 			jsonObj := block.S("details", "ip_data")
 
 			idxStr := strconv.Itoa(markMax)
@@ -52,10 +51,7 @@ func Prettify(parsedAPI *gabs.Container, context map[string]bool, markRange map[
 			markMax -= 1
 		}
 
-		var re = regexp.MustCompile(`(?m)"626f4c60-([^"]+)"`)
-		var substitution = "$1"
-		res2 := re.ReplaceAllString(content, substitution)
-
+		res2 := utils.RemoveUnquotedMarker(content)
 		os.WriteFile(fPath, []byte(res2), 0644)
 	}
 }
