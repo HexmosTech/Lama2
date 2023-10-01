@@ -38,7 +38,6 @@ func RemoveUnquotedMarker(content string) string {
 	var re = regexp.MustCompile(fmt.Sprintf(`(?m)"~%v-\${([^}]+)}~"`, UNQUOTED_VAR_MARKER))
 	var substitution = "${$1}"
 	res2 := re.ReplaceAllString(content, substitution)
-	fmt.Println("!!! post substitution", res2)
 	return res2
 }
 
@@ -46,7 +45,6 @@ func RemoveUnquotedValueMarker(content string) string {
 	var re = regexp.MustCompile(fmt.Sprintf(`(?m)"~%v-([^~]+)~"`, UNQUOTED_VAR_MARKER))
 	var substitution = "$1"
 	res2 := re.ReplaceAllString(content, substitution)
-	fmt.Println("!!! post substitution", res2)
 	return res2
 }
 

@@ -7,7 +7,6 @@
 package preprocess
 
 import (
-	"fmt"
 	"os"
 	"strings"
 
@@ -39,9 +38,7 @@ func Expand(s string, vm *goja.Runtime, mapping map[string]string) string {
 				buf = append(buf, s[j])
 			} else {
 				jsVal := vm.Get(name)
-				fmt.Println(">>> jsVal = ", jsVal)
 				if jsVal != nil {
-					fmt.Println("### buf", string(buf))
 					buf = append(buf, []byte(jsVal.String())...)
 				} else {
 					val, ok := mapping[name]
@@ -59,14 +56,11 @@ func Expand(s string, vm *goja.Runtime, mapping map[string]string) string {
 	}
 	res := ""
 	if buf == nil {
-		fmt.Println("Buf is nil!!")
 		res = s
 	} else {
 		res = string(buf) + s[i:]
 	}
-	fmt.Println("Expansion result before", res)
 	res2 := utils.RemoveUnquotedValueMarker(res)
-	fmt.Println("Expansion result after", res2)
 	return res2
 }
 
