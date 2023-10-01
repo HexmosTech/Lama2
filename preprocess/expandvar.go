@@ -9,9 +9,9 @@ package preprocess
 import (
 	"fmt"
 	"os"
-	"regexp"
 	"strings"
 
+	"github.com/HexmosTech/lama2/utils"
 	"github.com/dop251/goja"
 	"github.com/rs/zerolog/log"
 )
@@ -57,13 +57,16 @@ func Expand(s string, vm *goja.Runtime, mapping map[string]string) string {
 			i = j + 1
 		}
 	}
+	res := ""
 	if buf == nil {
-		return s
+		fmt.Println("Buf is nil!!")
+		res = s
+	} else {
+		res = string(buf) + s[i:]
 	}
-	res := string(buf) + s[i:]
-	var re = regexp.MustCompile(`(?m)"626f4c60-([^"]+)"`)
-	var substitution = "$1"
-	res2 := re.ReplaceAllString(res, substitution)
+	fmt.Println("Expansion result before", res)
+	res2 := utils.RemoveUnquotedValueMarker(res)
+	fmt.Println("Expansion result after", res2)
 	return res2
 }
 

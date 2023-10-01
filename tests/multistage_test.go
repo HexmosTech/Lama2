@@ -47,7 +47,7 @@ func TestMultiStageCount(t *testing.T) {
 	}
 }
 
-func TestMultiStageVars(t *testing.T) {
+func TestUnquotedVars(t *testing.T) {
 	apiContent, _ := os.ReadFile("../examples/0024_vars_multistage/0024_vars_multistage.l2")
 	p := parser.NewLama2Parser()
 	parsedAPI, _ := p.Parse(string(apiContent))

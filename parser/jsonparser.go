@@ -1,6 +1,8 @@
 package parser
 
 import (
+	"fmt"
+
 	"github.com/HexmosTech/gabs/v2"
 	"github.com/HexmosTech/lama2/utils"
 	"github.com/rs/zerolog/log"
@@ -44,7 +46,8 @@ func (p *Lama2Parser) L2Variable() (*gabs.Container, error) {
 
 	// hack to deal with unquoted variables
 	// in files
-	temp.Set("626f4c60-${" + res + "}")
+	primitive := fmt.Sprintf("~%v-${%v}~", utils.UNQUOTED_VAR_MARKER, res)
+	temp.Set(primitive)
 
 	return temp, nil
 }

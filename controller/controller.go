@@ -5,7 +5,6 @@
 package contoller
 
 import (
-	"fmt"
 	"os"
 
 	"github.com/HexmosTech/gabs/v2"
@@ -36,7 +35,6 @@ func ExecuteProcessorBlock(block *gabs.Container, vm *goja.Runtime) {
 }
 
 func ExecuteRequestorBlock(block *gabs.Container, vm *goja.Runtime, opts *lama2cmd.Opts, dir string) httpie.ExResponse {
-	fmt.Println("Block = " + block.String())
 	preprocess.ProcessVarsInBlock(block, vm)
 	// TODO - replace stuff in headers, and varjson and json as well
 	cmd, stdinBody := cmdgen.ConstructCommand(block, opts)
