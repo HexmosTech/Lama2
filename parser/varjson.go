@@ -8,10 +8,10 @@ import (
 )
 
 // Method VarJSON behaves in two ways depending
-// on whether `multipart` is true or not.
+// on whether `multipart` or `form` is true or not.
 // If there is no multipart, then VarJSON tries
 // to match one or more VarJSONPairs
-// However, if there is multipart, we try to match
+// However, if there is multipart or form, we try to match
 // zero or more VarJSON, followed by zero or more
 // file fields (separated by `@`). If there is no match
 // at all, we return a ParseError; otherwise the
@@ -19,12 +19,17 @@ import (
 func (p *Lama2Parser) VarJSON() (*gabs.Container, error) {
 	temp := gabs.New()
 	hasMultipart := false
+	hasForm := false
 	if val, ok := p.Context["multipart"]; ok {
 		hasMultipart = val
 	}
 
+	if val, ok := p.Context["form"]; ok {
+		hasForm = val
+	}
+
 	pair, e1 := p.Match([]string{"VarJSONPair"})
-	if e1 != nil && !hasMultipart {
+	if e1 != nil && (!hasMultipart || !hasForm) {
 		return nil, e1
 	}
 	temp.Merge(pair)
@@ -38,7 +43,7 @@ func (p *Lama2Parser) VarJSON() (*gabs.Container, error) {
 		temp.Merge(pair)
 	}
 
-	if hasMultipart {
+	if (hasMultipart) {
 		filesObj := gabs.New()
 		for {
 			pair, e1 = p.Match([]string{"FilesPair"})

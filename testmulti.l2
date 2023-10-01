@@ -1,0 +1,12 @@
+POST
+MULTIPART
+http://httpbin.org/post
+
+'X-Parse-Application-Id':hello
+X-Parse-REST-API-Key:"world"
+
+# DATA
+first=second
+
+# FILES
+myfile@./image.jpeg

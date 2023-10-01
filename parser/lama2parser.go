@@ -153,6 +153,11 @@ func (p *Lama2Parser) Requester() (*gabs.Container, error) {
 		temp.Set(res, "multipart")
 	}
 
+	res, e = p.Match([]string{"Form"})
+	if e == nil {
+		temp.Set(res, "form")
+	}
+
 	res, e = p.Match([]string{"TheURL"})
 	if e == nil {
 		temp.Set(res, "url")
@@ -230,6 +235,7 @@ func (p *Lama2Parser) Multipart() (*gabs.Container, error) {
 	_, e := p.Keyword("multipart", true, true, true)
 	if e == nil {
 		temp := gabs.New()
+
 		temp.Set(true, "value")
 		temp.Set("Multipart", "type")
 		p.Context["multipart"] = true
@@ -237,6 +243,19 @@ func (p *Lama2Parser) Multipart() (*gabs.Container, error) {
 	}
 	return nil, utils.NewParseError(p.Pos+1, p.LineNum+1,
 		"Expected 'multipart', but couldn't find", []string{})
+}
+
+func (p *Lama2Parser) Form() (*gabs.Container, error) {
+	_, e := p.Keyword("form", true, true, true)
+	if e == nil {
+		temp := gabs.New()
+		temp.Set(true, "value")
+		temp.Set("Form", "type")
+		p.Context["form"] = true
+		return temp, nil
+	}
+	return nil, utils.NewParseError(p.Pos+1, p.LineNum+1,
+		"Expected 'form', but couldn't find", []string{})
 }
 
 func (p *Lama2Parser) Details() (*gabs.Container, error) {
