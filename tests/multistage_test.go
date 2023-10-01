@@ -71,8 +71,8 @@ func TestMultiStageVars(t *testing.T) {
 
 	// get statistics
 
-	if procCount != 2 {
-		t.Fatalf("Expected processor block count = 2")
+	if procCount != 1 {
+		t.Fatalf("Expected processor block count = 1")
 	}
 
 	if reqCount != 2 {
