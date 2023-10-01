@@ -33,7 +33,7 @@ func (p *Lama2Parser) L2Variable() (*gabs.Container, error) {
 	}
 	res := ""
 	for {
-		item, err := p.CharClass("a-zA-Z0-9")
+		item, err := p.CharClass("a-zA-Z0-9_")
 		if err != nil {
 			break
 		}
