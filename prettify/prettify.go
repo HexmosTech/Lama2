@@ -28,7 +28,7 @@ func Prettify(parsedAPI *gabs.Container, context map[string]bool, markRange map[
 			jsonObj := block.S("details", "ip_data")
 
 			res := content[:markRange["DataStart"]] + jsonObj.StringIndent("", "  ") + "\n" + content[markRange["DataEnd"]:]
-			os.WriteFile(fPath, []byte(res), 0o644)
+			os.WriteFile(fPath, []byte(res), 0644)
 		}
 	}
 }

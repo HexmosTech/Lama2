@@ -1,9 +1,0 @@
-POST
-MULTIPART
-https://httpbin.org/post
-
-# HEADERS
-Cookie:"sessionid=foo;another-cookie=bar"
-
-# DATA
-hello=world

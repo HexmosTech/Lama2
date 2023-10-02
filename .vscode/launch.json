@@ -4,8 +4,6 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-
-
         {
             "type": "by-gdb",
             "request": "launch",
@@ -22,8 +20,7 @@
             "request": "launch",
             "mode": "auto",
             "program": "${fileDirname}",
-            "args": ["testform1.l2"],
-            "dlvFlags": ["--check-go-version=false"] 
-        },
+            "args": ["-h"]
+        }
     ]
 }

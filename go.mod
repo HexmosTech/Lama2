@@ -1,6 +1,6 @@
 module github.com/HexmosTech/lama2
 
-go 1.18
+go 1.19
 
 require (
 	github.com/HexmosTech/gabs/v2 v2.6.5

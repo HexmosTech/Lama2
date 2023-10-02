@@ -235,7 +235,6 @@ func (p *Lama2Parser) Multipart() (*gabs.Container, error) {
 	_, e := p.Keyword("multipart", true, true, true)
 	if e == nil {
 		temp := gabs.New()
-
 		temp.Set(true, "value")
 		temp.Set("Multipart", "type")
 		p.Context["multipart"] = true
