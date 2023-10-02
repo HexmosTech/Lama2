@@ -1,108 +1,276 @@
+// env_command_test.go
 package tests
 
 import (
-	"bytes"
 	"encoding/json"
 	"fmt"
-	"os"
-	"os/exec"
+	"path/filepath"
 	"testing"
 
-	"github.com/rs/zerolog/log"
+	testutils "github.com/HexmosTech/lama2/tests/utils"
 )
 
-type EnvData struct {
-	Src string `json:"src"`
-	Val string `json:"val"`
-}
+func TestForEmptySearchQuery(t *testing.T) {
+	stdin, stdout, err := startLSPServer()
+	if err != nil {
+		t.Fatalf("Failed to start LSP server: %v", err)
+	}
+	defer stdin.Close()
+	fpath := "../elfparser/ElfTestSuite/root_variable_override/api/y_0020_root_override.l2"
+	absPath, err := filepath.Abs(fpath)
+	if err != nil {
+		t.Fatalf("Failed to get the absolute path: %v", err)
+	}
+	// t.Fatalf("  absolute path: %v", absPath)
 
-func TestL2EnvCommand(t *testing.T) {
-	cmdArgs := []string{"-e", "../elfparser/ElfTestSuite/root_variable_override/api/y_0020_root_override.l2"}
-	envMap := runL2CommandAndParseJSON(t, cmdArgs...)
-	// Check the "AHOST" key
+	searchQuery := ""
+
+	req := fmt.Sprintf(`{"jsonrpc":"2.0","id":1,"method":"suggest/environmentVariables","params":{"textDocument":{"uri":"file://%s"},"position":{"line":1,"character":45},"searchQuery":"%s"}}`, absPath, searchQuery)
+	_, err = stdin.Write([]byte(req + "\n"))
+	if err != nil {
+		t.Fatalf("Failed to write to LSP server stdin: %v", err)
+	}
+
+	buffer := make([]byte, 2048)
+	n, err := stdout.Read(buffer)
+	if err != nil {
+		t.Fatalf("Failed to read from LSP server stdout: %v", err)
+	}
+
+	var rawResponse RawJSONRPCResponse
+	err = json.Unmarshal(buffer[:n], &rawResponse)
+	if err != nil {
+		t.Fatalf("Failed to unmarshal LSP raw response: %v", err)
+	}
+
+	if rawResponse.ID != 1 {
+		t.Fatalf("Expected response ID to be 1, got %v", rawResponse.ID)
+	}
+	if rawResponse.JSONRPC != "2.0" {
+		t.Fatalf("Expected jsonrpc version to be 2.0, got %v", rawResponse.JSONRPC)
+	}
+
+	// Parse the Result into a map
+	var envMap map[string]testutils.EnvData
+	err = json.Unmarshal(rawResponse.Result, &envMap)
+	if err != nil {
+		t.Fatalf("Failed to unmarshal LSP response result: %v", err)
+	}
+
+	// Use the helper functions to check the AHOST and BHOST values
 	checkAHost(t, envMap)
-
-	// Check the "BHOST" key
 	checkBHost(t, envMap)
 }
 
-func TestL2EnvCommandVerbose(t *testing.T) {
-	cmdArgs := []string{"-ev", "../elfparser/ElfTestSuite/root_variable_override/api/y_0020_root_override.l2"}
-	envMap := runL2CommandAndParseJSON(t, cmdArgs...)
-	// Check the "AHOST" key
+func TestL2SuggestEnvForNoL2Config(t *testing.T) {
+	stdin, stdout, err := startLSPServer()
+	if err != nil {
+		t.Fatalf("Failed to start LSP server: %v", err)
+	}
+	defer stdin.Close()
+	fpath := "../elfparser/ElfTestSuite/no_l2config/api/y_0021_no_l2config.l2"
+	absPath, err := filepath.Abs(fpath)
+	if err != nil {
+		t.Fatalf("Failed to get the absolute path: %v", err)
+	}
+	searchQuery := ""
+
+	req := fmt.Sprintf(`{"jsonrpc":"2.0","id":1,"method":"suggest/environmentVariables","params":{"textDocument":{"uri":"file://%s"},"position":{"line":1,"character":45},"searchQuery":"%s"}}`, absPath, searchQuery)
+	_, err = stdin.Write([]byte(req + "\n"))
+	if err != nil {
+		t.Fatalf("Failed to write to LSP server stdin: %v", err)
+	}
+
+	buffer := make([]byte, 2048)
+	n, err := stdout.Read(buffer)
+	if err != nil {
+		t.Fatalf("Failed to read from LSP server stdout: %v", err)
+	}
+
+	var rawResponse RawJSONRPCResponse
+	err = json.Unmarshal(buffer[:n], &rawResponse)
+	if err != nil {
+		t.Fatalf("Failed to unmarshal LSP raw response: %v", err)
+	}
+
+	if rawResponse.ID != 1 {
+		t.Fatalf("Expected response ID to be 1, got %v", rawResponse.ID)
+	}
+	if rawResponse.JSONRPC != "2.0" {
+		t.Fatalf("Expected jsonrpc version to be 2.0, got %v", rawResponse.JSONRPC)
+	}
+
+	// Parse the Result into a map
+	var envMap map[string]testutils.EnvData
+	err = json.Unmarshal(rawResponse.Result, &envMap)
+	if err != nil {
+		t.Fatalf("Failed to unmarshal LSP response result: %v", err)
+	}
+
+	// Use the helper functions to check the AHOST and BHOST values
+	checkAHost(t, envMap)
+}
+
+func TestL2RelevantEnvForAString(t *testing.T) {
+	stdin, stdout, err := startLSPServer()
+	if err != nil {
+		t.Fatalf("Failed to start LSP server: %v", err)
+	}
+	defer stdin.Close()
+	fpath := "../elfparser/ElfTestSuite/root_variable_override/api/y_0020_root_override.l2"
+	absPath, err := filepath.Abs(fpath)
+	if err != nil {
+		t.Fatalf("Failed to get the absolute path: %v", err)
+	}
+	searchQuery := "A"
+	jreq := `{"jsonrpc":"2.0","id":1,"method":"suggest/environmentVariables","params":{"textDocument":{"uri":"file://%s"},"position":{"line":1,"character":45},"searchQuery":"%s"}}`
+	req := fmt.Sprintf(jreq, absPath, searchQuery)
+	_, err = stdin.Write([]byte(req + "\n"))
+	if err != nil {
+		t.Fatalf("JSON-RPC request: %v   LSP Err: %v", req, err)
+	}
+
+	buffer := make([]byte, 2048)
+	n, err := stdout.Read(buffer)
+	if err != nil {
+		t.Fatalf("JSON-RPC request: %v   LSP Err: %v", req, err)
+	}
+
+	var rawResponse RawJSONRPCResponse
+	err = json.Unmarshal(buffer[:n], &rawResponse)
+	if err != nil {
+		t.Fatalf("JSON-RPC request: %v   LSP Err: %v", req, err)
+	}
+
+	if rawResponse.ID != 1 {
+		t.Fatalf("Expected response ID to be 1, got %v JSON-RPC request: %v", rawResponse.ID, req)
+	}
+	if rawResponse.JSONRPC != "2.0" {
+		t.Fatalf("Expected jsonrpc version to be 2.0, got %v JSON-RPC request: %v", rawResponse.JSONRPC, req)
+	}
+
+	// Parse the Result into a map
+	var envMap map[string]testutils.EnvData
+	err = json.Unmarshal(rawResponse.Result, &envMap)
+	if err != nil {
+		t.Fatalf("Failed to unmarshal LSP response result: %v JSON-RPC request: %v", err, req)
+	}
+
+	// Use the helper functions to check the AHOST and BHOST values
+	// Check the "AHOST" key is present
 	checkAHost(t, envMap)
 
-	// Check the "BHOST" key
+	// Check the "BHOST" key is absent
+	checkBHostDoesNotExist(t, envMap)
+}
+
+func TestL2RelevantEnvForBString(t *testing.T) {
+	stdin, stdout, err := startLSPServer()
+	if err != nil {
+		t.Fatalf("Failed to start LSP server: %v", err)
+	}
+	defer stdin.Close()
+	fpath := "../elfparser/ElfTestSuite/root_variable_override/api/y_0020_root_override.l2"
+	absPath, err := filepath.Abs(fpath)
+	if err != nil {
+		t.Fatalf("Failed to get the absolute path: %v", err)
+	}
+	searchQuery := "B"
+
+	req := fmt.Sprintf(`{"jsonrpc":"2.0","id":1,"method":"suggest/environmentVariables","params":{"textDocument":{"uri":"file://%s"},"position":{"line":1,"character":45},"searchQuery":"%s"}}`, absPath, searchQuery)
+	_, err = stdin.Write([]byte(req + "\n"))
+	if err != nil {
+		t.Fatalf("Failed to write to LSP server stdin: %v", err)
+	}
+
+	buffer := make([]byte, 2048)
+	n, err := stdout.Read(buffer)
+	if err != nil {
+		t.Fatalf("Failed to read from LSP server stdout: %v", err)
+	}
+
+	var rawResponse RawJSONRPCResponse
+	err = json.Unmarshal(buffer[:n], &rawResponse)
+	if err != nil {
+		t.Fatalf("Failed to unmarshal LSP raw response: %v", err)
+	}
+
+	if rawResponse.ID != 1 {
+		t.Fatalf("Expected response ID to be 1, got %v", rawResponse.ID)
+	}
+	if rawResponse.JSONRPC != "2.0" {
+		t.Fatalf("Expected jsonrpc version to be 2.0, got %v", rawResponse.JSONRPC)
+	}
+
+	// Parse the Result into a map
+	var envMap map[string]testutils.EnvData
+	err = json.Unmarshal(rawResponse.Result, &envMap)
+	if err != nil {
+		t.Fatalf("Failed to unmarshal LSP response result: %v", err)
+	}
+
+	// Use the helper functions to check the AHOST and BHOST values
+	// Check the "BHOST" key is present
 	checkBHost(t, envMap)
+
+	// Check the "AHOST" key is absent
+	checkAHostDoesNotExist(t, envMap)
 }
 
 func TestL2EnvWithoutL2config(t *testing.T) {
-	cmdArgs := []string{"-ev", "../elfparser/ElfTestSuite/no_l2config/api/y_0021_no_l2config.l2"}
-	envMap := runL2CommandAndParseJSON(t, cmdArgs...)
-	// Check the "AHOST" key
-	checkAHost(t, envMap)
-}
+	stdin, stdout, err := startLSPServer()
+	if err != nil {
+		t.Fatalf("Failed to start LSP server: %v", err)
+	}
+	defer stdin.Close()
+	fpath := "../elfparser/ElfTestSuite/no_l2env/api/y_0022_no_l2env.l2"
 
-func TestL2EnvWithoutL2env(t *testing.T) {
-	cmdArgs := []string{"-ev", "../elfparser/ElfTestSuite/no_l2env/api/y_0022_no_l2env.l2"}
-	envMap := runL2CommandAndParseJSON(t, cmdArgs...)
+	absPath, err := filepath.Abs(fpath)
+	// t.Fatalf(string(absPath))
+	if err != nil {
+		t.Fatalf("Failed to get the absolute path: %v", err)
+	}
+	searchQuery := ""
 
-	// Check the "BHOST" key
+	req := fmt.Sprintf(`{"jsonrpc":"2.0","id":1,"method":"suggest/environmentVariables","params":{"textDocument":{"uri":"file://%s"},"position":{"line":1,"character":45},"searchQuery":"%s"}}`, absPath, searchQuery)
+	_, err = stdin.Write([]byte(req + "\n"))
+	if err != nil {
+		t.Fatalf("Failed to write to LSP server stdin: %v", err)
+	}
+
+	buffer := make([]byte, 2048)
+	n, err := stdout.Read(buffer)
+	if err != nil {
+		t.Fatalf("Failed to read from LSP server stdout: %v", err)
+	}
+
+	var rawResponse RawJSONRPCResponse
+	err = json.Unmarshal(buffer[:n], &rawResponse)
+	if err != nil {
+		t.Fatalf("Failed to unmarshal LSP raw response: %v", err)
+	}
+
+	if rawResponse.ID != 1 {
+		t.Fatalf("Expected response ID to be 1, got %v", rawResponse.ID)
+	}
+	if rawResponse.JSONRPC != "2.0" {
+		t.Fatalf("Expected jsonrpc version to be 2.0, got %v", rawResponse.JSONRPC)
+	}
+
+	// Parse the Result into a map
+	var envMap map[string]testutils.EnvData
+	err = json.Unmarshal(rawResponse.Result, &envMap)
+	if err != nil {
+		t.Fatalf("Failed to unmarshal LSP response result: %v", err)
+	}
+
+	// Use the helper functions to check the AHOST and BHOST values
+	// Check the "AHOST" key is present
 	checkBHost(t, envMap)
 }
 
-func runL2CommandAndParseJSON(t *testing.T, cmdArgs ...string) map[string]EnvData {
-	// Get the full path to the l2 binary
-	l2BinPath := "../build/l2"
-
-	// Check if the l2 binary file exists
-	if err := checkL2BinaryExists(l2BinPath); err != nil {
-		t.Error(err)
-		return make(map[string]EnvData)
-	}
-
-	// Your existing code to run the l2 command and parse JSON
-	cmd := exec.Command(l2BinPath, cmdArgs...)
-
-	var stdout bytes.Buffer
-	cmd.Stdout = &stdout
-
-	// Execute the command
-	err := cmd.Run()
-	if err != nil {
-		// Handle the error if needed
-		t.Errorf("Error running l2 command: %v\n", err)
-		return make(map[string]EnvData)
-	}
-
-	// Retrieve the captured stdout
-	stdoutOutput := stdout.String()
-
-	log.Debug().Str("Test env_command", stdoutOutput).Msg("output from command")
-
-	// Convert the stdoutOutput string to []byte slice
-	outputBytes := []byte(stdoutOutput)
-
-	envMap := make(map[string]EnvData)
-	err = json.Unmarshal(outputBytes, &envMap)
-	if err != nil {
-		t.Fatalf("Error unmarshaling JSON env: %v\nOutput:\n%s", err, stdoutOutput)
-	}
-
-	return envMap
-}
-
-// checkL2BinaryExists checks if the l2 binary file exists in the specified path
-func checkL2BinaryExists(l2BinPath string) error {
-	// Check if the l2 binary file exists
-	if _, err := os.Stat(l2BinPath); os.IsNotExist(err) {
-		return fmt.Errorf("l2 binary not found in the build folder %s, please change the path", l2BinPath)
-	}
-	return nil
-}
-
 // checkAHost checks the "AHOST" key in the JSON map
-func checkAHost(t *testing.T, envMap map[string]EnvData) {
+func checkAHost(t *testing.T, envMap map[string]testutils.EnvData) {
 	if ahost, ok := envMap["AHOST"]; !ok {
 		t.Error("Expected 'AHOST' key in the JSON, but it was not found")
 	} else {
@@ -117,7 +285,7 @@ func checkAHost(t *testing.T, envMap map[string]EnvData) {
 }
 
 // checkBHost checks the "BHOST" key in the JSON map
-func checkBHost(t *testing.T, envMap map[string]EnvData) {
+func checkBHost(t *testing.T, envMap map[string]testutils.EnvData) {
 	if bhost, ok := envMap["BHOST"]; !ok {
 		t.Error("Expected 'BHOST' key in the JSON, but it was not found")
 	} else {
@@ -128,5 +296,17 @@ func checkBHost(t *testing.T, envMap map[string]EnvData) {
 		if bhost.Val != "https://httpbin.org" {
 			t.Errorf(`Expected "val" value to be "https://httpbin.org" for "BHOST", but got: %v`, bhost.Val)
 		}
+	}
+}
+
+func checkBHostDoesNotExist(t *testing.T, envMap map[string]testutils.EnvData) {
+	if _, ok := envMap["BHOST"]; ok {
+		t.Error("Expected 'BHOST' key not to be present in the JSON, but it was found")
+	}
+}
+
+func checkAHostDoesNotExist(t *testing.T, envMap map[string]testutils.EnvData) {
+	if _, ok := envMap["AHOST"]; ok {
+		t.Error("Expected 'AHOST' key not to be present in the JSON, but it was found")
 	}
 }

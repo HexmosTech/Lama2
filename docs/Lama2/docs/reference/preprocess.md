@@ -15,7 +15,7 @@ Package preprocess provides facilities to expand environment variables in \`.l2\
 - [func ExpandHeaders\(block \*gabs.Container, vm \*goja.Runtime\)](<#ExpandHeaders>)
 - [func ExpandJSON\(block \*gabs.Container, vm \*goja.Runtime\)](<#ExpandJSON>)
 - [func ExpandURL\(block \*gabs.Container, vm \*goja.Runtime\)](<#ExpandURL>)
-- [func GetL2EnvVariables\(dir string\) \(\[\]byte, error\)](<#GetL2EnvVariables>)
+- [func GetL2EnvVariables\(dir string\) \(map\[string\]map\[string\]interface\{\}, error\)](<#GetL2EnvVariables>)
 - [func GetLamaFileAsString\(path string\) string](<#GetLamaFileAsString>)
 - [func LamaFile\(inputFile string\) \(string, string\)](<#LamaFile>)
 - [func LoadEnvFile\(l2path string\)](<#LoadEnvFile>)
@@ -73,13 +73,13 @@ func ExpandURL(block *gabs.Container, vm *goja.Runtime)
 ## func [GetL2EnvVariables](<https://github.com/HexmosTech/Lama2/blob/main/preprocess/preprocess.go#L169>)
 
 ```go
-func GetL2EnvVariables(dir string) ([]byte, error)
+func GetL2EnvVariables(dir string) (map[string]map[string]interface{}, error)
 ```
 
 
 
 <a name="GetLamaFileAsString"></a>
-## func [GetLamaFileAsString](<https://github.com/HexmosTech/Lama2/blob/main/preprocess/preprocess.go#L200>)
+## func [GetLamaFileAsString](<https://github.com/HexmosTech/Lama2/blob/main/preprocess/preprocess.go#L196>)
 
 ```go
 func GetLamaFileAsString(path string) string
@@ -88,7 +88,7 @@ func GetLamaFileAsString(path string) string
 
 
 <a name="LamaFile"></a>
-## func [LamaFile](<https://github.com/HexmosTech/Lama2/blob/main/preprocess/preprocess.go#L214>)
+## func [LamaFile](<https://github.com/HexmosTech/Lama2/blob/main/preprocess/preprocess.go#L210>)
 
 ```go
 func LamaFile(inputFile string) (string, string)

@@ -5,7 +5,6 @@
 package contoller
 
 import (
-	"fmt"
 	"os"
 
 	"github.com/HexmosTech/gabs/v2"
@@ -86,17 +85,6 @@ func Process(version string) {
 	_, dir, _ := utils.GetFilePathComponents(o.Positional.LamaAPIFile)
 	oldDir, _ := os.Getwd()
 	utils.ChangeWorkingDir(dir)
-
-	if o.Env {
-		jsonEnvs, err := preprocess.GetL2EnvVariables(dir)
-		if err != nil {
-			log.Error().Str("Type", "Preprocess").Msg(err.Error())
-			return
-		}
-		// Frontend can read the stdout for this command and get the JSON of all the env's
-		fmt.Println(string(jsonEnvs))
-		return
-	}
 
 	preprocess.LoadEnvironments(dir)
 	utils.ChangeWorkingDir(oldDir)

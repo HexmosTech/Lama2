@@ -10,6 +10,7 @@ import (
 	"os"
 	"strings"
 
+	"github.com/HexmosTech/lama2/utils"
 	"github.com/dop251/goja"
 	"github.com/rs/zerolog/log"
 )
@@ -53,10 +54,14 @@ func Expand(s string, vm *goja.Runtime, mapping map[string]string) string {
 			i = j + 1
 		}
 	}
+	res := ""
 	if buf == nil {
-		return s
+		res = s
+	} else {
+		res = string(buf) + s[i:]
 	}
-	return string(buf) + s[i:]
+	res2 := utils.RemoveUnquotedValueMarker(res)
+	return res2
 }
 
 func getEnvironMap() map[string]string {

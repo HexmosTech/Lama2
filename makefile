@@ -40,3 +40,10 @@ rnotes:
 
 clean:
 	rm -rf build/*
+
+setbuild:
+# Use for clearing exising L2 and set built L2 as global 
+	go mod tidy
+	go build -o build/l2 -ldflags "-X main.version=`git tag --sort=-version:refname | head -n 1`" l2.go
+	sudo rm -rf /usr/local/bin/l2
+	sudo cp build/l2 /usr/local/bin/l2

@@ -1,6 +1,8 @@
 package parser
 
 import (
+	"strconv"
+
 	"github.com/HexmosTech/gabs/v2"
 	"github.com/HexmosTech/lama2/utils"
 	"github.com/rs/zerolog/log"
@@ -42,7 +44,10 @@ func (p *Lama2Parser) DataHeader() (*gabs.Container, error) {
 }
 
 func (p *Lama2Parser) DataInput() (*gabs.Container, error) {
-	p.MarkRange["DataStart"] = p.Pos + 1
+	idx := (len(p.MarkRange) / 2)
+	idxStr := strconv.Itoa(idx)
+
+	p.MarkRange["DataStart"+idxStr] = p.Pos + 1
 	s, e1 := p.Match([]string{"VarJSON"})
 	p.Context["JSON"] = false
 	if e1 != nil {
@@ -51,7 +56,7 @@ func (p *Lama2Parser) DataInput() (*gabs.Container, error) {
 			p.Context["JSON"] = true
 		}
 	}
-	p.MarkRange["DataEnd"] = p.Pos + 1
+	p.MarkRange["DataEnd"+idxStr] = p.Pos + 1
 	return s, e1
 }
 

@@ -46,3 +46,36 @@ func TestMultiStageCount(t *testing.T) {
 		t.Fatalf("Expected requestor block count = 2")
 	}
 }
+
+func TestUnquotedVars(t *testing.T) {
+	apiContent, _ := os.ReadFile("../examples/0024_vars_multistage/0024_vars_multistage.l2")
+	p := parser.NewLama2Parser()
+	parsedAPI, _ := p.Parse(string(apiContent))
+	fmt.Println(parsedAPI)
+
+	// get parsed blocks
+	parsedAPIblocks := controller.GetParsedAPIBlocks(parsedAPI)
+	fmt.Println(parsedAPIblocks)
+
+	procCount := 0
+	reqCount := 0
+	// loop through
+	for _, block := range parsedAPIblocks {
+		blockType := block.S("type").Data().(string)
+		if blockType == "processor" {
+			procCount++
+		} else if blockType == "Lama2File" {
+			reqCount++
+		}
+	}
+
+	// get statistics
+
+	if procCount != 1 {
+		t.Fatalf("Expected processor block count = 1")
+	}
+
+	if reqCount != 2 {
+		t.Fatalf("Expected requestor block count = 2")
+	}
+}

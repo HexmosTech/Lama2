@@ -10,12 +10,43 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"regexp"
 	"strings"
 	"unicode"
 
 	"github.com/HexmosTech/gabs/v2"
 	"github.com/rs/zerolog/log"
 )
+
+// The following string fragment is used to mark unquoted
+// variables within a JSON body in the lama2 file.
+// For example, Lama2 parser will mark an unquoted variable
+// `hello` as:
+//
+// "<626f4c60-${hello}>"
+//
+// The above string is actually representative of the user intent:
+//
+// ${hello}
+//
+// Note the lack of quotes around the variable above. This hack
+// is needed to work around Gabs, which is unaware of variables
+// required in the Lama2 system
+const UNQUOTED_VAR_MARKER = "626f4c60"
+
+func RemoveUnquotedMarker(content string) string {
+	var re = regexp.MustCompile(fmt.Sprintf(`(?m)"~%v-\${([^}]+)}~"`, UNQUOTED_VAR_MARKER))
+	var substitution = "${$1}"
+	res2 := re.ReplaceAllString(content, substitution)
+	return res2
+}
+
+func RemoveUnquotedValueMarker(content string) string {
+	var re = regexp.MustCompile(fmt.Sprintf(`(?m)"~%v-([^~]+)~"`, UNQUOTED_VAR_MARKER))
+	var substitution = "$1"
+	res2 := re.ReplaceAllString(content, substitution)
+	return res2
+}
 
 // SetJSON is a helper function to work with the `gabs` library, which
 // in turn is an API on top of the standard JSON library
@@ -137,4 +168,13 @@ func UpdateSelf() {
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 	_ = cmd.Run()
+}
+
+func MarshalAndPrintJSON(data interface{}) {
+	filteredJSON, err := json.MarshalIndent(data, "", "  ")
+	if err != nil {
+		log.Error().Str("Type", "Preprocess").Msg(fmt.Sprintf("Failed to marshal JSON: %v", err))
+		os.Exit(0)
+	}
+	fmt.Println(string(filteredJSON))
 }

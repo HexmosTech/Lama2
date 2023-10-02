@@ -12,7 +12,7 @@
         <link rel="canonical" href="http://hexmos.com/lama2/reference/preprocess.html">
       
       <link rel="icon" href="../favicon.ico">
-      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-8.5.10">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
     
 
 <meta name="description" content="Hexmos Lama2: Plain-Text Powered REST API Client for Teams">
@@ -572,6 +572,20 @@
 
             
           
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="lsp.html" class="md-nav__link">
+        Contribute to LSP
+      </a>
+    </li>
+  
+
+            
+          
         </ul>
       </nav>
     </li>
@@ -792,7 +806,7 @@
 <li><a href="#ExpandHeaders">func ExpandHeaders(block *gabs.Container, vm *goja.Runtime)</a></li>
 <li><a href="#ExpandJSON">func ExpandJSON(block *gabs.Container, vm *goja.Runtime)</a></li>
 <li><a href="#ExpandURL">func ExpandURL(block *gabs.Container, vm *goja.Runtime)</a></li>
-<li><a href="#GetL2EnvVariables">func GetL2EnvVariables(dir string) ([]byte, error)</a></li>
+<li><a href="#GetL2EnvVariables">func GetL2EnvVariables(dir string) (map[string]map[string]interface{}, error)</a></li>
 <li><a href="#GetLamaFileAsString">func GetLamaFileAsString(path string) string</a></li>
 <li><a href="#LamaFile">func LamaFile(inputFile string) (string, string)</a></li>
 <li><a href="#LoadEnvFile">func LoadEnvFile(l2path string)</a></li>
@@ -824,14 +838,14 @@
 </code></pre></div>
 <p><a name="GetL2EnvVariables"></a></p>
 <h2 id="func-getl2envvariables">func <a href="https://github.com/HexmosTech/Lama2/blob/main/preprocess/preprocess.go#L169">GetL2EnvVariables</a><a class="headerlink" href="#func-getl2envvariables" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">GetL2EnvVariables</span><span class="p">(</span><span class="nx">dir</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="p">([]</span><span class="kt">byte</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">GetL2EnvVariables</span><span class="p">(</span><span class="nx">dir</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kd">interface</span><span class="p">{},</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
 <p><a name="GetLamaFileAsString"></a></p>
-<h2 id="func-getlamafileasstring">func <a href="https://github.com/HexmosTech/Lama2/blob/main/preprocess/preprocess.go#L200">GetLamaFileAsString</a><a class="headerlink" href="#func-getlamafileasstring" title="Permanent link">&para;</a></h2>
+<h2 id="func-getlamafileasstring">func <a href="https://github.com/HexmosTech/Lama2/blob/main/preprocess/preprocess.go#L196">GetLamaFileAsString</a><a class="headerlink" href="#func-getlamafileasstring" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">GetLamaFileAsString</span><span class="p">(</span><span class="nx">path</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="kt">string</span>
 </code></pre></div>
 <p><a name="LamaFile"></a></p>
-<h2 id="func-lamafile">func <a href="https://github.com/HexmosTech/Lama2/blob/main/preprocess/preprocess.go#L214">LamaFile</a><a class="headerlink" href="#func-lamafile" title="Permanent link">&para;</a></h2>
+<h2 id="func-lamafile">func <a href="https://github.com/HexmosTech/Lama2/blob/main/preprocess/preprocess.go#L210">LamaFile</a><a class="headerlink" href="#func-lamafile" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">LamaFile</span><span class="p">(</span><span class="nx">inputFile</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span>
 </code></pre></div>
 <p>LamaFile takes in a path to an API file. It moves into the API file directory, reads the API contents, loads the `l2.env` file if available, and finally substitutes environment vars in the API contents Once done, it reverts back to the original directory, and returns the processed l2 file.</p>
