@@ -22,7 +22,7 @@ func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, header
 		Str("httpv", httpv).
 		Str("url", url).
 		Bool("multipart", multipart).
-		Bool("form",form).
+		Bool("form", form).
 		Msg(fmt.Sprint("Construct parameters"))
 
 	log.Debug().
@@ -114,9 +114,9 @@ func ConstructCommand(parsedInput *gabs.Container, o *lama2cmd.Opts) ([]string, 
 	if multipart != nil {
 		multipartBool = true
 	}
-	form := parsedInput.S("form","value")
+	form := parsedInput.S("form", "value")
 	formBool := false
-	if form !=nil {
+	if form != nil {
 		formBool = true
 	}
 
