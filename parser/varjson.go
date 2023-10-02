@@ -43,7 +43,7 @@ func (p *Lama2Parser) VarJSON() (*gabs.Container, error) {
 		temp.Merge(pair)
 	}
 
-	if (hasMultipart) {
+	if hasMultipart {
 		filesObj := gabs.New()
 		for {
 			pair, e1 = p.Match([]string{"FilesPair"})

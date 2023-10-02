@@ -62,8 +62,7 @@ func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, header
 		command = append(command, "--pretty=none ")
 	}
 	if multipart || form {
-		command = append(command, //"--headers",
-		"--ignore-stdin", "--form")
+		command = append(command, "--ignore-stdin", "--form")
 	}
 
 	command = append(command, httpv+" ")
@@ -82,7 +81,6 @@ func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, header
 		for key, val := range jsonObj.Data().(*gabs.Container).ChildrenMap() {
 			command = append(command, "'"+key+"'='"+val.Data().(string)+"'  ")
 		}
-
 	}
 
 	if headers != nil {
@@ -122,6 +120,6 @@ func ConstructCommand(parsedInput *gabs.Container, o *lama2cmd.Opts) ([]string, 
 		formBool = true
 	}
 
-	res, stdinBody := assembleCmdString(httpv.Data().(string), url.Data().(string), jsonObj, headers, multipartBool,formBool, o)
+	res, stdinBody := assembleCmdString(httpv.Data().(string), url.Data().(string), jsonObj, headers, multipartBool, formBool, o)
 	return res, stdinBody
 }
