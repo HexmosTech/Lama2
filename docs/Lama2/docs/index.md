@@ -1,4 +1,4 @@
-# **`Lama2`**: Plain-Text Powered REST API Client for Teams :llama:
+# **`Lama2`**:  Free, Lightweight & Collaborative API Client
 
 ![](./banner.png)
 

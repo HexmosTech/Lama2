@@ -1,4 +1,4 @@
-# `Lama2`: Plain-Text Powered REST API Client
+# `Lama2`: Free, Lightweight & Collaborative API Client
 
 
 <div align="center">
