@@ -17,6 +17,10 @@
 > The frontend part of the Lama2 project lives in [Lama2Code](https://github.com/HexmosTech/Lama2Code). The
 > extension tends to be updated along with the Lama2 core in this repo.
 
+## The Problem
+
+Most engineering teams have trouble collaborating on APIs or end up paying too much for Postman/Insomnia. Our 100% FOSS product *Lama2* helps your team collaborate on APIs for free based on git, so that you can save money and avoid friction.
+
 ## About
 
 *Lama2* is a Plain-Text powered REST API client & manager built for serious engineering teams.

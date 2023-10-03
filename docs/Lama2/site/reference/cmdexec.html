@@ -745,28 +745,24 @@
 <p>Package `cmdexec` provides a facility to execute l2 commands, stream output to stdout, while also providing ability to retrieve the command output as a string.</p>
 <h2 id="index">Index<a class="headerlink" href="#index" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="#ExecCommand">func ExecCommand(cmdSlice []string, stdinBody string, apiDir string) (httpie.ExResponse, error)</a></li>
-<li><a href="#GenerateChainCode">func GenerateChainCode(httpRespBody string) string</a></li>
-<li><a href="#GetJSVm">func GetJSVm() *goja.Runtime</a></li>
-<li><a href="#RunVMCode">func RunVMCode(jsCode string, vm *goja.Runtime)</a></li>
+<li><a href="#func-execcommand">func ExecCommand(cmdSlice []string, stdinBody string, apiDir string) (httpie.ExResponse, error)</a></li>
+<li><a href="#func-generatechaincode">func GenerateChainCode(httpRespBody string) string</a></li>
+<li><a href="#func-getjsvm">func GetJSVm() *goja.Runtime</a></li>
+<li><a href="#func-runvmcode">func RunVMCode(jsCode string, vm *goja.Runtime)</a></li>
 </ul>
-<p><a name="ExecCommand"></a></p>
-<h2 id="func-execcommand">func <a href="https://github.com/HexmosTech/Lama2/blob/main/cmdexec/cmdexec.go#L23">ExecCommand</a><a class="headerlink" href="#func-execcommand" title="Permanent link">&para;</a></h2>
+<h2 id="func-execcommand">func <a href="https://github.com/HexmosTech/Lama2/blob/master/cmdexec/cmdexec.go#L23">ExecCommand</a><a class="headerlink" href="#func-execcommand" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">ExecCommand</span><span class="p">(</span><span class="nx">cmdSlice</span><span class="w"> </span><span class="p">[]</span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="nx">stdinBody</span><span class="w"> </span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="nx">apiDir</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nx">httpie</span><span class="p">.</span><span class="nx">ExResponse</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
 <p>ExecCommand changes directory to the given `apiDir` and then executes the command specified in `cmdStr` During command execution, ExecCommand streams output to stdout. Once execution finishes, previous CWD is restored, and the command output is returned as a string</p>
-<p><a name="GenerateChainCode"></a></p>
-<h2 id="func-generatechaincode">func <a href="https://github.com/HexmosTech/Lama2/blob/main/cmdexec/js.go#L39">GenerateChainCode</a><a class="headerlink" href="#func-generatechaincode" title="Permanent link">&para;</a></h2>
+<h2 id="func-generatechaincode">func <a href="https://github.com/HexmosTech/Lama2/blob/master/cmdexec/js.go#L39">GenerateChainCode</a><a class="headerlink" href="#func-generatechaincode" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">GenerateChainCode</span><span class="p">(</span><span class="nx">httpRespBody</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="kt">string</span>
 </code></pre></div>
 <p>GenerateChainCode takes in an HTTP response body and comes up with some JS code to define the "magic variable" result. What does the code do? The result is stored as a JS object, if the input value can be parsed as JSON. Otherwise the value is stored as a simple string.</p>
-<p><a name="GetJSVm"></a></p>
-<h2 id="func-getjsvm">func <a href="https://github.com/HexmosTech/Lama2/blob/main/cmdexec/js.go#L12">GetJSVm</a><a class="headerlink" href="#func-getjsvm" title="Permanent link">&para;</a></h2>
+<h2 id="func-getjsvm">func <a href="https://github.com/HexmosTech/Lama2/blob/master/cmdexec/js.go#L12">GetJSVm</a><a class="headerlink" href="#func-getjsvm" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">GetJSVm</span><span class="p">()</span><span class="w"> </span><span class="o">*</span><span class="nx">goja</span><span class="p">.</span><span class="nx">Runtime</span>
 </code></pre></div>
 <p>GetJSVm creates a new goja runtime instance with console.log enabled</p>
-<p><a name="RunVMCode"></a></p>
-<h2 id="func-runvmcode">func <a href="https://github.com/HexmosTech/Lama2/blob/main/cmdexec/js.go#L26">RunVMCode</a><a class="headerlink" href="#func-runvmcode" title="Permanent link">&para;</a></h2>
+<h2 id="func-runvmcode">func <a href="https://github.com/HexmosTech/Lama2/blob/master/cmdexec/js.go#L26">RunVMCode</a><a class="headerlink" href="#func-runvmcode" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">RunVMCode</span><span class="p">(</span><span class="nx">jsCode</span><span class="w"> </span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="nx">vm</span><span class="w"> </span><span class="o">*</span><span class="nx">goja</span><span class="p">.</span><span class="nx">Runtime</span><span class="p">)</span>
 </code></pre></div>
 <p>RunVMCode takes in a JS snippet as a string, executes the code in a JS VM, finally checks whether there are any errors, and if yes, logs the problem. Note: the vm runtime remains modified; so if you reuse the vm for other operations, the state from previous invocations carry over</p>

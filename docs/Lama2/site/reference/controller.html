@@ -752,30 +752,25 @@
 <p>Package controller coordinates all the other components in the `Lama2` project. The high level overview of command execution is easily understood from this package</p>
 <h2 id="index">Index<a class="headerlink" href="#index" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="#ExecuteProcessorBlock">func ExecuteProcessorBlock(block *gabs.Container, vm *goja.Runtime)</a></li>
-<li><a href="#ExecuteRequestorBlock">func ExecuteRequestorBlock(block *gabs.Container, vm *goja.Runtime, opts *lama2cmd.Opts, dir string) httpie.ExResponse</a></li>
-<li><a href="#GetParsedAPIBlocks">func GetParsedAPIBlocks(parsedAPI *gabs.Container) []*gabs.Container</a></li>
-<li><a href="#HandleParsedFile">func HandleParsedFile(parsedAPI *gabs.Container, o *lama2cmd.Opts, dir string)</a></li>
-<li><a href="#Process">func Process(version string)</a></li>
+<li><a href="#func-executeprocessorblock">func ExecuteProcessorBlock(block <em>gabs.Container, vm </em>goja.Runtime)</a></li>
+<li><a href="#func-executerequestorblock">func ExecuteRequestorBlock(block <em>gabs.Container, vm </em>goja.Runtime, opts *lama2cmd.Opts, dir string) httpie.ExResponse</a></li>
+<li><a href="#func-getparsedapiblocks">func GetParsedAPIBlocks(parsedAPI <em>gabs.Container) []</em>gabs.Container</a></li>
+<li><a href="#func-handleparsedfile">func HandleParsedFile(parsedAPI <em>gabs.Container, o </em>lama2cmd.Opts, dir string)</a></li>
+<li><a href="#func-process">func Process(version string)</a></li>
 </ul>
-<p><a name="ExecuteProcessorBlock"></a></p>
-<h2 id="func-executeprocessorblock">func <a href="https://github.com/HexmosTech/Lama2/blob/main/controller/controller.go#L29">ExecuteProcessorBlock</a><a class="headerlink" href="#func-executeprocessorblock" title="Permanent link">&para;</a></h2>
+<h2 id="func-executeprocessorblock">func <a href="https://github.com/HexmosTech/Lama2/blob/master/controller/controller.go#L29">ExecuteProcessorBlock</a><a class="headerlink" href="#func-executeprocessorblock" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">ExecuteProcessorBlock</span><span class="p">(</span><span class="nx">block</span><span class="w"> </span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="nx">vm</span><span class="w"> </span><span class="o">*</span><span class="nx">goja</span><span class="p">.</span><span class="nx">Runtime</span><span class="p">)</span>
 </code></pre></div>
-<p><a name="ExecuteRequestorBlock"></a></p>
-<h2 id="func-executerequestorblock">func <a href="https://github.com/HexmosTech/Lama2/blob/main/controller/controller.go#L36">ExecuteRequestorBlock</a><a class="headerlink" href="#func-executerequestorblock" title="Permanent link">&para;</a></h2>
+<h2 id="func-executerequestorblock">func <a href="https://github.com/HexmosTech/Lama2/blob/master/controller/controller.go#L36">ExecuteRequestorBlock</a><a class="headerlink" href="#func-executerequestorblock" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">ExecuteRequestorBlock</span><span class="p">(</span><span class="nx">block</span><span class="w"> </span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="nx">vm</span><span class="w"> </span><span class="o">*</span><span class="nx">goja</span><span class="p">.</span><span class="nx">Runtime</span><span class="p">,</span><span class="w"> </span><span class="nx">opts</span><span class="w"> </span><span class="o">*</span><span class="nx">lama2cmd</span><span class="p">.</span><span class="nx">Opts</span><span class="p">,</span><span class="w"> </span><span class="nx">dir</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="nx">httpie</span><span class="p">.</span><span class="nx">ExResponse</span>
 </code></pre></div>
-<p><a name="GetParsedAPIBlocks"></a></p>
-<h2 id="func-getparsedapiblocks">func <a href="https://github.com/HexmosTech/Lama2/blob/main/controller/controller.go#L25">GetParsedAPIBlocks</a><a class="headerlink" href="#func-getparsedapiblocks" title="Permanent link">&para;</a></h2>
+<h2 id="func-getparsedapiblocks">func <a href="https://github.com/HexmosTech/Lama2/blob/master/controller/controller.go#L25">GetParsedAPIBlocks</a><a class="headerlink" href="#func-getparsedapiblocks" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">GetParsedAPIBlocks</span><span class="p">(</span><span class="nx">parsedAPI</span><span class="w"> </span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">)</span><span class="w"> </span><span class="p">[]</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span>
 </code></pre></div>
-<p><a name="HandleParsedFile"></a></p>
-<h2 id="func-handleparsedfile">func <a href="https://github.com/HexmosTech/Lama2/blob/main/controller/controller.go#L53">HandleParsedFile</a><a class="headerlink" href="#func-handleparsedfile" title="Permanent link">&para;</a></h2>
+<h2 id="func-handleparsedfile">func <a href="https://github.com/HexmosTech/Lama2/blob/master/controller/controller.go#L53">HandleParsedFile</a><a class="headerlink" href="#func-handleparsedfile" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">HandleParsedFile</span><span class="p">(</span><span class="nx">parsedAPI</span><span class="w"> </span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="nx">o</span><span class="w"> </span><span class="o">*</span><span class="nx">lama2cmd</span><span class="p">.</span><span class="nx">Opts</span><span class="p">,</span><span class="w"> </span><span class="nx">dir</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span>
 </code></pre></div>
-<p><a name="Process"></a></p>
-<h2 id="func-process">func <a href="https://github.com/HexmosTech/Lama2/blob/main/controller/controller.go#L80">Process</a><a class="headerlink" href="#func-process" title="Permanent link">&para;</a></h2>
+<h2 id="func-process">func <a href="https://github.com/HexmosTech/Lama2/blob/master/controller/controller.go#L80">Process</a><a class="headerlink" href="#func-process" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">Process</span><span class="p">(</span><span class="nx">version</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span>
 </code></pre></div>
 <p>Process initiates the following tasks in the given order: 1. Parse command line arguments 2. Read API file contents 3. Expand environment variables in API file 4. Parse the API contents 5. Generate API request command 6. Execute command &amp; retrieve results 7. Optionally, post-process and write results to a JSON file</p>

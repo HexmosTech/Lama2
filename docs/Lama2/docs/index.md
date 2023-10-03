@@ -10,6 +10,10 @@
 
 <a href="https://www.producthunt.com/posts/hexmos-lama2?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-hexmos&#0045;lama2" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=370586&theme=light" alt="Hexmos&#0032;Lama2 - Plain&#0045;Text&#0032;Powered&#0032;REST&#0032;API&#0032;Client&#0032;for&#0032;Teams | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
 
+## The Problem
+
+Most engineering teams have trouble collaborating on APIs or end up paying too much for Postman/Insomnia. Our 100% FOSS product *Lama2* helps your team collaborate on APIs for free based on git, so that you can save money and avoid friction.
+
 
 ## About
 
