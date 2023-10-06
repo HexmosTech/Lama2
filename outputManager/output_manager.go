@@ -9,7 +9,7 @@ import (
 	"os"
 
 	"github.com/HexmosTech/gabs/v2"
-	"github.com/HexmosTech/httpie-go"
+	"github.com/rogueloop/httpie-go"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 )

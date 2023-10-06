@@ -1,0 +1,29 @@
+package main
+
+import (
+	contoller "github.com/HexmosTech/lama2/controller"
+	"crypto"
+	_ "crypto/sha512"
+	"encoding/hex"
+	"syscall/js"
+)
+
+var version string
+
+func main() {
+	done := make(chan struct{}, 0)
+	if len(version) == 0 {
+		version = "vUnset"
+	}
+	contoller.Process(version)
+	js.Global().Set("wasmHash", js.FuncOf(hash))
+	<-done
+}
+
+
+func hash(this js.Value, args []js.Value) interface{} {
+	h := crypto.SHA512.New()
+	h.Write([]byte(args[0].String()))
+
+	return hex.EncodeToString(h.Sum(nil))
+}

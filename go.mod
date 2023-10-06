@@ -5,7 +5,6 @@ go 1.19
 require (
 	github.com/HexmosTech/gabs/v2 v2.6.5
 	github.com/HexmosTech/godotenv v0.0.0-20230327154318-72e1f3d32ed3
-	github.com/HexmosTech/httpie-go v1.0.9-0.20230930094305-5a4f038eba5a
 	github.com/dop251/goja v0.0.0-20230216180835-5937a312edda
 	github.com/dop251/goja_nodejs v0.0.0-20230207183254-2229640ea097
 	github.com/jessevdk/go-flags v1.5.0
