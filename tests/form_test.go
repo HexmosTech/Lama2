@@ -23,7 +23,6 @@ func TestFormPositive(t *testing.T) {
 	}
 }
 
-
 func TestFormNegative(t *testing.T) {
 	fpath := "formtests/test_form_negative.l2"
 	cmdArgs := []string{fpath}
