@@ -10,7 +10,7 @@ import (
 	"path"
 
 	"github.com/HexmosTech/gabs/v2"
-	"github.com/rogueloop/httpie-go"
+	"github.com/HexmosTech/httpie-go"
 	"github.com/HexmosTech/lama2/cmdexec"
 	"github.com/HexmosTech/lama2/cmdgen"
 	"github.com/HexmosTech/lama2/codegen"
