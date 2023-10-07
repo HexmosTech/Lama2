@@ -32,3 +32,14 @@ func ExecCommand(cmdSlice []string, stdinBody string, apiDir string) (httpie.ExR
 	utils.ChangeWorkingDir(oldDir)
 	return resp, nil
 }
+
+func ExecWASMCommand(cmdSlice []string, stdinBody string)(httpie.ExResponse, error) {
+	log.Info().Str("stdinBody", stdinBody).Msg("")
+	resp, err := httpie.Lama2Entry(cmdSlice, strings.NewReader(stdinBody))
+	if err != nil {
+		log.Fatal().Str("Error from the API executor", err.Error()).Msg("")
+		return httpie.ExResponse{}, errors.New("Error from API executor: " + err.Error())
+	}
+	log.Debug().Str("Response body from API executor", resp.Body).Msg("")
+	return resp, nil
+}

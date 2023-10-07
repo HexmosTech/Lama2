@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>L2 WASM</title>
+    <style>
+        #outputField {
+            width: calc(100% - 22px);
+            height: 300px;
+            color: white;
+            background-color: black;
+            border: 1px solid #555;
+            padding: 10px;
+            font-family: monospace;
+            resize: vertical;
+        }
+        #runButton {
+            background-color: rgb(39, 153, 24);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        html {
+            font-family: Arial, serif;
+        }
+    </style>
+</head>
+<body>
+<script src="wasm_exec.js"></script>
+<script>
+        let wasmLoaded = false;
+
+        const go = new Go();
+        
+        WebAssembly.instantiateStreaming(fetch("main.wasm"), go.importObject).then((result) => {
+            go.run(result.instance);
+            wasmLoaded = true;  
+        });
+</script>
+<div>
+    <label for="inputField">Enter value</label>
+    <input id="inputField" name="Hash" type="text">
+    <div id="outputHash" style="font-size: 20px"></div>
+</div>
+
+<!-- <button onClick="run();" id="runButton" disabled>Run</button> -->
+<!-- <br><br> -->
+<!-- <textarea id="outputField" placeholder="Results will appear here..." readonly></textarea> -->
+<script>
+        var inputField = document.querySelector('#inputField')
+        var outputHash = document.querySelector('#outputHash')
+        inputField.addEventListener('keyup', function () {
+         if (wasmLoaded) {
+        outputHash.innerHTML = wasmLamaRequest(inputField.value);
+        }else{
+            outputHash.innerHTML = "Loading... Please wait";
+        }
+        });
+</script>
+</body>
+</html>

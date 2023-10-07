@@ -13,7 +13,7 @@ import (
 	"github.com/HexmosTech/gabs/v2"
 	"github.com/HexmosTech/lama2/cmdexec"
 	"github.com/HexmosTech/lama2/preprocess"
-	"github.com/atotto/clipboard"
+	// "github.com/atotto/clipboard"
 )
 
 //go:embed httpsnippet.js
@@ -172,6 +172,6 @@ func GenerateTargetCode(targetLangLib string, parsedAPI *gabs.Container) {
 	}
 	convertedSnippetFinal := strings.Join(convertedSnippetList, "\n")
 	fmt.Println(convertedSnippetFinal)
-	clipboard.WriteAll(convertedSnippetFinal)
+	// clipboard.WriteAll(convertedSnippetFinal)
 	fmt.Println("Code copied to clipboard")
 }

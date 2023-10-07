@@ -5,6 +5,7 @@
 package contoller
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/HexmosTech/gabs/v2"
@@ -50,6 +51,25 @@ func ExecuteRequestorBlock(block *gabs.Container, vm *goja.Runtime, opts *lama2c
 	return resp
 }
 
+func ExecuteWasmRequestorBlock(block *gabs.Container, vm *goja.Runtime)httpie.ExResponse {
+	preprocess.ProcessVarsInBlock(block, vm)
+	// cmd, stdinBody := cmdgen.ConstructCommand(block, opts)
+	cmd, stdinBody := cmdgen.ConstructWasmCommand(block)
+	log.Info().Interface("cmd", cmd).Msg("commands")
+
+	// log.Info().Str("stdinBody", stdinBody).Msg("")
+	resp, e1 := cmdexec.ExecWASMCommand(cmd, stdinBody)
+	log.Info().Interface("resp", resp).Msg("ExecWASMCommand resp")
+	if e1 == nil {
+		chainCode := cmdexec.GenerateChainCode(resp.Body)
+		cmdexec.RunVMCode(chainCode, vm)
+	} else {
+		log.Fatal().Str("Error from ExecCommand", e1.Error())
+		os.Exit(1)
+	}
+	return resp
+}
+
 func HandleParsedFile(parsedAPI *gabs.Container, o *lama2cmd.Opts, dir string) {
 	parsedAPIblocks := GetParsedAPIBlocks(parsedAPI)
 	vm := cmdexec.GetJSVm()
@@ -58,6 +78,7 @@ func HandleParsedFile(parsedAPI *gabs.Container, o *lama2cmd.Opts, dir string) {
 		log.Debug().Int("Block num", i).Msg("")
 		log.Debug().Str("Block getting processed", block.String()).Msg("")
 		blockType := block.S("type").Data().(string)
+		log.Debug().Str("Block type", blockType ).Msg("")
 		if blockType == "processor" {
 			ExecuteProcessorBlock(block, vm)
 		} else if blockType == "Lama2File" {
@@ -67,7 +88,54 @@ func HandleParsedFile(parsedAPI *gabs.Container, o *lama2cmd.Opts, dir string) {
 	if o.Output != "" {
 		outputmanager.WriteJSONOutput(resp, o.Output)
 	}
+
 }
+
+func HandleParsedWasmOutput(parsedAPI *gabs.Container){
+	parsedAPIblocks := GetParsedAPIBlocks(parsedAPI)
+	vm := cmdexec.GetJSVm()
+	var resp httpie.ExResponse
+	for i, block := range parsedAPIblocks {
+		log.Debug().Int("Block num", i).Msg("")
+		log.Debug().Str("Block getting processed", block.String()).Msg("")
+		blockType := block.S("type").Data().(string)
+		log.Debug().Str("Block type", blockType ).Msg("")
+		if blockType == "processor" {
+			ExecuteProcessorBlock(block, vm)
+		} else if blockType == "Lama2File" {
+			resp = ExecuteWasmRequestorBlock(block, vm)
+		}
+	}
+	fmt.Println(resp)
+}
+
+func ProcessWasmInput(apiContent string){
+	p := parser.NewLama2Parser()
+	parsedAPI, e := p.Parse(apiContent)
+	if e != nil {
+		log.Fatal().
+			 Str("Type", "Controller").
+			 Str("Error", e.Error()).
+			 Msg(fmt.Sprint("Parse Error"))
+	 }
+	log.Debug().Str("Parsed API", parsedAPI.String()).Msg("")
+	// HandleParsedWasmOutput(parsedAPI,o)
+	parsedAPIblocks := GetParsedAPIBlocks(parsedAPI)
+	vm := cmdexec.GetJSVm()
+	var resp httpie.ExResponse
+	for i, block := range parsedAPIblocks {
+		log.Debug().Int("Block num", i).Msg("")
+		log.Debug().Str("Block getting processed", block.String()).Msg("")
+		blockType := block.S("type").Data().(string)
+		log.Debug().Str("Block type", blockType ).Msg("")
+		if blockType == "processor" {
+			ExecuteProcessorBlock(block, vm)
+		} else if blockType == "Lama2File" {
+			resp = ExecuteWasmRequestorBlock(block, vm)
+		}
+	}
+	fmt.Println(resp)
+ }
 
 // Process initiates the following tasks in the given order:
 // 1. Parse command line arguments
@@ -82,10 +150,10 @@ func Process(version string) {
 	lama2cmd.ArgParsing(o, version)
 
 	apiContent := preprocess.GetLamaFileAsString(o.Positional.LamaAPIFile)
+	log.Debug().Str("apiContent data string", apiContent ).Msg("")
 	_, dir, _ := utils.GetFilePathComponents(o.Positional.LamaAPIFile)
 	oldDir, _ := os.Getwd()
 	utils.ChangeWorkingDir(dir)
-
 	preprocess.LoadEnvironments(dir)
 	utils.ChangeWorkingDir(oldDir)
 	p := parser.NewLama2Parser()
@@ -105,7 +173,7 @@ func Process(version string) {
 			Str("Type", "Controller").
 			Str("LamaFile", o.Positional.LamaAPIFile).
 			Str("Error", e.Error()).
-			Msg("Parse Error")
+			Msg(fmt.Sprint("Parse Error"))
 	}
 	log.Debug().Str("Parsed API", parsedAPI.String()).Msg("")
 	HandleParsedFile(parsedAPI, o, dir)
