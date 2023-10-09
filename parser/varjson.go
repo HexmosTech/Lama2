@@ -26,10 +26,10 @@ func (p *Lama2Parser) VarJSON() (*gabs.Container, error) {
 	pair, e1 := p.Match([]string{"VarJSONPair"})
 	// Errors out when there is no key-value pair and multipart is not enabled,
 	// Multipart may contain file so thats why its not erroring out.
-	if e1 != nil && (!hasMultipart) { 
+	if e1 != nil && (!hasMultipart) {
 		return nil, e1
 	}
-	
+
 	temp.Merge(pair)
 
 	for {

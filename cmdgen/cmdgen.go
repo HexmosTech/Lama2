@@ -117,7 +117,6 @@ func ConstructCommand(parsedInput *gabs.Container, o *lama2cmd.Opts) ([]string, 
 	}
 	form := parsedInput.S("form", "value")
 	formBool := form != nil
-	
 
 	res, stdinBody := assembleCmdString(httpv.Data().(string), url.Data().(string), jsonObj, headers, multipartBool, formBool, o)
 	return res, stdinBody

@@ -9,7 +9,7 @@ import (
 
 func TestFormPositive(t *testing.T) {
 	fpath := "formtests/test_form_positive.l2"
-	
+
 	cmdArgs := []string{fpath}
 
 	output, err := testutils.RunL2CommandAndGetOutput(cmdArgs...)
@@ -35,7 +35,7 @@ func TestFormNegative(t *testing.T) { // File attached to FORM, which is expecte
 	}
 }
 
-func TestMultipartPositive(t *testing.T) { // File not attached to Multipart, which is expected to pass 
+func TestMultipartPositive(t *testing.T) { // File not attached to Multipart, which is expected to pass
 	fpath := "formtests/test_multipart_positive.l2"
 	cmdArgs := []string{fpath}
 
