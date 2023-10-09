@@ -19,19 +19,17 @@ import (
 func (p *Lama2Parser) VarJSON() (*gabs.Container, error) {
 	temp := gabs.New()
 	hasMultipart := false
-	hasForm := false
 	if val, ok := p.Context["multipart"]; ok {
 		hasMultipart = val
 	}
 
-	if val, ok := p.Context["form"]; ok {
-		hasForm = val
-	}
-
 	pair, e1 := p.Match([]string{"VarJSONPair"})
-	if e1 != nil && (!hasMultipart || !hasForm) {
+	// Errors out when there is no key-value pair and multipart is not enabled,
+	// Multipart may contain file so thats why its not erroring out.
+	if e1 != nil && (!hasMultipart) { 
 		return nil, e1
 	}
+	
 	temp.Merge(pair)
 
 	for {

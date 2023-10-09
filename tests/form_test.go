@@ -9,6 +9,7 @@ import (
 
 func TestFormPositive(t *testing.T) {
 	fpath := "formtests/test_form_positive.l2"
+	
 	cmdArgs := []string{fpath}
 
 	output, err := testutils.RunL2CommandAndGetOutput(cmdArgs...)
@@ -23,7 +24,7 @@ func TestFormPositive(t *testing.T) {
 	}
 }
 
-func TestFormNegative(t *testing.T) {
+func TestFormNegative(t *testing.T) { // File attached to FORM, which is expected to fail
 	fpath := "formtests/test_form_negative.l2"
 	cmdArgs := []string{fpath}
 
@@ -31,5 +32,21 @@ func TestFormNegative(t *testing.T) {
 	if err == nil {
 		t.Errorf("Expected failure on faulty code")
 		return
+	}
+}
+
+func TestMultipartPositive(t *testing.T) { // File not attached to Multipart, which is expected to pass 
+	fpath := "formtests/test_multipart_positive.l2"
+	cmdArgs := []string{fpath}
+
+	output, err := testutils.RunL2CommandAndGetOutput(cmdArgs...)
+	if err != nil {
+		t.Errorf("Error running L2 command: %v", err)
+		return
+	}
+
+	expectedOutputPart := "\"form\": {\n    \"'first'\": \"'second'\", \n    \"'third'\": \"'fourth'\"\n  }"
+	if !strings.Contains(output, expectedOutputPart) {
+		t.Errorf("Expected output to contain %q, but got %q", expectedOutputPart, output)
 	}
 }
