@@ -49,20 +49,17 @@
     <input id="inputField" name="Hash" type="text">
     <div id="outputHash" style="font-size: 20px"></div>
 </div>
-
-<!-- <button onClick="run();" id="runButton" disabled>Run</button> -->
-<!-- <br><br> -->
-<!-- <textarea id="outputField" placeholder="Results will appear here..." readonly></textarea> -->
 <script>
-        var inputField = document.querySelector('#inputField')
-        var outputHash = document.querySelector('#outputHash')
-        inputField.addEventListener('keyup', function () {
-         if (wasmLoaded) {
-        outputHash.innerHTML = wasmLamaRequest(inputField.value);
-        }else{
-            outputHash.innerHTML = "Loading... Please wait";
+        async function makeLamaRequest(command) {
+            // Get the Promise from Go
+            const request_params = JSON.parse(wasmLamaRequest(command))
+            console.log(request_params)
+            console.log(request_params.URL)
+            console.log(request_params.Method)
+            const response = await GoWebRequestFunc(request_params.URL,request_params.Method)
+            const message = await response.text();
+            console.log(message);
         }
-        });
 </script>
 </body>
 </html>

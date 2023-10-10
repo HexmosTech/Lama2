@@ -44,6 +44,7 @@ func GenerateChainCode(httpRespBody string) string {
 		result = String.raw` + "`" + httpRespBody + "`" + ` 	
 		console.log(e)
 		console.log("Stored as string")
+		console.log(` + httpRespBody + `)
 	}`
 	log.Debug().Str("Chain code generated", code).Msg("")
 	return code
