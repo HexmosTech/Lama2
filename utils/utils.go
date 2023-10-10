@@ -35,15 +35,15 @@ import (
 const UNQUOTED_VAR_MARKER = "626f4c60"
 
 func RemoveUnquotedMarker(content string) string {
-	var re = regexp.MustCompile(fmt.Sprintf(`(?m)"~%v-\${([^}]+)}~"`, UNQUOTED_VAR_MARKER))
-	var substitution = "${$1}"
+	re := regexp.MustCompile(fmt.Sprintf(`(?m)"~%v-\${([^}]+)}~"`, UNQUOTED_VAR_MARKER))
+	substitution := "${$1}"
 	res2 := re.ReplaceAllString(content, substitution)
 	return res2
 }
 
 func RemoveUnquotedValueMarker(content string) string {
-	var re = regexp.MustCompile(fmt.Sprintf(`(?m)"~%v-([^~]+)~"`, UNQUOTED_VAR_MARKER))
-	var substitution = "$1"
+	re := regexp.MustCompile(fmt.Sprintf(`(?m)"~%v-([^~]+)~"`, UNQUOTED_VAR_MARKER))
+	substitution := "$1"
 	res2 := re.ReplaceAllString(content, substitution)
 	return res2
 }

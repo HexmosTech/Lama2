@@ -12,7 +12,7 @@ import (
 
 func Prettify(parsedAPI *gabs.Container, context map[string]bool, markRange map[string]int, content string, fPath string) {
 	defer func() {
-		if err := recover(); err != nil { //catch
+		if err := recover(); err != nil { // catch
 			log.Debug().Msg("Potential issue with prettify")
 			// os.Exit(0)
 		}

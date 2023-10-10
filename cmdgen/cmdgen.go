@@ -15,13 +15,14 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, headers *gabs.Container, multipart bool, o *lama2cmd.Opts) ([]string, string) {
+func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, headers *gabs.Container, multipart bool, form bool, o *lama2cmd.Opts) ([]string, string) {
 	command := make([]string, 0)
 	log.Info().
 		Str("Type", "Construct Command").
 		Str("httpv", httpv).
 		Str("url", url).
 		Bool("multipart", multipart).
+		Bool("form", form).
 		Msg(fmt.Sprint("Construct parameters"))
 
 	log.Debug().
@@ -39,7 +40,7 @@ func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, header
 	}
 
 	jsonStr := ""
-	if jsonObj != nil && !multipart {
+	if jsonObj != nil && !multipart && !form {
 		dst := &bytes.Buffer{}
 		if err := json.Compact(dst, []byte(jsonObj.String())); err != nil {
 			log.Fatal().
@@ -60,8 +61,8 @@ func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, header
 	if o.Nocolor {
 		command = append(command, "--pretty=none ")
 	}
-	if multipart {
-		command = append(command, "--headers", "--ignore-stdin", "--form")
+	if multipart || form {
+		command = append(command, "--ignore-stdin", "--form")
 	}
 
 	command = append(command, httpv+" ")
@@ -76,6 +77,13 @@ func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, header
 		}
 	}
 
+	if form {
+		for key, val := range jsonObj.Data().(*gabs.Container).ChildrenMap() {
+			keyValuePair := fmt.Sprintf("'%s'='%s'  ", key, val.Data().(string))
+			command = append(command, keyValuePair)
+		}
+	}
+
 	if headers != nil {
 		for key, val := range headers.Data().(*gabs.Container).ChildrenMap() {
 			command = append(command, key+":"+val.Data().(*gabs.Container).Data().(string))
@@ -86,7 +94,7 @@ func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, header
 		cleanC := strings.TrimSpace(c)
 		cleanCommand = append(cleanCommand, cleanC)
 	}
-	if multipart {
+	if multipart || form {
 		return cleanCommand, ""
 	}
 	return cleanCommand, jsonStr
@@ -107,7 +115,9 @@ func ConstructCommand(parsedInput *gabs.Container, o *lama2cmd.Opts) ([]string, 
 	if multipart != nil {
 		multipartBool = true
 	}
+	form := parsedInput.S("form", "value")
+	formBool := form != nil
 
-	res, stdinBody := assembleCmdString(httpv.Data().(string), url.Data().(string), jsonObj, headers, multipartBool, o)
+	res, stdinBody := assembleCmdString(httpv.Data().(string), url.Data().(string), jsonObj, headers, multipartBool, formBool, o)
 	return res, stdinBody
 }
