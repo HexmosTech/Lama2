@@ -53,13 +53,22 @@
         async function makeLamaRequest(command) {
             // Get the Promise from Go
             const request_params = JSON.parse(wasmLamaRequest(command))
-            console.log(request_params)
-            console.log(request_params.URL)
-            console.log(request_params.Method)
-            const response = await GoWebRequestFunc(request_params.URL,request_params.Method)
-            const message = await response.text();
-            console.log(message);
+            console.log("All the request params:",request_params)
+            // console.log(request_params.URL)
+            // console.log(request_params.Method)
+            const response = await GoWebRequestFunc(request_params.URL,request_params.Method,request_params.Body,request_params.Headers)
+            const responseBody = await response.text();
+            console.log(responseBody);
         }
+
+        // Examples 
+        // makeLamaRequest("POST\nhttps://httpbin.org/post\n{'a': 'b','c': 'd'}")
+        // makeLamaRequest("GET\nhttps://httpbin.org/get")
+        // makeLamaRequest("POST\nhttps://httpbin.org/post\na='b'\n 'c'=d \n X-Parse-Application-Id:'helloworld'\nX-Parse-REST-API-Key:'byeworld'\n")
+        // makeLamaRequest('url = "http://google.com"\nREMOTE_COORD = "https://httpbing.org"\n---\n# stage 1\n\nPOST\n${REMOTE_COORD}/anything\n
+        // \n{\n"username": "admin",\n    "password": "Password@123",\n    "from": "${LOCAL_COORD}/anything",\n    "url": "${url}",\n   
+        //  "Token": "MySuperSecretToken"\n}\n\n---\n\n// filtering, store in var\nconsole.log("@@Result", result)\nlet TOKEN = result["json"]["Token"]\n
+        // console.log(TOKEN)\n\n---\n\n# stage 2\nGET\n${REMOTE_COORD}/bearer\n\nAuthorization: "Bearer ${TOKEN}"\n\n{}\n')
 </script>
 </body>
 </html>

@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"net/http"
+	"strings"
 	"syscall/js"
-	"time"
 
 	contoller "github.com/HexmosTech/lama2/controller"
 )
@@ -41,41 +41,20 @@ func hello(this js.Value, p []js.Value) interface{} {
 	return js.ValueOf("Hello from Go WASM!")
 }
 
-func MyGoFunc() js.Func {
-	return js.FuncOf(func(this js.Value, args []js.Value) interface{} {
-		// Handler for the Promise: this is a JS function
-		// It receives two arguments, which are JS functions themselves: resolve and reject
-		handler := js.FuncOf(func(this js.Value, args []js.Value) interface{} {
-			resolve := args[0]
-			// Commented out because this Promise never fails
-			//reject := args[1]
-
-			// Now that we have a way to return the response to JS, spawn a goroutine
-			// This way, we don't block the event loop and avoid a deadlock
-			go func() {
-				// Block the goroutine for 3 seconds
-				time.Sleep(3 * time.Second)
-				// Resolve the Promise, passing anything back to JavaScript
-				// This is done by invoking the "resolve" function passed to the handler
-				resolve.Invoke("Trentatré Trentini entrarono a Trento, tutti e trentatré trotterellando")
-			}()
-
-			// The handler of a Promise doesn't return any value
-			return nil
-		})
-
-		// Create and return the Promise object
-		promiseConstructor := js.Global().Get("Promise")
-		return promiseConstructor.New(handler)
-	})
-}
-
 func GoWebRequestFunc() js.Func {
 	return js.FuncOf(func(this js.Value, args []js.Value) interface{} {
 		// Get the URL as argument
 		// args[0] is a js.Value, so we need to get a string out of it
 		requestUrl := args[0].String()
 		requestMethod := args[1].String()
+		bodyStr := args[2].String()
+		bodyReader := strings.NewReader(bodyStr)
+
+		headersJS := args[3]
+		// headerKeys := headersJS.Call("OwnPropertyNames")
+		obj := js.Global().Get("Object")
+		headerKeys := obj.Call("getOwnPropertyNames", headersJS)
+		
 
 		// Handler for the Promise
 		// We need to return a Promise because HTTP requests are blocking in Go
@@ -87,13 +66,20 @@ func GoWebRequestFunc() js.Func {
 			go func() {
 				// Make the HTTP request
 				// res, err := http.DefaultClient.Get(requestUrl)
-				req, err := http.NewRequest(requestMethod, requestUrl, nil)
+				req, err := http.NewRequest(requestMethod, requestUrl, bodyReader)
 				if err != nil {
 					errorConstructor := js.Global().Get("Error")
 					errorObject := errorConstructor.New(err.Error())
 					reject.Invoke(errorObject)
 					return
 				}
+				// Add headers to the request
+				for i := 0; i < headerKeys.Length(); i++ {
+					key := headerKeys.Index(i).String()
+					value := headersJS.Get(key).String()
+					req.Header.Set(key, value)
+				}
+				
 				res, err := http.DefaultClient.Do(req)
 				if err != nil {
 					errorConstructor := js.Global().Get("Error")
@@ -101,6 +87,7 @@ func GoWebRequestFunc() js.Func {
 					reject.Invoke(errorObject)
 					return
 				}
+				
 				defer res.Body.Close()
 
 				// Read the response body

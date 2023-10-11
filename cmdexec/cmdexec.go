@@ -35,12 +35,12 @@ func ExecCommand(cmdSlice []string, stdinBody string, apiDir string) interface{}
 }
 
 func ExecWASMCommand(cmdSlice []string, stdinBody string) interface{} {
-	log.Info().Str("Response body from API executor", stdinBody).Msg("")
+	log.Info().Str("Request body from API executor initial", stdinBody).Msg("")
 	resp := httpie.Lama2Entry(cmdSlice, strings.NewReader(stdinBody))
 	// if err != nil {
 	// 	log.Fatal().Str("Error from the API executor", err.Error()).Msg("")
 	// 	return httpie.ExResponse{}, errors.New("Error from API executor: " + err.Error())
 	// }
-	log.Info().Interface("Response body from API executor", resp).Send()
+	log.Info().Interface("Response body from API executor final", resp).Send()
 	return resp
 }
