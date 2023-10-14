@@ -786,9 +786,6 @@ importers:
       '@firecamp/cookie-manager':
         specifier: ^0.0.0
         version: link:../../packages/firecamp-cookie-manager
-      '@firecamp/graphql':
-        specifier: workspace:*
-        version: link:../../playgrounds/firecamp-graphql
       '@firecamp/rest':
         specifier: workspace:*
         version: link:../../playgrounds/firecamp-rest
@@ -798,9 +795,6 @@ importers:
       '@firecamp/scripts':
         specifier: workspace:*
         version: link:../../packages/firecamp-scripts
-      '@firecamp/socket.io':
-        specifier: workspace:*
-        version: link:../../playgrounds/firecamp-socket-io
       '@firecamp/types':
         specifier: ^0.2.2
         version: 0.2.2
@@ -813,9 +807,6 @@ importers:
       '@firecamp/utils':
         specifier: ^0.0.24
         version: 0.0.24
-      '@firecamp/websocket':
-        specifier: workspace:*
-        version: link:../../playgrounds/firecamp-websocket
       '@mantine/form':
         specifier: ^6.0.17
         version: 6.0.17(react@17.0.2)
@@ -1134,103 +1125,6 @@ importers:
         specifier: ^5.0.2
         version: 5.0.2
 
-  playgrounds/firecamp-graphql:
-    dependencies:
-      '@firecamp/types':
-        specifier: ^0.2.2
-        version: 0.2.2
-      '@firecamp/ui':
-        specifier: workspace:*
-        version: link:../../platform/firecamp-ui
-      '@firecamp/url':
-        specifier: 0.0.20
-        version: 0.0.20
-      '@firecamp/utils':
-        specifier: ^0.0.24
-        version: 0.0.24
-      codemirror:
-        specifier: ^5.63.0
-        version: 5.65.11
-      codemirror-graphql:
-        specifier: ^1.0.2
-        version: 1.3.2(@codemirror/language@0.20.2)(codemirror@5.65.11)(graphql@15.8.0)
-      graphiql-explorer:
-        specifier: ^0.9.0
-        version: 0.9.0(graphql@15.8.0)(react-dom@17.0.2)(react@17.0.2)
-      graphql:
-        specifier: ^15.6.0
-        version: 15.8.0
-      lodash:
-        specifier: ^4.17.21
-        version: 4.17.21
-      react:
-        specifier: 17.0.2
-        version: 17.0.2
-      react-dom:
-        specifier: 17.0.2
-        version: 17.0.2(react@17.0.2)
-    devDependencies:
-      '@types/jest':
-        specifier: 29.2.4
-        version: 29.2.4
-      '@types/lodash':
-        specifier: ^4.14.175
-        version: 4.14.191
-      '@types/node':
-        specifier: ^18.0.0
-        version: 18.15.11
-      '@typescript-eslint/eslint-plugin':
-        specifier: ^5.35.1
-        version: 5.48.2(@typescript-eslint/parser@5.48.2)(eslint@8.32.0)(typescript@5.0.2)
-      '@typescript-eslint/parser':
-        specifier: ^5.29.0
-        version: 5.48.2(eslint@8.32.0)(typescript@5.0.2)
-      cspell:
-        specifier: ^4.1.0
-        version: 4.2.8
-      eslint:
-        specifier: ^8.29.0
-        version: 8.32.0
-      eslint-config-prettier:
-        specifier: ^6.11.0
-        version: 6.15.0(eslint@8.32.0)
-      eslint-plugin-eslint-comments:
-        specifier: ^3.2.0
-        version: 3.2.0(eslint@8.32.0)
-      eslint-plugin-functional:
-        specifier: ^4.2.1
-        version: 4.4.1(eslint@8.32.0)(typescript@5.0.2)
-      eslint-plugin-import:
-        specifier: ^2.22.0
-        version: 2.27.5(@typescript-eslint/parser@5.48.2)(eslint@8.32.0)
-      jest:
-        specifier: ^28.1.3
-        version: 28.1.3(@types/node@18.15.11)(ts-node@10.9.1)
-      npm-run-all:
-        specifier: ^4.1.5
-        version: 4.1.5
-      open-cli:
-        specifier: ^6.0.1
-        version: 6.0.1
-      prettier:
-        specifier: ^2.1.1
-        version: 2.8.3
-      standard-version:
-        specifier: ^9.0.0
-        version: 9.5.0
-      ts-jest:
-        specifier: ^28.0.7
-        version: 28.0.7(@babel/core@7.20.12)(jest@28.1.3)(typescript@5.0.2)
-      ts-node:
-        specifier: ^10.9.1
-        version: 10.9.1(@types/node@18.15.11)(typescript@5.0.2)
-      typedoc:
-        specifier: ^0.23.8
-        version: 0.23.24(typescript@5.0.2)
-      typescript:
-        specifier: ^5.0.2
-        version: 5.0.2
-
   playgrounds/firecamp-rest:
     dependencies:
       '@firecamp/curl-to-firecamp':
@@ -1538,400 +1432,6 @@ importers:
       tsup:
         specifier: ^6.7.0
         version: 6.7.0(postcss@8.4.27)(ts-node@10.9.1)(typescript@5.0.2)
-      typedoc:
-        specifier: ^0.23.8
-        version: 0.23.24(typescript@5.0.2)
-      typescript:
-        specifier: ^5.0.2
-        version: 5.0.2
-
-  playgrounds/firecamp-socket-io:
-    dependencies:
-      '@firecamp/socket.io-executor':
-        specifier: workspace:*
-        version: link:../firecamp-socket-io-executor
-      '@firecamp/types':
-        specifier: ^0.2.2
-        version: 0.2.2
-      '@firecamp/ui':
-        specifier: workspace:*
-        version: link:../../platform/firecamp-ui
-      '@firecamp/url':
-        specifier: 0.0.20
-        version: 0.0.20
-      '@firecamp/utils':
-        specifier: ^0.0.24
-        version: 0.0.24
-      classnames:
-        specifier: ^2.1.3
-        version: 2.3.2
-      lodash:
-        specifier: ^4.17.21
-        version: 4.17.21
-      nanoid:
-        specifier: 3.3.4
-        version: 3.3.4
-      prop-types:
-        specifier: ^15.6.2
-        version: 15.8.1
-      react:
-        specifier: 17.0.2
-        version: 17.0.2
-      react-dom:
-        specifier: 17.0.2
-        version: 17.0.2(react@17.0.2)
-      react-ga:
-        specifier: ^3.1.2
-        version: 3.3.1(prop-types@15.8.1)(react@17.0.2)
-      react-virtualized:
-        specifier: ^9.21.5
-        version: 9.22.3(react-dom@17.0.2)(react@17.0.2)
-      socket.io-client-v2:
-        specifier: npm:socket.io-client@2.4.0
-        version: /socket.io-client@2.4.0
-      socket.io-client-v3:
-        specifier: npm:socket.io-client@3.1.0
-        version: /socket.io-client@3.1.0
-      socket.io-client-v4:
-        specifier: npm:socket.io-client@4.1.3
-        version: /socket.io-client@4.1.3
-      zustand:
-        specifier: ^4.3.9
-        version: 4.3.9(react@17.0.2)
-    devDependencies:
-      '@types/jest':
-        specifier: 29.2.4
-        version: 29.2.4
-      '@types/lodash':
-        specifier: ^4.14.175
-        version: 4.14.191
-      '@types/node':
-        specifier: ^18.0.0
-        version: 18.15.11
-      '@typescript-eslint/eslint-plugin':
-        specifier: ^5.35.1
-        version: 5.48.2(@typescript-eslint/parser@5.48.2)(eslint@8.32.0)(typescript@5.0.2)
-      '@typescript-eslint/parser':
-        specifier: ^5.29.0
-        version: 5.48.2(eslint@8.32.0)(typescript@5.0.2)
-      cspell:
-        specifier: ^4.1.0
-        version: 4.2.8
-      eslint:
-        specifier: ^8.29.0
-        version: 8.32.0
-      eslint-config-prettier:
-        specifier: ^6.11.0
-        version: 6.15.0(eslint@8.32.0)
-      eslint-plugin-eslint-comments:
-        specifier: ^3.2.0
-        version: 3.2.0(eslint@8.32.0)
-      eslint-plugin-functional:
-        specifier: ^4.2.1
-        version: 4.4.1(eslint@8.32.0)(typescript@5.0.2)
-      eslint-plugin-import:
-        specifier: ^2.22.0
-        version: 2.27.5(@typescript-eslint/parser@5.48.2)(eslint@8.32.0)
-      jest:
-        specifier: ^28.1.3
-        version: 28.1.3(@types/node@18.15.11)(ts-node@10.9.1)
-      npm-run-all:
-        specifier: ^4.1.5
-        version: 4.1.5
-      open-cli:
-        specifier: ^6.0.1
-        version: 6.0.1
-      prettier:
-        specifier: ^2.1.1
-        version: 2.8.3
-      standard-version:
-        specifier: ^9.0.0
-        version: 9.5.0
-      ts-jest:
-        specifier: ^28.0.7
-        version: 28.0.7(@babel/core@7.20.12)(jest@28.1.3)(typescript@5.0.2)
-      ts-node:
-        specifier: ^10.9.1
-        version: 10.9.1(@types/node@18.15.11)(typescript@5.0.2)
-      typedoc:
-        specifier: ^0.23.8
-        version: 0.23.24(typescript@5.0.2)
-      typescript:
-        specifier: ^5.0.2
-        version: 5.0.2
-
-  playgrounds/firecamp-socket-io-executor:
-    dependencies:
-      '@firecamp/types':
-        specifier: ^0.2.2
-        version: 0.2.2
-      '@firecamp/utils':
-        specifier: ^0.0.24
-        version: 0.0.24
-      comment-json:
-        specifier: ^4.1.1
-        version: 4.2.3
-      mitt:
-        specifier: 3.0.0
-        version: 3.0.0
-      socket.io-client-v2:
-        specifier: npm:socket.io-client@2.4.0
-        version: /socket.io-client@2.4.0
-      socket.io-client-v3:
-        specifier: npm:socket.io-client@3.1.0
-        version: /socket.io-client@3.1.0
-      socket.io-client-v4:
-        specifier: npm:socket.io-client@4.1.3
-        version: /socket.io-client@4.1.3
-    devDependencies:
-      '@types/jest':
-        specifier: 29.2.4
-        version: 29.2.4
-      '@types/node':
-        specifier: ^18.0.0
-        version: 18.15.11
-      '@typescript-eslint/eslint-plugin':
-        specifier: ^5.35.1
-        version: 5.48.2(@typescript-eslint/parser@5.48.2)(eslint@8.32.0)(typescript@5.0.2)
-      '@typescript-eslint/parser':
-        specifier: ^5.29.0
-        version: 5.48.2(eslint@8.32.0)(typescript@5.0.2)
-      cspell:
-        specifier: ^4.1.0
-        version: 4.2.8
-      eslint:
-        specifier: ^8.29.0
-        version: 8.32.0
-      eslint-config-prettier:
-        specifier: ^6.11.0
-        version: 6.15.0(eslint@8.32.0)
-      eslint-plugin-eslint-comments:
-        specifier: ^3.2.0
-        version: 3.2.0(eslint@8.32.0)
-      eslint-plugin-functional:
-        specifier: ^4.2.1
-        version: 4.4.1(eslint@8.32.0)(typescript@5.0.2)
-      eslint-plugin-import:
-        specifier: ^2.22.0
-        version: 2.27.5(@typescript-eslint/parser@5.48.2)(eslint@8.32.0)
-      jest:
-        specifier: ^28.1.3
-        version: 28.1.3(@types/node@18.15.11)(ts-node@10.9.1)
-      npm-run-all:
-        specifier: ^4.1.5
-        version: 4.1.5
-      open-cli:
-        specifier: ^6.0.1
-        version: 6.0.1
-      prettier:
-        specifier: ^2.1.1
-        version: 2.8.3
-      standard-version:
-        specifier: ^9.0.0
-        version: 9.5.0
-      ts-jest:
-        specifier: ^28.0.7
-        version: 28.0.7(@babel/core@7.20.12)(jest@28.1.3)(typescript@5.0.2)
-      ts-node:
-        specifier: ^10.9.1
-        version: 10.9.1(@types/node@18.15.11)(typescript@5.0.2)
-      typedoc:
-        specifier: ^0.23.8
-        version: 0.23.24(typescript@5.0.2)
-      typescript:
-        specifier: ^5.0.2
-        version: 5.0.2
-
-  playgrounds/firecamp-websocket:
-    dependencies:
-      '@firecamp/types':
-        specifier: ^0.2.2
-        version: 0.2.2
-      '@firecamp/ui':
-        specifier: workspace:*
-        version: link:../../platform/firecamp-ui
-      '@firecamp/url':
-        specifier: 0.0.20
-        version: 0.0.20
-      '@firecamp/utils':
-        specifier: ^0.0.24
-        version: 0.0.24
-      '@firecamp/ws-executor':
-        specifier: workspace:*
-        version: link:../firecamp-ws-executor
-      classnames:
-        specifier: ^2.1.3
-        version: 2.3.2
-      lodash:
-        specifier: ^4.17.21
-        version: 4.17.21
-      mitt:
-        specifier: ^3.0.0
-        version: 3.0.0
-      nanoid:
-        specifier: 3.3.4
-        version: 3.3.4
-      prop-types:
-        specifier: ^15.6.2
-        version: 15.8.1
-      react:
-        specifier: 17.0.2
-        version: 17.0.2
-      react-dom:
-        specifier: 17.0.2
-        version: 17.0.2(react@17.0.2)
-      react-fast-compare:
-        specifier: ^3.2.0
-        version: 3.2.0
-      react-ga:
-        specifier: ^3.1.2
-        version: 3.3.1(prop-types@15.8.1)(react@17.0.2)
-      react-virtualized:
-        specifier: ^9.21.5
-        version: 9.22.3(react-dom@17.0.2)(react@17.0.2)
-      zustand:
-        specifier: ^4.3.9
-        version: 4.3.9(react@17.0.2)
-    devDependencies:
-      '@types/jest':
-        specifier: 29.2.4
-        version: 29.2.4
-      '@types/lodash':
-        specifier: ^4.14.175
-        version: 4.14.191
-      '@types/node':
-        specifier: ^18.0.0
-        version: 18.15.11
-      '@typescript-eslint/eslint-plugin':
-        specifier: ^5.35.1
-        version: 5.48.2(@typescript-eslint/parser@5.48.2)(eslint@8.32.0)(typescript@5.0.2)
-      '@typescript-eslint/parser':
-        specifier: ^5.29.0
-        version: 5.48.2(eslint@8.32.0)(typescript@5.0.2)
-      cspell:
-        specifier: ^4.1.0
-        version: 4.2.8
-      eslint:
-        specifier: ^8.29.0
-        version: 8.32.0
-      eslint-config-prettier:
-        specifier: ^6.11.0
-        version: 6.15.0(eslint@8.32.0)
-      eslint-plugin-eslint-comments:
-        specifier: ^3.2.0
-        version: 3.2.0(eslint@8.32.0)
-      eslint-plugin-functional:
-        specifier: ^4.2.1
-        version: 4.4.1(eslint@8.32.0)(typescript@5.0.2)
-      eslint-plugin-import:
-        specifier: ^2.22.0
-        version: 2.27.5(@typescript-eslint/parser@5.48.2)(eslint@8.32.0)
-      jest:
-        specifier: ^28.1.3
-        version: 28.1.3(@types/node@18.15.11)(ts-node@10.9.1)
-      npm-run-all:
-        specifier: ^4.1.5
-        version: 4.1.5
-      open-cli:
-        specifier: ^6.0.1
-        version: 6.0.1
-      prettier:
-        specifier: ^2.1.1
-        version: 2.8.3
-      rimraf:
-        specifier: ^3.0.2
-        version: 3.0.2
-      standard-version:
-        specifier: ^9.0.0
-        version: 9.5.0
-      ts-jest:
-        specifier: ^28.0.7
-        version: 28.0.7(@babel/core@7.20.12)(jest@28.1.3)(typescript@5.0.2)
-      ts-node:
-        specifier: ^10.9.1
-        version: 10.9.1(@types/node@18.15.11)(typescript@5.0.2)
-      typedoc:
-        specifier: ^0.23.8
-        version: 0.23.24(typescript@5.0.2)
-      typescript:
-        specifier: ^5.0.2
-        version: 5.0.2
-
-  playgrounds/firecamp-ws-executor:
-    dependencies:
-      '@firecamp/types':
-        specifier: ^0.2.2
-        version: 0.2.2
-      '@firecamp/utils':
-        specifier: ^0.0.24
-        version: 0.0.24
-      comment-json:
-        specifier: ^4.1.1
-        version: 4.2.3
-      mitt:
-        specifier: ^3.0.0
-        version: 3.0.0
-      nanoid:
-        specifier: 3.3.4
-        version: 3.3.4
-      ws:
-        specifier: 8.11.0
-        version: 8.11.0
-    devDependencies:
-      '@types/chrome':
-        specifier: ^0.0.204
-        version: 0.0.204
-      '@types/jest':
-        specifier: 29.2.4
-        version: 29.2.4
-      '@types/node':
-        specifier: ^18.0.0
-        version: 18.15.11
-      '@typescript-eslint/eslint-plugin':
-        specifier: ^5.35.1
-        version: 5.48.2(@typescript-eslint/parser@5.48.2)(eslint@8.32.0)(typescript@5.0.2)
-      '@typescript-eslint/parser':
-        specifier: ^5.29.0
-        version: 5.48.2(eslint@8.32.0)(typescript@5.0.2)
-      cspell:
-        specifier: ^4.1.0
-        version: 4.2.8
-      eslint:
-        specifier: ^8.29.0
-        version: 8.32.0
-      eslint-config-prettier:
-        specifier: ^6.11.0
-        version: 6.15.0(eslint@8.32.0)
-      eslint-plugin-eslint-comments:
-        specifier: ^3.2.0
-        version: 3.2.0(eslint@8.32.0)
-      eslint-plugin-functional:
-        specifier: ^4.2.1
-        version: 4.4.1(eslint@8.32.0)(typescript@5.0.2)
-      eslint-plugin-import:
-        specifier: ^2.22.0
-        version: 2.27.5(@typescript-eslint/parser@5.48.2)(eslint@8.32.0)
-      jest:
-        specifier: ^28.1.3
-        version: 28.1.3(@types/node@18.15.11)(ts-node@10.9.1)
-      npm-run-all:
-        specifier: ^4.1.5
-        version: 4.1.5
-      open-cli:
-        specifier: ^6.0.1
-        version: 6.0.1
-      prettier:
-        specifier: ^2.1.1
-        version: 2.8.3
-      standard-version:
-        specifier: ^9.0.0
-        version: 9.5.0
-      ts-jest:
-        specifier: ^28.0.7
-        version: 28.0.7(@babel/core@7.20.12)(jest@28.1.3)(typescript@5.0.2)
-      ts-node:
-        specifier: ^10.9.1
-        version: 10.9.1(@types/node@18.15.11)(typescript@5.0.2)
       typedoc:
         specifier: ^0.23.8
         version: 0.23.24(typescript@5.0.2)
@@ -12201,6 +11701,7 @@ packages:
   /clsx@1.2.1:
     resolution: {integrity: sha512-EcR6r5a8bj6pu3ycsa/E/cKVGuTgZJZdsyUYHOksG/UHIiKfjxzRxYJpyVBwYaQeOvghal9fcc4PidlgzugAQg==}
     engines: {node: '>=6'}
+    dev: true
 
   /cmd-shim@5.0.0:
     resolution: {integrity: sha512-qkCtZ59BidfEwHltnJwkyVZn+XQojdAySM1D1gSeh11Z4pW1Kpolkyo53L5noc0nrxmIvyFwTmJRo4xs7FFLPw==}
@@ -13705,13 +13206,6 @@ packages:
       utila: 0.4.0
     dev: true
 
-  /dom-helpers@5.2.1:
-    resolution: {integrity: sha512-nRCa7CK3VTrM2NmGkIy4cbK7IZlgBE/PYMn55rrXefr5xXDP0LdtfPnblFDoVdcAfslJ7or6iqAUnx0CCGIWQA==}
-    dependencies:
-      '@babel/runtime': 7.20.13
-      csstype: 3.1.1
-    dev: false
-
   /dom-serializer@0.2.2:
     resolution: {integrity: sha512-2/xPb3ORsQ42nHYiSunXkDjPLBaEj/xTwUO4B7XCZQTRk7EBtTOPaygh10YAAh2OI1Qrp6NWfpAhzswj0ydt9g==}
     dependencies:
@@ -13950,43 +13444,6 @@ packages:
       parseuri: 0.0.6
       ws: 7.4.6
       xmlhttprequest-ssl: 1.6.3
-      yeast: 0.1.2
-    transitivePeerDependencies:
-      - bufferutil
-      - supports-color
-      - utf-8-validate
-    dev: false
-
-  /engine.io-client@4.1.4:
-    resolution: {integrity: sha512-843fqAdKeUMFqKi1sSjnR11tJ4wi8sIefu6+JC1OzkkJBmjtc/gM/rZ53tJfu5Iae/3gApm5veoS+v+gtT0+Fg==}
-    dependencies:
-      base64-arraybuffer: 0.1.4
-      component-emitter: 1.3.0
-      debug: 4.3.4(supports-color@8.1.1)
-      engine.io-parser: 4.0.3
-      has-cors: 1.1.0
-      parseqs: 0.0.6
-      parseuri: 0.0.6
-      ws: 7.4.6
-      xmlhttprequest-ssl: 1.6.3
-      yeast: 0.1.2
-    transitivePeerDependencies:
-      - bufferutil
-      - supports-color
-      - utf-8-validate
-    dev: false
-
-  /engine.io-client@5.1.2:
-    resolution: {integrity: sha512-blRrgXIE0A/eurWXRzvfCLG7uUFJqfTGFsyJzXSK71srMMGJ2VraBLg8Mdw28uUxSpVicepBN9X7asqpD1mZcQ==}
-    dependencies:
-      base64-arraybuffer: 0.1.4
-      component-emitter: 1.3.0
-      debug: 4.3.4(supports-color@8.1.1)
-      engine.io-parser: 4.0.3
-      has-cors: 1.1.0
-      parseqs: 0.0.6
-      parseuri: 0.0.6
-      ws: 7.4.6
       yeast: 0.1.2
     transitivePeerDependencies:
       - bufferutil
@@ -16741,18 +16198,6 @@ packages:
   /grapheme-splitter@1.0.4:
     resolution: {integrity: sha512-bzh50DW9kTPM00T8y4o8vQg89Di9oLJVLW/KaOGIXJWP/iqCN6WKYkbNOF04vFLJhwcpYUh9ydh/+5vpOqV4YQ==}
     dev: true
-
-  /graphiql-explorer@0.9.0(graphql@15.8.0)(react-dom@17.0.2)(react@17.0.2):
-    resolution: {integrity: sha512-fZC/wsuatqiQDO2otchxriFO0LaWIo/ovF/CQJ1yOudmY0P7pzDiP+l9CEHUiWbizk3e99x6DQG4XG1VxA+d6A==}
-    peerDependencies:
-      graphql: ^0.6.0 || ^0.7.0 || ^0.8.0-b || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0
-      react: ^15.6.0 || ^16.0.0
-      react-dom: ^15.6.0 || ^16.0.0
-    dependencies:
-      graphql: 15.8.0
-      react: 17.0.2
-      react-dom: 17.0.2(react@17.0.2)
-    dev: false
 
   /graphql-language-service@5.1.1(graphql@15.8.0):
     resolution: {integrity: sha512-gpaDT9E3+3eWhoqO4C81CGhkzr7Vp2jH/eq+ykoUbgfvMEpqhGTfCeNmrf+S4K/+4WTkAAJBsYT0/ZPZkqe/Hg==}
@@ -24342,10 +23787,6 @@ packages:
       react: 17.0.2
     dev: false
 
-  /react-fast-compare@3.2.0:
-    resolution: {integrity: sha512-rtGImPZ0YyLrscKI9xTpV8psd6I8VAtjKCzQDlzyDvqJA8XOW78TXYQwNRNd8g8JZnDu8q9Fu/1v4HPAVwVdHA==}
-    dev: false
-
   /react-fast-compare@3.2.2:
     resolution: {integrity: sha512-nsO+KSNgo1SbJqJEYRE9ERzo7YtYbou/OqjSQKxV7jcKox7+usiUVZOAC+XnDOABXggQTno0Y1CpVnuWEc1boQ==}
     dev: false
@@ -24406,10 +23847,6 @@ packages:
   /react-is@18.2.0:
     resolution: {integrity: sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==}
     dev: true
-
-  /react-lifecycles-compat@3.0.4:
-    resolution: {integrity: sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==}
-    dev: false
 
   /react-measure@2.5.2(react-dom@17.0.2)(react@17.0.2):
     resolution: {integrity: sha512-M+rpbTLWJ3FD6FXvYV6YEGvQ5tMayQ3fGrZhRPHrE9bVlBYfDCLuDcgNttYfk8IqfOI03jz6cbpqMRTUclQnaA==}
@@ -24549,22 +23986,6 @@ packages:
     dependencies:
       react: 17.0.2
       react-dom: 17.0.2(react@17.0.2)
-    dev: false
-
-  /react-virtualized@9.22.3(react-dom@17.0.2)(react@17.0.2):
-    resolution: {integrity: sha512-MKovKMxWTcwPSxE1kK1HcheQTWfuCxAuBoSTf2gwyMM21NdX/PXUhnoP8Uc5dRKd+nKm8v41R36OellhdCpkrw==}
-    peerDependencies:
-      react: ^15.3.0 || ^16.0.0-alpha
-      react-dom: ^15.3.0 || ^16.0.0-alpha
-    dependencies:
-      '@babel/runtime': 7.20.13
-      clsx: 1.2.1
-      dom-helpers: 5.2.1
-      loose-envify: 1.4.0
-      prop-types: 15.8.1
-      react: 17.0.2
-      react-dom: 17.0.2(react@17.0.2)
-      react-lifecycles-compat: 3.0.4
     dev: false
 
   /react-window@1.8.8(react-dom@17.0.2)(react@17.0.2):
@@ -25852,40 +25273,6 @@ packages:
       parseuri: 0.0.6
       socket.io-parser: 3.3.3
       to-array: 0.1.4
-    transitivePeerDependencies:
-      - bufferutil
-      - supports-color
-      - utf-8-validate
-    dev: false
-
-  /socket.io-client@3.1.0:
-    resolution: {integrity: sha512-T4qPOL80KnoBwkdR70zMpiR6aH6zv3ZqLNriofHqsO9wvQllNTOez0mpV4GdVqo1Y55Z+h8YOlBo7c8pOxDlHw==}
-    engines: {node: '>=10.0.0'}
-    dependencies:
-      '@types/component-emitter': 1.2.11
-      backo2: 1.0.2
-      component-emitter: 1.3.0
-      debug: 4.3.4(supports-color@8.1.1)
-      engine.io-client: 4.1.4
-      parseuri: 0.0.6
-      socket.io-parser: 4.0.5
-    transitivePeerDependencies:
-      - bufferutil
-      - supports-color
-      - utf-8-validate
-    dev: false
-
-  /socket.io-client@4.1.3:
-    resolution: {integrity: sha512-hISFn6PDpgDifVUiNklLHVPTMv1LAk8poHArfIUdXa+gKgbr0MZbAlquDFqCqsF30yBqa+jg42wgos2FK50BHA==}
-    engines: {node: '>=10.0.0'}
-    dependencies:
-      '@types/component-emitter': 1.2.11
-      backo2: 1.0.2
-      component-emitter: 1.3.0
-      debug: 4.3.4(supports-color@8.1.1)
-      engine.io-client: 5.1.2
-      parseuri: 0.0.6
-      socket.io-parser: 4.0.5
     transitivePeerDependencies:
       - bufferutil
       - supports-color
@@ -29490,6 +28877,7 @@ packages:
         optional: true
       utf-8-validate:
         optional: true
+    dev: true
 
   /ws@8.13.0:
     resolution: {integrity: sha512-x9vcZYTrFPC7aSIbj7sRCYo7L/Xb8Iy+pW0ng0wt2vCJv7M9HOMy0UoN3rr+IFC7hb7vXoqS+P9ktyLLLhO+LA==}

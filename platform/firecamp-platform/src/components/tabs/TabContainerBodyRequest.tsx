@@ -15,17 +15,7 @@ import { Rest } from '@firecamp/rest';
 // const Rest = lazy(() =>
 //   import('@firecamp/rest').then((module) => ({ default: module.Rest }))
 // );
-const GraphQL = lazy(() =>
-  import('@firecamp/graphql').then((module) => ({ default: module.GraphQL }))
-);
-const WSClient = lazy(() =>
-  import('@firecamp/websocket').then((module) => ({ default: module.WSClient }))
-);
-const SocketIOClient = lazy(() =>
-  import('@firecamp/socket.io').then((module) => ({
-    default: module.SocketIOClient,
-  }))
-);
+
 
 import { ETabEntityTypes, IEntityTab, IRequestTabProps } from './types';
 import pltContext from '../../services/platform-context';
@@ -76,24 +66,7 @@ const TabContainerBodyRequest: FC<any> = ({ tab, index }) => {
           //     <Rest {...tabProps} />
           //   </Suspense>
           // );
-          case ERequestTypes.GraphQL:
-            return (
-              <Suspense fallback={<Loader />}>
-                <GraphQL {...tabProps} />
-              </Suspense>
-            );
-          case ERequestTypes.SocketIO:
-            return (
-              <Suspense fallback={<Loader />}>
-                <SocketIOClient {...tabProps} />
-              </Suspense>
-            );
-          case ERequestTypes.WebSocket:
-            return (
-              <Suspense fallback={<Loader />}>
-                <WSClient {...tabProps} />
-              </Suspense>
-            );
+           
           case 'json':
             return <JsonTab {...tabProps} />;
           case 'md':

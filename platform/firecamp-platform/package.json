@@ -52,16 +52,16 @@
     "@firecamp/agent-manager": "workspace:*",
     "@firecamp/cloud-apis": "0.2.11",
     "@firecamp/cookie-manager": "^0.0.0",
-    "@firecamp/graphql": "workspace:*",
+    
     "@firecamp/rest": "workspace:*",
     "@firecamp/rest-executor": "workspace:*",
     "@firecamp/scripts": "workspace:*",
-    "@firecamp/socket.io": "workspace:*",
+   
     "@firecamp/types": "^0.2.2",
     "@firecamp/ui": "workspace:*",
     "@firecamp/url": "0.0.20",
     "@firecamp/utils": "^0.0.24",
-    "@firecamp/websocket": "workspace:*",
+   
     "@mantine/form": "^6.0.17",
     "@sentry/browser": "7.28.1",
     "@sentry/tracing": "7.28.1",

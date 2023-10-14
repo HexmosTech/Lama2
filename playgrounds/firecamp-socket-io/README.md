@@ -1,1 +1,0 @@
-# `@firecamp/socket-io`
