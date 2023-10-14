@@ -24,7 +24,7 @@ const Response: FC<IResponsePanel> = ({
   client = '',
 }) => {
   const [activeBodyTab, setActiveBodyTab] = useState('Body');
-  console.log('response in', response);
+  // console.log('response in', response);
   return (
     <Resizable
       width={'50%'}

@@ -58,7 +58,7 @@ export default class RestExecutor implements IRestExecutor {
       );
 
     const { status, statusText, config, headers } = response;
-
+    console.log('request=>>>>', request);
     tl.push('\n-----------   GENERAL  -----------\n');
     tl.push(`# Request URL:  ${config.url}`);
     tl.push(`# Request Method: ${config.method}`);
@@ -250,7 +250,7 @@ export default class RestExecutor implements IRestExecutor {
             errors,
           });
         } catch (e) {
-          console.error(e);
+          // console.error(e);
           if (!_object.isEmpty(e.response)) {
             const response = this._normalizeResponse(e.response);
             if (!e.response?.config && e.config) e.response.config = e.config;

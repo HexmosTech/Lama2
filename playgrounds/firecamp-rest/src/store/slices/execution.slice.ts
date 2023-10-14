@@ -178,17 +178,17 @@ const createExecutionSlice: TStoreSlice<IExecutionSlice> = (set, get) => ({
     await state.context.request
       .execute(finalRequest)
       .then(({ response, variables, testResult, scriptErrors }) => {
-        console.log({ response, variables, testResult });
+        // console.log({ response, variables, testResult });
         if (response?.error) {
           const error = response.error;
-          console.log(error.message, error.code, error.e.response, error.e);
+          // console.log(error.message, error.code, error.e.response, error.e);
         }
         if (response) {
           set((s) => ({ response, testResult, scriptErrors })); // TODO: check what to set/ response or testScriptResponse
         }
       })
       .catch((e) => {
-        console.log(e.message, e.stack, e.response, e, 9090);
+        // console.log(e.message, e.stack, e.response, e, 9090);
       })
       .finally(() => {
         state.setRequestRunningFlag(false);
