@@ -39,11 +39,27 @@ func lama2Wasm(this js.Value, i []js.Value) interface{} {
 func wasmLamaPromise() js.Func {
 	return js.FuncOf(func(this js.Value, args []js.Value) interface{} {
 		inputdata := args[0].String()
+		// outputField := js.Global().Get("document").Call("getElementById", "outputField")
+
+		// p.Set("innerHTML", "Hello WASM from Go!")
+		// document.Get("body").Call("appendChild", p)
 
 		handler := js.FuncOf(func(this js.Value, args []js.Value) interface{} {
 			go func() {
 				result := controller.ProcessWasmInput(inputdata)
-				fmt.Println(result)
+
+				// document := js.Global().Get("document")
+
+				// p := document.Call("getElementById", "outputField")
+				// p.Set("textContent", result)
+				responseString := fmt.Sprintf("%+v", result)
+
+				// fmt.Println(document)
+				fmt.Println("result data :", responseString)
+				document := js.Global().Get("document")
+				p := document.Call("getElementById", "outputField")
+				p.Set("textContent", responseString)
+
 			}()
 			return nil
 		})
