@@ -13,6 +13,7 @@
             padding: 10px;
             font-family: monospace;
             resize: vertical;
+            overflow-y: auto; /* Enable vertical scroll */
         }
         #runButton {
             background-color: rgb(39, 153, 24);
@@ -35,57 +36,42 @@
 <body>
 <script src="wasm_exec.js"></script>
 <script>
-        let wasmLoaded = false;
+    let wasmLoaded = false;
 
-        const go = new Go();
-        
-        WebAssembly.instantiateStreaming(fetch("main.wasm"), go.importObject).then((result) => {
-            go.run(result.instance);
-            wasmLoaded = true;  
-            // console.log(example())
-        });
+    const go = new Go();
+    
+    WebAssembly.instantiateStreaming(fetch("main.wasm"), go.importObject).then((result) => {
+        go.run(result.instance);
+        wasmLoaded = true;  
+    });
 </script>
 <div>
-    <div>
-        <label for="inputField">Enter value</label>
-        <input id="inputField" name="Hash" type="text" style="width: 300px; height: 40px;">
-        <div id="outputHash" style="font-size: 20px; margin-top: 10px;"></div>
+    <div style="display: flex; flex-direction: column; align-items: center;">
+        <label for="inputField" style="margin-bottom: 10px;">Enter value</label>
+        <textarea id="inputField" name="Hash" style="width: 300px; height: 200px; padding: 10px;"></textarea>
+        <button id="runButton" onclick="runLama()" style="margin-top: 10px;">Run</button>
+    <!-- </div> -->
+        <div id="outputField" style="font-size: 20px; margin-top: 10px;"></div>
     </div>
-    
 </div>
 <script>
-        async function makeLamaRequest(command) {
-            const request_params = JSON.parse(wasmLamaRequest(command))
-            console.log("All the request params:",request_params)
-            const response = await GoWebRequestFunc(request_params.URL,request_params.Method,request_params.Body,request_params.Headers)
-            const responseBody = await response.text();
-            console.log(responseBody);
-        }
+    async function makeLamaRequest(command) {
+        try {
+        console.log("Command:", command); // Log the command to check the value being passed
+        const response = await goWebRequestFunc(command);
+        console.log("response Data:",response)
+        const outputField = document.getElementById("outputField");
+        outputField.textContent = JSON.stringify(response, null, 2); 
+    } catch (error) {
+        console.error("Error making Lama request:", error);
+    }
+    }
 
-        async function makeMultireq(data){
-            console.log("Data:",data)
-            const escapedData = data.replace(/\n/g, '\\n');
-            const resp12 = await goWebRequestFunc(escapedData)
-            console.log(resp12)
-        }
-        
-    // document.getElementById('combinedDataOutput').innerText = combinedData;
-    // Examples 
-        // makeLamaRequest("POST\nhttps://httpbin.org/post\n{'a': 'b','c': 'd'}")
-        // makeLamaRequest("GET\nhttps://httpbin.org/get")
-        // makeLamaRequest("POST\nhttps://httpbin.org/post\na='b'\n 'c'=d \n X-Parse-Application-Id:'helloworld'\nX-Parse-REST-API-Key:'byeworld'\n")
-        // makeLamaRequest('url = "http://google.com"\nREMOTE_COORD = "https://httpbing.org"\n---\n# stage 1\n\nPOST\n${REMOTE_COORD}/anything\n
-        // \n{\n"username": "admin",\n    "password": "Password@123",\n    "from": "${LOCAL_COORD}/anything",\n    "url": "${url}",\n   
-        //  "Token": "MySuperSecretToken"\n}\n\n---\n\n// filtering, store in var\nconsole.log("@@Result", result)\nlet TOKEN = result["json"]["Token"]\n
-        // console.log(TOKEN)\n\n---\n\n# stage 2\nGET\n${REMOTE_COORD}/bearer\n\nAuthorization: "Bearer ${TOKEN}"\n\n{}\n')
-
-        //chaining
-        // WOrking
-        // makeLamaRequest('url = "http://google.com"\nREMOTE_COORD = "https://httpbin.org"\n---\nPOST\n${REMOTE_COORD}/anything\n{\n    "username": "admin",\n    "password": "Password@123",\n    "from": "${LOCAL_COORD}/anything",\n    "url": "${url}",\n    "Token": "MySuperSecretToken"\n}\n')
-        //makeLamaRequest('url = "http://google.com"\nREMOTE_COORD = "https://httpbin.org"\n---\nPOST\n${REMOTE_COORD}/anything\n{\n    "username": "admin",\n    "password": "Password@123",\n    "from": "${LOCAL_COORD}/anything",\n    "url": "${url}",\n    "Token": "MySuperSecretToken"\n}\n---\nconsole.log("@@Result", result)\nlet TOKEN = result["json"]["Token"]\nconsole.log(TOKEN)\n')
-
-        // Failing
-        // makeLamaRequest('url = "http://google.com"\nREMOTE_COORD = "https://httpbin.org"\n---\nPOST\n${REMOTE_COORD}/anything\n{\n    "username": "admin",\n    "password": "Password@123",\n    "from": "${LOCAL_COORD}/anything",\n    "url": "${url}",\n    "Token": "MySuperSecretToken"\n}\n---\nconsole.log("@@Result", result)\nlet TOKEN = result["json"]["Token"]\nconsole.log(TOKEN)\n---\nGET\n${REMOTE_COORD}/bearer\nAuthorization: "Bearer ${TOKEN}"\n{}\n')
-        </script>
+    function runLama() {
+    const inputValue = document.getElementById("inputField").value;
+    const command = inputValue.replace(/\n/g, ' '); // Replace newline with space
+    makeLamaRequest(inputValue);
+}
+</script>
 </body>
 </html>
