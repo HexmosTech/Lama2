@@ -11,11 +11,11 @@ import (
 	"strings"
 
 	"github.com/HexmosTech/gabs/v2"
-	"github.com/HexmosTech/lama2/lama2cmd"
+	// "github.com/HexmosTech/lama2/lama2cmd"
 	"github.com/rs/zerolog/log"
 )
 
-func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, headers *gabs.Container, multipart bool, form bool, o *lama2cmd.Opts) ([]string, string) {
+func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, headers *gabs.Container, multipart bool, form bool) ([]string, string) {
 	command := make([]string, 0)
 	log.Info().
 		Str("Type", "Construct Command").
@@ -58,9 +58,9 @@ func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, header
 		}*/
 
 	command = append(command, "ht ")
-	if o.Nocolor {
-		command = append(command, "--pretty=none ")
-	}
+	// if o.Nocolor {
+	// 	command = append(command, "--pretty=none ")
+	// }
 	if multipart || form {
 		command = append(command, "--ignore-stdin", "--form")
 	}
@@ -104,7 +104,7 @@ func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, header
 // API file inputs, figures out the type of target command
 // and finally generates a string representing the generated
 // command
-func ConstructCommand(parsedInput *gabs.Container, o *lama2cmd.Opts) ([]string, string) {
+func ConstructCommand(parsedInput *gabs.Container) ([]string, string) {
 	log.Info().Str("ParsedInput", parsedInput.String()).Msg("")
 	httpv := parsedInput.S("verb", "value")
 	url := parsedInput.S("url", "value")
@@ -118,6 +118,6 @@ func ConstructCommand(parsedInput *gabs.Container, o *lama2cmd.Opts) ([]string, 
 	form := parsedInput.S("form", "value")
 	formBool := form != nil
 
-	res, stdinBody := assembleCmdString(httpv.Data().(string), url.Data().(string), jsonObj, headers, multipartBool, formBool, o)
+	res, stdinBody := assembleCmdString(httpv.Data().(string), url.Data().(string), jsonObj, headers, multipartBool, formBool)
 	return res, stdinBody
 }

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>L2 WASM</title>
+    <style>
+        #outputField {
+            width: calc(100% - 22px);
+            height: 300px;
+            color: white;
+            background-color: black;
+            border: 1px solid #555;
+            padding: 10px;
+            font-family: monospace;
+            resize: vertical;
+        }
+        #runButton {
+            background-color: rgb(39, 153, 24);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        html {
+            font-family: Arial, serif;
+        }
+    </style>
+</head>
+<body>
+<script src="wasm_exec.js"></script>
+<script>
+        let wasmLoaded = false;
+
+        const go = new Go();
+        
+        WebAssembly.instantiateStreaming(fetch("main.wasm"), go.importObject).then((result) => {
+            go.run(result.instance);
+            wasmLoaded = true;  
+            // console.log(example())
+        });
+</script>
+<div>
+    <div>
+        <label for="inputField">Enter value</label>
+        <input id="inputField" name="Hash" type="text" style="width: 300px; height: 40px;">
+        <div id="outputHash" style="font-size: 20px; margin-top: 10px;"></div>
+    </div>
+    
+</div>
+<script>
+        async function makeLamaRequest(command) {
+            const request_params = JSON.parse(wasmLamaRequest(command))
+            console.log("All the request params:",request_params)
+            const response = await GoWebRequestFunc(request_params.URL,request_params.Method,request_params.Body,request_params.Headers)
+            const responseBody = await response.text();
+            console.log(responseBody);
+        }
+
+        async function makeMultireq(data){
+            console.log("Data:",data)
+            const escapedData = data.replace(/\n/g, '\\n');
+            const resp12 = await goWebRequestFunc(escapedData)
+            console.log(resp12)
+        }
+        
+    // document.getElementById('combinedDataOutput').innerText = combinedData;
+    // Examples 
+        // makeLamaRequest("POST\nhttps://httpbin.org/post\n{'a': 'b','c': 'd'}")
+        // makeLamaRequest("GET\nhttps://httpbin.org/get")
+        // makeLamaRequest("POST\nhttps://httpbin.org/post\na='b'\n 'c'=d \n X-Parse-Application-Id:'helloworld'\nX-Parse-REST-API-Key:'byeworld'\n")
+        // makeLamaRequest('url = "http://google.com"\nREMOTE_COORD = "https://httpbing.org"\n---\n# stage 1\n\nPOST\n${REMOTE_COORD}/anything\n
+        // \n{\n"username": "admin",\n    "password": "Password@123",\n    "from": "${LOCAL_COORD}/anything",\n    "url": "${url}",\n   
+        //  "Token": "MySuperSecretToken"\n}\n\n---\n\n// filtering, store in var\nconsole.log("@@Result", result)\nlet TOKEN = result["json"]["Token"]\n
+        // console.log(TOKEN)\n\n---\n\n# stage 2\nGET\n${REMOTE_COORD}/bearer\n\nAuthorization: "Bearer ${TOKEN}"\n\n{}\n')
+
+        //chaining
+        // WOrking
+        // makeLamaRequest('url = "http://google.com"\nREMOTE_COORD = "https://httpbin.org"\n---\nPOST\n${REMOTE_COORD}/anything\n{\n    "username": "admin",\n    "password": "Password@123",\n    "from": "${LOCAL_COORD}/anything",\n    "url": "${url}",\n    "Token": "MySuperSecretToken"\n}\n')
+        //makeLamaRequest('url = "http://google.com"\nREMOTE_COORD = "https://httpbin.org"\n---\nPOST\n${REMOTE_COORD}/anything\n{\n    "username": "admin",\n    "password": "Password@123",\n    "from": "${LOCAL_COORD}/anything",\n    "url": "${url}",\n    "Token": "MySuperSecretToken"\n}\n---\nconsole.log("@@Result", result)\nlet TOKEN = result["json"]["Token"]\nconsole.log(TOKEN)\n')
+
+        // Failing
+        // makeLamaRequest('url = "http://google.com"\nREMOTE_COORD = "https://httpbin.org"\n---\nPOST\n${REMOTE_COORD}/anything\n{\n    "username": "admin",\n    "password": "Password@123",\n    "from": "${LOCAL_COORD}/anything",\n    "url": "${url}",\n    "Token": "MySuperSecretToken"\n}\n---\nconsole.log("@@Result", result)\nlet TOKEN = result["json"]["Token"]\nconsole.log(TOKEN)\n---\nGET\n${REMOTE_COORD}/bearer\nAuthorization: "Bearer ${TOKEN}"\n{}\n')
+        </script>
+</body>
+</html>
