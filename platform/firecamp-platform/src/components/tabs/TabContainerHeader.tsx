@@ -93,10 +93,10 @@ const TabHeaderContainer = () => {
       <Row>
         <Column flex={1} overflow="auto" className="-mb-96 pb-96">
           <div className="flex z-30 relative">
-            <HomeTabIcon
+            {/* <HomeTabIcon
               isActive={activeTab === 'home'}
               onClick={() => changeActiveTab('home')}
-            />
+            /> */}
             <Tabs
               list={tabs}
               orders={orders}
@@ -132,10 +132,10 @@ const TabHeaderContainer = () => {
             />
           </div>
         </Column>
-        <div className="-mb-96 pb-96 flex">
+        {/* <div className="-mb-96 pb-96 flex">
           <EnvironmentSelector />
           <GlobalCreateDD />
-        </div>
+        </div> */}
       </Row>
     </Column>
   );

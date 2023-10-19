@@ -13,22 +13,11 @@ const HELPDESK_TYPES = {
 const helpDesks = {
   [HELPDESK_TYPES.DOCUMENTATION]: {
     id: HELPDESK_TYPES.DOCUMENTATION,
-    name: 'Documentation',
-    link: 'https://firecamp.io/docs/',
+    name: 'Lama2 Docs',
+    link: 'https://hexmos.com/lama2/index.html',
     image: <File size={24} strokeWidth={1.5} />
   },
-  [HELPDESK_TYPES.GITHUB]: {
-    id: HELPDESK_TYPES.GITHUB,
-    name: 'GitHub',
-    link: 'https://github.com/firecamp-dev/firecamp/issues/new',
-    image: <Github size={24} strokeWidth={1.5} />
-  },
-  [HELPDESK_TYPES.JOIN_DISCORD]: {
-    id: HELPDESK_TYPES.JOIN_DISCORD,
-    name: 'Join Discord',
-    link: 'https://discord.com/invite/8hRaqhK',
-    image: <SiDiscord size={24} />
-  }
+
 };
 
 /**
@@ -41,7 +30,7 @@ const Help: FC<IHelp> = ({ docLink = '', client = 'http' }) => {
         return (
           <a
             className="text-app-foreground-inactive"
-            href={docLink || 'https://firecamp.io/docs/'}
+            href={docLink || 'https://hexmos.com/lama2/index.html'}
             target={'_blank'}
           >
             {helpDesks[type] ? helpDesks[type].name : ''}
