@@ -48,9 +48,9 @@
 <div>
     <div style="display: flex; flex-direction: column; align-items: center;">
         <label for="inputField" style="margin-bottom: 10px;">Enter value</label>
-        <textarea id="inputField" name="Hash" style="width: 300px; height: 200px; padding: 10px;"></textarea>
+        <textarea id="inputField" name="Hash" style="width: 500px; height: 200px; padding: 10px;"></textarea>
         <button id="runButton" onclick="runLama()" style="margin-top: 10px;">Run</button>
-    <!-- </div> -->
+
         <div id="outputField" style="font-size: 20px; margin-top: 10px;"></div>
     </div>
 </div>
@@ -59,9 +59,13 @@
         try {
         console.log("Command:", command); // Log the command to check the value being passed
         const response = await goWebRequestFunc(command);
-        console.log("response Data:",response)
+        var jsonObject = JSON.parse(response);
+        var formattedJson = JSON.stringify(jsonObject, null, 2);
+        console.log("Response Data from JS:", formattedJson);       
+
+        // console.log("response Data:",response)
         const outputField = document.getElementById("outputField");
-        outputField.textContent = JSON.stringify(response, null, 2); 
+        outputField.textContent = formattedJson; 
     } catch (error) {
         console.error("Error making Lama request:", error);
     }
