@@ -70,7 +70,7 @@ func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, header
 
 	if multipart {
 		for key, val := range jsonObj.Data().(*gabs.Container).ChildrenMap() {
-			command = append(command, "'"+key+"'='"+val.Data().(string)+"'  ")
+			command = append(command, key+"="+val.Data().(string))
 		}
 		for key, val := range files.ChildrenMap() {
 			command = append(command, key+"@"+val.Data().(string))
