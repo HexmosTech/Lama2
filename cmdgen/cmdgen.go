@@ -70,7 +70,8 @@ func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, header
 
 	if multipart {
 		for key, val := range jsonObj.Data().(*gabs.Container).ChildrenMap() {
-			command = append(command, "'"+key+"'='"+val.Data().(string)+"'  ")
+			keyValuePair := fmt.Sprintf("%s=%s", key, val.Data().(string))
+			command = append(command, keyValuePair)
 		}
 		for key, val := range files.ChildrenMap() {
 			command = append(command, key+"@"+val.Data().(string))
@@ -79,7 +80,7 @@ func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, header
 
 	if form {
 		for key, val := range jsonObj.Data().(*gabs.Container).ChildrenMap() {
-			keyValuePair := fmt.Sprintf("'%s'='%s'  ", key, val.Data().(string))
+			keyValuePair := fmt.Sprintf("%s=%s", key, val.Data().(string))
 			command = append(command, keyValuePair)
 		}
 	}

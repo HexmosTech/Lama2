@@ -18,7 +18,7 @@ func TestFormPositive(t *testing.T) {
 		return
 	}
 
-	expectedOutputPart := "\"form\": {\n    \"'first'\": \"'second'\", \n    \"'third'\": \"'fourth'\"\n  }"
+	expectedOutputPart := "\"form\": {\n    \"first\": \"second\", \n    \"third\": \"fourth\"\n  }"
 	if !strings.Contains(output, expectedOutputPart) {
 		t.Errorf("Expected output to contain %q, but got %q", expectedOutputPart, output)
 	}
@@ -45,7 +45,7 @@ func TestMultipartPositive(t *testing.T) { // File not attached to Multipart, wh
 		return
 	}
 
-	expectedOutputPart := "\"form\": {\n    \"'first'\": \"'second'\", \n    \"'third'\": \"'fourth'\"\n  }"
+	expectedOutputPart := "\"form\": {\n    \"first\": \"second\", \n    \"third\": \"fourth\"\n  }"
 	if !strings.Contains(output, expectedOutputPart) {
 		t.Errorf("Expected output to contain %q, but got %q", expectedOutputPart, output)
 	}
