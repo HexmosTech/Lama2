@@ -26,13 +26,7 @@ func main() {
 
 func lama2Wasm(this js.Value, i []js.Value) interface{} {
 	go func() {
-		// controller.ProcessWasmInput("POST\nhttps://httpbin.org/post\n{'a': 'b','c': 'd'}")
-		// controller.ProcessWasmInput("GET\nhttps://google.com")
 		controller.ProcessWasmInput("GET\nhttps://httpbin.org/get")
-		// controller.ProcessWasmInput("POST\nhttps://httpbin.org/post\na='b'\n 'c'=d \n X-Parse-Application-Id:'helloworld'\nX-Parse-REST-API-Key:'byeworld'\n")
-		// controller.ProcessWasmInput("url = 'http://google.com'\nREMOTE_COORD = 'https://httpbin.org'\n---\nPOST\n${REMOTE_COORD}/anything\n{\n    'username': 'admin',\n    'password': 'Password@123',\n    'from': '${LOCAL_COORD}/anything',\n    'url': '${url}',\n    'Token': 'MySuperSecretToken'\n}\n")
-		// controller.ProcessWasmInput("url = 'http://google.com'\nREMOTE_COORD = 'https://httpbin.org'\n---\nPOST\n${REMOTE_COORD}/anything\n{\n    'username': 'admin',\n    'password': 'Password@123',\n    'from': '${LOCAL_COORD}/anything',\n    'url': '${url}',\n    'Token': 'MySuperSecretToken'\n}\n---\nconsole.log('@@Result', result)\nlet TOKEN = result['json']['Token']\nconsole.log(TOKEN)\n")
-		// controller.ProcessWasmInput("url = 'http://google.com'\nREMOTE_COORD = 'https://httpbin.org'\n---\nPOST\n${REMOTE_COORD}/anything\n{\n    'username': 'admin',\n    'password': 'Password@123',\n    'from': '${LOCAL_COORD}/anything',\n    'url': '${url}',\n    'Token': 'MySuperSecretToken'\n}\n---\nconsole.log('@@Result', result)\nlet TOKEN = result['json']['Token']\nconsole.log(TOKEN)\n---\nGET\n${REMOTE_COORD}/bearer\nAuthorization: 'Bearer ${TOKEN}'\n\n")
 	}()
 	return "data from api:"
 }
@@ -44,10 +38,8 @@ func wasmLamaPromise() js.Func {
 			resolve := args[0]
 			go func() {
 				result := controller.ProcessWasmInput(inputdata)
-				fmt.Println("Result&&&&&&&&&&&:", result)
-				// resultJSON, err := json.Marshal(result)
-				resultJSON, err := json.MarshalIndent(result, "", "  ")
-
+				fmt.Println("<-----Result----->:", result)
+				resultJSON, err := json.Marshal(result)
 				if err != nil {
 					fmt.Println("Error:", err)
 					return
