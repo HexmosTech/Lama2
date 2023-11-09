@@ -57,18 +57,20 @@
 <script>
     async function makeLamaRequest(command) {
         try {
-        console.log("Command:", command); // Log the command to check the value being passed
-        const response = await goWebRequestFunc(command);
-        var jsonObject = JSON.parse(response);
-        var formattedJson = JSON.stringify(jsonObject, null, 2);
-        console.log("Response Data from JS:", formattedJson);       
+            console.log("Command:", command); // Log the command to check the value being passed
+            const response = await goWebRequestFunc(command);
 
-        // console.log("response Data:",response)
-        const outputField = document.getElementById("outputField");
-        outputField.textContent = formattedJson; 
-    } catch (error) {
-        console.error("Error making Lama request:", error);
-    }
+            const jsonObject = JSON.parse(response);
+            const formattedBody = JSON.parse(jsonObject.Body); 
+
+            var formattedJson = JSON.stringify(formattedBody, null, 2);
+            console.log("Response Data from JS:", formattedJson);       
+
+            const outputField = document.getElementById("outputField");
+            outputField.textContent = response; 
+        } catch (error) {
+            console.error("Error making Lama request:", error);
+        }
     }
 
     function runLama() {

@@ -93,7 +93,7 @@
     <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent="">
   
     
-    
+      <script src="wasm_exec.js"></script>
       <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -942,13 +942,13 @@ presently. Execute each file as:</p>
 VSCode, install the <em>Lama2</em> extension and fire
 requests from there.</p>
 <h2 id="get-request">GET request<a class="headerlink" href="#get-request" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>GET
+<div class="highlight"><pre><span></span><code class="textbox-container">GET
 https://httpbin.org/get
 </code></pre></div>
 <p>Get <a href="https://github.com/HexmosTech/Lama2/tree/main/examples/0000_sample_get.l2">Source File</a></p>
 <h2 id="json-post-request">JSON POST request<a class="headerlink" href="#json-post-request" title="Permanent link">&para;</a></h2>
 <p>One can dump the JSON body at the end of an <code>.l2</code> file to create a POST request:</p>
-<div class="highlight"><pre><span></span><code>POST
+<div class="highlight"><pre><span></span><code class="textbox-container" >POST
 https://httpbin.org/post
 
 {
@@ -961,7 +961,7 @@ https://httpbin.org/post
 <p>Make a POST request with JSON body specified
 as <code>key=value</code>. <em>Lama2</em> converts the input into
 a corresponding JSON value <code>{"a": "b", "c": "d"}</code>. We call the <code>key=value</code> format <em>VarJSON</em>. This example produces an effect identical to the <a href="#basic-json-post">previous one</a></p>
-<div class="highlight"><pre><span></span><code>POST
+<div class="highlight"><pre><span></span><code class="textbox-container">POST
 https://httpbin.org/post
 
 a=b
@@ -971,7 +971,7 @@ c=d
 <h2 id="comments">Comments<a class="headerlink" href="#comments" title="Permanent link">&para;</a></h2>
 <p>One can start a comment anywhere in the file
 with the <code>#</code> character.</p>
-<div class="highlight"><pre><span></span><code># Pound symbol signifies a comment
+<div class="highlight"><pre><span></span><code class="textbox-container"># Pound symbol signifies a comment
 POST
 https://httpbin.org/post
 
@@ -1033,7 +1033,7 @@ ${AHOST}/users
 <li>Single quoted (<code>'hello'</code>)</li>
 <li>Unquoted (<code>hello</code>)</li>
 </ol>
-<div class="highlight"><pre><span></span><code>POST
+<div class="highlight"><pre><span></span><code class="textbox-container"> POST
 https://httpbin.org/post
 
 # HEADERS
@@ -1049,7 +1049,7 @@ a=&quot;b&quot;  # double-quoted string
 <p class="admonition-title">Note</p>
 <p>The data section may appear <em>before</em> headers as well (see below)</p>
 </div>
-<div class="highlight"><pre><span></span><code>POST
+<div class="highlight"><pre><span></span><code class="textbox-container">POST
 https://httpbin.org/post
 
 
@@ -1064,7 +1064,7 @@ X-Parse-REST-API-Key:&quot;byeworld&quot;
 <h2 id="send-cookies-in-header">Send cookies in header<a class="headerlink" href="#send-cookies-in-header" title="Permanent link">&para;</a></h2>
 <p>Headers represent cookies in <em>Lama2</em>. Just specify cookie key value pairs separated by
 <code>=</code> within the header value as shown.</p>
-<div class="highlight"><pre><span></span><code>POST
+<div class="highlight"><pre><span></span><code class="textbox-container" >POST
 https://httpbin.org/post
 
 # HEADERS
@@ -1082,7 +1082,7 @@ form inputs using the <code>key=value</code> syntax.</p>
 <p>Following the data section, one can specify
 any number of files in the form of <code>&lt;field_name&gt;@&lt;file_path&gt;</code>. The file path is
 relative to the API file.</p>
-<div class="highlight"><pre><span></span><code>POST
+<div><pre><span></span><code class="textbox-container" >POST
 MULTIPART
 http://httpbin.org/post
 
@@ -1129,7 +1129,7 @@ from previous requestor block. If possible,
 <code>result</code> is automatically stored as a JS
 object through <code>JSON.parse()</code>. Otherwise,
 <code>result</code> is stored as a regular <code>string</code>.</p>
-<div class="highlight"><pre><span></span><code>url = &quot;http://google.com&quot;
+<div class="highlight"><pre><span></span><code class="textbox-container">url = &quot;http://google.com&quot;
 REMOTE_COORD = &quot;https://httpbing.org&quot;
 ---
 # stage 1
@@ -1250,7 +1250,15 @@ Authorization: &#39;Bearer ${TOKEN}&#39;
       
         <script src="../links.js"></script>
       
-    
+        <script>
+        (function (w,d,s,o,f,js,fjs) {
+            w['JS-Widget']=o;w[o] = w[o] || function () { (w[o].q = w[o].q || []).push(arguments) };
+            js = d.createElement(s), fjs = d.getElementsByTagName(s)[0];
+            js.id = o; js.src = f; js.async = 1; fjs.parentNode.insertBefore(js, fjs);
+        }(window, document, 'script', 'mw', 'widget.js'));
+        mw('init', { someConfiguration: 42 });
+        mw('lamabutton','textbox-container')
+       </script> 
     
   </body>
 </html>
