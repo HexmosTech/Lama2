@@ -6,12 +6,11 @@ import (
 	"fmt"
 	"strings"
 	"text/template"
-
-	"github.com/dop251/goja"
+	"syscall/js"
 	"github.com/rs/zerolog/log"
 
 	"github.com/HexmosTech/gabs/v2"
-	"github.com/HexmosTech/lama2/cmdexec"
+	// "github.com/HexmosTech/lama2/cmdexec"
 	"github.com/HexmosTech/lama2/preprocess"
 )
 
@@ -25,11 +24,11 @@ type SnippetArgs struct {
 	SnippetCore string
 }
 
-var globalVM *goja.Runtime
+// var globalVM *goja.Runtime
 
-func initialize() {
-	globalVM = cmdexec.GetJSVm()
-}
+// func initialize() {
+// 	globalVM = cmdexec.GetJSVm()
+// }
 
 func PrepareHTTPSnippetGenerator(snippetArgs SnippetArgs) string {
 	var templOutput bytes.Buffer
@@ -96,7 +95,7 @@ func GetHARHeadersCookies(headers *gabs.Container) (*gabs.Container, *gabs.Conta
 }
 
 func GetRequestHARString(block *gabs.Container) string {
-	preprocess.ProcessVarsInBlock(block, globalVM)
+	preprocess.ProcessVarsInBlock(block)
 	httpv := block.S("verb", "value")
 	url := block.S("url", "value")
 	jsonObj := block.S("details", "ip_data")
@@ -135,7 +134,7 @@ func GetRequestHARString(block *gabs.Container) string {
 }
 
 func GenerateTargetCode(targetLangLib string, parsedAPI *gabs.Container) {
-	initialize()
+	// initialize()
 	parsedAPIblocks := parsedAPI.S("value").Data().(*gabs.Container).Children()
 	convertedSnippetList := make([]string, 0)
 
@@ -156,16 +155,20 @@ func GenerateTargetCode(targetLangLib string, parsedAPI *gabs.Container) {
 			snippetArgs.SnippetCore = snippetcore
 			httpsnippetCode := PrepareHTTPSnippetGenerator(snippetArgs)
 
-			vm := cmdexec.GetJSVm()
-			_, e := vm.RunString(httpsnippetCode)
-			if e != nil {
-				log.Fatal().
-					Str("Type", "CodeGen").
-					Str("Error", e.Error()).
-					Msg("Code generator error")
-			}
+			// vm := cmdexec.GetJSVm()
+			// _, e := vm.RunString(httpsnippetCode)
+			js.Global().Call("eval", httpsnippetCode) 
+
+			// if e != nil {
+			// 	log.Fatal().
+			// 		Str("Type", "CodeGen").
+			// 		Str("Error", e.Error()).
+			// 		Msg("Code generator error")
+			// }
 			// Init returns an error if the package is not ready for use.
-			convertedSnippet := vm.Get("convertedSnippet").String()
+			// convertedSnippet := vm.Get("convertedSnippet").String()
+
+			convertedSnippet :=  js.Global().Get("convertedSnippet").String()
 			convertedSnippetList = append(convertedSnippetList, convertedSnippet)
 		}
 	}

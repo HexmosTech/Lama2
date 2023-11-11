@@ -20,31 +20,36 @@ import (
 	"github.com/HexmosTech/lama2/preprocess"
 	"github.com/HexmosTech/lama2/prettify"
 	"github.com/HexmosTech/lama2/utils"
-	"github.com/dop251/goja"
+	// "github.com/dop251/goja"
 	"github.com/rs/zerolog/log"
+	"syscall/js"
 )
 
 func GetParsedAPIBlocks(parsedAPI *gabs.Container) []*gabs.Container {
 	return parsedAPI.S("value").Data().(*gabs.Container).Children()
 }
 
-func ExecuteProcessorBlock(block *gabs.Container, vm *goja.Runtime) {
+func ExecuteProcessorBlock(block *gabs.Container) {
 	b := block.S("value").Data().(*gabs.Container)
-	log.Debug().Str("Processor block incoming block", block.String()).Msg("")
+	log.Info().Str("Processor block incoming block", block.String()).Msg("")
 	script := b.Data().(string)
-	cmdexec.RunVMCode(script, vm)
+	// cmdexec.RunVMCode(script, vm)
+	fmt.Println("<-----JS CODE----->:", script)
+	log.Info().Str("Evaluated through syscall js:", script).Msg("")
+	js.Global().Call("eval", script)
 }
 
-func ExecuteRequestorBlock(block *gabs.Container, vm *goja.Runtime) httpie.ExResponse {
-	preprocess.ProcessVarsInBlock(block, vm)
+func ExecuteRequestorBlock(block *gabs.Container) httpie.ExResponse {
+	preprocess.ProcessVarsInBlock(block)
 	// TODO - replace stuff in headers, and varjson and json as well
 	cmd, stdinBody := cmdgen.ConstructCommand(block)
-	log.Debug().Str("Stdin Body to be passed into httpie", stdinBody).Msg("")
+	log.Info().Str("Stdin Body to be passed into httpie", stdinBody).Msg("")
 	resp, e1 := cmdexec.ExecCommand(cmd, stdinBody)
-	log.Debug().Str("Response from ExecCommand", resp.Body).Msg("")
+	log.Info().Str("Response from ExecCommand", resp.Body).Msg("")
 	if e1 == nil {
 		chainCode := cmdexec.GenerateChainCode(resp.Body)
-		cmdexec.RunVMCode(chainCode, vm)
+		log.Info().Str("Evaluated through syscall js:", chainCode).Msg("")
+		js.Global().Call("eval", chainCode)
 	} else {
 		log.Fatal().Str("Error from ExecCommand", e1.Error())
 		os.Exit(1)
@@ -54,16 +59,15 @@ func ExecuteRequestorBlock(block *gabs.Container, vm *goja.Runtime) httpie.ExRes
 
 func HandleParsedFile(parsedAPI *gabs.Container) httpie.ExResponse {
 	parsedAPIblocks := GetParsedAPIBlocks(parsedAPI)
-	vm := cmdexec.GetJSVm()
 	var resp httpie.ExResponse
 	for i, block := range parsedAPIblocks {
-		log.Debug().Int("Block num", i).Msg("")
-		log.Debug().Str("Block getting processed", block.String()).Msg("")
+		log.Info().Int("Block num", i).Msg("")
+		log.Info().Str("Block getting processed", block.String()).Msg("")
 		blockType := block.S("type").Data().(string)
 		if blockType == "processor" {
-			ExecuteProcessorBlock(block, vm)
+			ExecuteProcessorBlock(block)
 		} else if blockType == "Lama2File" {
-			resp = ExecuteRequestorBlock(block, vm)
+			resp = ExecuteRequestorBlock(block)
 		}
 	}
 	// if o.Output != "" {
@@ -110,21 +114,12 @@ func Process(version string) {
 			Str("Error", e.Error()).
 			Msg("Parse Error")
 	}
-	log.Debug().Str("Parsed API", parsedAPI.String()).Msg("")
+	log.Info().Str("Parsed API", parsedAPI.String()).Msg("")
 	HandleParsedFile(parsedAPI)
 }
 
 func ProcessWasmInput(data string) httpie.ExResponse {
-	// o := lama2cmd.GetAndValidateCmd(os.Args)
-	// lama2cmd.ArgParsing(o, version)
 	apiContent := data
-	// apiContent := preprocess.GetLamaFileAsString(o.Positional.LamaAPIFile)
-	// _, dir, _ := utils.GetFilePathComponents(o.Positional.LamaAPIFile)
-	// oldDir, _ := os.Getwd()
-	// utils.ChangeWorkingDir(dir)
-
-	// preprocess.LoadEnvironments(dir)
-	// utils.ChangeWorkingDir(oldDir)
 	p := parser.NewLama2Parser()
 	parsedAPI, e := p.Parse(apiContent)
 	if e != nil {
@@ -133,26 +128,7 @@ func ProcessWasmInput(data string) httpie.ExResponse {
 
 	// Print the parsedAPI value
 	fmt.Printf("Parsed API: %+v\n", parsedAPI)
-
-	// if o.Convert != "" {
-	// 	codegen.GenerateTargetCode(o.Convert, parsedAPI)
-	// 	// return
-	// }
-
-	// if o.Prettify {
-	// 	prettify.Prettify(parsedAPI, p.Context, p.MarkRange, apiContent, o.Positional.LamaAPIFile)
-	// 	// return
-	// }
-
-	// if e != nil {
-	// 	log.Fatal().
-	// 		Str("Type", "Controller").
-	// 		Str("LamaFile", o.Positional.LamaAPIFile).
-	// 		Str("Error", e.Error()).
-	// 		Msg("Parse Error")
-	// }
-
 	fmt.Println(parsedAPI)
-	log.Debug().Str("Parsed API", parsedAPI.String()).Msg("")
+	log.Info().Str("Parsed API", parsedAPI.String()).Msg("")
 	return HandleParsedFile(parsedAPI)
 }
