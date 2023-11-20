@@ -16,7 +16,6 @@ import (
 	"github.com/HexmosTech/gabs/v2"
 	"github.com/HexmosTech/godotenv"
 	"github.com/HexmosTech/lama2/utils"
-	// "github.com/dop251/goja"
 	"github.com/rs/zerolog/log"
 )
 
