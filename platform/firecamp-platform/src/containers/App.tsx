@@ -64,15 +64,15 @@ const App: FC<any> = () => {
           className="h-screen w-screen bg-app-background text-app-foreground"
         >
           <Row flex={1}>
-            <SidebarContainer />
+            {/* <SidebarContainer /> */}
             <TabsContainer />
           </Row>
 
-          <RealtimeEventManager />
-          <ModalContainer />
-          <EnvSidebarContainer />
+          {/* <RealtimeEventManager /> */}
+          {/* <ModalContainer /> */}
+          {/* <EnvSidebarContainer /> */}
 
-          <StatusBarContainer className="border-t focus-outer2" />
+          {/* <StatusBarContainer className="border-t focus-outer2" /> */}
         </RootContainer>
       </FirecampThemeProvider>
       <Crisp />

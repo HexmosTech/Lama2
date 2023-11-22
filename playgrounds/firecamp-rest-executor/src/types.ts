@@ -19,3 +19,12 @@ export interface IRestExecutor {
   /**  cancel the request */
   cancel(): void;
 }
+
+// export interface Window {
+//   makeLamaRequest: () => void;
+// }
+declare global {
+  interface Window {
+    makeLamaRequest: (arg: string) => void;
+  }
+}

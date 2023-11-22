@@ -150,6 +150,7 @@ export default class RestExecutor implements IRestExecutor {
     variables: IVariableGroup
   ): Promise<TRestExecutionResponse> {
     // console.log(fcRequest, variables, 2000000);
+    console.log('fcRequest-1', fcRequest);
     if (_object.isEmpty(fcRequest)) {
       const message: string = 'invalid request payload';
       return Promise.resolve({
@@ -169,6 +170,7 @@ export default class RestExecutor implements IRestExecutor {
     return scriptRunner
       .preScript(fcRequest, variables)
       .then(({ fc, error }) => {
+        console.log('fcRequest-2', fcRequest);
         // console.log(error.name, error.message);
         const {
           request: _request,
@@ -197,6 +199,7 @@ export default class RestExecutor implements IRestExecutor {
         };
       })
       .then(({ fcRequest, variables, errors }) => {
+        console.log('fcRequest-3', fcRequest);
         // apply variables to request
         // const { globals, environment, collectionVariables } = variables;
         const plainVars = _env.preparePlainVarsFromVariableGroup(variables);
@@ -236,6 +239,7 @@ export default class RestExecutor implements IRestExecutor {
         }
       })
       .then(async ({ request, variables, errors }) => {
+        console.log('fcRequest-4', fcRequest);
         const axiosRequest: AxiosRequestConfig = await this._prepare(request);
         try {
           // execute request
@@ -285,6 +289,7 @@ export default class RestExecutor implements IRestExecutor {
         }
       })
       .then(async ({ response, variables, errors }) => {
+        console.log('fcRequest-5', response);
         /** run post-script */
         const { fc, error } = await scriptRunner.testScript(
           fcRequest,
@@ -308,6 +313,46 @@ export default class RestExecutor implements IRestExecutor {
             error,
           });
         }
+        console.log('fcRequest-6', typeof fcRequest.body.value);
+        console.log('before wasm');
+        let convertedString = '';
+
+        if (
+          typeof fcRequest.body.value === 'string' &&
+          fcRequest.body.value !== ''
+        ) {
+          let jsonObject = JSON.parse(fcRequest.body.value);
+
+          convertedString = Object.entries(jsonObject)
+
+            .map(([key, value]) => `${key}='${value}'`)
+
+            .join('\n');
+        }
+
+        console.log('first-string', convertedString);
+
+        const headersList = fcRequest.headers;
+
+        let headers = headersList
+
+          .filter((item) => !item.disable) // Filter out disabled items
+
+          .map((item) => `${item.key}:'${item.value}'`) // Map to 'key:value' format
+
+          .join('\n'); // Join all items with newline character
+        console.log('headers', headers);
+        let command = '';
+        // if (fcRequest.method == 'POST')
+        command = `${fcRequest.method}\n${fcRequest.url.raw}\n${fcRequest.body.value}\n  ${headers}\n`;
+        // else command = `${fcRequest.method}\n${fcRequest.url.raw}`;
+        const lama2req = await window?.makeLamaRequest?.(command);
+
+        console.log('lama2req', lama2req);
+
+        response['body'] = lama2req;
+
+        console.log('response', response);
         // console.log(errors, 'scriptErrors...');
         return {
           response,

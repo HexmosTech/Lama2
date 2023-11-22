@@ -11,14 +11,14 @@ export enum ERestBodyTypes {
   Binary = 'binary',
 }
 
-export type TFormDataBody = IKeyValueTable[];
-export type TUrlEncodedBody = IKeyValueTable[];
+// export type TFormDataBody = IKeyValueTable[];
+// export type TUrlEncodedBody = IKeyValueTable[];
 
-export interface TGraphQLBody {
-  // value: string,
-  query: string;
-  variables?: string;
-}
+// export interface TGraphQLBody {
+//   // value: string,
+//   query: string;
+//   variables?: string;
+// }
 
 export type TJsonBody = string;
 
@@ -26,19 +26,16 @@ export type TXmlBody = string;
 
 export type TTextBody = string;
 
-export type TBinaryBody = Promise<File> | string | ArrayBuffer;
+// export type TBinaryBody = Promise<File> | string | ArrayBuffer;
 
 /**
  * rest request body
  */
 export interface IRestBody {
-  value:
-    | TFormDataBody
-    | TUrlEncodedBody
-    | TGraphQLBody
-    | TJsonBody
-    | TXmlBody
-    | TTextBody
-    | TBinaryBody;
+  value: // | TFormDataBody
+  // | TUrlEncodedBody
+  // | TGraphQLBody
+  TJsonBody | TXmlBody | TTextBody;
+  // | TBinaryBody;
   type: ERestBodyTypes;
 }

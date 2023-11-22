@@ -19,6 +19,10 @@ module.exports = merge(base, {
     path: `${__dirname}/build/${nodeEnv}`,
     publicPath: '',
   },
+  // experiments: {
+  //   asyncWebAssembly: true,
+  //   syncWebAssembly: true,
+  // },
   optimization: {
     nodeEnv: 'development',
     minimizer: [
@@ -46,6 +50,18 @@ module.exports = merge(base, {
         'X-Requested-With, content-type, Authorization',
     },
   },
+  // module: {
+  //   rules: [
+  //     {
+  //       test: /\.wasm$/,
+  //       use: ['wasm-loader'],
+  //     },
+  //     {
+  //       test: /\.wasm$/,
+  //       type: 'webassembly/experimental', // Specify the type here
+  //     },
+  //   ],
+  // },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.IgnorePlugin({ resourceRegExp: /[^/]+\/[\S]+.dev$/ }),
