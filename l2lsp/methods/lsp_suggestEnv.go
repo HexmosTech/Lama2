@@ -9,7 +9,7 @@ import (
 	l2envpackege "github.com/HexmosTech/lama2/l2env"
 	"github.com/HexmosTech/lama2/l2lsp/request"
 	"github.com/HexmosTech/lama2/l2lsp/response"
-	"github.com/rs/zerolog/log"
+	// "github.com/rs/zerolog/log"
 )
 
 func getSearchQueryString(req request.JSONRPCRequest) string {
@@ -42,7 +42,7 @@ func getRequestURI(req request.JSONRPCRequest) (string, int, error) {
 		return "", response.ErrUnsupportedFeature, errors.New("Windows is not supported as of now. To contribute visit here: https://github.com/HexmosTech/Lama2")
 	} else {
 		// Log the unexpected URI scheme
-		log.Warn().Str("URI", uri).Msg("Encountered unexpected URI scheme.")
+		// log.Warn().Str("URI", uri).Msg("Encountered unexpected URI scheme.")
 		return "", response.ErrUnexpectedURIScheme, errors.New("encountered unexpected URI scheme. Ex: 'file:///path/to/workspace/myapi.l2'")
 	}
 }
@@ -66,18 +66,18 @@ func SuggestEnvironmentVariables(req request.JSONRPCRequest) response.JSONRPCRes
 		}
 	*/
 
-	log.Info().Msg("L2 LSP environment variables suggestion requested")
-	log.Info().Str("Method", req.Method).Interface("Params", req.Params)
+	// log.Info().Msg("L2 LSP environment variables suggestion requested")
+	// log.Info().Str("Method", req.Method).Interface("Params", req.Params)
 
 	searchQuery := getSearchQueryString(req)
-	log.Debug().Str("Method", req.Method).Interface("searchQuery", searchQuery)
+	// log.Debug().Str("Method", req.Method).Interface("searchQuery", searchQuery)
 	uri, errorCode, err := getRequestURI(req)
 	if err != nil {
 		return response.ErrorResp(req, errorCode, err.Error())
 	}
-	log.Debug().Str("Method", req.Method).Interface("uri", uri)
+	// log.Debug().Str("Method", req.Method).Interface("uri", uri)
 	parentFolder := filepath.Dir(uri)
-	log.Debug().Str("Method", req.Method).Interface("parentFolder", parentFolder)
+	// log.Debug().Str("Method", req.Method).Interface("parentFolder", parentFolder)
 	res := l2envpackege.ProcessEnvironmentVariables(searchQuery, parentFolder)
 	return response.CreateEnvironmentVariablesResp(req, res)
 }

@@ -1,7 +1,7 @@
 package cmdexec
 
 import (
-	"github.com/rs/zerolog/log"
+	// "github.com/rs/zerolog/log"
 	"syscall/js"
 )
 
@@ -23,7 +23,7 @@ import (
 // you reuse the vm for other operations, the state
 // from previous invocations carry over
 func RunVMCode(jsCode string) {
-	log.Info().Str("Evaluated through syscall js:", jsCode).Msg("")
+	// log.Info().Str("Evaluated through syscall js:", jsCode).Msg("")
 	js.Global().Call("eval", jsCode)
 	// _, err := vm.RunString(jsCode)
 	// if ex, ok := err.(*goja.Exception); ok {
@@ -46,6 +46,6 @@ func GenerateChainCode(httpRespBody string) string {
 		console.log(e)
 		console.log("Stored as string")
 	}`
-	log.Info().Str("Chain code generated", code).Msg("")
+	// log.Info().Str("Chain code generated", code).Msg("")
 	return code
 }

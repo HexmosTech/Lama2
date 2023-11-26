@@ -11,7 +11,7 @@ import (
 
 	"github.com/HexmosTech/httpie-go"
 	// "github.com/HexmosTech/lama2/utils"
-	"github.com/rs/zerolog/log"
+	// "github.com/rs/zerolog/log"
 )
 
 // ExecCommand changes directory to the given `apiDir`
@@ -25,10 +25,10 @@ func ExecCommand(cmdSlice []string, stdinBody string) (httpie.ExResponse, error)
 	// utils.ChangeWorkingDir(apiDir)
 	resp, err := httpie.Lama2Entry(cmdSlice, strings.NewReader(stdinBody))
 	if err != nil {
-		log.Fatal().Str("Error from the API executor", err.Error()).Msg("")
+		// log.Fatal().Str("Error from the API executor", err.Error()).Msg("")
 		return httpie.ExResponse{}, errors.New("Error from API executor: " + err.Error())
 	}
-	log.Debug().Str("Response body from API executor", resp.Body).Msg("")
+	// log.Debug().Str("Response body from API executor", resp.Body).Msg("")
 	// utils.ChangeWorkingDir(oldDir)
 	return resp, nil
 }

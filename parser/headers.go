@@ -5,20 +5,20 @@ import (
 
 	"github.com/HexmosTech/gabs/v2"
 	"github.com/HexmosTech/lama2/utils"
-	"github.com/rs/zerolog/log"
+	// "github.com/rs/zerolog/log"
 )
 
 var DataInputType string
 
 func (p *Lama2Parser) HeaderData() (*gabs.Container, error) {
 	headers, e := p.Match([]string{"Headers"})
-	log.Trace().Str("Headers", headers.String()).Msg("")
+	// log.Trace().Str("Headers", headers.String()).Msg("")
 	if e != nil {
 		return nil, e
 	}
 
 	jsond, e2 := p.Match([]string{"DataInput"})
-	log.Trace().Str("JSONd", jsond.String()).Msg("")
+	// log.Trace().Str("JSONd", jsond.String()).Msg("")
 	temp := gabs.New()
 	temp = utils.SetJSON(temp, headers, "headers")
 	if e2 == nil {
@@ -112,7 +112,7 @@ func (p *Lama2Parser) HeaderPair() (*gabs.Container, error) {
 	keyStr, _ := key.Data().(string)
 	temp.Set(valueStr, keyStr)
 
-	log.Trace().Str("Header pair", temp.String()).Msg("")
+	// log.Trace().Str("Header pair", temp.String()).Msg("")
 
 	return temp, nil
 }

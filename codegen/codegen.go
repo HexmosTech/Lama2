@@ -7,7 +7,7 @@ import (
 	"strings"
 	"text/template"
 	"syscall/js"
-	"github.com/rs/zerolog/log"
+	// "github.com/rs/zerolog/log"
 
 	"github.com/HexmosTech/gabs/v2"
 	// "github.com/HexmosTech/lama2/cmdexec"
@@ -139,8 +139,9 @@ func GenerateTargetCode(targetLangLib string, parsedAPI *gabs.Container) {
 	convertedSnippetList := make([]string, 0)
 
 	for i, block := range parsedAPIblocks {
-		log.Debug().Int("Block num", i).Msg("")
-		log.Debug().Str("Block getting processed", block.String()).Msg("")
+		// log.Debug().Int("Block num", i).Msg("")
+		fmt.Println(i)
+		// log.Debug().Str("Block getting processed", block.String()).Msg("")
 		blockType := block.S("type").Data().(string)
 		if blockType == "processor" {
 			snippet := block.S("value").Data().(*gabs.Container).Data().(string)

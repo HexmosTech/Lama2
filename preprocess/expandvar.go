@@ -13,7 +13,7 @@ import (
 	"syscall/js"
 
 	"github.com/HexmosTech/lama2/utils"
-	"github.com/rs/zerolog/log"
+	// "github.com/rs/zerolog/log"
 )
 
 // Expand replaces ${var} or $var in the string based on the mapping function.
@@ -41,8 +41,8 @@ func Expand(s string, mapping map[string]string) string {
 				// jsVal := vm.Get(name)
 				jsVal := js.Global().Get(name)
 
-				log.Info().Str("Name to be searched:", name).Msg("")
-				log.Info().Str("Stdin Body to be passed into jsVal:", jsVal.String()).Msg("")
+				// log.Info().Str("Name to be searched:", name).Msg("")
+				// log.Info().Str("Stdin Body to be passed into jsVal:", jsVal.String()).Msg("")
 				// if jsVal != nil {
 				if jsVal.Truthy() {
 					buf = append(buf, []byte(jsVal.String())...)
@@ -52,7 +52,7 @@ func Expand(s string, mapping map[string]string) string {
 						buf = append(buf, val...)
 					} else {
 						buf = append(buf, ""...)
-						log.Warn().Str("Couldn't find the variable `"+name+"`,  in both Javascript processor block and environment variables. Replacing with empty string", "").Msg("")
+						// log.Warn().Str("Couldn't find the variable `"+name+"`,  in both Javascript processor block and environment variables. Replacing with empty string", "").Msg("")
 					}
 				}
 			}
@@ -91,13 +91,9 @@ func getEnvironMap() map[string]string {
 			result[name] = value.String()
 		}
 	}
-	// log.Info().Str("getEnvironMap()-> Returnned ENV map:", result).Msg()
-	// log.Info().Str("getEnvironMap()-> Returned ENV map",result).Msg("")
+
 
 	return result
-
-	// log.Info().Msgf("getEnvironMap()-> Returnned ENV map:", m)
-	// return m
 }
 
 // ExpandEnv replaces ${var} or $var in the string according to the values

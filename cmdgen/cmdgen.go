@@ -12,30 +12,30 @@ import (
 
 	"github.com/HexmosTech/gabs/v2"
 	// "github.com/HexmosTech/lama2/lama2cmd"
-	"github.com/rs/zerolog/log"
+	// "github.com/rs/zerolog/log"
 )
 
 func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, headers *gabs.Container, multipart bool, form bool) ([]string, string) {
 	command := make([]string, 0)
-	log.Info().
-		Str("Type", "Construct Command").
-		Str("httpv", httpv).
-		Str("url", url).
-		Bool("multipart", multipart).
-		Bool("form", form).
-		Msg(fmt.Sprint("Construct parameters"))
+	// log.Info().
+	// 	Str("Type", "Construct Command").
+	// 	Str("httpv", httpv).
+	// 	Str("url", url).
+	// 	Bool("multipart", multipart).
+	// 	Bool("form", form).
+	// 	Msg(fmt.Sprint("Construct parameters"))
 
-	log.Debug().
-		Str("JSONObj", jsonObj.String()).
-		Str("Headers", headers.String()).Msg("")
+	// log.Debug().
+	// 	Str("JSONObj", jsonObj.String()).
+	// 	Str("Headers", headers.String()).Msg("")
 
 	var files *gabs.Container
 	if multipart {
 		if jsonObj.ExistsP("@files") {
 			files = jsonObj.S("@files")
-			log.Debug().Str("Files", files.String()).Msg("")
+			// log.Debug().Str("Files", files.String()).Msg("")
 			jsonObj.Delete("@files")
-			log.Trace().Str("Shortened JsonObj", jsonObj.String()).Msg("")
+			// log.Trace().Str("Shortened JsonObj", jsonObj.String()).Msg("")
 		}
 	}
 
@@ -43,9 +43,9 @@ func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, header
 	if jsonObj != nil && !multipart && !form {
 		dst := &bytes.Buffer{}
 		if err := json.Compact(dst, []byte(jsonObj.String())); err != nil {
-			log.Fatal().
-				Str("Error", err.Error()).
-				Msg("Couldn't minify JSON")
+			// log.Fatal().
+			// 	Str("Error", err.Error()).
+			// 	Msg("Couldn't minify JSON")
 		}
 		jsonStr = dst.String()
 	}
@@ -105,7 +105,7 @@ func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, header
 // and finally generates a string representing the generated
 // command
 func ConstructCommand(parsedInput *gabs.Container) ([]string, string) {
-	log.Info().Str("ParsedInput", parsedInput.String()).Msg("")
+	// log.Info().Str("ParsedInput", parsedInput.String()).Msg("")
 	httpv := parsedInput.S("verb", "value")
 	url := parsedInput.S("url", "value")
 	jsonObj := parsedInput.S("details", "ip_data")

@@ -7,13 +7,13 @@ import (
 
 	"github.com/HexmosTech/gabs/v2"
 	"github.com/HexmosTech/lama2/utils"
-	"github.com/rs/zerolog/log"
+	// "github.com/rs/zerolog/log"
 )
 
 func Prettify(parsedAPI *gabs.Container, context map[string]bool, markRange map[string]int, content string, fPath string) {
 	defer func() {
 		if err := recover(); err != nil { // catch
-			log.Debug().Msg("Potential issue with prettify")
+			// log.Debug().Msg("Potential issue with prettify")
 			// os.Exit(0)
 		}
 	}()

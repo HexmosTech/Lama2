@@ -5,7 +5,7 @@ import (
 
 	"github.com/HexmosTech/lama2/preprocess"
 	trie "github.com/Vivino/go-autocomplete-trie"
-	"github.com/rs/zerolog/log"
+	// "github.com/rs/zerolog/log"
 )
 
 func ProcessEnvironmentVariables(searchQuery, directory string) interface{} {
@@ -13,7 +13,7 @@ func ProcessEnvironmentVariables(searchQuery, directory string) interface{} {
 	if err != nil {
 		// Potential Errors:
 		// - JSON marshalling errors.
-		log.Error().Str("Type", "Preprocess").Msg(err.Error())
+		// log.Error().Str("Type", "Preprocess").Msg(err.Error())
 		os.Exit(0)
 	}
 	if searchQuery == "" { // Handle empty searchQuery: ""
