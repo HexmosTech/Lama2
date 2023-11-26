@@ -116,7 +116,6 @@ func LoadEnvFile(l2path string) {
 	err := godotenv.Load(l2path)
 	if err != nil {
 		fmt.Println("Didn't find " + envFileName + " in the API directory")
-		// log.Info().Str("Type", "Preprocess").Msg("Didn't find " + envFileName + " in the API directory")
 	}
 }
 
