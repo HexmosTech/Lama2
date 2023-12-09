@@ -23,3 +23,16 @@
     content="Hexmos Lama2: Human-friendly syntax and CLI for describing and executing APIs, store and collaborate on API files using version control. Ships with IDE and text-editor integrations. Markdown for APIs.">
 <meta name="twitter:image" content="https://hexmos.com/lama2/banner.png">
 {% endblock %}
+
+{% block footer %}
+{{ super() }}
+<script>
+     (function (w,d,s,o,f,js,fjs) {
+            w['JS-Widget']=o;w[o] = w[o] || function () { (w[o].q = w[o].q || []).push(arguments) };
+            js = d.createElement(s), fjs = d.getElementsByTagName(s)[0];
+            js.id = o; js.src = f; js.async = 1; fjs.parentNode.insertBefore(js, fjs);
+        }(window, document, 'script', 'mw', './widget.js'));
+        mw('init', { someConfiguration: 42 });
+        mw('lamabutton','code')
+</script>
+{% endblock %}

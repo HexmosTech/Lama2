@@ -284,7 +284,7 @@ object through `JSON.parse()`. Otherwise,
 
 ```
 url = "http://google.com"
-REMOTE_COORD = "https://httpbing.org"
+REMOTE_COORD = "https://httpbin.org"
 ---
 # stage 1
 
@@ -303,7 +303,7 @@ ${REMOTE_COORD}/anything
 
 // filtering, store in var
 console.log("@@Result", result)
-let TOKEN = result["json"]["Token"]
+TOKEN = result["json"]["Token"]
 console.log(TOKEN)
 
 ---
@@ -314,7 +314,6 @@ ${REMOTE_COORD}/bearer
 
 Authorization: 'Bearer ${TOKEN}'
 
-{}
 ```
 
 Get [Source Files](https://github.com/HexmosTech/Lama2/tree/main/examples/0009_processor_basic)
