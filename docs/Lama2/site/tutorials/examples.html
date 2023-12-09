@@ -1130,7 +1130,7 @@ from previous requestor block. If possible,
 object through <code>JSON.parse()</code>. Otherwise,
 <code>result</code> is stored as a regular <code>string</code>.</p>
 <div class="highlight"><pre><span></span><code>url = &quot;http://google.com&quot;
-REMOTE_COORD = &quot;https://httpbing.org&quot;
+REMOTE_COORD = &quot;https://httpbin.org&quot;
 ---
 # stage 1
 
@@ -1149,7 +1149,7 @@ ${REMOTE_COORD}/anything
 
 // filtering, store in var
 console.log(&quot;@@Result&quot;, result)
-let TOKEN = result[&quot;json&quot;][&quot;Token&quot;]
+TOKEN = result[&quot;json&quot;][&quot;Token&quot;]
 console.log(TOKEN)
 
 ---
@@ -1160,7 +1160,6 @@ ${REMOTE_COORD}/bearer
 
 Authorization: &#39;Bearer ${TOKEN}&#39;
 
-{}
 </code></pre></div>
 <p>Get <a href="https://github.com/HexmosTech/Lama2/tree/main/examples/0009_processor_basic">Source Files</a></p>
 
