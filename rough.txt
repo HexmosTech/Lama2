@@ -1,0 +1,2 @@
+ // "dev": "pnpm boot && run-p build:workspace  webpack:dev",
+ "main": "packages/firecamp-desktop-app/dist/services/Main",

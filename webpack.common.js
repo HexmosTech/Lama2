@@ -96,6 +96,10 @@ const plugins = [
 
 const rules = [
   {
+    test: /\.(node|png|jpg|gif)$/,
+    use: 'file-loader',
+  },
+  {
     test: /\.(ts|js)x?$/,
     exclude: /node_modules/,
     loader: 'babel-loader',

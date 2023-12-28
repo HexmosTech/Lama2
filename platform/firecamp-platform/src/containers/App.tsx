@@ -64,7 +64,7 @@ const App: FC<any> = () => {
           className="h-screen w-screen bg-app-background text-app-foreground"
         >
           <Row flex={1}>
-            {/* <SidebarContainer /> */}
+            <SidebarContainer />
             <TabsContainer />
           </Row>
 

@@ -173,26 +173,169 @@ const createExecutionSlice: TStoreSlice<IExecutionSlice> = (set, get) => ({
     state.setRequestRunningFlag(true);
 
     const finalRequest = state.prepareRequestForExecution();
-    // console.log(finalRequest, '...finalRequest');
+    console.log(finalRequest, '...finalRequest');
+    let response = {
+      code: 200,
+      status: '',
+      body: '{\n  "args": {}, \n  "headers": {\n    "Accept": "*/*", \n    "Accept-Encoding": "gzip, deflate, br", \n    "Accept-Language": "en-GB,en-US;q=0.9,en;q=0.8", \n    "Content-Type": "application/json", \n    "Host": "httpbin.org", \n    "Sec-Ch-Ua": "\\"Google Chrome\\";v=\\"119\\", \\"Chromium\\";v=\\"119\\", \\"Not?A_Brand\\";v=\\"24\\"", \n    "Sec-Ch-Ua-Mobile": "?0", \n    "Sec-Ch-Ua-Platform": "\\"Linux\\"", \n    "Sec-Fetch-Dest": "empty", \n    "Sec-Fetch-Mode": "cors", \n    "Sec-Fetch-Site": "cross-site", \n    "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36", \n    "X-Amzn-Trace-Id": "Root=1-6568d62e-32fe0ea5560563e15fbc98bb"\n  }, \n  "origin": "103.169.215.32", \n  "url": "https://httpbin.org/get"\n}\n',
+      headers: [
+        {
+          key: 'access-control-allow-credentials',
+          value: 'true',
+          type: 'text',
+          disable: false,
+          description: '',
+        },
+        {
+          key: 'access-control-allow-origin',
+          value: '*',
+          type: 'text',
+          disable: false,
+          description: '',
+        },
+        {
+          key: 'content-length',
+          value: '745',
+          type: 'text',
+          disable: false,
+          description: '',
+        },
+        {
+          key: 'content-type',
+          value: 'application/json',
+          type: 'text',
+          disable: false,
+          description: '',
+        },
+        {
+          key: 'date',
+          value: 'Thu, 30 Nov 2023 18:36:29 GMT',
+          type: 'text',
+          disable: false,
+          description: '',
+        },
+        {
+          key: 'server',
+          value: 'gunicorn/19.9.0',
+          type: 'text',
+          disable: false,
+          description: '',
+        },
+      ],
+      responseTime: 975,
+      responseSize: 745,
+      timeline:
+        '\n-----------   GENERAL  -----------\n\n# Request URL:  https://httpbin.org/get\n# Request Method: get\n# Status Code: 200 \n\n-----------   RESPONSE HEADERS   -----------\n\n< access-control-allow-credentials:true\n< access-control-allow-origin:*\n< content-length:745\n< content-type:application/json\n< date:Thu, 30 Nov 2023 18:36:29 GMT\n< server:gunicorn/19.9.0\n\n\n-----------   RESPONSE DATA   -----------\n\n> {\n  "args": {}, \n  "headers": {\n    "Accept": "application/json, text/plain, */*", \n    "Accept-Encoding": "gzip, deflate, br", \n    "Accept-Language": "en-GB,en-US;q=0.9,en;q=0.8", \n    "Host": "httpbin.org", \n    "Sec-Ch-Ua": "\\"Google Chrome\\";v=\\"119\\", \\"Chromium\\";v=\\"119\\", \\"Not?A_Brand\\";v=\\"24\\"", \n    "Sec-Ch-Ua-Mobile": "?0", \n    "Sec-Ch-Ua-Platform": "\\"Linux\\"", \n    "Sec-Fetch-Dest": "empty", \n    "Sec-Fetch-Mode": "cors", \n    "Sec-Fetch-Site": "cross-site", \n    "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36", \n    "X-Amzn-Trace-Id": "Root=1-6568d62d-6cf2d0257610f2b25eed0f96"\n  }, \n  "origin": "103.169.215.32", \n  "url": "https://httpbin.org/get"\n}\n',
+      cookies: [],
+    };
+
+    let convertedString = '';
+
+    if (
+      typeof finalRequest.body.value === 'string' &&
+      finalRequest.body.value !== ''
+    ) {
+      let jsonObject = JSON.parse(finalRequest.body.value);
+
+      convertedString = Object.entries(jsonObject)
+
+        .map(([key, value]) => `${key}='${value}'`)
+
+        .join('\n');
+    }
+
+    console.log('first-string', convertedString);
+
+    const headersList = finalRequest.headers;
+
+    let headers = headersList
+
+      .filter((item) => !item.disable) // Filter out disabled items
+
+      .map((item) => `${item.key}:'${item.value}'`) // Map to 'key:value' format
+
+      .join('\n'); // Join all items with newline character
+    console.log('headers', headers);
+    let command = '';
+    // if (fcRequest.method == 'POST')
+    command = `${finalRequest.method}\n${finalRequest.url.raw}\n${finalRequest.body.value}\n  ${headers}\n`;
+    console.log('command', command);
+    // else command = `${fcRequest.method}\n${fcRequest.url.raw}`;
+    const lama2req = await window?.makeLamaRequest?.(command);
+
+    console.log('lama2req', lama2req);
+
+    response['body'] = lama2req;
+    if (response) {
+      set((s) => ({ response }));
+      // TODO: check what to set/ response or testScriptResponse
+    }
+
+    state.setRequestRunningFlag(false);
+
+    // await state.context.request
+    //   .execute(finalRequest)
+    //   .then(({ response, variables, testResult, scriptErrors }) => {
+    //     // console.log({ response, variables, testResult });
+    //     if (response?.error) {
+    //       const error = response.error;
+    //       // console.log(error.message, error.code, error.e.response, error.e);
+    //     }
+    //     if (response) {
+    //       console.log('response', { response });
+    //       set((s) => ({ response, testResult, scriptErrors })); // TODO: check what to set/ response or testScriptResponse
+    //     }
+    //   })
+    //   .catch((e) => {
+    //     console.log('debug-1', e.message, e.stack, e.response, e, 9090);
+    //   })
+    //   .finally(() => {
+    //     state.setRequestRunningFlag(false);
+    //   });
     // execute request
-    await state.context.request
-      .execute(finalRequest)
-      .then(({ response, variables, testResult, scriptErrors }) => {
-        // console.log({ response, variables, testResult });
-        if (response?.error) {
-          const error = response.error;
-          // console.log(error.message, error.code, error.e.response, error.e);
-        }
-        if (response) {
-          set((s) => ({ response, testResult, scriptErrors })); // TODO: check what to set/ response or testScriptResponse
-        }
-      })
-      .catch((e) => {
-        // console.log(e.message, e.stack, e.response, e, 9090);
-      })
-      .finally(() => {
-        state.setRequestRunningFlag(false);
-      });
+    //     let convertedString = '';
+
+    //     if (
+    //       typeof finalRequest.body.value === 'string' &&
+    //       finalRequest.body.value !== ''
+    //     ) {
+    //       let jsonObject = JSON.parse(finalRequest.body.value);
+
+    //       convertedString = Object.entries(jsonObject)
+
+    //         .map(([key, value]) => `${key}='${value}'`)
+
+    //         .join('\n');
+    //     }
+
+    //     console.log('first-string', convertedString);
+    //     let response = {};
+    //     const headersList = finalRequest.headers;
+
+    //     let headers = headersList
+
+    //       .filter((item) => !item.disable) // Filter out disabled items
+
+    //       .map((item) => `${item.key}:'${item.value}'`) // Map to 'key:value' format
+
+    //       .join('\n'); // Join all items with newline character
+    //     console.log('headers', headers);
+    //     let command = '';
+    //     // if (fcRequest.method == 'POST')
+    //     command = `${finalRequest.method}\n${finalRequest.url.raw}\n${finalRequest.body.value}\n  ${headers}\n`;
+    //     console.log('command', command);
+    //     // else command = `${fcRequest.method}\n${fcRequest.url.raw}`;
+    //     const lama2req = await window?.makeLamaRequest?.(command);
+
+    //     console.log('lama2req', lama2req);
+
+    //     response['body'] = lama2req;
+    //     if (response) {
+    //       set((s) => ({ response }));
+    //       // TODO: check what to set/ response or testScriptResponse
+    //     }
+    //     state.setRequestRunningFlag(false);
+    //     console.log('response', response);
   },
 });
 

@@ -345,6 +345,7 @@ export default class RestExecutor implements IRestExecutor {
         let command = '';
         // if (fcRequest.method == 'POST')
         command = `${fcRequest.method}\n${fcRequest.url.raw}\n${fcRequest.body.value}\n  ${headers}\n`;
+        console.log('command', command);
         // else command = `${fcRequest.method}\n${fcRequest.url.raw}`;
         const lama2req = await window?.makeLamaRequest?.(command);
 

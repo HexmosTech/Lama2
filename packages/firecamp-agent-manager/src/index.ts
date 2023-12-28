@@ -80,9 +80,9 @@ export const cancel = async (
     case EFirecampAgent.Extension:
       return extension.cancel(requestId);
     case EFirecampAgent.Web:
-      restExecutors[requestId].cancel();
+      // restExecutors[requestId].cancel();
 
-      delete restExecutors[requestId];
+      // delete restExecutors[requestId];
 
       return;
     case EFirecampAgent.Cloud:

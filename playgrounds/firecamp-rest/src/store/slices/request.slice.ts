@@ -190,9 +190,29 @@ const createRequestSlice: TStoreSlice<IRequestSlice> = (
   },
   save: (tabId) => {
     const state = get();
+    console.log(tabId, 'tabId');
     if (!state.runtime.isRequestSaved) {
       // save new request
       const _request = state.preparePayloadForSaveRequest();
+      console.log('_request', _request);
+      const method = _request.method;
+      let url = _request.url.raw;
+
+      let headers = _request.headers
+        .map((header) => `${header.key}: ${header.value}`)
+        .join('\n');
+      let body = _request.body.value;
+
+      const l2Content = `${method}\n# URL\n${url}\n\n# HEADERS\n${headers}\n\n#Body\n${body}`;
+      const blob = new Blob([l2Content], { type: 'text/plain' });
+      url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'request.l2';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
       state.context.request.save(_request, tabId, true).then(({ __ref }) => {
         //reset the rcs state
         state.disposeRCS();

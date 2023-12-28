@@ -43,6 +43,7 @@ const UrlBarContainer = () => {
   };
 
   const _onExecute = async () => {
+   
     try {
       execute();
     } catch (error) { }
@@ -102,9 +103,12 @@ const SuffixButtons = () => {
   };
 
   const _onExecute = async () => {
+    console.log("executing request")
     try {
       execute();
-    } catch (error) { }
+    } catch (error) { 
+      console.log("electron error",error)
+    }
   };
 
   // const isSaveBtnDisabled = isRequestSaved ? !requestHasChanges : false;

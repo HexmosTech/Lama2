@@ -10,7 +10,7 @@
   "license": "AGPLV3",
   "scripts": {
     "build:old": "run-p 'build:*'",
-    "build": "tsup  && cp src/main.wasm dist/main.wasm",
+    "build": "tsup",
     "build:main": "tsc -p tsconfig.esm.json && tsc -p tsconfig.cjs.json",
     "clean": "rimraf dist/",
     "copy-files": "copyfiles -u 1 src/**/*.pem dist/esm && copyfiles -u 1 src/**/*.pem dist/cjs",
