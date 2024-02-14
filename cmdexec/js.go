@@ -2,6 +2,7 @@ package cmdexec
 
 import (
 	// "github.com/rs/zerolog/log"
+	"fmt"
 	"syscall/js"
 )
 
@@ -47,5 +48,6 @@ func GenerateChainCode(httpRespBody string) string {
 		console.log("Stored as string")
 	}`
 	// log.Info().Str("Chain code generated", code).Msg("")
+	fmt.Println("code:", code)
 	return code
 }

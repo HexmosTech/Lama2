@@ -6,6 +6,8 @@ package cmdexec
 
 import (
 	"errors"
+	"fmt"
+
 	// "os"
 	"strings"
 
@@ -21,14 +23,22 @@ import (
 // Once execution finishes, previous CWD is restored,
 // and the command output is returned as a string
 func ExecCommand(cmdSlice []string, stdinBody string) (httpie.ExResponse, error) {
-	// oldDir, _ := os.Getwd()
-	// utils.ChangeWorkingDir(apiDir)
-	resp, err := httpie.Lama2Entry(cmdSlice, strings.NewReader(stdinBody))
+	fmt.Println("Inside cmd exec code")
+	proxyURL := "http://proxyserver.hexmos.com:8080/"
+	proxyUserName := "proxyServer"
+	proxyUserPassword := "proxy22523146server"
+	allowRedirects := true
+	resp, err := httpie.Lama2Entry(cmdSlice, strings.NewReader(stdinBody), proxyURL, proxyUserName, proxyUserPassword, allowRedirects)
+	// resp, err := httpie.Lama2Entry(cmdSlice, strings.NewReader(stdinBody), "", "", "", false)
+	fmt.Println("error:", err)
+	fmt.Println("Data Response:", resp)
 	if err != nil {
 		// log.Fatal().Str("Error from the API executor", err.Error()).Msg("")
+		fmt.Println("Got error while executing", err)
 		return httpie.ExResponse{}, errors.New("Error from API executor: " + err.Error())
 	}
 	// log.Debug().Str("Response body from API executor", resp.Body).Msg("")
 	// utils.ChangeWorkingDir(oldDir)
+	// fmt.Println("Reponse fro httpie", resp)
 	return resp, nil
 }

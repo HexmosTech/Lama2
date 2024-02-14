@@ -34,6 +34,7 @@ func lama2Wasm(this js.Value, i []js.Value) interface{} {
 func wasmLamaPromise() js.Func {
 	return js.FuncOf(func(this js.Value, args []js.Value) interface{} {
 		inputdata := args[0].String()
+		// proxyinputdata := args[1].String()
 		handler := js.FuncOf(func(this js.Value, args []js.Value) interface{} {
 			resolve := args[0]
 			go func() {

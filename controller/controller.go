@@ -8,6 +8,12 @@ import (
 	"fmt"
 	"os"
 
+	// "os"
+
+	"strings"
+
+	"reflect"
+
 	"github.com/HexmosTech/gabs/v2"
 	"github.com/HexmosTech/httpie-go"
 	"github.com/HexmosTech/lama2/cmdexec"
@@ -44,26 +50,65 @@ func ExecuteRequestorBlock(block *gabs.Container) httpie.ExResponse {
 	preprocess.ProcessVarsInBlock(block)
 	// TODO - replace stuff in headers, and varjson and json as well
 	cmd, stdinBody := cmdgen.ConstructCommand(block)
-	// log.Info().Str("Stdin Body to be passed into httpie", stdinBody).Msg("")
+	fmt.Println("Reached ExecuteRequestorBlock")
 	resp, e1 := cmdexec.ExecCommand(cmd, stdinBody)
-	// log.Info().Str("Response from ExecCommand", resp.Body).Msg("")
-	if e1 == nil {
-		chainCode := cmdexec.GenerateChainCode(resp.Body)
-		// log.Info().Str("Evaluated through syscall js:", chainCode).Msg("")
-		js.Global().Call("eval", chainCode)
-	} else {
-		// log.Fatal().Str("Error from ExecCommand", e1.Error())
-		os.Exit(1)
+	fmt.Println("Value of e1 lets see:", e1)
+	printFields(resp)
+
+	headers := resp.Headers
+	fmt.Println("Value of Headders:", headers)
+
+	var headersString string
+	for key, value := range headers {
+		headersString += fmt.Sprintf("%s: %s\n", key, value)
 	}
+
+	targetHeader := "text/html"
+	isTextHTMLPresent := strings.Contains(headersString, targetHeader)
+
+	if isTextHTMLPresent {
+		fmt.Printf("'%s' is present in the headers.\n", targetHeader)
+		return resp
+	} else {
+		fmt.Printf("'%s' is not present in the headers.\n", targetHeader)
+		if e1 == nil {
+			fmt.Println("Chain code evaluator")
+			chainCode := cmdexec.GenerateChainCode(resp.Body)
+			fmt.Println("chainCode:", chainCode)
+			js.Global().Call("eval", chainCode)
+		} else {
+			fmt.Println("Exiting ........")
+			os.Exit(1)
+		}
+	}
+
+	// if e1 == nil {
+	// 	fmt.Println("Chain code evaluator")
+	// 	chainCode := cmdexec.GenerateChainCode(resp.Body)
+	// 	fmt.Println("chainCode:", chainCode)
+	// 	js.Global().Call("eval", chainCode)
+	// } else {
+	// 	fmt.Println("Exiting ........")
+	// 	os.Exit(1)
+	// }
 	return resp
+}
+
+func printFields(data interface{}) {
+	v := reflect.ValueOf(data)
+	t := v.Type()
+
+	for i := 0; i < v.NumField(); i++ {
+		fieldName := t.Field(i).Name
+		fieldValue := v.Field(i).Interface()
+		fmt.Printf("The key values available : %s: %v\n", fieldName, fieldValue)
+	}
 }
 
 func HandleParsedFile(parsedAPI *gabs.Container) httpie.ExResponse {
 	parsedAPIblocks := GetParsedAPIBlocks(parsedAPI)
 	var resp httpie.ExResponse
 	for i, block := range parsedAPIblocks {
-		// log.Info().Int("Block num", i).Msg("")
-		// log.Info().Str("Block getting processed", block.String()).Msg("")
 		fmt.Println(i)
 		blockType := block.S("type").Data().(string)
 		if blockType == "processor" {
@@ -122,6 +167,5 @@ func ProcessWasmInput(data string) httpie.ExResponse {
 	// Print the parsedAPI value
 	fmt.Printf("Parsed API: %+v\n", parsedAPI)
 	fmt.Println(parsedAPI)
-	// log.Info().Str("Parsed API", parsedAPI.String()).Msg("")
 	return HandleParsedFile(parsedAPI)
 }
