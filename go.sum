@@ -4,14 +4,8 @@ github.com/HexmosTech/gabs/v2 v2.6.5 h1:08ZCTfpH/ZxGwrjOfipdZ7x75t0svRDIw2qjlGyA
 github.com/HexmosTech/gabs/v2 v2.6.5/go.mod h1:172vE+burNJgaTsFgfbzzqT4wF+FELkL3t2BCmxa2lo=
 github.com/HexmosTech/godotenv v0.0.0-20230327154318-72e1f3d32ed3 h1:erCSX5e8CH5f9HjQfpp9SMWuTJXD1ikmW9E9ns1DcwA=
 github.com/HexmosTech/godotenv v0.0.0-20230327154318-72e1f3d32ed3/go.mod h1:sln7CopgjyZgBSuIw7IkdpwIQf72vgZiy1kgYterloo=
-github.com/HexmosTech/httpie-go v1.0.9-0.20231223102214-fc22a08bbde2 h1:SkgSiyzJMLezPNZ+AAfcmWFr4mVJmkljLynJj5oBTEw=
-github.com/HexmosTech/httpie-go v1.0.9-0.20231223102214-fc22a08bbde2/go.mod h1:U2lyp7l8mHMJUBR3DAsa79A2eY1b/FtuMOkUw1vKY8s=
-github.com/HexmosTech/httpie-go v1.0.9-0.20240131154638-b3a595e5c03c h1:/SkT4LtUiMBob8hedCzu/jXmZjCoN7qzN2TDyqe7DWY=
-github.com/HexmosTech/httpie-go v1.0.9-0.20240131154638-b3a595e5c03c/go.mod h1:U2lyp7l8mHMJUBR3DAsa79A2eY1b/FtuMOkUw1vKY8s=
-github.com/HexmosTech/httpie-go v1.0.9-0.20240202153100-aa4bfa44ed1b h1:+9rhrr3p0iQfLvD+WH6HLsXyGNWo+/uhbFaFcMsoagM=
-github.com/HexmosTech/httpie-go v1.0.9-0.20240202153100-aa4bfa44ed1b/go.mod h1:U2lyp7l8mHMJUBR3DAsa79A2eY1b/FtuMOkUw1vKY8s=
-github.com/HexmosTech/httpie-go v1.0.9-0.20240202153347-a80782274022 h1:VcIodK5cWdOrRbUMU/qgB8A1TxBtKi44nbC21UC7i6Y=
-github.com/HexmosTech/httpie-go v1.0.9-0.20240202153347-a80782274022/go.mod h1:U2lyp7l8mHMJUBR3DAsa79A2eY1b/FtuMOkUw1vKY8s=
+github.com/HexmosTech/httpie-go v1.0.9-0.20240315204350-d2cf74bdc758 h1:AW8ehXdPEfaMNWxYNflrJUbn4dO9ieIg+0Zu7X1ft18=
+github.com/HexmosTech/httpie-go v1.0.9-0.20240315204350-d2cf74bdc758/go.mod h1:U2lyp7l8mHMJUBR3DAsa79A2eY1b/FtuMOkUw1vKY8s=
 github.com/Vivino/go-autocomplete-trie v0.0.0-20230301121706-da951497d081 h1:CgfvELsx826xvyUI3te9pUu6K/9xc7INVm6QwdbbH6A=
 github.com/Vivino/go-autocomplete-trie v0.0.0-20230301121706-da951497d081/go.mod h1:cknpiHPHiypnmvUq1EAV3M0SQQeVY2rPjGt32hNCEDs=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=

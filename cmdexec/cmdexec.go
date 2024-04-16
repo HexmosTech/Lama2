@@ -14,6 +14,7 @@ import (
 	"github.com/HexmosTech/httpie-go"
 	// "github.com/HexmosTech/lama2/utils"
 	// "github.com/rs/zerolog/log"
+	// "github.com/HexmosTech/httpie-go"
 )
 
 // ExecCommand changes directory to the given `apiDir`
@@ -24,6 +25,7 @@ import (
 // and the command output is returned as a string
 func ExecCommand(cmdSlice []string, stdinBody string) (httpie.ExResponse, error) {
 	fmt.Println("Inside cmd exec code")
+	fmt.Println("Inside cmd exec code httpie Integer", httpie.Int(24601))
 	proxyURL := "http://proxyserver.hexmos.com:8080/"
 	proxyUserName := "proxyServer"
 	proxyUserPassword := "proxy22523146server"

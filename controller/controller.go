@@ -52,6 +52,7 @@ func ExecuteRequestorBlock(block *gabs.Container) httpie.ExResponse {
 	cmd, stdinBody := cmdgen.ConstructCommand(block)
 	fmt.Println("Reached ExecuteRequestorBlock")
 	resp, e1 := cmdexec.ExecCommand(cmd, stdinBody)
+	fmt.Println("Command to execute:", cmd)
 	fmt.Println("Value of e1 lets see:", e1)
 	printFields(resp)
 

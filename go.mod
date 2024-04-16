@@ -5,7 +5,7 @@ go 1.19
 require (
 	github.com/HexmosTech/gabs/v2 v2.6.5
 	github.com/HexmosTech/godotenv v0.0.0-20230327154318-72e1f3d32ed3
-	github.com/HexmosTech/httpie-go v1.0.9-0.20240202153347-a80782274022
+	github.com/HexmosTech/httpie-go v1.0.9-0.20240315204350-d2cf74bdc758
 	github.com/Vivino/go-autocomplete-trie v0.0.0-20230301121706-da951497d081
 	github.com/jessevdk/go-flags v1.5.0
 )
