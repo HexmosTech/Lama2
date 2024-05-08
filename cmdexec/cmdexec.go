@@ -26,7 +26,7 @@ import (
 func ExecCommand(cmdSlice []string, stdinBody string) (httpie.ExResponse, error) {
 	fmt.Println("Inside cmd exec code")
 	fmt.Println("Inside cmd exec code httpie Integer", httpie.Int(24601))
-	proxyURL := "http://proxyserver.hexmos.com:8080/"
+	proxyURL := "https://proxyserver.hexmos.com/"	
 	proxyUserName := "proxyServer"
 	proxyUserPassword := "proxy22523146server"
 	allowRedirects := true
