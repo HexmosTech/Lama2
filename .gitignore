@@ -1,3 +1,5 @@
 build/
 lama2
 .vscode
+buildAndPublish.sh
+static/
