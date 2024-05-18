@@ -1,22 +1,22 @@
-//go:build cli
+//go:build wasm
 
 package cmdexec
 
 import (
-	"github.com/dop251/goja"
-	"github.com/dop251/goja_nodejs/console"
-	"github.com/dop251/goja_nodejs/require"
-	"github.com/rs/zerolog/log"
+	// "github.com/rs/zerolog/log"
+	"fmt"
+	"syscall/js"
 )
 
 // GetJSVm creates a new goja runtime instance
 // with console.log enabled
-func GetJSVm() *goja.Runtime {
-	vm := goja.New()
-	new(require.Registry).Enable(vm)
-	console.Enable(vm)
-	return vm
-}
+
+// func GetJSVm() *goja.Runtime {
+// 	vm := goja.New()
+// 	new(require.Registry).Enable(vm)
+// 	console.Enable(vm)
+// 	return vm
+// }
 
 // RunVMCode takes in a JS snippet as a string,
 // executes the code in a JS VM, finally checks
@@ -25,11 +25,13 @@ func GetJSVm() *goja.Runtime {
 // Note: the vm runtime remains modified; so if
 // you reuse the vm for other operations, the state
 // from previous invocations carry over
-func RunVMCode(jsCode string, vm *goja.Runtime) {
-	_, err := vm.RunString(jsCode)
-	if ex, ok := err.(*goja.Exception); ok {
-		log.Fatal().Str("Error executing JS processor block", ex.String()).Msg("")
-	}
+func RunVMCode(jsCode string) {
+	// log.Info().Str("Evaluated through syscall js:", jsCode).Msg("")
+	js.Global().Call("eval", jsCode)
+	// _, err := vm.RunString(jsCode)
+	// if ex, ok := err.(*goja.Exception); ok {
+	// 	log.Debug().Str("Error executing JS processor block", ex.String()).Msg("")
+	// }
 }
 
 // GenerateChainCode takes in an HTTP response body
@@ -47,6 +49,7 @@ func GenerateChainCode(httpRespBody string) string {
 		console.log(e)
 		console.log("Stored as string")
 	}`
-	log.Debug().Str("Chain code generated", code).Msg("")
+	// log.Info().Str("Chain code generated", code).Msg("")
+	fmt.Println("code:", code)
 	return code
 }

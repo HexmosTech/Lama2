@@ -1,4 +1,4 @@
-//go:build cli
+//go:build wasm
 
 // Copyright 2010 The Go Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style
@@ -9,17 +9,18 @@
 package preprocess
 
 import (
-	"os"
-	"strings"
+	// "os"
+	// "strings"
+
+	"syscall/js"
 
 	"github.com/HexmosTech/lama2/utils"
-	"github.com/dop251/goja"
-	"github.com/rs/zerolog/log"
+	// "github.com/rs/zerolog/log"
 )
 
 // Expand replaces ${var} or $var in the string based on the mapping function.
 // For example, os.ExpandEnv(s) is equivalent to os.Expand(s, os.Getenv).
-func Expand(s string, vm *goja.Runtime, mapping map[string]string) string {
+func Expand(s string, mapping map[string]string) string {
 	var buf []byte
 	// ${} is all ASCII, so bytes are fine for this operation.
 	i := 0
@@ -39,8 +40,13 @@ func Expand(s string, vm *goja.Runtime, mapping map[string]string) string {
 				// name. Leave the dollar character untouched.
 				buf = append(buf, s[j])
 			} else {
-				jsVal := vm.Get(name)
-				if jsVal != nil {
+				// jsVal := vm.Get(name)
+				jsVal := js.Global().Get(name)
+
+				// log.Info().Str("Name to be searched:", name).Msg("")
+				// log.Info().Str("Stdin Body to be passed into jsVal:", jsVal.String()).Msg("")
+				// if jsVal != nil {
+				if jsVal.Truthy() {
 					buf = append(buf, []byte(jsVal.String())...)
 				} else {
 					val, ok := mapping[name]
@@ -48,7 +54,7 @@ func Expand(s string, vm *goja.Runtime, mapping map[string]string) string {
 						buf = append(buf, val...)
 					} else {
 						buf = append(buf, ""...)
-						log.Warn().Str("Couldn't find the variable `"+name+"`,  in both Javascript processor block and environment variables. Replacing with empty string", "").Msg("")
+						// log.Warn().Str("Couldn't find the variable `"+name+"`,  in both Javascript processor block and environment variables. Replacing with empty string", "").Msg("")
 					}
 				}
 			}
@@ -66,21 +72,37 @@ func Expand(s string, vm *goja.Runtime, mapping map[string]string) string {
 	return res2
 }
 
+// func getEnvironMap() map[string]string  {
 func getEnvironMap() map[string]string {
-	m := make(map[string]string)
-	for _, e := range os.Environ() {
-		if i := strings.Index(e, "="); i >= 0 {
-			m[e[:i]] = e[i+1:]
+
+	// m := make(map[string]string)
+	// for _, e := range os.Environ() {
+	// 	if i := strings.Index(e, "="); i >= 0 {
+	// 		m[e[:i]] = e[i+1:]
+	// 	}
+	// }
+	result := make(map[string]string)
+
+	keysArray :=  js.Global().Get("Object").Call("keys", js.Global())
+	keys := make([]string, keysArray.Length())
+	for i := 0; i < keysArray.Length(); i++ {
+		keys[i] = keysArray.Index(i).String()
+	}
+	for _, name := range keys {
+		if value := js.Global().Get(name); value.Truthy() {
+			result[name] = value.String()
 		}
 	}
-	return m
+
+
+	return result
 }
 
 // ExpandEnv replaces ${var} or $var in the string according to the values
 // of the current environment variables. References to undefined
 // variables are replaced by the empty string.
-func ExpandEnv(s string, vm *goja.Runtime) string {
-	return Expand(s, vm, getEnvironMap())
+func ExpandEnv(s string) string {
+	return Expand(s, getEnvironMap())
 }
 
 // isShellSpecialVar reports whether the character identifies a special

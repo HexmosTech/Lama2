@@ -1,4 +1,4 @@
-//go:build cli
+//go:build wasm
 
 // Package `utils` provides useful functions for
 // simplifying various programming tasks
@@ -9,15 +9,19 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"os"
 	"os/exec"
+
+	// "io"
+	// "net/http"
+	"os"
+	// "os/exec"
 	"path/filepath"
 	"regexp"
 	"strings"
 	"unicode"
 
 	"github.com/HexmosTech/gabs/v2"
-	"github.com/rs/zerolog/log"
+	// "github.com/rs/zerolog/log"
 )
 
 // The following string fragment is used to mark unquoted
@@ -126,10 +130,10 @@ func GetFilePathComponents(name string) (string, string, string) {
 func ChangeWorkingDir(dir string) {
 	err := os.Chdir(dir)
 	if err != nil {
-		log.Fatal().
-			Str("Type", "Preprocess").
-			Str("dir", dir).
-			Msg(fmt.Sprint("Moving into dir failed"))
+		// log.Fatal().
+		// 	Str("Type", "Preprocess").
+		// 	Str("dir", dir).
+		// 	Msg(fmt.Sprint("Moving into dir failed"))
 	}
 }
 
@@ -175,9 +179,8 @@ func UpdateSelf() {
 func MarshalAndPrintJSON(data interface{}) {
 	filteredJSON, err := json.MarshalIndent(data, "", "  ")
 	if err != nil {
-		log.Error().Str("Type", "Preprocess").Msg(fmt.Sprintf("Failed to marshal JSON: %v", err))
+		// log.Error().Str("Type", "Preprocess").Msg(fmt.Sprintf("Failed to marshal JSON: %v", err))
 		os.Exit(0)
 	}
 	fmt.Println(string(filteredJSON))
 }
-

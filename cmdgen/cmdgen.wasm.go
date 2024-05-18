@@ -1,4 +1,4 @@
-//go:build cli
+//go:build wasm
 
 // Package `cmdgen` provides an API to generate
 // API request commands (by default based on HTTPie)
@@ -13,31 +13,31 @@ import (
 	"strings"
 
 	"github.com/HexmosTech/gabs/v2"
-	"github.com/HexmosTech/lama2/lama2cmd"
-	"github.com/rs/zerolog/log"
+	// "github.com/HexmosTech/lama2/lama2cmd"
+	// "github.com/rs/zerolog/log"
 )
 
-func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, headers *gabs.Container, multipart bool, form bool, o *lama2cmd.Opts) ([]string, string) {
+func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, headers *gabs.Container, multipart bool, form bool) ([]string, string) {
 	command := make([]string, 0)
-	log.Info().
-		Str("Type", "Construct Command").
-		Str("httpv", httpv).
-		Str("url", url).
-		Bool("multipart", multipart).
-		Bool("form", form).
-		Msg(fmt.Sprint("Construct parameters"))
+	// log.Info().
+	// 	Str("Type", "Construct Command").
+	// 	Str("httpv", httpv).
+	// 	Str("url", url).
+	// 	Bool("multipart", multipart).
+	// 	Bool("form", form).
+	// 	Msg(fmt.Sprint("Construct parameters"))
 
-	log.Debug().
-		Str("JSONObj", jsonObj.String()).
-		Str("Headers", headers.String()).Msg("")
+	// log.Debug().
+	// 	Str("JSONObj", jsonObj.String()).
+	// 	Str("Headers", headers.String()).Msg("")
 
 	var files *gabs.Container
 	if multipart {
 		if jsonObj.ExistsP("@files") {
 			files = jsonObj.S("@files")
-			log.Debug().Str("Files", files.String()).Msg("")
+			// log.Debug().Str("Files", files.String()).Msg("")
 			jsonObj.Delete("@files")
-			log.Trace().Str("Shortened JsonObj", jsonObj.String()).Msg("")
+			// log.Trace().Str("Shortened JsonObj", jsonObj.String()).Msg("")
 		}
 	}
 
@@ -45,9 +45,9 @@ func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, header
 	if jsonObj != nil && !multipart && !form {
 		dst := &bytes.Buffer{}
 		if err := json.Compact(dst, []byte(jsonObj.String())); err != nil {
-			log.Fatal().
-				Str("Error", err.Error()).
-				Msg("Couldn't minify JSON")
+			// log.Fatal().
+			// 	Str("Error", err.Error()).
+			// 	Msg("Couldn't minify JSON")
 		}
 		jsonStr = dst.String()
 	}
@@ -60,9 +60,9 @@ func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, header
 		}*/
 
 	command = append(command, "ht ")
-	if o.Nocolor {
-		command = append(command, "--pretty=none ")
-	}
+	// if o.Nocolor {
+	// 	command = append(command, "--pretty=none ")
+	// }
 	if multipart || form {
 		command = append(command, "--ignore-stdin", "--form")
 	}
@@ -72,8 +72,7 @@ func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, header
 
 	if multipart {
 		for key, val := range jsonObj.Data().(*gabs.Container).ChildrenMap() {
-			keyValuePair := fmt.Sprintf("%s=%s", key, val.Data().(string))
-			command = append(command, keyValuePair)
+			command = append(command, "'"+key+"'='"+val.Data().(string)+"'  ")
 		}
 		for key, val := range files.ChildrenMap() {
 			command = append(command, key+"@"+val.Data().(string))
@@ -82,7 +81,7 @@ func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, header
 
 	if form {
 		for key, val := range jsonObj.Data().(*gabs.Container).ChildrenMap() {
-			keyValuePair := fmt.Sprintf("%s=%s", key, val.Data().(string))
+			keyValuePair := fmt.Sprintf("'%s'='%s'  ", key, val.Data().(string))
 			command = append(command, keyValuePair)
 		}
 	}
@@ -107,8 +106,8 @@ func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, header
 // API file inputs, figures out the type of target command
 // and finally generates a string representing the generated
 // command
-func ConstructCommand(parsedInput *gabs.Container, o *lama2cmd.Opts) ([]string, string) {
-	log.Info().Str("ParsedInput", parsedInput.String()).Msg("")
+func ConstructCommand(parsedInput *gabs.Container) ([]string, string) {
+	// log.Info().Str("ParsedInput", parsedInput.String()).Msg("")
 	httpv := parsedInput.S("verb", "value")
 	url := parsedInput.S("url", "value")
 	jsonObj := parsedInput.S("details", "ip_data")
@@ -121,6 +120,6 @@ func ConstructCommand(parsedInput *gabs.Container, o *lama2cmd.Opts) ([]string, 
 	form := parsedInput.S("form", "value")
 	formBool := form != nil
 
-	res, stdinBody := assembleCmdString(httpv.Data().(string), url.Data().(string), jsonObj, headers, multipartBool, formBool, o)
+	res, stdinBody := assembleCmdString(httpv.Data().(string), url.Data().(string), jsonObj, headers, multipartBool, formBool)
 	return res, stdinBody
 }
