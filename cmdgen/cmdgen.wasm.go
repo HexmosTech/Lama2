@@ -1,9 +1,5 @@
 //go:build wasm
 
-// Package `cmdgen` provides an API to generate
-// API request commands (by default based on HTTPie)
-// based on the parsed API file contents and the `l2`
-// command invocation parameters
 package cmdgen
 
 import (
@@ -17,25 +13,11 @@ import (
 
 func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, headers *gabs.Container, multipart bool, form bool) ([]string, string) {
 	command := make([]string, 0)
-	// log.Info().
-	// 	Str("Type", "Construct Command").
-	// 	Str("httpv", httpv).
-	// 	Str("url", url).
-	// 	Bool("multipart", multipart).
-	// 	Bool("form", form).
-	// 	Msg(fmt.Sprint("Construct parameters"))
-
-	// log.Debug().
-	// 	Str("JSONObj", jsonObj.String()).
-	// 	Str("Headers", headers.String()).Msg("")
-
 	var files *gabs.Container
 	if multipart {
 		if jsonObj.ExistsP("@files") {
 			files = jsonObj.S("@files")
-			// log.Debug().Str("Files", files.String()).Msg("")
 			jsonObj.Delete("@files")
-			// log.Trace().Str("Shortened JsonObj", jsonObj.String()).Msg("")
 		}
 	}
 
@@ -43,24 +25,12 @@ func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, header
 	if jsonObj != nil && !multipart && !form {
 		dst := &bytes.Buffer{}
 		if err := json.Compact(dst, []byte(jsonObj.String())); err != nil {
-			// log.Fatal().
-			// 	Str("Error", err.Error()).
-			// 	Msg("Couldn't minify JSON")
 		}
 		jsonStr = dst.String()
 	}
 
-	/*
-		if !multipart && jsonStr != "" {
-			command = append(command, "echo '")
-			command = append(command, jsonStr)
-			command = append(command, "' |")
-		}*/
 
 	command = append(command, "ht ")
-	// if o.Nocolor {
-	// 	command = append(command, "--pretty=none ")
-	// }
 	if multipart || form {
 		command = append(command, "--ignore-stdin", "--form")
 	}
@@ -100,12 +70,7 @@ func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, header
 	return cleanCommand, jsonStr
 }
 
-// ConstructCommand extracts the HTTP verb, url and other
-// API file inputs, figures out the type of target command
-// and finally generates a string representing the generated
-// command
 func ConstructCommand(parsedInput *gabs.Container) ([]string, string) {
-	// log.Info().Str("ParsedInput", parsedInput.String()).Msg("")
 	httpv := parsedInput.S("verb", "value")
 	url := parsedInput.S("url", "value")
 	jsonObj := parsedInput.S("details", "ip_data")
