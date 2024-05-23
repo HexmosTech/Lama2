@@ -6,7 +6,6 @@ import (
 
 	"github.com/HexmosTech/gabs/v2"
 	"github.com/HexmosTech/lama2/utils"
-	// "github.com/rs/zerolog/log"
 )
 
 type Lama2Parser struct {
@@ -26,7 +25,6 @@ func NewLama2Parser() *Lama2Parser {
 
 // Start primarily calls the Lama2File method
 func (p *Lama2Parser) Start() (*gabs.Container, error) {
-	// log.Trace().Msg("Within the Start function")
 	temp := gabs.New()
 	res, e := p.Match([]string{"Lama2File"})
 	if e == nil {
@@ -40,8 +38,6 @@ func (p *Lama2Parser) Start() (*gabs.Container, error) {
 func (p *Lama2Parser) Lama2File() (*gabs.Container, error) {
 	// Trying to get:
 	// PSBlock? Requestor [SPSBlock Requestor]*
-
-	// log.Trace().Msg("Within Lama2File")
 	temp := gabs.New()
 	tempArr, e1 := temp.Array()
 	if e1 != nil {
@@ -59,7 +55,6 @@ func (p *Lama2Parser) Lama2File() (*gabs.Container, error) {
 	} else if procE1 == nil && sepE1 != nil {
 		return nil, utils.NewParseError(p.Pos+1, p.LineNum+1, "Processor without subsequent requestor block found", []string{})
 	} else {
-		// log.Debug().Str("Found separator", "---").Msg("")
 	}
 
 	// match requester
@@ -69,8 +64,6 @@ func (p *Lama2Parser) Lama2File() (*gabs.Container, error) {
 	}
 
 	tempArr.ArrayAppend(res3)
-
-	// log.Debug().Str("Parse structure so far", tempArr.String())
 
 	// until file is done:
 	var res4, res5 *gabs.Container
@@ -109,10 +102,8 @@ func (p *Lama2Parser) Lama2File() (*gabs.Container, error) {
 }
 
 func (p *Lama2Parser) Processor() (*gabs.Container, error) {
-	// log.Trace().Msg("Within Processor")
 	// A Processor cannot start with any of the HTTP Verbs
 	res := p.LookAhead([]string{"HTTPVerb"})
-	// log.Debug().Bool("HTTPVerb LookAhead result", res)
 	if res {
 		return nil, utils.NewParseError(p.Pos+1, p.LineNum+1, "HTTPVerb found at start of block; cannot be a Requestor block", []string{})
 	}
@@ -120,13 +111,10 @@ func (p *Lama2Parser) Processor() (*gabs.Container, error) {
 	res2, _ := p.MatchUntil("\n---\n")
 	temp.Set("processor", "type")
 	temp.Set(res2, "value")
-	// log.Debug().Str("Processor block parsed", res2.String()).Msg("")
-
 	return temp, nil
 }
 
 func (p *Lama2Parser) Separator() (*gabs.Container, error) {
-	// log.Trace().Msg("Within Separator")
 	temp := gabs.New()
 	s, e := p.Keyword("---\n", false, false, false)
 	temp.Set(string(s))
@@ -139,7 +127,6 @@ func (p *Lama2Parser) Separator() (*gabs.Container, error) {
 // Requester applies the rule:
 // HTTPVerb Multipart? TheURL Details?
 func (p *Lama2Parser) Requester() (*gabs.Container, error) {
-	// log.Trace().Msg("Within Requester")
 	res, e := p.Match([]string{"HTTPVerb"})
 	temp := gabs.New()
 	if e == nil {
@@ -174,27 +161,6 @@ func (p *Lama2Parser) Requester() (*gabs.Container, error) {
 
 func (p *Lama2Parser) TheURL() (*gabs.Container, error) {
 	res := []string{}
-	/*
-		kw, e := p.Keyword("http", true, false, true)
-		if e == nil {
-			res = append(res, string(kw))
-		} else {
-			return nil, utils.NewParseError(p.Pos+1, p.LineNum+1, "Couldn't find URL (starting with http(s)", []string{})
-		}
-
-		_, e = p.CharClass("s")
-		if e == nil {
-			res = append(res, "s")
-		}
-
-		_, e = p.Keyword("://", false, false, true)
-		if e == nil {
-			res = append(res, "://")
-		} else {
-			return nil, utils.NewParseError(p.Pos+1, p.LineNum+1, "Couldn't find URL (starting with http(s)://", []string{})
-		}
-	*/
-
 	for {
 		up, err := p.CharClass("A-Za-z0-9-._~:/?#[]@!$&'()*+,;%=}{")
 		if err == nil {
@@ -212,7 +178,6 @@ func (p *Lama2Parser) TheURL() (*gabs.Container, error) {
 }
 
 func (p *Lama2Parser) HTTPVerb() (*gabs.Container, error) {
-	// log.Trace().Msg("Within HTTPVerb")
 	verbList := []string{
 		"get", "head", "post", "put",
 		"delete", "connect", "trace", "patch",

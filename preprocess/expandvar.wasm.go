@@ -1,21 +1,12 @@
 //go:build wasm
 
-// Copyright 2010 The Go Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style
-// license that can be found in the LICENSE file.
-
-// General environment variables.
-
 package preprocess
 
 import (
-	// "os"
-	// "strings"
 
 	"syscall/js"
 
 	"github.com/HexmosTech/lama2/utils"
-	// "github.com/rs/zerolog/log"
 )
 
 // Expand replaces ${var} or $var in the string based on the mapping function.
@@ -43,9 +34,6 @@ func Expand(s string, mapping map[string]string) string {
 				// jsVal := vm.Get(name)
 				jsVal := js.Global().Get(name)
 
-				// log.Info().Str("Name to be searched:", name).Msg("")
-				// log.Info().Str("Stdin Body to be passed into jsVal:", jsVal.String()).Msg("")
-				// if jsVal != nil {
 				if jsVal.Truthy() {
 					buf = append(buf, []byte(jsVal.String())...)
 				} else {
@@ -54,7 +42,6 @@ func Expand(s string, mapping map[string]string) string {
 						buf = append(buf, val...)
 					} else {
 						buf = append(buf, ""...)
-						// log.Warn().Str("Couldn't find the variable `"+name+"`,  in both Javascript processor block and environment variables. Replacing with empty string", "").Msg("")
 					}
 				}
 			}
@@ -72,15 +59,7 @@ func Expand(s string, mapping map[string]string) string {
 	return res2
 }
 
-// func getEnvironMap() map[string]string  {
 func getEnvironMap() map[string]string {
-
-	// m := make(map[string]string)
-	// for _, e := range os.Environ() {
-	// 	if i := strings.Index(e, "="); i >= 0 {
-	// 		m[e[:i]] = e[i+1:]
-	// 	}
-	// }
 	result := make(map[string]string)
 
 	keysArray :=  js.Global().Get("Object").Call("keys", js.Global())
@@ -146,35 +125,3 @@ func getShellName(s string) (string, int) {
 	var i int
 	return s[:i], i
 }
-
-/*
-// Getenv retrieves the value of the environment variable named by the key.
-// It returns the value, which will be empty if the variable is not present.
-// To distinguish between an empty value and an unset value, use LookupEnv.
-func Getenv(key string) string {
-	testlog.Getenv(key)
-	v, _ := syscall.Getenv(key)
-	return v
-}
-
-// LookupEnv retrieves the value of the environment variable named
-// by the key. If the variable is present in the environment the
-// value (which may be empty) is returned and the boolean is true.
-// Otherwise the returned value will be empty and the boolean will
-// be false.
-func LookupEnv(key string) (string, bool) {
-	testlog.Getenv(key)
-	return syscall.Getenv(key)
-}
-
-// Clearenv deletes all environment variables.
-func Clearenv() {
-	syscall.Clearenv()
-}
-
-// Environ returns a copy of strings representing the environment,
-// in the form "key=value".
-func Environ() []string {
-	return syscall.Environ()
-}
-*/

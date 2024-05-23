@@ -1,7 +1,5 @@
 //go:build wasm
 
-
-
 // Package preprocess provides facilities to expand
 // environment variables in `.l2` API files and return
 // the contents
@@ -126,7 +124,6 @@ func LoadEnvFile(l2path string) {
 func LoadEnvironments(dir string) {
 	l2ConfigPath, err := SearchL2ConfigEnv(dir)
 	if err != nil {
-		// log.Info().Str("Type", "Preprocess").Msg(err.Error())
 	} else {
 		LoadEnvFile(l2ConfigPath) // Loads global variables from l2config.env
 	}
@@ -199,7 +196,6 @@ func GetL2EnvVariables(dir string) (map[string]map[string]interface{}, error) {
 func GetLamaFileAsString(path string) string {
 	b, err := ioutil.ReadFile(path) // just pass the file name
 	if err != nil {
-		// log.Fatal().Str("Type", "Preprocess").Msg(fmt.Sprint("Couldn't read: ", path))
 	}
 	return string(b)
 }
