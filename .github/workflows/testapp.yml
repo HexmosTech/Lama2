@@ -16,7 +16,7 @@ jobs:
       - name: Install dependencies
         run: go mod tidy
       - name: Build
-        run: go build -v ./...
+        run: go build -tags=cli -v ./...
       - name: Test with the Go CLI
         run: |
           go mod tidy
