@@ -15,7 +15,7 @@ import (
 	"strings"
 
 	"github.com/HexmosTech/gabs/v2"
-	// "github.com/rs/zerolog/log"
+	"github.com/rs/zerolog/log"
 )
 
 // create 3 structures:
@@ -75,7 +75,7 @@ func createFolderTree(folderIDOrder []string, parentPath string) {
 		fmt.Println("@@P1", folder.FullPath, targetPath)
 		err := os.MkdirAll(targetPath, os.ModePerm)
 		if err != nil {
-			// log.Fatal().Msg(err.Error())
+			log.Fatal().Msg(err.Error())
 		}
 
 		createFolderTree(folder.Order, targetPath)
@@ -153,7 +153,7 @@ func createRequestFiles(collectionPath string) {
 		}
 		err := os.WriteFile(targetRequestPath, []byte(res), 0o644)
 		if err != nil {
-			// log.Fatal().Msg(err.Error())
+			log.Fatal().Msg(err.Error())
 		}
 		if l2URL != rObj.TheURL {
 			// need an env file
@@ -168,7 +168,7 @@ func createRequestFiles(collectionPath string) {
 			envRes := strings.Join(envOp, "\n")
 			err := os.WriteFile(targetEnvPath, []byte(envRes), 0o644)
 			if err != nil {
-				// log.Fatal().Msg(err.Error())
+				log.Fatal().Msg(err.Error())
 			}
 		}
 	}
@@ -256,11 +256,11 @@ func generateRequestMap(requestsList *gabs.Container) {
 func ReadPostmanFile(postmanFile string) *gabs.Container {
 	contents, e := os.ReadFile(postmanFile)
 	if e != nil {
-		// log.Fatal().Msg(e.Error())
+		log.Fatal().Msg(e.Error())
 	}
 	pJSON, e2 := gabs.ParseJSON(contents)
 	if e2 != nil {
-		// log.Fatal().Msg(e.Error())
+		log.Fatal().Msg(e.Error())
 	}
 	return pJSON
 }
@@ -284,7 +284,7 @@ func PickEnvironmentID(pJSON *gabs.Container) string {
 	fmt.Println(option)
 	i, e := strconv.Atoi(option)
 	if e != nil {
-		// log.Fatal().Msg("Provide a valid option number")
+		log.Fatal().Msg("Provide a valid option number")
 	}
 	for idx, e := range environmentList.Children() {
 		fmt.Println("e = ", e)
@@ -313,7 +313,7 @@ func PostmanConvert(pJSON *gabs.Container, targetFolder string, environID string
 		collectionPath := filepath.Join(targetFolder, collectionName.Data().(string))
 		err := os.MkdirAll(collectionPath, os.ModePerm)
 		if err != nil {
-			// log.Fatal().Msg(err.Error())
+			log.Fatal().Msg(err.Error())
 		}
 		generateFolderMap(collectionFolders)
 		cOrder := make([]string, 0)

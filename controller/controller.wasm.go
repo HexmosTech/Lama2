@@ -1,9 +1,5 @@
 //go:build wasm
 
-// Package controller coordinates all the other
-// components in the `Lama2` project. The high
-// level overview of command execution is easily
-// understood from this package
 package contoller
 
 import (
@@ -90,7 +86,6 @@ func HandleParsedFile(parsedAPI *gabs.Container) httpie.ExResponse {
 	}
 	return resp
 }
-
 
 func ProcessWasmInput(data string) httpie.ExResponse {
 	apiContent := data

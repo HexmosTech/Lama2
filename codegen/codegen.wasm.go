@@ -14,7 +14,6 @@ import (
 	"github.com/HexmosTech/lama2/preprocess"
 )
 
-//go:embed httpsnippet.js
 var snippetcore string
 
 type SnippetArgs struct {
@@ -23,12 +22,6 @@ type SnippetArgs struct {
 	HARRequest  string
 	SnippetCore string
 }
-
-// var globalVM *goja.Runtime
-
-// func initialize() {
-// 	globalVM = cmdexec.GetJSVm()
-// }
 
 func PrepareHTTPSnippetGenerator(snippetArgs SnippetArgs) string {
 	var templOutput bytes.Buffer
@@ -102,7 +95,6 @@ func GetRequestHARString(block *gabs.Container) string {
 	headers := block.S("details", "headers")
 	/*
 		TODO: Handle multipart case
-
 		multipart := block.S("multipart", "value")
 		multipartBool := false
 		if multipart != nil {
