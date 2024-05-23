@@ -7,12 +7,10 @@ import (
 	_ "embed"
 	"fmt"
 	"strings"
-	"text/template"
 	"syscall/js"
-	// "github.com/rs/zerolog/log"
+	"text/template"
 
 	"github.com/HexmosTech/gabs/v2"
-	// "github.com/HexmosTech/lama2/cmdexec"
 	"github.com/HexmosTech/lama2/preprocess"
 )
 
@@ -136,14 +134,10 @@ func GetRequestHARString(block *gabs.Container) string {
 }
 
 func GenerateTargetCode(targetLangLib string, parsedAPI *gabs.Container) {
-	// initialize()
 	parsedAPIblocks := parsedAPI.S("value").Data().(*gabs.Container).Children()
 	convertedSnippetList := make([]string, 0)
 
 	for i, block := range parsedAPIblocks {
-		// log.Debug().Int("Block num", i).Msg("")
-		fmt.Println(i)
-		// log.Debug().Str("Block getting processed", block.String()).Msg("")
 		blockType := block.S("type").Data().(string)
 		if blockType == "processor" {
 			snippet := block.S("value").Data().(*gabs.Container).Data().(string)
@@ -157,21 +151,8 @@ func GenerateTargetCode(targetLangLib string, parsedAPI *gabs.Container) {
 			snippetArgs.HARRequest = harRequest
 			snippetArgs.SnippetCore = snippetcore
 			httpsnippetCode := PrepareHTTPSnippetGenerator(snippetArgs)
-
-			// vm := cmdexec.GetJSVm()
-			// _, e := vm.RunString(httpsnippetCode)
-			js.Global().Call("eval", httpsnippetCode) 
-
-			// if e != nil {
-			// 	log.Fatal().
-			// 		Str("Type", "CodeGen").
-			// 		Str("Error", e.Error()).
-			// 		Msg("Code generator error")
-			// }
-			// Init returns an error if the package is not ready for use.
-			// convertedSnippet := vm.Get("convertedSnippet").String()
-
-			convertedSnippet :=  js.Global().Get("convertedSnippet").String()
+			js.Global().Call("eval", httpsnippetCode)
+			convertedSnippet := js.Global().Get("convertedSnippet").String()
 			convertedSnippetList = append(convertedSnippetList, convertedSnippet)
 		}
 	}

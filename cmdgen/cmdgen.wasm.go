@@ -13,8 +13,6 @@ import (
 	"strings"
 
 	"github.com/HexmosTech/gabs/v2"
-	// "github.com/HexmosTech/lama2/lama2cmd"
-	// "github.com/rs/zerolog/log"
 )
 
 func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, headers *gabs.Container, multipart bool, form bool) ([]string, string) {

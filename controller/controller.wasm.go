@@ -9,9 +9,6 @@ package contoller
 import (
 	"fmt"
 	"os"
-
-	// "os"
-
 	"strings"
 
 	"reflect"
@@ -21,16 +18,9 @@ import (
 	"github.com/HexmosTech/lama2/cmdexec"
 	"github.com/HexmosTech/lama2/cmdgen"
 
-	// "github.com/HexmosTech/lama2/codegen"
-	// "github.com/HexmosTech/lama2/lama2cmd"
-
-	// outputmanager "github.com/HexmosTech/lama2/outputManager"
 	"github.com/HexmosTech/lama2/parser"
 	"github.com/HexmosTech/lama2/preprocess"
 
-	// "github.com/HexmosTech/lama2/prettify"
-	// "github.com/HexmosTech/lama2/utils"
-	// "github.com/rs/zerolog/log"
 	"syscall/js"
 )
 
@@ -40,11 +30,7 @@ func GetParsedAPIBlocks(parsedAPI *gabs.Container) []*gabs.Container {
 
 func ExecuteProcessorBlock(block *gabs.Container) {
 	b := block.S("value").Data().(*gabs.Container)
-	// log.Info().Str("Processor block incoming block", block.String()).Msg("")
 	script := b.Data().(string)
-	// cmdexec.RunVMCode(script, vm)
-	fmt.Println("<-----JS CODE----->:", script)
-	// log.Info().Str("Evaluated through syscall js:", script).Msg("")
 	js.Global().Call("eval", script)
 }
 
@@ -52,15 +38,9 @@ func ExecuteRequestorBlock(block *gabs.Container) httpie.ExResponse {
 	preprocess.ProcessVarsInBlock(block)
 	// TODO - replace stuff in headers, and varjson and json as well
 	cmd, stdinBody := cmdgen.ConstructCommand(block)
-	fmt.Println("Reached ExecuteRequestorBlock")
 	resp, e1 := cmdexec.ExecCommand(cmd, stdinBody)
-	fmt.Println("Command to execute:", cmd)
-	fmt.Println("Value of e1 lets see:", e1)
 	printFields(resp)
-
 	headers := resp.Headers
-	fmt.Println("Value of Headders:", headers)
-
 	var headersString string
 	for key, value := range headers {
 		headersString += fmt.Sprintf("%s: %s\n", key, value)
@@ -75,25 +55,13 @@ func ExecuteRequestorBlock(block *gabs.Container) httpie.ExResponse {
 	} else {
 		fmt.Printf("'%s' is not present in the headers.\n", targetHeader)
 		if e1 == nil {
-			fmt.Println("Chain code evaluator")
 			chainCode := cmdexec.GenerateChainCode(resp.Body)
-			fmt.Println("chainCode:", chainCode)
 			js.Global().Call("eval", chainCode)
 		} else {
-			fmt.Println("Exiting ........")
 			os.Exit(1)
 		}
 	}
 
-	// if e1 == nil {
-	// 	fmt.Println("Chain code evaluator")
-	// 	chainCode := cmdexec.GenerateChainCode(resp.Body)
-	// 	fmt.Println("chainCode:", chainCode)
-	// 	js.Global().Call("eval", chainCode)
-	// } else {
-	// 	fmt.Println("Exiting ........")
-	// 	os.Exit(1)
-	// }
 	return resp
 }
 
@@ -120,44 +88,9 @@ func HandleParsedFile(parsedAPI *gabs.Container) httpie.ExResponse {
 			resp = ExecuteRequestorBlock(block)
 		}
 	}
-	// if o.Output != "" {
-	// 	outputmanager.WriteJSONOutput(resp, o.Output)
-	// }
 	return resp
 }
 
-// Process initiates the following tasks in the given order:
-// 1. Parse command line arguments
-// 2. Read API file contents
-// 3. Expand environment variables in API file
-// 4. Parse the API contents
-// 5. Generate API request command
-// 6. Execute command & retrieve results
-// 7. Optionally, post-process and write results to a JSON file
-// func Process(version string) {
-// 	o := lama2cmd.GetAndValidateCmd(os.Args)
-// 	lama2cmd.ArgParsing(o, version)
-
-// 	apiContent := preprocess.GetLamaFileAsString(o.Positional.LamaAPIFile)
-// 	_, dir, _ := utils.GetFilePathComponents(o.Positional.LamaAPIFile)
-// 	oldDir, _ := os.Getwd()
-// 	utils.ChangeWorkingDir(dir)
-
-// 	preprocess.LoadEnvironments(dir)
-// 	utils.ChangeWorkingDir(oldDir)
-// 	p := parser.NewLama2Parser()
-// 	parsedAPI, e := p.Parse(apiContent)
-// 	if o.Convert != "" {
-// 		codegen.GenerateTargetCode(o.Convert, parsedAPI)
-// 		return
-// 	}
-
-// 	if o.Prettify {
-// 		prettify.Prettify(parsedAPI, p.Context, p.MarkRange, apiContent, o.Positional.LamaAPIFile)
-// 		return
-// 	}
-// 	HandleParsedFile(parsedAPI)
-// }
 
 func ProcessWasmInput(data string) httpie.ExResponse {
 	apiContent := data

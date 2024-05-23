@@ -41,13 +41,11 @@ func wasmLamaPromise() js.Func {
 			resolve := args[0]
 			go func() {
 				result := controller.ProcessWasmInput(inputdata)
-				fmt.Println("<-----Result----->:", result)
 				resultJSON, err := json.Marshal(result)
 				if err != nil {
 					fmt.Println("Error:", err)
 					return
 				}
-				fmt.Println("Result: ", string(resultJSON))
 				resolve.Invoke(js.ValueOf(string(resultJSON)))
 			}()
 			return nil
