@@ -29,7 +29,6 @@ func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, header
 		jsonStr = dst.String()
 	}
 
-
 	command = append(command, "ht ")
 	if multipart || form {
 		command = append(command, "--ignore-stdin", "--form")
