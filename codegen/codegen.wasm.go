@@ -23,19 +23,6 @@ type SnippetArgs struct {
 	SnippetCore string
 }
 
-func PrepareHTTPSnippetGenerator(snippetArgs SnippetArgs) string {
-	var templOutput bytes.Buffer
-	templStr := `{{.SnippetCore}} 
-
-	const snippet = new window.HTTPSnippet({{.HARRequest}});
-	
-	let convertedSnippet = snippet.convert('{{.Language}}'{{if .Library }}, '{{.Library}}'{{end}});
-	`
-	tmpl, _ := template.New("httpsnippet").Parse(templStr)
-	tmpl.Execute(&templOutput, snippetArgs)
-	return templOutput.String()
-}
-
 // takes in the headers in L2 format, and generates
 // HAR compatible
 func GetHARHeadersCookies(headers *gabs.Container) (*gabs.Container, *gabs.Container) {

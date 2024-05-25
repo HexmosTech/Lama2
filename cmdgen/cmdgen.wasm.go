@@ -69,6 +69,10 @@ func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, header
 	return cleanCommand, jsonStr
 }
 
+// func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, headers *gabs.Container, multipart bool, form bool, o *lama2cmd.Opts) ([]string, string) {
+// 	return assembleCmdStringHelper(httpv, url, jsonObj, headers, multipart, form, o.Nocolor)
+// }
+
 func ConstructCommand(parsedInput *gabs.Container) ([]string, string) {
 	httpv := parsedInput.S("verb", "value")
 	url := parsedInput.S("url", "value")

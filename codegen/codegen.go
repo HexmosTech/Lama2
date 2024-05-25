@@ -1,5 +1,3 @@
-//go:wasm cli
-
 package codegen
 
 import (
