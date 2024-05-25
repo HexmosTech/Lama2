@@ -1,4 +1,4 @@
-//go:build cli
+
 
 // Package `outputmanager` provides facilities for controlling
 // the logging library as well as capabilities to post-process
