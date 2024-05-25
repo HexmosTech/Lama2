@@ -7,8 +7,6 @@ import (
 	"os"
 	"strings"
 
-	"reflect"
-
 	"github.com/HexmosTech/gabs/v2"
 	"github.com/HexmosTech/httpie-go"
 	"github.com/HexmosTech/lama2/cmdexec"
