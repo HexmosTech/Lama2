@@ -29,13 +29,11 @@ func ProcessVarsInBlock(block *gabs.Container) {
 
 func ExpandHeaders(block *gabs.Container) {
 	headerMap := block.S("details", "headers")
-	// log.Info().Str("HeaderMap", headerMap.String()).Msg("")
 	if headerMap == nil {
 		return
 	}
 	newHeaderMap := gabs.New()
 	for k, v := range headerMap.ChildrenMap() {
-		// log.Trace().Strs("Header pair", []string{k, " = ", v.String()}).Msg("")
 		key := ExpandEnv(k)
 		val := ExpandEnv(v.Data().(*gabs.Container).Data().(string))
 		valWrap := gabs.New()
@@ -44,12 +42,10 @@ func ExpandHeaders(block *gabs.Container) {
 	}
 	block.Delete("details", "headers")
 	block.Set(newHeaderMap, "details", "headers")
-	// log.Info().Str("Expanded Header block", block.String()).Msg("")
 }
 
 func ExpandURL(block *gabs.Container) {
 	b := block.S("url", "value").Data().(string)
-	// log.Info().Str("Url block", b).Msg("")
 	url := ExpandEnv(b)
 	block.Delete("url", "value")
 	block.Set(url, "url", "value")
@@ -74,30 +70,26 @@ func debugOp(str string) {
 func escapeString(input string) string {
 	output, err := json.Marshal(input)
 	if err != nil {
-		// log.Error().Str("Error marshaling JSON:", "escapeString()")
+		fmt.Println("Error marshaling JSON: escapeString()")
 	}
 	return string(output)
 }
 
 func ExpandJSON(block *gabs.Container) {
-	// log.Info().Str("JSON block to be expanded", block.String()).Msg("")
 	dataBlock := block.S("details", "ip_data")
 	if dataBlock == nil {
 		return
 	}
 	dataBlockStr := dataBlock.String()
 	dataBlockStr = ExpandEnv(dataBlockStr)
-	// dataBlockStr = escapeString(dataBlockStr)
 	dataBlockStr = strings.ReplaceAll(dataBlockStr, "\n", "")
-	// log.Info().Str("Expanded JSON data block", dataBlockStr).Msg("")
 	processedBlock, err := gabs.ParseJSON([]byte(dataBlockStr))
 	if err != nil {
-		// log.Error().Str("Preprocess JSON block issue", "").Msg("")
+		fmt.Println("Preprocess JSON block issue)")
 		return
 	}
 	block.Delete("details", "ip_data")
 	block.Set(processedBlock, "details", "ip_data")
-	// log.Info().Str("Processed JSON block", block.String()).Msg("")
 }
 
 func SearchL2ConfigEnv(dir string) (string, error) {

@@ -35,7 +35,6 @@ func ExecuteRequestorBlock(block *gabs.Container) httpie.ExResponse {
 	// TODO - replace stuff in headers, and varjson and json as well
 	cmd, stdinBody := cmdgen.ConstructCommand(block)
 	resp, e1 := cmdexec.ExecCommand(cmd, stdinBody)
-	printFields(resp)
 	headers := resp.Headers
 	var headersString string
 	for key, value := range headers {
@@ -59,17 +58,6 @@ func ExecuteRequestorBlock(block *gabs.Container) httpie.ExResponse {
 	}
 
 	return resp
-}
-
-func printFields(data interface{}) {
-	v := reflect.ValueOf(data)
-	t := v.Type()
-
-	for i := 0; i < v.NumField(); i++ {
-		fieldName := t.Field(i).Name
-		fieldValue := v.Field(i).Interface()
-		fmt.Printf("The key values available : %s: %v\n", fieldName, fieldValue)
-	}
 }
 
 func HandleParsedFile(parsedAPI *gabs.Container) httpie.ExResponse {

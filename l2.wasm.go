@@ -17,26 +17,18 @@ func init() {
 	if len(version) == 0 {
 		version = "vUnset"
 	}
-}
+}	
 
 func main() {
-	// Set up the WebAssembly function
-	js.Global().Set("lama2Wasm", js.FuncOf(lama2Wasm))
+	//Set the global JavaScript property "goWebRequestFunc" to the result of wasmLamaPromise
 	js.Global().Set("goWebRequestFunc", wasmLamaPromise())
+	// Block the main function to keep the Go WebAssembly running
 	select {}
-}
-
-func lama2Wasm(this js.Value, i []js.Value) interface{} {
-	go func() {
-		controller.ProcessWasmInput("GET\nhttps://httpbin.org/get")
-	}()
-	return "data from api:"
 }
 
 func wasmLamaPromise() js.Func {
 	return js.FuncOf(func(this js.Value, args []js.Value) interface{} {
 		inputdata := args[0].String()
-		// proxyinputdata := args[1].String()
 		handler := js.FuncOf(func(this js.Value, args []js.Value) interface{} {
 			resolve := args[0]
 			go func() {
