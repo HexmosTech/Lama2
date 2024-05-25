@@ -18,10 +18,6 @@ import (
 	"syscall/js"
 )
 
-func GetParsedAPIBlocks(parsedAPI *gabs.Container) []*gabs.Container {
-	return parsedAPI.S("value").Data().(*gabs.Container).Children()
-}
-
 func ExecuteProcessorBlock(block *gabs.Container) {
 	b := block.S("value").Data().(*gabs.Container)
 	script := b.Data().(string)
