@@ -1,5 +1,3 @@
-//go:build cli
-
 // Package `cmdgen` provides an API to generate
 // API request commands (by default based on HTTPie)
 // based on the parsed API file contents and the `l2`
@@ -14,7 +12,6 @@ import (
 
 	"github.com/HexmosTech/gabs/v2"
 	"github.com/HexmosTech/lama2/lama2cmd"
-	"github.com/rs/zerolog/log"
 )
 
 func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, headers *gabs.Container, multipart bool, form bool, o *lama2cmd.Opts) ([]string, string) {
@@ -90,20 +87,17 @@ func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, header
 // API file inputs, figures out the type of target command
 // and finally generates a string representing the generated
 // command
-func ConstructCommand(parsedInput *gabs.Container, o *lama2cmd.Opts) ([]string, string) {
-	log.Info().Str("ParsedInput", parsedInput.String()).Msg("")
+func ConstructCommandHelper(parsedInput *gabs.Container) (string, string, *gabs.Container, *gabs.Container, bool, bool) {
 	httpv := parsedInput.S("verb", "value")
 	url := parsedInput.S("url", "value")
 	jsonObj := parsedInput.S("details", "ip_data")
 	headers := parsedInput.S("details", "headers")
 	multipart := parsedInput.S("multipart", "value")
+	form := parsedInput.S("form", "value")
 	multipartBool := false
 	if multipart != nil {
 		multipartBool = true
 	}
-	form := parsedInput.S("form", "value")
 	formBool := form != nil
-
-	res, stdinBody := assembleCmdString(httpv.Data().(string), url.Data().(string), jsonObj, headers, multipartBool, formBool, o)
-	return res, stdinBody
+	return httpv.Data().(string), url.Data().(string), jsonObj, headers, multipartBool, formBool
 }

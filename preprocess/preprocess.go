@@ -1,5 +1,3 @@
-//go:build cli
-
 // Package preprocess provides facilities to expand
 // environment variables in `.l2` API files and return
 // the contents
