@@ -4,9 +4,11 @@ package cmdexec
 
 import (
 	"syscall/js"
+
+	"github.com/dop251/goja"
 )
 
-func RunVMCode(jsCode string) {
+func RunVMCode(jsCode string, vm *goja.Runtime) {
 	js.Global().Call("eval", jsCode)
 }
 

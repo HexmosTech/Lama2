@@ -7,10 +7,14 @@
 package contoller
 
 import (
+	"fmt"
 	"os"
+	"strings"
 
 	"github.com/HexmosTech/gabs/v2"
 	"github.com/HexmosTech/httpie-go"
+	"github.com/HexmosTech/lama2/cmdexec"
+	"github.com/HexmosTech/lama2/cmdgen"
 	"github.com/HexmosTech/lama2/codegen"
 	"github.com/HexmosTech/lama2/lama2cmd"
 	"github.com/HexmosTech/lama2/parser"
@@ -21,12 +25,12 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-func ExecuteProcessorBlock(block *gabs.Container, vm *goja.Runtime) {
+func ExecuteProcessorBlock(block *gabs.Container, vm *goja.Runtime) httpie.ExResponse {
 	// b := block.S("value").Data().(*gabs.Container)
 	// log.Debug().Str("Processor block incoming block", block.String()).Msg("")
 	// script := b.Data().(string)
 	// cmdexec.RunVMCode(script, vm)
-	ExecuteProcessorBlockHelper(block, vm...)
+	return ExecuteProcessorBlockHelper(block, vm)
 }
 
 func ExecuteRequestorBlock(block *gabs.Container, vm *goja.Runtime, opts *lama2cmd.Opts, dir string) httpie.ExResponse {
@@ -47,7 +51,7 @@ func ExecuteRequestorBlock(block *gabs.Container, vm *goja.Runtime, opts *lama2c
 	return ExecuteRequestorBlockHelper(block, vm, opts, dir)
 }
 
-func HandleParsedFile(parsedAPI *gabs.Container, o *lama2cmd.Opts, dir string) {
+func HandleParsedFile(parsedAPI *gabs.Container, o *lama2cmd.Opts, dir string) httpie.ExResponse {
 	// parsedAPIblocks := GetParsedAPIBlocks(parsedAPI)
 	// vm := cmdexec.GetJSVm()
 	// var resp httpie.ExResponse
@@ -64,7 +68,7 @@ func HandleParsedFile(parsedAPI *gabs.Container, o *lama2cmd.Opts, dir string) {
 	// if o.Output != "" {
 	// 	outputmanager.WriteJSONOutput(resp, o.Output)
 	// }
-	return HandleParsedFileHelper(parsedAPI, O, dir)
+	return HandleParsedFileHelper(parsedAPI, o, dir)
 }
 
 // Process initiates the following tasks in the given order:
@@ -107,4 +111,75 @@ func Process(version string) {
 	}
 	log.Debug().Str("Parsed API", parsedAPI.String()).Msg("")
 	HandleParsedFile(parsedAPI, o, dir)
+}
+
+func ExecuteRequestorBlockHelper(block *gabs.Container, args ...interface{}) httpie.ExResponse {
+	var vm *goja.Runtime
+	var opts *lama2cmd.Opts
+	var dir string
+	var cmd []string
+	var stdinBody string
+	if len(args) > 0 {
+		for _, arg := range args {
+			switch v := arg.(type) {
+			case *goja.Runtime:
+				vm = v
+			case *lama2cmd.Opts:
+				opts = v
+			case string:
+				dir = v
+			}
+		}
+	}
+
+	if vm != nil {
+		preprocess.ProcessVarsInBlock(block, vm)
+	} else {
+		preprocess.ProcessVarsInBlock(block, nil)
+	}
+
+	if opts != nil {
+		cmd, stdinBody = cmdgen.ConstructCommand(block, opts)
+	} else {
+		cmd, stdinBody = cmdgen.ConstructCommand(block, nil)
+	}
+
+	var resp httpie.ExResponse
+	var e1 error
+	if dir != "" {
+		resp, e1 = cmdexec.ExecCommand(cmd, stdinBody, dir)
+	} else {
+		resp, e1 = cmdexec.ExecCommand(cmd, stdinBody, "")
+	}
+
+	headers := resp.Headers
+	var headersString string
+	for key, value := range headers {
+		headersString += fmt.Sprintf("%s: %s\n", key, value)
+	}
+
+	targetHeader := "text/html"
+	isTextHTMLPresent := strings.Contains(headersString, targetHeader)
+
+	if isTextHTMLPresent {
+		fmt.Printf("'%s' is present in the headers.\n", targetHeader)
+		return resp
+	} else {
+		fmt.Printf("'%s' is not present in the headers.\n", targetHeader)
+		if e1 == nil {
+			chainCode := cmdexec.GenerateChainCode(resp.Body)
+			if vm != nil {
+				cmdexec.RunVMCode(chainCode, vm)
+			} else {
+				cmdexec.RunVMCode(chainCode, nil)
+				// ExecuteJsCodeWasm(chainCode)
+				// js.Global().Call("eval", chainCode)
+			}
+		} else {
+			fmt.Printf("Error from ExecCommand", e1)
+			os.Exit(1)
+		}
+	}
+
+	return resp
 }

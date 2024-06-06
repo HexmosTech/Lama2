@@ -10,10 +10,11 @@ import (
 	"strings"
 
 	"github.com/HexmosTech/gabs/v2"
+	"github.com/dop251/goja"
 	// "github.com/rs/zerolog/log"
 )
 
-func ProcessVarsInBlock(block *gabs.Container) {
+func ProcessVarsInBlock(block *gabs.Container, vm *goja.Runtime) {
 	ExpandURL(block)
 	ExpandHeaders(block)
 	ExpandJSON(block)

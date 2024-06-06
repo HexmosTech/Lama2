@@ -21,8 +21,8 @@ import (
 // to stdout.
 // Once execution finishes, previous CWD is restored,
 // and the command output is returned as a string
-func ExecCommand(cmdSlice []string, stdinBody string) (httpie.ExResponse, error) {
-	proxyURL := "https://proxyserver.hexmos.com/"	
+func ExecCommand(cmdSlice []string, stdinBody string, apiDir string) (httpie.ExResponse, error) {
+	proxyURL := "https://proxyserver.hexmos.com/"
 	proxyUserName := "proxyServer"
 	proxyUserPassword := "proxy22523146server"
 	allowRedirects := true
