@@ -26,6 +26,9 @@ func GetJSVm() *goja.Runtime {
 // you reuse the vm for other operations, the state
 // from previous invocations carry over
 func RunVMCode(jsCode string, vm *goja.Runtime) {
+	if vm == nil {
+		vm = GetJSVm()
+	}
 	_, err := vm.RunString(jsCode)
 	if ex, ok := err.(*goja.Exception); ok {
 		log.Fatal().Str("Error executing JS processor block", ex.String()).Msg("")

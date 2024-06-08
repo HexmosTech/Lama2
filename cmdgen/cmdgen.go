@@ -28,6 +28,7 @@ func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, header
 	if jsonObj != nil && !multipart && !form {
 		dst := &bytes.Buffer{}
 		if err := json.Compact(dst, []byte(jsonObj.String())); err != nil {
+			fmt.Println(err)
 		}
 		jsonStr = dst.String()
 	}
@@ -40,7 +41,7 @@ func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, header
 		}*/
 
 	command = append(command, "ht ")
-	if o.Nocolor {
+	if o != nil && o.Nocolor {
 		command = append(command, "--pretty=none ")
 	}
 	if multipart || form {

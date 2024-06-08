@@ -141,7 +141,7 @@ func ExecuteRequestorBlockHelper(block *gabs.Container, args ...interface{}) htt
 	if opts != nil {
 		cmd, stdinBody = cmdgen.ConstructCommand(block, opts)
 	} else {
-		cmd, stdinBody = cmdgen.ConstructCommand(block, nil)
+		cmd, stdinBody = cmdgen.ConstructCommand(block, opts)
 	}
 
 	var resp httpie.ExResponse
@@ -171,7 +171,7 @@ func ExecuteRequestorBlockHelper(block *gabs.Container, args ...interface{}) htt
 			if vm != nil {
 				cmdexec.RunVMCode(chainCode, vm)
 			} else {
-				cmdexec.RunVMCode(chainCode, nil)
+				cmdexec.RunVMCode(chainCode, vm)
 				// ExecuteJsCodeWasm(chainCode)
 				// js.Global().Call("eval", chainCode)
 			}

@@ -124,12 +124,24 @@ func GetFilePathComponents(name string) (string, string, string) {
 // ChangeWorkingDirectory tries to set the CWD; on failure
 // it exits with a log error message
 func ChangeWorkingDir(dir string) {
+	if dir == "" {
+		log.Error().
+			Str("Type", "Preprocess").
+			Msg("Directory path is empty")
+		return
+	}
+
+	log.Debug().
+		Str("Type", "Preprocess").
+		Str("dir", dir).
+		Msg("Attempting to change directory")
+
 	err := os.Chdir(dir)
 	if err != nil {
 		log.Fatal().
 			Str("Type", "Preprocess").
 			Str("dir", dir).
-			Msg(fmt.Sprint("Moving into dir failed"))
+			Msg("Moving into dir failed")
 	}
 }
 
@@ -180,4 +192,3 @@ func MarshalAndPrintJSON(data interface{}) {
 	}
 	fmt.Println(string(filteredJSON))
 }
-

@@ -52,7 +52,7 @@ func processLama2FileBlock(block *gabs.Container, vm *goja.Runtime, o *lama2cmd.
 	if vm != nil && o != nil && dir != "" {
 		resp = ExecuteRequestorBlock(block, vm, o, dir)
 	} else {
-		resp = ExecuteRequestorBlock(block, nil, nil, "")
+		resp = ExecuteRequestorBlock(block, vm, o, dir)
 	}
 	return resp
 }
