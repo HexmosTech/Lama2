@@ -14,13 +14,13 @@ import (
 	contoller "github.com/HexmosTech/lama2/controller"
 	"github.com/HexmosTech/lama2/parser"
 	"github.com/HexmosTech/lama2/utils"
-	// "github.com/rs/zerolog/log"
+	"github.com/rs/zerolog/log"
 )
 
 func FileToString(filePath string) (string, error) {
 	b, err := os.ReadFile(filePath)
 	if err != nil {
-		// log.Debug().Str("Error", err.Error()).Msg("")
+		log.Debug().Str("Error", err.Error()).Msg("")
 		return "", err
 	}
 
@@ -44,17 +44,17 @@ func jsonFileToGabs(jsonPath string) (*gabs.Container, error) {
 func getDataFiles(relativeAppend string, globPattern string) ([]string, error) {
 	pwd, err := os.Getwd()
 	if err != nil {
-		// log.Debug().Str("Error", err.Error()).Msg("")
+		log.Debug().Str("Error", err.Error()).Msg("")
 		os.Exit(1)
 	}
 	res := filepath.Join(pwd, relativeAppend, globPattern)
 	matches, err := filepath.Glob(res)
-	// log.Debug().Strs("Matches", matches).Msg("")
+	log.Debug().Strs("Matches", matches).Msg("")
 	if err == nil {
 		sort.Strings(matches)
 		return matches, nil
 	}
-	// log.Debug().Msg("Couldn't get data file matches")
+	log.Debug().Msg("Couldn't get data file matches")
 	return nil, errors.New("Couldn't get data file matches")
 }
 
@@ -62,7 +62,7 @@ func PerformParserMatch(text string) (*gabs.Container, error) {
 	p := parser.NewLama2Parser()
 	got, e := p.Parse(text)
 	if e == nil {
-		// log.Debug().Str("Got", got.String()).Msg("")
+		log.Debug().Str("Got", got.String()).Msg("")
 	}
 	return got, e
 }
@@ -78,12 +78,12 @@ func TestValidFiles(_ *testing.T) {
 	for _, m := range matchFiles {
 		b, err := os.ReadFile(m) // just pass the file name
 		if err != nil {
-			// log.Fatal().Str("Error:", err.Error()).Msg("")
+			log.Fatal().Str("Error:", err.Error()).Msg("")
 		}
 
 		str := string(b) // convert content to a 'string'
 		myOp, _ := PerformParserMatch(str)
-		// log.Debug().Str("Execution result myOp", myOp.String()).Msg("")
+		log.Debug().Str("Execution result myOp", myOp.String()).Msg("")
 	}
 }
 
@@ -92,11 +92,11 @@ func TestInvalidFiles(_ *testing.T) {
 	for _, m := range matchFiles {
 		b, err := os.ReadFile(m) // just pass the file name
 		if err != nil {
-			// log.Fatal().Str("Error:", err.Error()).Msg("")
+			log.Fatal().Str("Error:", err.Error()).Msg("")
 		}
 
 		str := string(b) // convert content to a 'string'
-		// log.Debug().Str("str", str).Msg("")
+		log.Debug().Str("str", str).Msg("")
 	}
 }
 

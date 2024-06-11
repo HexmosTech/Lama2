@@ -9,7 +9,6 @@ package contoller
 import (
 	"fmt"
 	"os"
-	"strings"
 
 	"github.com/HexmosTech/gabs/v2"
 	"github.com/HexmosTech/httpie-go"
@@ -26,48 +25,14 @@ import (
 )
 
 func ExecuteProcessorBlock(block *gabs.Container, vm *goja.Runtime) httpie.ExResponse {
-	// b := block.S("value").Data().(*gabs.Container)
-	// log.Debug().Str("Processor block incoming block", block.String()).Msg("")
-	// script := b.Data().(string)
-	// cmdexec.RunVMCode(script, vm)
 	return ExecuteProcessorBlockHelper(block, vm)
 }
 
 func ExecuteRequestorBlock(block *gabs.Container, vm *goja.Runtime, opts *lama2cmd.Opts, dir string) httpie.ExResponse {
-	// preprocess.ProcessVarsInBlock(block, vm)
-	// // TODO - replace stuff in headers, and varjson and json as well
-	// cmd, stdinBody := cmdgen.ConstructCommand(block, opts)
-	// log.Debug().Str("Stdin Body to be passed into httpie", stdinBody).Msg("")
-	// resp, e1 := cmdexec.ExecCommand(cmd, stdinBody, dir)
-	// log.Debug().Str("Response from ExecCommand", resp.Body).Msg("")
-	// if e1 == nil {
-	// 	chainCode := cmdexec.GenerateChainCode(resp.Body)
-	// 	cmdexec.RunVMCode(chainCode, vm)
-	// } else {
-	// 	log.Fatal().Str("Error from ExecCommand", e1.Error())
-	// 	os.Exit(1)
-	// }
-	// return resp
 	return ExecuteRequestorBlockHelper(block, vm, opts, dir)
 }
 
 func HandleParsedFile(parsedAPI *gabs.Container, o *lama2cmd.Opts, dir string) httpie.ExResponse {
-	// parsedAPIblocks := GetParsedAPIBlocks(parsedAPI)
-	// vm := cmdexec.GetJSVm()
-	// var resp httpie.ExResponse
-	// for i, block := range parsedAPIblocks {
-	// 	log.Debug().Int("Block num", i).Msg("")
-	// 	log.Debug().Str("Block getting processed", block.String()).Msg("")
-	// 	blockType := block.S("type").Data().(string)
-	// 	if blockType == "processor" {
-	// 		ExecuteProcessorBlock(block, vm)
-	// 	} else if blockType == "Lama2File" {
-	// 		resp = ExecuteRequestorBlock(block, vm, o, dir)
-	// 	}
-	// }
-	// if o.Output != "" {
-	// 	outputmanager.WriteJSONOutput(resp, o.Output)
-	// }
 	return HandleParsedFileHelper(parsedAPI, o, dir)
 }
 
@@ -158,28 +123,27 @@ func ExecuteRequestorBlockHelper(block *gabs.Container, args ...interface{}) htt
 		headersString += fmt.Sprintf("%s: %s\n", key, value)
 	}
 
-	targetHeader := "text/html"
-	isTextHTMLPresent := strings.Contains(headersString, targetHeader)
+	// TODO: Getting html results for widget
+	// targetHeader := "text/html"
+	// isTextHTMLPresent := strings.Contains(headersString, targetHeader)
 
-	if isTextHTMLPresent {
-		fmt.Printf("'%s' is present in the headers.\n", targetHeader)
-		return resp
-	} else {
-		fmt.Printf("'%s' is not present in the headers.\n", targetHeader)
-		if e1 == nil {
-			chainCode := cmdexec.GenerateChainCode(resp.Body)
-			if vm != nil {
-				cmdexec.RunVMCode(chainCode, vm)
-			} else {
-				cmdexec.RunVMCode(chainCode, vm)
-				// ExecuteJsCodeWasm(chainCode)
-				// js.Global().Call("eval", chainCode)
-			}
+	// if isTextHTMLPresent {
+	// 	// fmt.Printf("'%s' is present in the headers.\n", targetHeader)
+	// 	return resp
+	// } else {
+	// 	fmt.Printf("'%s' is not present in the headers.\n", targetHeader)
+	if e1 == nil {
+		chainCode := cmdexec.GenerateChainCode(resp.Body)
+		if vm != nil {
+			cmdexec.RunVMCode(chainCode, vm)
 		} else {
-			fmt.Printf("Error from ExecCommand", e1)
-			os.Exit(1)
+			cmdexec.RunVMCode(chainCode, vm)
+			// ExecuteJsCodeWasm(chainCode)
+			// js.Global().Call("eval", chainCode)
 		}
+	} else {
+		fmt.Printf("Error from ExecCommand", e1)
+		os.Exit(1)
 	}
-
 	return resp
 }

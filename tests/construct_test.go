@@ -9,7 +9,7 @@ import (
 	contoller "github.com/HexmosTech/lama2/controller"
 	"github.com/HexmosTech/lama2/lama2cmd"
 	"github.com/HexmosTech/lama2/parser"
-	// "github.com/rs/zerolog/log"
+	"github.com/rs/zerolog/log"
 )
 
 // matchFiles, _ := getDataFiles("../elfparser/ElfTestSuite", "y_0012_varjson_multipart.l2")
@@ -28,7 +28,7 @@ func TestConstruct(t *testing.T) {
 	blocks := contoller.GetParsedAPIBlocks(res)
 	for _, block := range blocks {
 		r2, body := cmdgen.ConstructCommand(block, opts)
-		// log.Debug().Strs("Constructed command", r2).Msg("")
-		// log.Debug().Str("Constructed body: ", body).Msg("")
+		log.Debug().Strs("Constructed command", r2).Msg("")
+		log.Debug().Str("Constructed body: ", body).Msg("")
 	}
 }

@@ -2,11 +2,11 @@ all: test lint gofumpt buildme mkdocs
 
 buildme: 
 	go mod tidy
-	go build -o build/l2 -ldflags "-X main.version=`git tag --sort=-version:refname | head -n 1`" l2.go
+	go build -tags=cli -o build/l2 -ldflags "-X main.version=`git tag --sort=-version:refname | head -n 1`" l2.go
 
 debug:
 	go mod tidy
-	go build -gcflags=all="-N -l" -ldflags=-w -ldflags=-compressdwarf=false
+	go build -tags=cli -gcflags=all="-N -l" -ldflags=-w -ldflags=-compressdwarf=false
 	echo "\033[31m(1) At localhost:8081, set gdbserver address as localhost:8082;\n(2) Also run "monitor exit" from gdb client to terminate the server\033[0m"
 	-pkill -9 gdbgui && true
 	gdbgui -p 8081&
@@ -24,7 +24,8 @@ gofumpt:
 
 test:
 	make buildme
-	go test ./tests/ -count=1 -v
+	go test -tags=cli ./tests/ -count=1 -v
+
 	
 benchmark:
 	go test -bench=. -count 1 -run=^# -benchmem ./tests/
@@ -44,6 +45,6 @@ clean:
 setbuild:
 # Use for clearing exising L2 and set built L2 as global 
 	go mod tidy
-	go build -o build/l2 -ldflags "-X main.version=`git tag --sort=-version:refname | head -n 1`" l2.go
+	go build -tags=cli -o build/l2 -ldflags "-X main.version=`git tag --sort=-version:refname | head -n 1`" l2.go
 	sudo rm -rf /usr/local/bin/l2
 	sudo cp build/l2 /usr/local/bin/l2

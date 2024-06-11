@@ -20,9 +20,6 @@ import (
 )
 
 func ExecuteProcessorBlock(block *gabs.Container, vm *goja.Runtime) httpie.ExResponse {
-	// b := block.S("value").Data().(*gabs.Container)
-	// script := b.Data().(string)
-	// js.Global().Call("eval", script)
 	return ExecuteProcessorBlockHelper(block)
 }
 
@@ -31,49 +28,10 @@ func ExecuteJsCodeWasm(script string) {
 }
 
 func ExecuteRequestorBlock(block *gabs.Container, vm *goja.Runtime, opts *lama2cmd.Opts, dir string) httpie.ExResponse {
-	// preprocess.ProcessVarsInBlock(block)
-	// // TODO - replace stuff in headers, and varjson and json as well
-	// cmd, stdinBody := cmdgen.ConstructCommand(block)
-	// resp, e1 := cmdexec.ExecCommand(cmd, stdinBody)
-	// headers := resp.Headers
-	// var headersString string
-	// for key, value := range headers {
-	// 	headersString += fmt.Sprintf("%s: %s\n", key, value)
-	// }
-
-	// targetHeader := "text/html"
-	// isTextHTMLPresent := strings.Contains(headersString, targetHeader)
-
-	// if isTextHTMLPresent {
-	// 	fmt.Printf("'%s' is present in the headers.\n", targetHeader)
-	// 	return resp
-	// } else {
-	// 	fmt.Printf("'%s' is not present in the headers.\n", targetHeader)
-	// 	if e1 == nil {
-	// 		chainCode := cmdexec.GenerateChainCode(resp.Body)
-	// 		js.Global().Call("eval", chainCode)
-	// 	} else {
-	// 		os.Exit(1)
-	// 	}
-	// }
-
-	// return resp
 	return ExecuteRequestorBlockHelper(block)
 }
 
 func HandleParsedFile(parsedAPI *gabs.Container) httpie.ExResponse {
-	// parsedAPIblocks := GetParsedAPIBlocks(parsedAPI)
-	// var resp httpie.ExResponse
-	// for i, block := range parsedAPIblocks {
-	// 	fmt.Println(i)
-	// 	blockType := block.S("type").Data().(string)
-	// 	if blockType == "processor" {
-	// 		ExecuteProcessorBlock(block)
-	// 	} else if blockType == "Lama2File" {
-	// 		resp = ExecuteRequestorBlock(block)
-	// 	}
-	// }
-	// return resp
 	return HandleParsedFileHelper(parsedAPI)
 }
 
@@ -112,14 +70,14 @@ func ExecuteRequestorBlockHelper(block *gabs.Container, args ...interface{}) htt
 	if vm != nil {
 		preprocess.ProcessVarsInBlock(block, vm)
 	} else {
-		preprocess.ProcessVarsInBlock(block, nil)
+		preprocess.ProcessVarsInBlock(block, vm)
 	}
 	var cmd []string
 	var stdinBody string
 	if opts != nil {
 		cmd, stdinBody = cmdgen.ConstructCommand(block, opts)
 	} else {
-		cmd, stdinBody = cmdgen.ConstructCommand(block, nil)
+		cmd, stdinBody = cmdgen.ConstructCommand(block, opts)
 	}
 
 	var resp httpie.ExResponse
@@ -127,7 +85,7 @@ func ExecuteRequestorBlockHelper(block *gabs.Container, args ...interface{}) htt
 	if dir != "" {
 		resp, e1 = cmdexec.ExecCommand(cmd, stdinBody, dir)
 	} else {
-		resp, e1 = cmdexec.ExecCommand(cmd, stdinBody, "")
+		resp, e1 = cmdexec.ExecCommand(cmd, stdinBody, dir)
 	}
 
 	headers := resp.Headers
