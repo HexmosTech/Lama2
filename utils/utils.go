@@ -1,5 +1,3 @@
-//go:build cli
-
 // Package `utils` provides useful functions for
 // simplifying various programming tasks
 package utils
@@ -17,7 +15,6 @@ import (
 	"unicode"
 
 	"github.com/HexmosTech/gabs/v2"
-	"github.com/rs/zerolog/log"
 )
 
 // The following string fragment is used to mark unquoted

@@ -12,21 +12,6 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-// The following string fragment is used to mark unquoted
-// variables within a JSON body in the lama2 file.
-// For example, Lama2 parser will mark an unquoted variable
-// `hello` as:
-//
-// "<626f4c60-${hello}>"
-//
-// The above string is actually representative of the user intent:
-//
-// ${hello}
-//
-// Note the lack of quotes around the variable above. This hack
-// is needed to work around Gabs, which is unaware of variables
-// required in the Lama2 system
-const UNQUOTED_VAR_MARKER = "626f4c60"
 
 // ChangeWorkingDirectory tries to set the CWD; on failure
 // it exits with a log error message
