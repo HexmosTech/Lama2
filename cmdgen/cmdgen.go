@@ -14,6 +14,10 @@ import (
 	"github.com/HexmosTech/lama2/lama2cmd"
 )
 
+// The assembleCmdString function constructs a httpie 
+// command string for an HTTP request based on the provided 
+// HTTP method, URL, JSON object, headers, and options. It also
+//  handle multipart and form data.
 func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, headers *gabs.Container, multipart bool, form bool, o *lama2cmd.Opts) ([]string, string) {
 	command := make([]string, 0)
 	var files *gabs.Container

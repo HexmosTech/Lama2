@@ -129,7 +129,6 @@ func ExecuteRequestorBlockHelper(block *gabs.Container, args ...interface{}) htt
 	// isTextHTMLPresent := strings.Contains(headersString, targetHeader)
 
 	// if isTextHTMLPresent {
-	// 	// fmt.Printf("'%s' is present in the headers.\n", targetHeader)
 	// 	return resp
 	// } else {
 	// 	fmt.Printf("'%s' is not present in the headers.\n", targetHeader)
@@ -139,8 +138,6 @@ func ExecuteRequestorBlockHelper(block *gabs.Container, args ...interface{}) htt
 			cmdexec.RunVMCode(chainCode, vm)
 		} else {
 			cmdexec.RunVMCode(chainCode, vm)
-			// ExecuteJsCodeWasm(chainCode)
-			// js.Global().Call("eval", chainCode)
 		}
 	} else {
 		fmt.Printf("Error from ExecCommand", e1)
