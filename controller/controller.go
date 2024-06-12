@@ -34,11 +34,8 @@ func extractArgs(args []interface{}) (*goja.Runtime, *lama2cmd.Opts, string) {
 			}
 		}
 	}
-	vm = cmdexec.GetJSVm()
 	return vm, o, dir
 }
-
-
 
 func processLama2FileBlock(block *gabs.Container, vm *goja.Runtime, o *lama2cmd.Opts, dir string) httpie.ExResponse {
 	var resp httpie.ExResponse

@@ -33,7 +33,8 @@ func ExecuteRequestorBlock(block *gabs.Container, vm *goja.Runtime, opts *lama2c
 }
 
 func HandleParsedFile(parsedAPI *gabs.Container, o *lama2cmd.Opts, dir string) httpie.ExResponse {
-	return HandleParsedFileHelper(parsedAPI, o, dir)
+	vm := cmdexec.GetJSVm()
+	return HandleParsedFileHelper(parsedAPI, o, dir,vm)
 }
 
 // Process initiates the following tasks in the given order:

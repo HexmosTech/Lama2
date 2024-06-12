@@ -9,6 +9,7 @@ package cmdexec
 import (
 	"errors"
 	"fmt"
+	"os"
 
 	"strings"
 
@@ -22,9 +23,9 @@ import (
 // Once execution finishes, previous CWD is restored,
 // and the command output is returned as a string
 func ExecCommand(cmdSlice []string, stdinBody string, apiDir string) (httpie.ExResponse, error) {
-	proxyURL := "https://proxyserver.hexmos.com/"
-	proxyUserName := "proxyServer"
-	proxyUserPassword := "proxy22523146server"
+	proxyURL := os.Getenv("PROXY_URL")
+	proxyUserName := os.Getenv("PROXY_USERNAME")
+	proxyUserPassword := os.Getenv("PROXY_PASSWORD")
 	allowRedirects := true
 	resp, err := httpie.Lama2Entry(cmdSlice, strings.NewReader(stdinBody), proxyURL, proxyUserName, proxyUserPassword, allowRedirects)
 	if err != nil {
