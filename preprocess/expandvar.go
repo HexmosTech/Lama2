@@ -1,5 +1,3 @@
-//go:build cli
-
 // Copyright 2010 The Go Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
@@ -9,9 +7,6 @@
 package preprocess
 
 import (
-	"os"
-	"strings"
-
 	"github.com/HexmosTech/lama2/utils"
 	"github.com/dop251/goja"
 	"github.com/rs/zerolog/log"
@@ -39,7 +34,8 @@ func Expand(s string, vm *goja.Runtime, mapping map[string]string) string {
 				// name. Leave the dollar character untouched.
 				buf = append(buf, s[j])
 			} else {
-				jsVal := vm.Get(name)
+				// jsVal := vm.Get(name)
+				jsVal := getJsValue(vm, name)
 				if jsVal != nil {
 					buf = append(buf, []byte(jsVal.String())...)
 				} else {
@@ -64,23 +60,6 @@ func Expand(s string, vm *goja.Runtime, mapping map[string]string) string {
 	}
 	res2 := utils.RemoveUnquotedValueMarker(res)
 	return res2
-}
-
-func getEnvironMap() map[string]string {
-	m := make(map[string]string)
-	for _, e := range os.Environ() {
-		if i := strings.Index(e, "="); i >= 0 {
-			m[e[:i]] = e[i+1:]
-		}
-	}
-	return m
-}
-
-// ExpandEnv replaces ${var} or $var in the string according to the values
-// of the current environment variables. References to undefined
-// variables are replaced by the empty string.
-func ExpandEnv(s string, vm *goja.Runtime) string {
-	return Expand(s, vm, getEnvironMap())
 }
 
 // isShellSpecialVar reports whether the character identifies a special
@@ -125,34 +104,9 @@ func getShellName(s string) (string, int) {
 	return s[:i], i
 }
 
-/*
-// Getenv retrieves the value of the environment variable named by the key.
-// It returns the value, which will be empty if the variable is not present.
-// To distinguish between an empty value and an unset value, use LookupEnv.
-func Getenv(key string) string {
-	testlog.Getenv(key)
-	v, _ := syscall.Getenv(key)
-	return v
+// ExpandEnv replaces ${var} or $var in the string according to the values
+// of the current environment variables. References to undefined
+// variables are replaced by the empty string.
+func ExpandEnv(s string, vm *goja.Runtime) string {
+	return Expand(s, vm, getEnvironMap())
 }
-
-// LookupEnv retrieves the value of the environment variable named
-// by the key. If the variable is present in the environment the
-// value (which may be empty) is returned and the boolean is true.
-// Otherwise the returned value will be empty and the boolean will
-// be false.
-func LookupEnv(key string) (string, bool) {
-	testlog.Getenv(key)
-	return syscall.Getenv(key)
-}
-
-// Clearenv deletes all environment variables.
-func Clearenv() {
-	syscall.Clearenv()
-}
-
-// Environ returns a copy of strings representing the environment,
-// in the form "key=value".
-func Environ() []string {
-	return syscall.Environ()
-}
-*/
