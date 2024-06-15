@@ -38,11 +38,7 @@ func extractArgs(args []interface{}) (*goja.Runtime, *lama2cmd.Opts, string) {
 
 func processLama2FileBlock(block *gabs.Container, vm *goja.Runtime, o *lama2cmd.Opts, dir string) httpie.ExResponse {
 	var resp httpie.ExResponse
-	if vm != nil && o != nil && dir != "" {
-		resp = ExecuteRequestorBlock(block, vm, o, dir)
-	} else {
-		resp = ExecuteRequestorBlock(block, vm, o, dir)
-	}
+	resp = ExecuteRequestorBlock(block, vm, o, dir)
 	return resp
 }
 

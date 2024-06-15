@@ -101,48 +101,19 @@ func ExecuteRequestorBlockHelper(block *gabs.Container, args ...interface{}) htt
 			}
 		}
 	}
-
-	if vm != nil {
-		preprocess.ProcessVarsInBlock(block, vm)
-	} else {
-		preprocess.ProcessVarsInBlock(block, nil)
-	}
-
-	if opts != nil {
-		cmd, stdinBody = cmdgen.ConstructCommand(block, opts)
-	} else {
-		cmd, stdinBody = cmdgen.ConstructCommand(block, opts)
-	}
-
+	preprocess.ProcessVarsInBlock(block, vm)
+	cmd, stdinBody = cmdgen.ConstructCommand(block, opts)
 	var resp httpie.ExResponse
 	var e1 error
-	if dir != "" {
-		resp, e1 = cmdexec.ExecCommand(cmd, stdinBody, dir)
-	} else {
-		resp, e1 = cmdexec.ExecCommand(cmd, stdinBody, "")
-	}
-
+	resp, e1 = cmdexec.ExecCommand(cmd, stdinBody, dir)
 	headers := resp.Headers
 	var headersString string
 	for key, value := range headers {
 		headersString += fmt.Sprintf("%s: %s\n", key, value)
 	}
-
-	// TODO: Getting html results for widget
-	// targetHeader := "text/html"
-	// isTextHTMLPresent := strings.Contains(headersString, targetHeader)
-
-	// if isTextHTMLPresent {
-	// 	return resp
-	// } else {
-	// 	fmt.Printf("'%s' is not present in the headers.\n", targetHeader)
 	if e1 == nil {
 		chainCode := cmdexec.GenerateChainCode(resp.Body)
-		if vm != nil {
-			cmdexec.RunVMCode(chainCode, vm)
-		} else {
-			cmdexec.RunVMCode(chainCode, vm)
-		}
+		cmdexec.RunVMCode(chainCode, vm)
 	} else {
 		fmt.Printf("Error from ExecCommand", e1)
 		os.Exit(1)

@@ -45,7 +45,6 @@ func ProcessWasmInput(data string) (httpie.ExResponse, *lama2cmd.Opts) {
 
 	// Print the parsedAPI value
 	fmt.Printf("Parsed API: %+v\n", parsedAPI)
-	fmt.Println(parsedAPI)
 	return HandleParsedFile(parsedAPI)
 }
 
@@ -66,28 +65,13 @@ func ExecuteRequestorBlockHelper(block *gabs.Container, args ...interface{}) htt
 			}
 		}
 	}
-
-	if vm != nil {
-		preprocess.ProcessVarsInBlock(block, vm)
-	} else {
-		preprocess.ProcessVarsInBlock(block, vm)
-	}
+	preprocess.ProcessVarsInBlock(block, vm)
 	var cmd []string
 	var stdinBody string
-	if opts != nil {
-		cmd, stdinBody = cmdgen.ConstructCommand(block, opts)
-	} else {
-		cmd, stdinBody = cmdgen.ConstructCommand(block, opts)
-	}
-
+	cmd, stdinBody = cmdgen.ConstructCommand(block, opts)
 	var resp httpie.ExResponse
 	var e1 error
-	if dir != "" {
-		resp, e1 = cmdexec.ExecCommand(cmd, stdinBody, dir)
-	} else {
-		resp, e1 = cmdexec.ExecCommand(cmd, stdinBody, dir)
-	}
-
+	resp, e1 = cmdexec.ExecCommand(cmd, stdinBody, dir)
 	headers := resp.Headers
 	var headersString string
 	for key, value := range headers {
@@ -108,7 +92,6 @@ func ExecuteRequestorBlockHelper(block *gabs.Container, args ...interface{}) htt
 				cmdexec.RunVMCode(chainCode, vm)
 			} else {
 				ExecuteJsCodeWasm(chainCode)
-				// js.Global().Call("eval", chainCode)
 			}
 		} else {
 			fmt.Println("Error from ExecCommand", e1)
