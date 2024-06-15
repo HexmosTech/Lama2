@@ -5,13 +5,13 @@
 package contoller
 
 import (
+	"fmt"
 	"log"
 
 	"github.com/HexmosTech/gabs/v2"
 	"github.com/HexmosTech/httpie-go"
 	"github.com/HexmosTech/lama2/cmdexec"
 	"github.com/HexmosTech/lama2/lama2cmd"
-	outputmanager "github.com/HexmosTech/lama2/outputManager"
 	"github.com/dop251/goja"
 )
 
@@ -47,7 +47,7 @@ func processLama2FileBlock(block *gabs.Container, vm *goja.Runtime, o *lama2cmd.
 	return resp
 }
 
-func processBlocks(parsedAPIblocks []*gabs.Container, vm *goja.Runtime, o *lama2cmd.Opts, dir string) httpie.ExResponse {
+func processBlocks(parsedAPIblocks []*gabs.Container, vm *goja.Runtime, o *lama2cmd.Opts, dir string) (httpie.ExResponse, *lama2cmd.Opts) {
 	var resp httpie.ExResponse
 
 	for i, block := range parsedAPIblocks {
@@ -56,19 +56,15 @@ func processBlocks(parsedAPIblocks []*gabs.Container, vm *goja.Runtime, o *lama2
 		blockType := block.S("type").Data().(string)
 		switch blockType {
 		case "processor":
-			// resp = processProcessorBlock(block, vm)
 			resp = ExecuteProcessorBlock(block, vm)
 		case "Lama2File":
 			resp = processLama2FileBlock(block, vm, o, dir)
 		}
 	}
-	if o.Output != "" {
-		outputmanager.WriteJSONOutput(resp, o.Output)
-	}
-	return resp
+	return resp, o
 }
 
-func HandleParsedFileHelper(parsedAPI *gabs.Container, args ...interface{}) httpie.ExResponse {
+func HandleParsedFileHelper(parsedAPI *gabs.Container, args ...interface{}) (httpie.ExResponse, *lama2cmd.Opts) {
 	parsedAPIblocks := GetParsedAPIBlocks(parsedAPI)
 	vm, o, dir := extractArgs(args)
 	return processBlocks(parsedAPIblocks, vm, o, dir)

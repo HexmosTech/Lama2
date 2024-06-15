@@ -16,6 +16,7 @@ import (
 	"github.com/HexmosTech/lama2/cmdgen"
 	"github.com/HexmosTech/lama2/codegen"
 	"github.com/HexmosTech/lama2/lama2cmd"
+	outputmanager "github.com/HexmosTech/lama2/outputManager"
 	"github.com/HexmosTech/lama2/parser"
 	"github.com/HexmosTech/lama2/preprocess"
 	"github.com/HexmosTech/lama2/prettify"
@@ -32,9 +33,9 @@ func ExecuteRequestorBlock(block *gabs.Container, vm *goja.Runtime, opts *lama2c
 	return ExecuteRequestorBlockHelper(block, vm, opts, dir)
 }
 
-func HandleParsedFile(parsedAPI *gabs.Container, o *lama2cmd.Opts, dir string) httpie.ExResponse {
+func HandleParsedFile(parsedAPI *gabs.Container, o *lama2cmd.Opts, dir string) (httpie.ExResponse, *lama2cmd.Opts) {
 	vm := cmdexec.GetJSVm()
-	return HandleParsedFileHelper(parsedAPI, o, dir,vm)
+	return HandleParsedFileHelper(parsedAPI, o, dir, vm)
 }
 
 // Process initiates the following tasks in the given order:
@@ -76,7 +77,10 @@ func Process(version string) {
 			Msg("Parse Error")
 	}
 	log.Debug().Str("Parsed API", parsedAPI.String()).Msg("")
-	HandleParsedFile(parsedAPI, o, dir)
+	res, out := HandleParsedFile(parsedAPI, o, dir)
+	if out.Output != "" {
+		outputmanager.WriteJSONOutput(res, out.Output)
+	}
 }
 
 func ExecuteRequestorBlockHelper(block *gabs.Container, args ...interface{}) httpie.ExResponse {

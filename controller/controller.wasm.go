@@ -31,11 +31,11 @@ func ExecuteRequestorBlock(block *gabs.Container, vm *goja.Runtime, opts *lama2c
 	return ExecuteRequestorBlockHelper(block)
 }
 
-func HandleParsedFile(parsedAPI *gabs.Container) httpie.ExResponse {
+func HandleParsedFile(parsedAPI *gabs.Container) (httpie.ExResponse, *lama2cmd.Opts) {
 	return HandleParsedFileHelper(parsedAPI)
 }
 
-func ProcessWasmInput(data string) httpie.ExResponse {
+func ProcessWasmInput(data string) (httpie.ExResponse, *lama2cmd.Opts) {
 	apiContent := data
 	p := parser.NewLama2Parser()
 	parsedAPI, e := p.Parse(apiContent)
