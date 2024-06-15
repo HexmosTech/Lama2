@@ -5,12 +5,15 @@
 package contoller
 
 import (
+	"fmt"
 	"log"
 
 	"github.com/HexmosTech/gabs/v2"
 	"github.com/HexmosTech/httpie-go"
 	"github.com/HexmosTech/lama2/cmdexec"
+	"github.com/HexmosTech/lama2/cmdgen"
 	"github.com/HexmosTech/lama2/lama2cmd"
+	"github.com/HexmosTech/lama2/preprocess"
 	"github.com/dop251/goja"
 )
 
@@ -37,8 +40,18 @@ func extractArgs(args []interface{}) (*goja.Runtime, *lama2cmd.Opts, string) {
 }
 
 func processLama2FileBlock(block *gabs.Container, vm *goja.Runtime, o *lama2cmd.Opts, dir string) httpie.ExResponse {
+	preprocess.ProcessVarsInBlock(block, vm)
+	cmd, stdinBody := cmdgen.ConstructCommand(block, o)
 	var resp httpie.ExResponse
-	resp = ExecuteRequestorBlock(block, vm, o, dir)
+	var e1 error
+	resp, e1 = cmdexec.ExecCommand(cmd, stdinBody, dir)
+	headers := resp.Headers
+	var headersString string
+	for key, value := range headers {
+		headersString += fmt.Sprintf("%s: %s\n", key, value)
+	}
+
+	resp = ExecuteRequestorBlockHelper(resp, headersString, e1, vm)
 	return resp
 }
 

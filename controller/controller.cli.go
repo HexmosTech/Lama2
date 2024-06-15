@@ -13,7 +13,6 @@ import (
 	"github.com/HexmosTech/gabs/v2"
 	"github.com/HexmosTech/httpie-go"
 	"github.com/HexmosTech/lama2/cmdexec"
-	"github.com/HexmosTech/lama2/cmdgen"
 	"github.com/HexmosTech/lama2/codegen"
 	"github.com/HexmosTech/lama2/lama2cmd"
 	outputmanager "github.com/HexmosTech/lama2/outputManager"
@@ -29,9 +28,9 @@ func ExecuteProcessorBlock(block *gabs.Container, vm *goja.Runtime) httpie.ExRes
 	return ExecuteProcessorBlockHelper(block, vm)
 }
 
-func ExecuteRequestorBlock(block *gabs.Container, vm *goja.Runtime, opts *lama2cmd.Opts, dir string) httpie.ExResponse {
-	return ExecuteRequestorBlockHelper(block, vm, opts, dir)
-}
+// func ExecuteRequestorBlock(block *gabs.Container, vm *goja.Runtime, opts *lama2cmd.Opts, dir string) httpie.ExResponse {
+// 	return ExecuteRequestorBlockHelper(block, vm, opts, dir)
+// }
 
 func HandleParsedFile(parsedAPI *gabs.Container, o *lama2cmd.Opts, dir string) (httpie.ExResponse, *lama2cmd.Opts) {
 	vm := cmdexec.GetJSVm()
@@ -83,34 +82,7 @@ func Process(version string) {
 	}
 }
 
-func ExecuteRequestorBlockHelper(block *gabs.Container, args ...interface{}) httpie.ExResponse {
-	var vm *goja.Runtime
-	var opts *lama2cmd.Opts
-	var dir string
-	var cmd []string
-	var stdinBody string
-	if len(args) > 0 {
-		for _, arg := range args {
-			switch v := arg.(type) {
-			case *goja.Runtime:
-				vm = v
-			case *lama2cmd.Opts:
-				opts = v
-			case string:
-				dir = v
-			}
-		}
-	}
-	preprocess.ProcessVarsInBlock(block, vm)
-	cmd, stdinBody = cmdgen.ConstructCommand(block, opts)
-	var resp httpie.ExResponse
-	var e1 error
-	resp, e1 = cmdexec.ExecCommand(cmd, stdinBody, dir)
-	headers := resp.Headers
-	var headersString string
-	for key, value := range headers {
-		headersString += fmt.Sprintf("%s: %s\n", key, value)
-	}
+func ExecuteRequestorBlockHelper(resp httpie.ExResponse, headersString string, e1 error, vm *goja.Runtime) httpie.ExResponse {
 	if e1 == nil {
 		chainCode := cmdexec.GenerateChainCode(resp.Body)
 		cmdexec.RunVMCode(chainCode, vm)
