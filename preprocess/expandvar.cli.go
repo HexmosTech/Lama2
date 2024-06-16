@@ -13,10 +13,23 @@ import (
 	"strings"
 
 	"github.com/dop251/goja"
+	"github.com/rs/zerolog/log"
 )
 
-func getJsValue(vm *goja.Runtime, name string) goja.Value {
-	return vm.Get(name)
+func getJsValue(vm *goja.Runtime, name string, mapping map[string]string, buf []byte) []byte {
+	jsVal := vm.Get(name)
+	if jsVal != nil {
+		buf = append(buf, []byte(jsVal.String())...)
+	} else {
+		val, ok := mapping[name]
+		if ok {
+			buf = append(buf, val...)
+		} else {
+			buf = append(buf, ""...)
+			log.Warn().Str("Couldn't find the variable `"+name+"`,  in both Javascript processor block and environment variables. Replacing with empty string", "").Msg("")
+		}
+	}
+	return buf
 }
 
 func getEnvironMap() map[string]string {

@@ -8,8 +8,20 @@ import (
 	"github.com/dop251/goja"
 )
 
-func getJsValue(vm *goja.Runtime, name string) goja.Value {
-	return js.Global().Get(name)
+func getJsValue(vm *goja.Runtime, name string, mapping map[string]string, buf []byte) []byte {
+	jsVal := js.Global().Get(name)
+	if jsVal.Truthy() {
+		buf = append(buf, []byte(jsVal.String())...)
+	} else {
+		val, ok := mapping[name]
+		if ok {
+			buf = append(buf, val...)
+		} else {
+			buf = append(buf, ""...)
+		}
+	}
+
+	return buf
 }
 
 func getEnvironMap() map[string]string {

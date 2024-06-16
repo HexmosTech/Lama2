@@ -9,7 +9,6 @@ package preprocess
 import (
 	"github.com/HexmosTech/lama2/utils"
 	"github.com/dop251/goja"
-	"github.com/rs/zerolog/log"
 )
 
 // Expand replaces ${var} or $var in the string based on the mapping function.
@@ -34,19 +33,7 @@ func Expand(s string, vm *goja.Runtime, mapping map[string]string) string {
 				// name. Leave the dollar character untouched.
 				buf = append(buf, s[j])
 			} else {
-				// jsVal := vm.Get(name)
-				jsVal := getJsValue(vm, name)
-				if jsVal != nil {
-					buf = append(buf, []byte(jsVal.String())...)
-				} else {
-					val, ok := mapping[name]
-					if ok {
-						buf = append(buf, val...)
-					} else {
-						buf = append(buf, ""...)
-						log.Warn().Str("Couldn't find the variable `"+name+"`,  in both Javascript processor block and environment variables. Replacing with empty string", "").Msg("")
-					}
-				}
+				buf = getJsValue(vm, name, mapping, buf)
 			}
 			j += w
 			i = j + 1
