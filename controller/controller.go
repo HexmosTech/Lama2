@@ -33,6 +33,8 @@ func extractArgs(args []interface{}) (*goja.Runtime, *lama2cmd.Opts, string) {
 				o = v
 			case string:
 				dir = v
+			case *goja.Runtime:
+				vm = v
 			}
 		}
 	}
