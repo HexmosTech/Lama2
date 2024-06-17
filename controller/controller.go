@@ -6,7 +6,6 @@ package contoller
 
 import (
 	"fmt"
-	"log"
 
 	"github.com/HexmosTech/gabs/v2"
 	"github.com/HexmosTech/httpie-go"
@@ -60,9 +59,7 @@ func processLama2FileBlock(block *gabs.Container, vm *goja.Runtime, o *lama2cmd.
 func processBlocks(parsedAPIblocks []*gabs.Container, vm *goja.Runtime, o *lama2cmd.Opts, dir string) (httpie.ExResponse, *lama2cmd.Opts) {
 	var resp httpie.ExResponse
 
-	for i, block := range parsedAPIblocks {
-		log.Println("Block num", i)
-		log.Println("Block getting processed", block.String())
+	for _, block := range parsedAPIblocks {
 		blockType := block.S("type").Data().(string)
 		switch blockType {
 		case "processor":
@@ -86,7 +83,7 @@ func ExecuteProcessorBlockHelper(block *gabs.Container, vm ...*goja.Runtime) htt
 
 	// Check if vm is provided
 	if len(vm) > 0 && vm[0] != nil {
-		log.Println("Executing with VM")
+		// log.Println("Executing with VM")
 		cmdexec.RunVMCode(script, vm[0])
 	} else {
 		cmdexec.RunVMCode(script, nil)
