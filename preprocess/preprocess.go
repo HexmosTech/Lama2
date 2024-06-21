@@ -141,7 +141,7 @@ func GetL2EnvVariables(dir string) (map[string]map[string]interface{}, error) {
 func GetLamaFileAsString(path string) string {
 	b, err := ioutil.ReadFile(path) // just pass the file name
 	if err != nil {
-		fmt.Println("Type: Preprocess , Couldn't read: ", path)
+		log.Fatal().Str("Type", "Preprocess").Msg(fmt.Sprint("Couldn't read: ", path))
 	}
 	return string(b)
 }
