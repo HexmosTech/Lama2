@@ -49,7 +49,10 @@ func Process(version string) {
 	o := lama2cmd.GetAndValidateCmd(os.Args)
 	lama2cmd.ArgParsing(o, version)
 
-	apiContent := preprocess.GetLamaFileAsString(o.Positional.LamaAPIFile)
+	apiContent, err := preprocess.GetLamaFileAsString(o.Positional.LamaAPIFile)
+	if err != nil {
+		log.Fatal().Str("Type", "Preprocess").Msg(fmt.Sprint("Couldn't read: ", o.Positional.LamaAPIFile))
+	}
 	_, dir, _ := utils.GetFilePathComponents(o.Positional.LamaAPIFile)
 	oldDir, _ := os.Getwd()
 	utils.ChangeWorkingDir(dir)

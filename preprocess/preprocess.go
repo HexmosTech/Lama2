@@ -138,12 +138,13 @@ func GetL2EnvVariables(dir string) (map[string]map[string]interface{}, error) {
 	return finalEnvMap, nil
 }
 
-func GetLamaFileAsString(path string) string {
+func GetLamaFileAsString(path string) (string, error) {
 	b, err := ioutil.ReadFile(path) // just pass the file name
 	if err != nil {
-		log.Fatal().Str("Type", "Preprocess").Msg(fmt.Sprint("Couldn't read: ", path))
+		log.Printf("Couldn't read: %s\n", path)
+		return "", fmt.Errorf("failed to read file: %w", err)
 	}
-	return string(b)
+	return string(b), nil
 }
 
 // LamaFile takes in a path to an API file.
@@ -153,7 +154,7 @@ func GetLamaFileAsString(path string) string {
 // Once done, it reverts back to the original directory,
 // and returns the processed l2 file.
 func LamaFile(inputFile string) (string, string) {
-	content := GetLamaFileAsString(inputFile)
+	content, _ := GetLamaFileAsString(inputFile)
 	_, dir, _ := utils.GetFilePathComponents(inputFile)
 	oldDir, _ := os.Getwd()
 
