@@ -17,11 +17,13 @@ func init() {
 	if len(version) == 0 {
 		version = "vUnset"
 	}
-}	
+}
 
 func main() {
 	//Set the global JavaScript property "goWebRequestFunc" to the result of wasmLamaPromise
 	js.Global().Set("goWebRequestFunc", wasmLamaPromise())
+	js.Global().Set("goCmdConvertFunc", wasmCodeConverter())
+
 	// Block the main function to keep the Go WebAssembly running
 	select {}
 }
@@ -44,5 +46,15 @@ func wasmLamaPromise() js.Func {
 		})
 		promiseConstructor := js.Global().Get("Promise")
 		return promiseConstructor.New(handler)
+	})
+}
+
+func wasmCodeConverter() js.Func {
+	return js.FuncOf(func(this js.Value, args []js.Value) interface{} {
+		inputdata := args[0].String()
+		convertLang := args[1].String()
+		fmt.Println("inputdata", inputdata)
+		result, _ := controller.ProcessConverterInput(inputdata,convertLang)
+		return result
 	})
 }

@@ -13,6 +13,7 @@ import (
 	"github.com/dop251/goja"
 
 	"github.com/HexmosTech/lama2/cmdexec"
+	"github.com/HexmosTech/lama2/codegen"
 	"github.com/HexmosTech/lama2/lama2cmd"
 	"github.com/HexmosTech/lama2/parser"
 )
@@ -40,6 +41,19 @@ func ProcessWasmInput(data string) (httpie.ExResponse, *lama2cmd.Opts) {
 	// Print the parsedAPI value
 	fmt.Printf("Parsed API: %+v\n", parsedAPI)
 	return HandleParsedFile(parsedAPI)
+}
+
+func ProcessConverterInput(data string, ConvertLang string) (string, error) {
+	apiContent := data
+	p := parser.NewLama2Parser()
+	parsedAPI, e := p.Parse(apiContent)
+	fmt.Println(parsedAPI)
+	if e != nil {
+		fmt.Println("Error while parsing API:", e)
+	}
+	snippet := codegen.GenerateTargetCode(ConvertLang, parsedAPI)
+	fmt.Println("Generated Snippet:", snippet)
+	return snippet, nil
 }
 
 func ExecuteRequestorBlockHelper(resp httpie.ExResponse, headersString string, e1 error, vm *goja.Runtime) httpie.ExResponse {
