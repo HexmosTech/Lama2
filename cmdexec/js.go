@@ -1,5 +1,3 @@
-//go:build cli
-
 package cmdexec
 
 import (
