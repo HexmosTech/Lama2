@@ -8,5 +8,5 @@ gomarkdoc --output docs/reference/outputmanager.md ../../outputManager/
 gomarkdoc --output docs/reference/preprocess.md ../../preprocess/
 gomarkdoc --output docs/reference/utils.md ../../utils/
 poetry run mkdocs build
-rm -rf ~/Projects/hexmoshomepage/public/lama2
-yes | cp -rf site ~/Projects/hexmoshomepage/public/lama2
+rm -rf ~/bin/hexmoshomepage/public/lama2
+yes | cp -rf site ~/bin/hexmoshomepage/public/lama2
