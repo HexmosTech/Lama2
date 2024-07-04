@@ -11,26 +11,26 @@ Package \`utils\` provides useful functions for simplifying various programming 
 ## Index
 
 - [Constants](<#constants>)
-- [func ChangeWorkingDir(dir string)](<#func-changeworkingdir>)
-- [func ContainsRune(s []rune, e rune) bool](<#func-containsrune>)
-- [func ContainsString(s []string, e string) bool](<#func-containsstring>)
-- [func ContainsStringPartial(s []string, e string) bool](<#func-containsstringpartial>)
-- [func GetFilePathComponents(name string) (string, string, string)](<#func-getfilepathcomponents>)
-- [func MarshalAndPrintJSON(data interface{})](<#func-marshalandprintjson>)
-- [func PrettyPrint(i interface{}) string](<#func-prettyprint>)
-- [func RemoveUnquotedMarker(content string) string](<#func-removeunquotedmarker>)
-- [func RemoveUnquotedValueMarker(content string) string](<#func-removeunquotedvaluemarker>)
-- [func SetJSON(parentObj *gabs.Container, childObj *gabs.Container, key string) *gabs.Container](<#func-setjson>)
-- [func UnicodeCategory(r rune) string](<#func-unicodecategory>)
-- [func UpdateSelf()](<#func-updateself>)
-- [type ParseError](<#type-parseerror>)
-  - [func NewParseError(pos int, line int, msg string, args []string) *ParseError](<#func-newparseerror>)
-  - [func (p ParseError) Error() string](<#func-parseerror-error>)
+- [func ChangeWorkingDir\(dir string\)](<#ChangeWorkingDir>)
+- [func ContainsRune\(s \[\]rune, e rune\) bool](<#ContainsRune>)
+- [func ContainsString\(s \[\]string, e string\) bool](<#ContainsString>)
+- [func ContainsStringPartial\(s \[\]string, e string\) bool](<#ContainsStringPartial>)
+- [func GetFilePathComponents\(name string\) \(string, string, string\)](<#GetFilePathComponents>)
+- [func MarshalAndPrintJSON\(data interface\{\}\)](<#MarshalAndPrintJSON>)
+- [func PrettyPrint\(i interface\{\}\) string](<#PrettyPrint>)
+- [func RemoveUnquotedMarker\(content string\) string](<#RemoveUnquotedMarker>)
+- [func RemoveUnquotedValueMarker\(content string\) string](<#RemoveUnquotedValueMarker>)
+- [func SetJSON\(parentObj \*gabs.Container, childObj \*gabs.Container, key string\) \*gabs.Container](<#SetJSON>)
+- [func UnicodeCategory\(r rune\) string](<#UnicodeCategory>)
+- [func UpdateSelf\(\)](<#UpdateSelf>)
+- [type ParseError](<#ParseError>)
+  - [func NewParseError\(pos int, line int, msg string, args \[\]string\) \*ParseError](<#NewParseError>)
+  - [func \(p ParseError\) Error\(\) string](<#ParseError.Error>)
 
 
 ## Constants
 
-The following string fragment is used to mark unquoted variables within a JSON body in the lama2 file. For example, Lama2 parser will mark an unquoted variable \`hello\` as:
+<a name="UNQUOTED_VAR_MARKER"></a>The following string fragment is used to mark unquoted variables within a JSON body in the lama2 file. For example, Lama2 parser will mark an unquoted variable \`hello\` as:
 
 "\<626f4c60\-$\{hello\}\>"
 
@@ -44,7 +44,8 @@ Note the lack of quotes around the variable above. This hack is needed to work a
 const UNQUOTED_VAR_MARKER = "626f4c60"
 ```
 
-## func [ChangeWorkingDir](<https://github.com/HexmosTech/Lama2/blob/master/utils/utils.go#L124>)
+<a name="ChangeWorkingDir"></a>
+## func [ChangeWorkingDir](<https://github.com/HexmosTech/Lama2/blob/main/utils/utils.go#L124>)
 
 ```go
 func ChangeWorkingDir(dir string)
@@ -52,7 +53,8 @@ func ChangeWorkingDir(dir string)
 
 ChangeWorkingDirectory tries to set the CWD; on failure it exits with a log error message
 
-## func [ContainsRune](<https://github.com/HexmosTech/Lama2/blob/master/utils/utils.go#L72>)
+<a name="ContainsRune"></a>
+## func [ContainsRune](<https://github.com/HexmosTech/Lama2/blob/main/utils/utils.go#L72>)
 
 ```go
 func ContainsRune(s []rune, e rune) bool
@@ -60,7 +62,8 @@ func ContainsRune(s []rune, e rune) bool
 
 ContainsRune searches for rune \`e\` in a slice of runes \`s\`; returns a boolean
 
-## func [ContainsString](<https://github.com/HexmosTech/Lama2/blob/master/utils/utils.go#L83>)
+<a name="ContainsString"></a>
+## func [ContainsString](<https://github.com/HexmosTech/Lama2/blob/main/utils/utils.go#L83>)
 
 ```go
 func ContainsString(s []string, e string) bool
@@ -68,7 +71,8 @@ func ContainsString(s []string, e string) bool
 
 ContainsString searches for string \`e\` in a slice of strings \`s\`; returns a boolean
 
-## func [ContainsStringPartial](<https://github.com/HexmosTech/Lama2/blob/master/utils/utils.go#L94>)
+<a name="ContainsStringPartial"></a>
+## func [ContainsStringPartial](<https://github.com/HexmosTech/Lama2/blob/main/utils/utils.go#L94>)
 
 ```go
 func ContainsStringPartial(s []string, e string) bool
@@ -76,7 +80,8 @@ func ContainsStringPartial(s []string, e string) bool
 
 ContainsStringPartial substring\-searches for string \`e\` in a slice of strings \`s\`; returns a boolean
 
-## func [GetFilePathComponents](<https://github.com/HexmosTech/Lama2/blob/master/utils/utils.go#L115>)
+<a name="GetFilePathComponents"></a>
+## func [GetFilePathComponents](<https://github.com/HexmosTech/Lama2/blob/main/utils/utils.go#L115>)
 
 ```go
 func GetFilePathComponents(name string) (string, string, string)
@@ -84,13 +89,17 @@ func GetFilePathComponents(name string) (string, string, string)
 
 GetFilePathComponent returns absolute path, directory, and filename given a filepath
 
-## func [MarshalAndPrintJSON](<https://github.com/HexmosTech/Lama2/blob/master/utils/utils.go#L173>)
+<a name="MarshalAndPrintJSON"></a>
+## func [MarshalAndPrintJSON](<https://github.com/HexmosTech/Lama2/blob/main/utils/utils.go#L173>)
 
 ```go
 func MarshalAndPrintJSON(data interface{})
 ```
 
-## func [PrettyPrint](<https://github.com/HexmosTech/Lama2/blob/master/utils/utils.go#L65>)
+
+
+<a name="PrettyPrint"></a>
+## func [PrettyPrint](<https://github.com/HexmosTech/Lama2/blob/main/utils/utils.go#L65>)
 
 ```go
 func PrettyPrint(i interface{}) string
@@ -98,19 +107,26 @@ func PrettyPrint(i interface{}) string
 
 PrettyPrint takes in a generic interface\{\} objects and uses standard JSON capabilities to try to print with indentation
 
-## func [RemoveUnquotedMarker](<https://github.com/HexmosTech/Lama2/blob/master/utils/utils.go#L37>)
+<a name="RemoveUnquotedMarker"></a>
+## func [RemoveUnquotedMarker](<https://github.com/HexmosTech/Lama2/blob/main/utils/utils.go#L37>)
 
 ```go
 func RemoveUnquotedMarker(content string) string
 ```
 
-## func [RemoveUnquotedValueMarker](<https://github.com/HexmosTech/Lama2/blob/master/utils/utils.go#L44>)
+
+
+<a name="RemoveUnquotedValueMarker"></a>
+## func [RemoveUnquotedValueMarker](<https://github.com/HexmosTech/Lama2/blob/main/utils/utils.go#L44>)
 
 ```go
 func RemoveUnquotedValueMarker(content string) string
 ```
 
-## func [SetJSON](<https://github.com/HexmosTech/Lama2/blob/master/utils/utils.go#L55>)
+
+
+<a name="SetJSON"></a>
+## func [SetJSON](<https://github.com/HexmosTech/Lama2/blob/main/utils/utils.go#L55>)
 
 ```go
 func SetJSON(parentObj *gabs.Container, childObj *gabs.Container, key string) *gabs.Container
@@ -118,7 +134,8 @@ func SetJSON(parentObj *gabs.Container, childObj *gabs.Container, key string) *g
 
 SetJSON is a helper function to work with the \`gabs\` library, which in turn is an API on top of the standard JSON library The function helps us create \`parentObj.key = childObj\` through using the \`Merge\` primitive available in \`gabs\`
 
-## func [UnicodeCategory](<https://github.com/HexmosTech/Lama2/blob/master/utils/utils.go#L104>)
+<a name="UnicodeCategory"></a>
+## func [UnicodeCategory](<https://github.com/HexmosTech/Lama2/blob/main/utils/utils.go#L104>)
 
 ```go
 func UnicodeCategory(r rune) string
@@ -126,7 +143,8 @@ func UnicodeCategory(r rune) string
 
 UnicodeCategory returns the Unicode Character Category of the given rune.
 
-## func [UpdateSelf](<https://github.com/HexmosTech/Lama2/blob/master/utils/utils.go#L161>)
+<a name="UpdateSelf"></a>
+## func [UpdateSelf](<https://github.com/HexmosTech/Lama2/blob/main/utils/utils.go#L161>)
 
 ```go
 func UpdateSelf()
@@ -134,7 +152,10 @@ func UpdateSelf()
 
 UpdateSelf downloads the installation script from the official repository, and executes it to update the l2 binary to the latest version
 
-## type [ParseError](<https://github.com/HexmosTech/Lama2/blob/master/utils/errors.go#L5-L10>)
+<a name="ParseError"></a>
+## type [ParseError](<https://github.com/HexmosTech/Lama2/blob/main/utils/errors.go#L5-L10>)
+
+
 
 ```go
 type ParseError struct {
@@ -144,13 +165,17 @@ type ParseError struct {
 }
 ```
 
-### func [NewParseError](<https://github.com/HexmosTech/Lama2/blob/master/utils/errors.go#L12>)
+<a name="NewParseError"></a>
+### func [NewParseError](<https://github.com/HexmosTech/Lama2/blob/main/utils/errors.go#L12>)
 
 ```go
 func NewParseError(pos int, line int, msg string, args []string) *ParseError
 ```
 
-### func \(ParseError\) [Error](<https://github.com/HexmosTech/Lama2/blob/master/utils/errors.go#L20>)
+
+
+<a name="ParseError.Error"></a>
+### func \(ParseError\) [Error](<https://github.com/HexmosTech/Lama2/blob/main/utils/errors.go#L20>)
 
 ```go
 func (p ParseError) Error() string
