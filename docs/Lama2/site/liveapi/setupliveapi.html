@@ -1166,43 +1166,17 @@
 <h1 id="how-to-setup-liveapi-on-your-api-docs">How to setup LiveAPI on your API Docs<a class="headerlink" href="#how-to-setup-liveapi-on-your-api-docs" title="Permanent link">&para;</a></h1>
 <h2 id="step-1-add-the-following-script-to-your-project">Step 1: Add the following script to your project<a class="headerlink" href="#step-1-add-the-following-script-to-your-project" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
-<span class="w">  </span><span class="p">;(</span><span class="kd">function</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="nb">window</span><span class="p">,</span>
-<span class="w">    </span><span class="nb">document</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">scriptTagName</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">globalName</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">scriptAddress</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">scriptElement</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">otherScriptElement</span>
-<span class="w">  </span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nb">window</span><span class="p">[</span><span class="s2">&quot;JS-Widget&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">globalName</span>
-<span class="w">    </span><span class="nb">window</span><span class="p">[</span><span class="nx">globalName</span><span class="p">]</span><span class="w"> </span><span class="o">=</span>
-<span class="w">      </span><span class="nb">window</span><span class="p">[</span><span class="nx">globalName</span><span class="p">]</span><span class="w"> </span><span class="o">||</span>
-<span class="w">      </span><span class="kd">function</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="p">;(</span><span class="nb">window</span><span class="p">[</span><span class="nx">globalName</span><span class="p">].</span><span class="nx">q</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">window</span><span class="p">[</span><span class="nx">globalName</span><span class="p">].</span><span class="nx">q</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="p">[]).</span><span class="nx">push</span><span class="p">(</span><span class="nx">arguments</span><span class="p">)</span>
-<span class="w">      </span><span class="p">}</span>
-<span class="w">    </span><span class="nx">scriptElement</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="nx">scriptTagName</span><span class="p">)</span>
-<span class="w">    </span><span class="nx">otherScriptElement</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="nx">scriptTagName</span><span class="p">)[</span><span class="mf">0</span><span class="p">]</span>
-<span class="w">    </span><span class="nx">scriptElement</span><span class="p">.</span><span class="nx">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">globalName</span>
-<span class="w">    </span><span class="nx">scriptElement</span><span class="p">.</span><span class="nx">src</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">scriptAddress</span>
-<span class="w">    </span><span class="nx">scriptElement</span><span class="p">.</span><span class="k">async</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
-<span class="w">    </span><span class="nx">otherScriptElement</span><span class="p">.</span><span class="nx">parentNode</span><span class="p">.</span><span class="nx">insertBefore</span><span class="p">(</span>
-<span class="w">      </span><span class="nx">scriptElement</span><span class="p">,</span>
-<span class="w">      </span><span class="nx">otherScriptElement</span>
-<span class="w">    </span><span class="p">)</span>
-<span class="w">  </span><span class="p">})(</span>
-<span class="w">    </span><span class="nb">window</span><span class="p">,</span>
-<span class="w">    </span><span class="nb">document</span><span class="p">,</span>
-<span class="w">    </span><span class="s2">&quot;script&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="s2">&quot;liveAPI&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="s2">&quot;https://d2q4vn0gqet98u.cloudfront.net/v0.0.11/liveapi.js&quot;</span>
-<span class="w">  </span><span class="p">)</span>
-
-<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="ow">typeof</span><span class="w"> </span><span class="nb">window</span><span class="p">.</span><span class="nx">liveAPI</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s2">&quot;function&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nb">window</span><span class="p">.</span><span class="nx">liveAPI</span><span class="p">(</span><span class="s2">&quot;liveapi&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nx">tagName</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;code&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="p">})</span>
-<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="p">((</span><span class="nx">w</span><span class="p">,</span><span class="w"> </span><span class="nx">d</span><span class="p">,</span><span class="w"> </span><span class="nx">s</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">w</span><span class="p">.</span><span class="nx">liveAPI</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(...</span><span class="nx">args</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="nx">w</span><span class="p">.</span><span class="nx">liveAPI</span><span class="p">.</span><span class="nx">q</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">w</span><span class="p">.</span><span class="nx">liveAPI</span><span class="p">.</span><span class="nx">q</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="p">[]).</span><span class="nx">push</span><span class="p">(</span><span class="nx">args</span><span class="p">);</span>
+<span class="w">    </span><span class="nx">d</span><span class="p">.</span><span class="nx">head</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nb">Object</span><span class="p">.</span><span class="nx">assign</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">&quot;script&quot;</span><span class="p">),</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">src</span><span class="o">:</span><span class="w"> </span><span class="nx">s</span><span class="p">,</span><span class="w"> </span><span class="k">async</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">}));</span>
+<span class="w">  </span><span class="p">})(</span><span class="nb">window</span><span class="p">,</span><span class="w"> </span><span class="nb">document</span><span class="p">,</span><span class="w"> </span><span class="sb">`https://d2q4vn0gqet98u.cloudfront.net/latest/liveapi.js?foo=</span><span class="si">${</span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">().</span><span class="nx">toString</span><span class="p">(</span><span class="mf">36</span><span class="p">).</span><span class="nx">slice</span><span class="p">(</span><span class="mf">2</span><span class="p">)</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
+<span class="w">  </span><span class="nx">liveAPI</span><span class="p">(</span><span class="s2">&quot;loadwidget&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">logoUrl</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;link_to_your_logo&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">siteLink</span><span class="o">:</span><span class="s2">&quot;link_to_your_site&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">tagNames</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;code&#39;</span><span class="p">],</span><span class="w"> </span><span class="c1">// Html tag where you want the widget to render</span>
+<span class="w">    </span><span class="nx">ids</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;liveapi-element&#39;</span><span class="p">],</span><span class="w"> </span><span class="c1">// Specify on which id you want the widget to be rendered</span>
+<span class="w">    </span><span class="nx">classNames</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;liveapi-element&#39;</span><span class="p">]</span><span class="w"> </span><span class="c1">// Specify on which class you want the widget to be rendered</span>
+<span class="w">  </span><span class="p">});</span>
 <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </code></pre></div>
 <h2 id="step-2">Step 2<a class="headerlink" href="#step-2" title="Permanent link">&para;</a></h2>
@@ -1219,7 +1193,11 @@
 &lt;/code&gt;
 </code></pre></div>
 <p>This will render the LiveAPI Widget on your page, like so</p>
-<p><img alt="alt text" src="liveapibasicexample.png" /></p>
+<pre id="liveapi-element">
+GET
+https://httpbin.org/ip
+</pre>
+
 <h2 id="additional-configurations">Additional Configurations<a class="headerlink" href="#additional-configurations" title="Permanent link">&para;</a></h2>
 <h3 id="logo-and-link-to-the-site">Logo and link to the site<a class="headerlink" href="#logo-and-link-to-the-site" title="Permanent link">&para;</a></h3>
 <ul>
@@ -1259,7 +1237,18 @@ _METADATA = {&quot;sample_response&quot;:{
 }
 </code></pre></div>
 <p>This will render the widget like so.</p>
-<p><img alt="alt text" src="liveapiexample.png" /></p>
+<pre id="liveapi-element">
+GET
+https://httpbin.org/ip
+
+---
+
+_METADATA = {"sample_response":{
+    "origin": "IP_ADDRESS"
+},
+"api_name":"Get the IP"
+}
+</pre>
 
 
 
@@ -1308,44 +1297,17 @@ _METADATA = {&quot;sample_response&quot;:{
   </div>
 </footer>
       
-<script>
-  ;(function (
-    window,
-    document,
-    scriptTagName,
-    globalName,
-    scriptAddress,
-    scriptElement,
-    otherScriptElement
-  ) {
-    window["JS-Widget"] = globalName
-    window[globalName] =
-      window[globalName] ||
-      function () {
-        ;(window[globalName].q = window[globalName].q || []).push(arguments)
-      }
-    scriptElement = document.createElement(scriptTagName)
-    otherScriptElement = document.getElementsByTagName(scriptTagName)[0]
-    scriptElement.id = globalName
-    scriptElement.src = scriptAddress
-    scriptElement.async = true
-    otherScriptElement.parentNode.insertBefore(
-      scriptElement,
-      otherScriptElement
-    )
-  })(
-    window,
-    document,
-    "script",
-    "liveAPI",
-    "https://d2q4vn0gqet98u.cloudfront.net/v0.0.15/liveapi.js"
-  )
 
-  if (typeof window.liveAPI === "function") {
-    window.liveAPI("liveapi", {
-      tagName: "code",
-    })
-  }
+<script>
+  ((w, d, s) => {
+    w.liveAPI = (...args) => (w.liveAPI.q = w.liveAPI.q || []).push(args);
+    d.head.appendChild(Object.assign(d.createElement("script"), { src: s, async: true }));
+  })(window, document, `https://d2q4vn0gqet98u.cloudfront.net/latest/liveapi.js?foo=${Math.random().toString(36).slice(2)}`);
+  liveAPI("loadwidget", {
+    tagNames: ['pre'],
+    ids: ['liveapi-element'],
+    classNames: ['liveapi-element']
+  });
 </script>
 
 

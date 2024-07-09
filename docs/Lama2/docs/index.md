@@ -41,7 +41,7 @@ IDEs and text-editors as well. Think of _Lama2_ as [**Markdown for APIs.**](refe
 
 **`basic_post.l2`:**
 
-```bash
+<pre id="liveapi-element">
 POST
 https://httpbin.org/post
 {
@@ -73,7 +73,7 @@ _METADATA={
         "url": "https://httpbin.org/post"
     }
 }
-```
+</pre>
 
 **Execute:**
 

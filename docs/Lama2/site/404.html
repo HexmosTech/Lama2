@@ -997,44 +997,17 @@
   </div>
 </footer>
       
-<script>
-  ;(function (
-    window,
-    document,
-    scriptTagName,
-    globalName,
-    scriptAddress,
-    scriptElement,
-    otherScriptElement
-  ) {
-    window["JS-Widget"] = globalName
-    window[globalName] =
-      window[globalName] ||
-      function () {
-        ;(window[globalName].q = window[globalName].q || []).push(arguments)
-      }
-    scriptElement = document.createElement(scriptTagName)
-    otherScriptElement = document.getElementsByTagName(scriptTagName)[0]
-    scriptElement.id = globalName
-    scriptElement.src = scriptAddress
-    scriptElement.async = true
-    otherScriptElement.parentNode.insertBefore(
-      scriptElement,
-      otherScriptElement
-    )
-  })(
-    window,
-    document,
-    "script",
-    "liveAPI",
-    "https://d2q4vn0gqet98u.cloudfront.net/v0.0.15/liveapi.js"
-  )
 
-  if (typeof window.liveAPI === "function") {
-    window.liveAPI("liveapi", {
-      tagName: "code",
-    })
-  }
+<script>
+  ((w, d, s) => {
+    w.liveAPI = (...args) => (w.liveAPI.q = w.liveAPI.q || []).push(args);
+    d.head.appendChild(Object.assign(d.createElement("script"), { src: s, async: true }));
+  })(window, document, `https://d2q4vn0gqet98u.cloudfront.net/latest/liveapi.js?foo=${Math.random().toString(36).slice(2)}`);
+  liveAPI("loadwidget", {
+    tagNames: ['pre'],
+    ids: ['liveapi-element'],
+    classNames: ['liveapi-element']
+  });
 </script>
 
 

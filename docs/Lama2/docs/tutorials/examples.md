@@ -14,7 +14,7 @@ requests from there.
 
 ## GET request
 
-```
+<pre id="liveapi-element">
 GET
 https://httpbin.org/get
 
@@ -36,7 +36,7 @@ _METADATA = {"sample_response":{
 "api_url":"https://httpbin.org/ip",
 "api_description": "Does a request to get the IP Address"
 }
-```
+</pre>
 
 Get [Source File](https://github.com/HexmosTech/Lama2/tree/main/examples/0000_sample_get.l2)
 
@@ -44,7 +44,7 @@ Get [Source File](https://github.com/HexmosTech/Lama2/tree/main/examples/0000_sa
 
 One can dump the JSON body at the end of an `.l2` file to create a POST request:
 
-```
+<pre id="liveapi-element">
 POST
 https://httpbin.org/post
 
@@ -79,7 +79,7 @@ _METADATA={
 },
     "api_name" : "POST Request"
 }
-```
+</pre>
 
 Get [Source File](https://github.com/HexmosTech/Lama2/tree/main/examples/0002_sample_post.l2)
 
@@ -89,7 +89,7 @@ Make a POST request with JSON body specified
 as `key=value`. _Lama2_ converts the input into
 a corresponding JSON value `{"a": "b", "c": "d"}`. We call the `key=value` format _VarJSON_. This example produces an effect identical to the [previous one](#basic-json-post)
 
-```
+<pre id="liveapi-element">
 POST
 https://httpbin.org/post
 
@@ -120,7 +120,7 @@ _METADATA={
         "url": "https://httpbin.org/post"
     }
 }
-```
+</pre>
 
 Get [Source File](https://github.com/HexmosTech/Lama2/tree/main/examples/0001_sample_post_varjson.l2)
 
@@ -129,7 +129,7 @@ Get [Source File](https://github.com/HexmosTech/Lama2/tree/main/examples/0001_sa
 One can start a comment anywhere in the file
 with the `#` character.
 
-```
+<pre id="liveapi-element">
 # Pound symbol signifies a comment
 POST
 https://httpbin.org/post
@@ -165,7 +165,7 @@ _METADATA={
   "url": "https://httpbin.org/post"
 }
 }
-```
+</pre>
 
 Get [Source File](https://github.com/HexmosTech/Lama2/tree/main/examples/0003_comment.l2)
 
@@ -184,7 +184,7 @@ export AHOST="http://127.0.0.1:8000"
 
 **project_folder/api/get_users.l2**
 
-```
+<pre id="liveapi-element">
 GET
 ${AHOST}/users
 
@@ -193,7 +193,7 @@ ${AHOST}/users
 _METADATA={
     "api_name": "Environment Variables"
 }
-```
+</pre>
 
 ![l2.env at API level](l2env.png)
 
@@ -215,7 +215,7 @@ export BHOST="https://google.com"
 
 **project_folder/api/get_users.l2**
 
-```
+<pre id="liveapi-element">
 GET
 ${AHOST}/users
 
@@ -225,7 +225,7 @@ _METADATA={
     "api_name": "Environment Variables"
 }
 
-```
+</pre>
 
 ![l2config.env at Project root level](l2configAtRoot.png)
 
@@ -250,7 +250,7 @@ export AHOST="http://127.0.0.1:8000"
 
 **project_folder/api/get_users.l2**
 
-```
+<pre id="liveapi-element">
 GET
 ${AHOST}/users
 
@@ -260,7 +260,7 @@ _METADATA={
     "api_name": "Environment Variables"
 }
 
-```
+</pre>
 
 ![Override of l2config.env with l2.env variable](l2envOverideL2config.png)
 
@@ -280,7 +280,7 @@ Specify strings for key/value in three ways:
 1. Single quoted (`'hello'`)
 1. Unquoted (`hello`)
 
-```
+<pre id="liveapi-element">
 POST
 https://httpbin.org/post
 
@@ -318,7 +318,7 @@ _METADATA={
   "url": "https://httpbin.org/post"
 }
 }
-```
+</pre>
 
 Get [Source File](https://github.com/HexmosTech/Lama2/tree/main/examples/0005_headers_simple.l2)
 
@@ -326,7 +326,7 @@ Get [Source File](https://github.com/HexmosTech/Lama2/tree/main/examples/0005_he
 
     The data section may appear *before* headers as well (see below)
 
-```
+<pre id="liveapi-element">
 POST
 https://httpbin.org/post
 
@@ -372,14 +372,14 @@ _METADATA={
   "url": "https://httpbin.org/post"
 }
 
-```
+</pre>
 
 ## Send cookies in header
 
 Headers represent cookies in _Lama2_. Just specify cookie key value pairs separated by
 `=` within the header value as shown.
 
-```
+<pre id="liveapi-element">
 POST
 https://httpbin.org/post
 
@@ -414,7 +414,7 @@ _METADATA={
   "url": "https://httpbin.org/post"
 }
 }
-```
+</pre>
 
 Get [Source File](https://github.com/HexmosTech/Lama2/tree/main/examples/0006_cookies.l2)
 
@@ -430,7 +430,7 @@ Following the data section, one can specify
 any number of files in the form of `<field_name>@<file_path>`. The file path is
 relative to the API file.
 
-```
+<pre id="liveapi-element">
 POST
 MULTIPART
 http://httpbin.org/post
@@ -449,7 +449,7 @@ myfile@./image.jpeg
 _METADATA={
     "api_name" : "Multipart Request"
 }
-```
+</pre>
 
 Get [Source Files](https://github.com/HexmosTech/Lama2/tree/main/examples/0007_multipart_file)
 
@@ -479,7 +479,7 @@ quoting mechanism `"'{PHOTO}'"`.
 
 **base64_embed.l2**
 
-```
+<pre id="liveapi-element">
 POST
 http://httpbin.org/post
 
@@ -492,7 +492,7 @@ http://httpbin.org/post
 _METADATA={
     "api_name" : "Image Example 2"
 }
-```
+</pre>
 
 Get [Source Files](https://github.com/HexmosTech/Lama2/tree/main/examples/0008_base64_image)
 
@@ -506,7 +506,7 @@ from previous requestor block. If possible,
 object through `JSON.parse()`. Otherwise,
 `result` is stored as a regular `string`.
 
-```
+<pre id="liveapi-element">
 url = "http://google.com"
 REMOTE_COORD = "https://httpbin.org"
 ---
@@ -544,6 +544,6 @@ _METADATA={
     "api_name" : "Chain Request"
 }
 
-```
+</pre>
 
 Get [Source Files](https://github.com/HexmosTech/Lama2/tree/main/examples/0009_processor_basic)

@@ -1167,38 +1167,40 @@ data dumps into a  nice  Plain-Text Lama2 repo.</p>
 <h2 id="terminal-demo-a-post-request">Terminal Demo: A POST request<a class="headerlink" href="#terminal-demo-a-post-request" title="Permanent link">&para;</a></h2>
 <p><img alt="" src="https://hexmos.com/lama2/demo.gif" /></p>
 <p><strong><code>basic_post.l2</code>:</strong></p>
-<div class="highlight"><pre><span></span><code>POST
+<pre id="liveapi-element">
+POST
 https://httpbin.org/post
-<span class="o">{</span>
-<span class="w">    </span><span class="s2">&quot;hello&quot;</span>:<span class="w"> </span><span class="s2">&quot;world&quot;</span>
-<span class="o">}</span>
+{
+    "hello": "world"
+}
 
 ---
 
-<span class="nv">_METADATA</span><span class="o">={</span>
-<span class="w">    </span><span class="s2">&quot;api_name&quot;</span>:<span class="w"> </span><span class="s2">&quot;Basic POST&quot;</span>,
-<span class="w">    </span><span class="s2">&quot;sample_response&quot;</span>:<span class="w"> </span><span class="o">{</span>
-<span class="w">        </span><span class="s2">&quot;args&quot;</span>:<span class="w"> </span><span class="o">{}</span>,
-<span class="w">        </span><span class="s2">&quot;data&quot;</span>:<span class="w"> </span><span class="s2">&quot;{\&quot;hello\&quot;:\&quot;world\&quot;}&quot;</span>,
-<span class="w">        </span><span class="s2">&quot;files&quot;</span>:<span class="w"> </span><span class="o">{}</span>,
-<span class="w">        </span><span class="s2">&quot;form&quot;</span>:<span class="w"> </span><span class="o">{}</span>,
-<span class="w">        </span><span class="s2">&quot;headers&quot;</span>:<span class="w"> </span><span class="o">{</span>
-<span class="w">            </span><span class="s2">&quot;Accept&quot;</span>:<span class="w"> </span><span class="s2">&quot;*/*&quot;</span>,
-<span class="w">            </span><span class="s2">&quot;Accept-Encoding&quot;</span>:<span class="w"> </span><span class="s2">&quot;gzip, deflate&quot;</span>,
-<span class="w">            </span><span class="s2">&quot;Content-Length&quot;</span>:<span class="w"> </span><span class="s2">&quot;17&quot;</span>,
-<span class="w">            </span><span class="s2">&quot;Content-Type&quot;</span>:<span class="w"> </span><span class="s2">&quot;application/json&quot;</span>,
-<span class="w">            </span><span class="s2">&quot;Host&quot;</span>:<span class="w"> </span><span class="s2">&quot;httpbin.org&quot;</span>,
-<span class="w">            </span><span class="s2">&quot;User-Agent&quot;</span>:<span class="w"> </span><span class="s2">&quot;python-requests/2.25.1&quot;</span>,
-<span class="w">            </span><span class="s2">&quot;X-Amzn-Trace-Id&quot;</span>:<span class="w"> </span><span class="s2">&quot;Root=1-6686d0e6-336395f75a7f8a8b474a7563&quot;</span>
-<span class="w">        </span><span class="o">}</span>,
-<span class="w">        </span><span class="s2">&quot;json&quot;</span>:<span class="w"> </span><span class="o">{</span>
-<span class="w">            </span><span class="s2">&quot;hello&quot;</span>:<span class="w"> </span><span class="s2">&quot;world&quot;</span>
-<span class="w">        </span><span class="o">}</span>,
-<span class="w">        </span><span class="s2">&quot;origin&quot;</span>:<span class="w"> </span><span class="s2">&quot;20.235.244.147&quot;</span>,
-<span class="w">        </span><span class="s2">&quot;url&quot;</span>:<span class="w"> </span><span class="s2">&quot;https://httpbin.org/post&quot;</span>
-<span class="w">    </span><span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div>
+_METADATA={
+    "api_name": "Basic POST",
+    "sample_response": {
+        "args": {},
+        "data": "{\"hello\":\"world\"}",
+        "files": {},
+        "form": {},
+        "headers": {
+            "Accept": "*/*",
+            "Accept-Encoding": "gzip, deflate",
+            "Content-Length": "17",
+            "Content-Type": "application/json",
+            "Host": "httpbin.org",
+            "User-Agent": "python-requests/2.25.1",
+            "X-Amzn-Trace-Id": "Root=1-6686d0e6-336395f75a7f8a8b474a7563"
+        },
+        "json": {
+            "hello": "world"
+        },
+        "origin": "20.235.244.147",
+        "url": "https://httpbin.org/post"
+    }
+}
+</pre>
+
 <p><strong>Execute:</strong></p>
 <div class="highlight"><pre><span></span><code>l2 basic_post.l2
 </code></pre></div>
@@ -1258,44 +1260,17 @@ https://httpbin.org/post
   </div>
 </footer>
       
-<script>
-  ;(function (
-    window,
-    document,
-    scriptTagName,
-    globalName,
-    scriptAddress,
-    scriptElement,
-    otherScriptElement
-  ) {
-    window["JS-Widget"] = globalName
-    window[globalName] =
-      window[globalName] ||
-      function () {
-        ;(window[globalName].q = window[globalName].q || []).push(arguments)
-      }
-    scriptElement = document.createElement(scriptTagName)
-    otherScriptElement = document.getElementsByTagName(scriptTagName)[0]
-    scriptElement.id = globalName
-    scriptElement.src = scriptAddress
-    scriptElement.async = true
-    otherScriptElement.parentNode.insertBefore(
-      scriptElement,
-      otherScriptElement
-    )
-  })(
-    window,
-    document,
-    "script",
-    "liveAPI",
-    "https://d2q4vn0gqet98u.cloudfront.net/v0.0.15/liveapi.js"
-  )
 
-  if (typeof window.liveAPI === "function") {
-    window.liveAPI("liveapi", {
-      tagName: "code",
-    })
-  }
+<script>
+  ((w, d, s) => {
+    w.liveAPI = (...args) => (w.liveAPI.q = w.liveAPI.q || []).push(args);
+    d.head.appendChild(Object.assign(d.createElement("script"), { src: s, async: true }));
+  })(window, document, `https://d2q4vn0gqet98u.cloudfront.net/latest/liveapi.js?foo=${Math.random().toString(36).slice(2)}`);
+  liveAPI("loadwidget", {
+    tagNames: ['pre'],
+    ids: ['liveapi-element'],
+    classNames: ['liveapi-element']
+  });
 </script>
 
 

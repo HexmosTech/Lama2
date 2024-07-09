@@ -1287,107 +1287,114 @@ presently. Execute each file as:</p>
 VSCode, install the <em>Lama2</em> extension and fire
 requests from there.</p>
 <h2 id="get-request">GET request<a class="headerlink" href="#get-request" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>GET
+<pre id="liveapi-element">
+GET
 https://httpbin.org/get
 
 ---
 
-_METADATA = {&quot;sample_response&quot;:{
-  &quot;args&quot;: {},
-  &quot;headers&quot;: {
-    &quot;Accept&quot;: &quot;*/*&quot;,
-    &quot;Accept-Encoding&quot;: &quot;gzip, deflate&quot;,
-    &quot;Host&quot;: &quot;httpbin.org&quot;,
-    &quot;User-Agent&quot;: &quot;python-requests/2.25.1&quot;,
-    &quot;X-Amzn-Trace-Id&quot;: &quot;Root=1-6686c611-62649d393aae96de5f4afcbf&quot;
+_METADATA = {"sample_response":{
+  "args": {},
+  "headers": {
+    "Accept": "*/*",
+    "Accept-Encoding": "gzip, deflate",
+    "Host": "httpbin.org",
+    "User-Agent": "python-requests/2.25.1",
+    "X-Amzn-Trace-Id": "Root=1-6686c611-62649d393aae96de5f4afcbf"
   },
-  &quot;origin&quot;: &quot;20.235.244.147&quot;,
-  &quot;url&quot;: &quot;https://httpbin.org/get&quot;
+  "origin": "20.235.244.147",
+  "url": "https://httpbin.org/get"
 },
-&quot;api_name&quot;:&quot;GET Request&quot;,
-&quot;api_url&quot;:&quot;https://httpbin.org/ip&quot;,
-&quot;api_description&quot;: &quot;Does a request to get the IP Address&quot;
+"api_name":"GET Request",
+"api_url":"https://httpbin.org/ip",
+"api_description": "Does a request to get the IP Address"
 }
-</code></pre></div>
+</pre>
+
 <p>Get <a href="https://github.com/HexmosTech/Lama2/tree/main/examples/0000_sample_get.l2">Source File</a></p>
 <h2 id="json-post-request">JSON POST request<a class="headerlink" href="#json-post-request" title="Permanent link">&para;</a></h2>
 <p>One can dump the JSON body at the end of an <code>.l2</code> file to create a POST request:</p>
-<div class="highlight"><pre><span></span><code>POST
+<pre id="liveapi-element">
+POST
 https://httpbin.org/post
 
 {
-    &quot;a&quot;: &quot;b&quot;,
-    &quot;c&quot;: &quot;d&quot;
+    "a": "b",
+    "c": "d"
 }
 
 ---
 
 _METADATA={
-    &quot;sample_response&quot;:{
-  &quot;args&quot;: {},
-  &quot;data&quot;: &quot;{\&quot;a\&quot;:\&quot;b\&quot;,\&quot;c\&quot;:\&quot;d\&quot;}&quot;,
-  &quot;files&quot;: {},
-  &quot;form&quot;: {},
-  &quot;headers&quot;: {
-    &quot;Accept&quot;: &quot;*/*&quot;,
-    &quot;Accept-Encoding&quot;: &quot;gzip, deflate&quot;,
-    &quot;Content-Length&quot;: &quot;17&quot;,
-    &quot;Content-Type&quot;: &quot;application/json&quot;,
-    &quot;Host&quot;: &quot;httpbin.org&quot;,
-    &quot;User-Agent&quot;: &quot;python-requests/2.25.1&quot;,
-    &quot;X-Amzn-Trace-Id&quot;: &quot;Root=1-6686c6c4-43e22f6539f1dae9070b962b&quot;
+    "sample_response":{
+  "args": {},
+  "data": "{\"a\":\"b\",\"c\":\"d\"}",
+  "files": {},
+  "form": {},
+  "headers": {
+    "Accept": "*/*",
+    "Accept-Encoding": "gzip, deflate",
+    "Content-Length": "17",
+    "Content-Type": "application/json",
+    "Host": "httpbin.org",
+    "User-Agent": "python-requests/2.25.1",
+    "X-Amzn-Trace-Id": "Root=1-6686c6c4-43e22f6539f1dae9070b962b"
   },
-  &quot;json&quot;: {
-    &quot;a&quot;: &quot;b&quot;,
-    &quot;c&quot;: &quot;d&quot;
+  "json": {
+    "a": "b",
+    "c": "d"
   },
-  &quot;origin&quot;: &quot;20.235.244.147&quot;,
-  &quot;url&quot;: &quot;https://httpbin.org/post&quot;
+  "origin": "20.235.244.147",
+  "url": "https://httpbin.org/post"
 },
-    &quot;api_name&quot; : &quot;POST Request&quot;
+    "api_name" : "POST Request"
 }
-</code></pre></div>
+</pre>
+
 <p>Get <a href="https://github.com/HexmosTech/Lama2/tree/main/examples/0002_sample_post.l2">Source File</a></p>
 <h2 id="json-post-in-varjson-format">JSON POST in VarJSON format<a class="headerlink" href="#json-post-in-varjson-format" title="Permanent link">&para;</a></h2>
 <p>Make a POST request with JSON body specified
 as <code>key=value</code>. <em>Lama2</em> converts the input into
 a corresponding JSON value <code>{"a": "b", "c": "d"}</code>. We call the <code>key=value</code> format <em>VarJSON</em>. This example produces an effect identical to the <a href="#basic-json-post">previous one</a></p>
-<div class="highlight"><pre><span></span><code>POST
+<pre id="liveapi-element">
+POST
 https://httpbin.org/post
 
 a=b
 c=d
 ---
 _METADATA={
-    &quot;api_name&quot;:&quot;POST Request in VarJSON&quot;,
-    &quot;sample_response&quot;:{
-        &quot;args&quot;: {},
-        &quot;data&quot;: &quot;{\&quot;a\&quot;:\&quot;b\&quot;,\&quot;c\&quot;:\&quot;d\&quot;}&quot;,
-        &quot;files&quot;: {},
-        &quot;form&quot;: {},
-        &quot;headers&quot;: {
-            &quot;Accept&quot;: &quot;*/*&quot;,
-            &quot;Accept-Encoding&quot;: &quot;gzip, deflate&quot;,
-            &quot;Content-Length&quot;: &quot;17&quot;,
-            &quot;Content-Type&quot;: &quot;application/json&quot;,
-            &quot;Host&quot;: &quot;httpbin.org&quot;,
-            &quot;User-Agent&quot;: &quot;python-requests/2.25.1&quot;,
-            &quot;X-Amzn-Trace-Id&quot;: &quot;Root=1-6686c721-0e9da41a16bc944d5fabe460&quot;
+    "api_name":"POST Request in VarJSON",
+    "sample_response":{
+        "args": {},
+        "data": "{\"a\":\"b\",\"c\":\"d\"}",
+        "files": {},
+        "form": {},
+        "headers": {
+            "Accept": "*/*",
+            "Accept-Encoding": "gzip, deflate",
+            "Content-Length": "17",
+            "Content-Type": "application/json",
+            "Host": "httpbin.org",
+            "User-Agent": "python-requests/2.25.1",
+            "X-Amzn-Trace-Id": "Root=1-6686c721-0e9da41a16bc944d5fabe460"
         },
-        &quot;json&quot;: {
-            &quot;a&quot;: &quot;b&quot;,
-            &quot;c&quot;: &quot;d&quot;
+        "json": {
+            "a": "b",
+            "c": "d"
         },
-        &quot;origin&quot;: &quot;20.235.244.147&quot;,
-        &quot;url&quot;: &quot;https://httpbin.org/post&quot;
+        "origin": "20.235.244.147",
+        "url": "https://httpbin.org/post"
     }
 }
-</code></pre></div>
+</pre>
+
 <p>Get <a href="https://github.com/HexmosTech/Lama2/tree/main/examples/0001_sample_post_varjson.l2">Source File</a></p>
 <h2 id="comments">Comments<a class="headerlink" href="#comments" title="Permanent link">&para;</a></h2>
 <p>One can start a comment anywhere in the file
 with the <code>#</code> character.</p>
-<div class="highlight"><pre><span></span><code># Pound symbol signifies a comment
+<pre id="liveapi-element">
+# Pound symbol signifies a comment
 POST
 https://httpbin.org/post
 
@@ -1399,30 +1406,31 @@ c=d
 ---
 
 _METADATA={
-    &quot;api_name&quot;:&quot;Request with comments&quot;,
-    &quot;sample_response&quot;:{
-  &quot;args&quot;: {},
-  &quot;data&quot;: &quot;{\&quot;a\&quot;:\&quot;b\&quot;,\&quot;c\&quot;:\&quot;d\&quot;}&quot;,
-  &quot;files&quot;: {},
-  &quot;form&quot;: {},
-  &quot;headers&quot;: {
-    &quot;Accept&quot;: &quot;*/*&quot;,
-    &quot;Accept-Encoding&quot;: &quot;gzip, deflate&quot;,
-    &quot;Content-Length&quot;: &quot;17&quot;,
-    &quot;Content-Type&quot;: &quot;application/json&quot;,
-    &quot;Host&quot;: &quot;httpbin.org&quot;,
-    &quot;User-Agent&quot;: &quot;python-requests/2.25.1&quot;,
-    &quot;X-Amzn-Trace-Id&quot;: &quot;Root=1-6686c73a-1c05768a182e50a86b161667&quot;
+    "api_name":"Request with comments",
+    "sample_response":{
+  "args": {},
+  "data": "{\"a\":\"b\",\"c\":\"d\"}",
+  "files": {},
+  "form": {},
+  "headers": {
+    "Accept": "*/*",
+    "Accept-Encoding": "gzip, deflate",
+    "Content-Length": "17",
+    "Content-Type": "application/json",
+    "Host": "httpbin.org",
+    "User-Agent": "python-requests/2.25.1",
+    "X-Amzn-Trace-Id": "Root=1-6686c73a-1c05768a182e50a86b161667"
   },
-  &quot;json&quot;: {
-    &quot;a&quot;: &quot;b&quot;,
-    &quot;c&quot;: &quot;d&quot;
+  "json": {
+    "a": "b",
+    "c": "d"
   },
-  &quot;origin&quot;: &quot;20.235.244.147&quot;,
-  &quot;url&quot;: &quot;https://httpbin.org/post&quot;
+  "origin": "20.235.244.147",
+  "url": "https://httpbin.org/post"
 }
 }
-</code></pre></div>
+</pre>
+
 <p>Get <a href="https://github.com/HexmosTech/Lama2/tree/main/examples/0003_comment.l2">Source File</a></p>
 <h2 id="environment-variables-switch-base-url">Environment Variables: Switch base URL<a class="headerlink" href="#environment-variables-switch-base-url" title="Permanent link">&para;</a></h2>
 <h3 id="case-1-l2env-adjacent-to-an-api-file">Case 1: <code>l2.env</code> adjacent to an API file<a class="headerlink" href="#case-1-l2env-adjacent-to-an-api-file" title="Permanent link">&para;</a></h3>
@@ -1432,15 +1440,17 @@ These variables will be available to be used within the API file</p>
 <div class="highlight"><pre><span></span><code>export AHOST=&quot;http://127.0.0.1:8000&quot;
 </code></pre></div>
 <p><strong>project_folder/api/get_users.l2</strong></p>
-<div class="highlight"><pre><span></span><code>GET
+<pre id="liveapi-element">
+GET
 ${AHOST}/users
 
 ---
 
 _METADATA={
-    &quot;api_name&quot;: &quot;Environment Variables&quot;
+    "api_name": "Environment Variables"
 }
-</code></pre></div>
+</pre>
+
 <p><img alt="l2.env at API level" src="l2env.png" /></p>
 <p>Get <a href="https://github.com/HexmosTech/Lama2/tree/main/examples/0023_l2env_declare">Source File</a></p>
 <h3 id="case-2-root-variables">Case 2: Root variables<a class="headerlink" href="#case-2-root-variables" title="Permanent link">&para;</a></h3>
@@ -1452,15 +1462,18 @@ The root of such a project can be signified through <code>l2config.env</code>:</
 export BHOST=&quot;https://google.com&quot;
 </code></pre></div>
 <p><strong>project_folder/api/get_users.l2</strong></p>
-<div class="highlight"><pre><span></span><code>GET
+<pre id="liveapi-element">
+GET
 ${AHOST}/users
 
 ---
 
 _METADATA={
-    &quot;api_name&quot;: &quot;Environment Variables&quot;
+    "api_name": "Environment Variables"
 }
-</code></pre></div>
+
+</pre>
+
 <p><img alt="l2config.env at Project root level" src="l2configAtRoot.png" /></p>
 <p>Get <a href="https://github.com/HexmosTech/Lama2/tree/main/examples/0022_l2config_declare">Source File</a></p>
 <h3 id="case-3-override-root-variable-with-local-variable">Case 3: Override Root variable with local variable<a class="headerlink" href="#case-3-override-root-variable-with-local-variable" title="Permanent link">&para;</a></h3>
@@ -1473,15 +1486,18 @@ export BHOST=&quot;https://httpbin.org&quot;
 <div class="highlight"><pre><span></span><code>export AHOST=&quot;http://127.0.0.1:8000&quot;
 </code></pre></div>
 <p><strong>project_folder/api/get_users.l2</strong></p>
-<div class="highlight"><pre><span></span><code>GET
+<pre id="liveapi-element">
+GET
 ${AHOST}/users
 
 ---
 
 _METADATA={
-    &quot;api_name&quot;: &quot;Environment Variables&quot;
+    "api_name": "Environment Variables"
 }
-</code></pre></div>
+
+</pre>
+
 <p><img alt="Override of l2config.env with l2.env variable" src="l2envOverideL2config.png" /></p>
 <p><img alt="l2envvariable variable" src="l2envvariable.png" /></p>
 <p><img alt="l2configvariable variable" src="l2configvariable.png" /></p>
@@ -1494,102 +1510,108 @@ _METADATA={
 <li>Single quoted (<code>'hello'</code>)</li>
 <li>Unquoted (<code>hello</code>)</li>
 </ol>
-<div class="highlight"><pre><span></span><code>POST
+<pre id="liveapi-element">
+POST
 https://httpbin.org/post
 
 # HEADERS
-X-Parse-Application-Id:&#39;helloworld&#39;
-X-Parse-REST-API-Key:&quot;byeworld&quot;
+X-Parse-Application-Id:'helloworld'
+X-Parse-REST-API-Key:"byeworld"
 
 # DATA
-a=&quot;b&quot;  # double-quoted string
-&#39;c&#39;=d  # single-quoted &amp; unquoted strings
+a="b"  # double-quoted string
+'c'=d  # single-quoted & unquoted strings
 
 ---
 
 _METADATA={
-    &quot;api_name&quot;:&quot;Header Example 1&quot;,
-    &quot;sample_response&quot;:{
-  &quot;args&quot;: {},
-  &quot;data&quot;: &quot;{\&quot;a\&quot;:\&quot;b\&quot;,\&quot;c\&quot;:\&quot;d\&quot;}&quot;,
-  &quot;files&quot;: {},
-  &quot;form&quot;: {},
-  &quot;headers&quot;: {
-    &quot;Accept&quot;: &quot;*/*&quot;,
-    &quot;Accept-Encoding&quot;: &quot;gzip, deflate&quot;,
-    &quot;Content-Length&quot;: &quot;17&quot;,
-    &quot;Content-Type&quot;: &quot;application/json&quot;,
-    &quot;Host&quot;: &quot;httpbin.org&quot;,
-    &quot;User-Agent&quot;: &quot;python-requests/2.25.1&quot;,
-    &quot;X-Amzn-Trace-Id&quot;: &quot;Root=1-6686c782-2fd42fdd70a089580fe2c166&quot;
+    "api_name":"Header Example 1",
+    "sample_response":{
+  "args": {},
+  "data": "{\"a\":\"b\",\"c\":\"d\"}",
+  "files": {},
+  "form": {},
+  "headers": {
+    "Accept": "*/*",
+    "Accept-Encoding": "gzip, deflate",
+    "Content-Length": "17",
+    "Content-Type": "application/json",
+    "Host": "httpbin.org",
+    "User-Agent": "python-requests/2.25.1",
+    "X-Amzn-Trace-Id": "Root=1-6686c782-2fd42fdd70a089580fe2c166"
   },
-  &quot;json&quot;: {
-    &quot;a&quot;: &quot;b&quot;,
-    &quot;c&quot;: &quot;d&quot;
+  "json": {
+    "a": "b",
+    "c": "d"
   },
-  &quot;origin&quot;: &quot;20.235.244.147&quot;,
-  &quot;url&quot;: &quot;https://httpbin.org/post&quot;
+  "origin": "20.235.244.147",
+  "url": "https://httpbin.org/post"
 }
 }
-</code></pre></div>
+</pre>
+
 <p>Get <a href="https://github.com/HexmosTech/Lama2/tree/main/examples/0005_headers_simple.l2">Source File</a></p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The data section may appear <em>before</em> headers as well (see below)</p>
 </div>
-<div class="highlight"><pre><span></span><code>POST
+<pre id="liveapi-element">
+POST
 https://httpbin.org/post
 
 
 # DATA
-a=&quot;b&quot;  # double-quoted string
-&#39;c&#39;=d  # single-quoted &amp; unquoted strings
+a="b"  # double-quoted string
+'c'=d  # single-quoted & unquoted strings
 
 # HEADERS
-X-Parse-Application-Id:&#39;helloworld&#39;
-X-Parse-REST-API-Key:&quot;byeworld&quot;
+X-Parse-Application-Id:'helloworld'
+X-Parse-REST-API-Key:"byeworld"
 
 ---
 
 _METADATA={
-    &quot;api_name&quot;:&quot;Header Example 2&quot;,
-    &quot;sample_response&quot;:{
-  &quot;args&quot;: {},
-  &quot;data&quot;: &quot;{\&quot;a\&quot;:\&quot;b\&quot;,\&quot;c\&quot;:\&quot;d\&quot;}&quot;,
-  &quot;files&quot;: {},
-  &quot;form&quot;: {},
-  &quot;headers&quot;: {
-    &quot;Accept&quot;: &quot;*/*&quot;,
-    &quot;Accept-Encoding&quot;: &quot;gzip, deflate&quot;,
-    &quot;Content-Length&quot;: &quot;17&quot;,
-    &quot;Content-Type&quot;: &quot;application/json&quot;,
-    &quot;Host&quot;: &quot;httpbin.org&quot;,
-    &quot;User-Agent&quot;: &quot;python-requests/2.25.1&quot;,
-    &quot;X-Amzn-Trace-Id&quot;: &quot;Root=1-6686c7f1-7bfd09a2000d33bc12cbf7c1&quot;
+    "api_name":"Header Example 2",
+    "sample_response":{
+  "args": {},
+  "data": "{\"a\":\"b\",\"c\":\"d\"}",
+  "files": {},
+  "form": {},
+  "headers": {
+    "Accept": "*/*",
+    "Accept-Encoding": "gzip, deflate",
+    "Content-Length": "17",
+    "Content-Type": "application/json",
+    "Host": "httpbin.org",
+    "User-Agent": "python-requests/2.25.1",
+    "X-Amzn-Trace-Id": "Root=1-6686c7f1-7bfd09a2000d33bc12cbf7c1"
   },
-  &quot;json&quot;: {
-    &quot;a&quot;: &quot;b&quot;,
-    &quot;c&quot;: &quot;d&quot;
+  "json": {
+    "a": "b",
+    "c": "d"
   },
-  &quot;origin&quot;: &quot;20.235.244.147&quot;,
-  &quot;url&quot;: &quot;https://httpbin.org/post&quot;
+  "origin": "20.235.244.147",
+  "url": "https://httpbin.org/post"
 },
-  &quot;json&quot;: {
-    &quot;a&quot;: &quot;b&quot;,
-    &quot;c&quot;: &quot;d&quot;
+  "json": {
+    "a": "b",
+    "c": "d"
   },
-  &quot;origin&quot;: &quot;20.235.244.147&quot;,
-  &quot;url&quot;: &quot;https://httpbin.org/post&quot;
+  "origin": "20.235.244.147",
+  "url": "https://httpbin.org/post"
 }
-</code></pre></div>
+
+</pre>
+
 <h2 id="send-cookies-in-header">Send cookies in header<a class="headerlink" href="#send-cookies-in-header" title="Permanent link">&para;</a></h2>
 <p>Headers represent cookies in <em>Lama2</em>. Just specify cookie key value pairs separated by
 <code>=</code> within the header value as shown.</p>
-<div class="highlight"><pre><span></span><code>POST
+<pre id="liveapi-element">
+POST
 https://httpbin.org/post
 
 # HEADERS
-Cookie:&quot;sessionid=foo;another-cookie=bar&quot;
+Cookie:"sessionid=foo;another-cookie=bar"
 
 # DATA
 hello=world
@@ -1597,29 +1619,30 @@ hello=world
 ---
 
 _METADATA={
-    &quot;api_name&quot;:&quot;Cookie Request&quot;,
-    &quot;sample_response&quot; : {
-  &quot;args&quot;: {},
-  &quot;data&quot;: &quot;{\&quot;hello\&quot;:\&quot;world\&quot;}&quot;,
-  &quot;files&quot;: {},
-  &quot;form&quot;: {},
-  &quot;headers&quot;: {
-    &quot;Accept&quot;: &quot;*/*&quot;,
-    &quot;Accept-Encoding&quot;: &quot;gzip, deflate&quot;,
-    &quot;Content-Length&quot;: &quot;17&quot;,
-    &quot;Content-Type&quot;: &quot;application/json&quot;,
-    &quot;Host&quot;: &quot;httpbin.org&quot;,
-    &quot;User-Agent&quot;: &quot;python-requests/2.25.1&quot;,
-    &quot;X-Amzn-Trace-Id&quot;: &quot;Root=1-6686c850-33bc68696295ac947eb27420&quot;
+    "api_name":"Cookie Request",
+    "sample_response" : {
+  "args": {},
+  "data": "{\"hello\":\"world\"}",
+  "files": {},
+  "form": {},
+  "headers": {
+    "Accept": "*/*",
+    "Accept-Encoding": "gzip, deflate",
+    "Content-Length": "17",
+    "Content-Type": "application/json",
+    "Host": "httpbin.org",
+    "User-Agent": "python-requests/2.25.1",
+    "X-Amzn-Trace-Id": "Root=1-6686c850-33bc68696295ac947eb27420"
   },
-  &quot;json&quot;: {
-    &quot;hello&quot;: &quot;world&quot;
+  "json": {
+    "hello": "world"
   },
-  &quot;origin&quot;: &quot;20.235.244.147&quot;,
-  &quot;url&quot;: &quot;https://httpbin.org/post&quot;
+  "origin": "20.235.244.147",
+  "url": "https://httpbin.org/post"
 }
 }
-</code></pre></div>
+</pre>
+
 <p>Get <a href="https://github.com/HexmosTech/Lama2/tree/main/examples/0006_cookies.l2">Source File</a></p>
 <h2 id="fill-forms-attach-files-with-multipart">Fill forms &amp; attach files with MULTIPART<a class="headerlink" href="#fill-forms-attach-files-with-multipart" title="Permanent link">&para;</a></h2>
 <p>Use the <code>MULTIPART</code> keyword after the HTTP
@@ -1629,12 +1652,13 @@ form inputs using the <code>key=value</code> syntax.</p>
 <p>Following the data section, one can specify
 any number of files in the form of <code>&lt;field_name&gt;@&lt;file_path&gt;</code>. The file path is
 relative to the API file.</p>
-<div class="highlight"><pre><span></span><code>POST
+<pre id="liveapi-element">
+POST
 MULTIPART
 http://httpbin.org/post
 
-&#39;X-Parse-Application-Id&#39;:hello
-X-Parse-REST-API-Key:&quot;world&quot;
+'X-Parse-Application-Id':hello
+X-Parse-REST-API-Key:"world"
 
 # DATA
 first=second
@@ -1645,9 +1669,10 @@ myfile@./image.jpeg
 ---
 
 _METADATA={
-    &quot;api_name&quot; : &quot;Multipart Request&quot;
+    "api_name" : "Multipart Request"
 }
-</code></pre></div>
+</pre>
+
 <p>Get <a href="https://github.com/HexmosTech/Lama2/tree/main/examples/0007_multipart_file">Source Files</a></p>
 <h2 id="image-as-base64-encoded-json-field">Image as Base64 encoded JSON field<a class="headerlink" href="#image-as-base64-encoded-json-field" title="Permanent link">&para;</a></h2>
 <p>We can embed images (or other files) as
@@ -1667,19 +1692,21 @@ must look exactly as shown in the following
 template for the request to work correctly.</strong></p>
 </div>
 <p><strong>base64_embed.l2</strong></p>
-<div class="highlight"><pre><span></span><code>POST
+<pre id="liveapi-element">
+POST
 http://httpbin.org/post
 
 {
-    &quot;imageb64_field&quot;: &quot;&#39;${PHOTO}&#39;&quot;,
+    "imageb64_field": "'${PHOTO}'",
 }
 
 ---
 
 _METADATA={
-    &quot;api_name&quot; : &quot;Image Example 2&quot;
+    "api_name" : "Image Example 2"
 }
-</code></pre></div>
+</pre>
+
 <p>Get <a href="https://github.com/HexmosTech/Lama2/tree/main/examples/0008_base64_image">Source Files</a></p>
 <h2 id="chain-requests-using-javascript">Chain requests using Javascript<a class="headerlink" href="#chain-requests-using-javascript" title="Permanent link">&para;</a></h2>
 <p>In Lama2, we have alternating requestor and processor (JS) blocks, separated by <code>---</code>.</p>
@@ -1688,8 +1715,9 @@ from previous requestor block. If possible,
 <code>result</code> is automatically stored as a JS
 object through <code>JSON.parse()</code>. Otherwise,
 <code>result</code> is stored as a regular <code>string</code>.</p>
-<div class="highlight"><pre><span></span><code>url = &quot;http://google.com&quot;
-REMOTE_COORD = &quot;https://httpbin.org&quot;
+<pre id="liveapi-element">
+url = "http://google.com"
+REMOTE_COORD = "https://httpbin.org"
 ---
 # stage 1
 
@@ -1697,18 +1725,18 @@ POST
 ${REMOTE_COORD}/anything
 
 {
-    &quot;username&quot;: &quot;admin&quot;,
-    &quot;password&quot;: &quot;Password@123&quot;,
-    &quot;from&quot;: &quot;${LOCAL_COORD}/anything&quot;,
-    &quot;url&quot;: &quot;${url}&quot;,
-    &quot;Token&quot;: &quot;MySuperSecretToken&quot;
+    "username": "admin",
+    "password": "Password@123",
+    "from": "${LOCAL_COORD}/anything",
+    "url": "${url}",
+    "Token": "MySuperSecretToken"
 }
 
 ---
 
 // filtering, store in var
-console.log(&quot;@@Result&quot;, result)
-TOKEN = result[&quot;json&quot;][&quot;Token&quot;]
+console.log("@@Result", result)
+TOKEN = result["json"]["Token"]
 console.log(TOKEN)
 
 ---
@@ -1717,14 +1745,16 @@ console.log(TOKEN)
 GET
 ${REMOTE_COORD}/bearer
 
-Authorization: &#39;Bearer ${TOKEN}&#39;
+Authorization: 'Bearer ${TOKEN}'
 
 ---
 
 _METADATA={
-    &quot;api_name&quot; : &quot;Chain Request&quot;
+    "api_name" : "Chain Request"
 }
-</code></pre></div>
+
+</pre>
+
 <p>Get <a href="https://github.com/HexmosTech/Lama2/tree/main/examples/0009_processor_basic">Source Files</a></p>
 
 
@@ -1774,44 +1804,17 @@ _METADATA={
   </div>
 </footer>
       
-<script>
-  ;(function (
-    window,
-    document,
-    scriptTagName,
-    globalName,
-    scriptAddress,
-    scriptElement,
-    otherScriptElement
-  ) {
-    window["JS-Widget"] = globalName
-    window[globalName] =
-      window[globalName] ||
-      function () {
-        ;(window[globalName].q = window[globalName].q || []).push(arguments)
-      }
-    scriptElement = document.createElement(scriptTagName)
-    otherScriptElement = document.getElementsByTagName(scriptTagName)[0]
-    scriptElement.id = globalName
-    scriptElement.src = scriptAddress
-    scriptElement.async = true
-    otherScriptElement.parentNode.insertBefore(
-      scriptElement,
-      otherScriptElement
-    )
-  })(
-    window,
-    document,
-    "script",
-    "liveAPI",
-    "https://d2q4vn0gqet98u.cloudfront.net/v0.0.15/liveapi.js"
-  )
 
-  if (typeof window.liveAPI === "function") {
-    window.liveAPI("liveapi", {
-      tagName: "code",
-    })
-  }
+<script>
+  ((w, d, s) => {
+    w.liveAPI = (...args) => (w.liveAPI.q = w.liveAPI.q || []).push(args);
+    d.head.appendChild(Object.assign(d.createElement("script"), { src: s, async: true }));
+  })(window, document, `https://d2q4vn0gqet98u.cloudfront.net/latest/liveapi.js?foo=${Math.random().toString(36).slice(2)}`);
+  liveAPI("loadwidget", {
+    tagNames: ['pre'],
+    ids: ['liveapi-element'],
+    classNames: ['liveapi-element']
+  });
 </script>
 
 

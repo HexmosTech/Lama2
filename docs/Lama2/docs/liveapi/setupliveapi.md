@@ -4,43 +4,17 @@
 
 ```html
 <script>
-  ;(function (
-    window,
-    document,
-    scriptTagName,
-    globalName,
-    scriptAddress,
-    scriptElement,
-    otherScriptElement
-  ) {
-    window["JS-Widget"] = globalName
-    window[globalName] =
-      window[globalName] ||
-      function () {
-        ;(window[globalName].q = window[globalName].q || []).push(arguments)
-      }
-    scriptElement = document.createElement(scriptTagName)
-    otherScriptElement = document.getElementsByTagName(scriptTagName)[0]
-    scriptElement.id = globalName
-    scriptElement.src = scriptAddress
-    scriptElement.async = true
-    otherScriptElement.parentNode.insertBefore(
-      scriptElement,
-      otherScriptElement
-    )
-  })(
-    window,
-    document,
-    "script",
-    "liveAPI",
-    "https://d2q4vn0gqet98u.cloudfront.net/v0.0.11/liveapi.js"
-  )
-
-  if (typeof window.liveAPI === "function") {
-    window.liveAPI("liveapi", {
-      tagName: "code",
-    })
-  }
+  ((w, d, s) => {
+    w.liveAPI = (...args) => (w.liveAPI.q = w.liveAPI.q || []).push(args);
+    d.head.appendChild(Object.assign(d.createElement("script"), { src: s, async: true }));
+  })(window, document, `https://d2q4vn0gqet98u.cloudfront.net/latest/liveapi.js?foo=${Math.random().toString(36).slice(2)}`);
+  liveAPI("loadwidget", {
+    logoUrl: "link_to_your_logo",
+    siteLink:"link_to_your_site",
+    tagNames: ['code'], // Html tag where you want the widget to render
+    ids: ['liveapi-element'], // Specify on which id you want the widget to be rendered
+    classNames: ['liveapi-element'] // Specify on which class you want the widget to be rendered
+  });
 </script>
 ```
 
@@ -66,7 +40,10 @@ Use the following format in your code block
 
 This will render the LiveAPI Widget on your page, like so
 
-![alt text](<liveapibasicexample.png>)
+<pre id="liveapi-element">
+GET
+https://httpbin.org/ip
+</pre>
 
 
 
@@ -119,8 +96,19 @@ _METADATA = {"sample_response":{
 
 This will render the widget like so.
 
+<pre id="liveapi-element">
+GET
+https://httpbin.org/ip
 
-![alt text](<liveapiexample.png>)
+---
+
+_METADATA = {"sample_response":{
+    "origin": "IP_ADDRESS"
+},
+"api_name":"Get the IP"
+}
+</pre>
+
 
 
 
