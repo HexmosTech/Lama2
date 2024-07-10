@@ -1171,26 +1171,22 @@
 <span class="w">    </span><span class="nx">d</span><span class="p">.</span><span class="nx">head</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nb">Object</span><span class="p">.</span><span class="nx">assign</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">&quot;script&quot;</span><span class="p">),</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">src</span><span class="o">:</span><span class="w"> </span><span class="nx">s</span><span class="p">,</span><span class="w"> </span><span class="k">async</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">}));</span>
 <span class="w">  </span><span class="p">})(</span><span class="nb">window</span><span class="p">,</span><span class="w"> </span><span class="nb">document</span><span class="p">,</span><span class="w"> </span><span class="sb">`https://d2q4vn0gqet98u.cloudfront.net/latest/liveapi.js?foo=</span><span class="si">${</span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">().</span><span class="nx">toString</span><span class="p">(</span><span class="mf">36</span><span class="p">).</span><span class="nx">slice</span><span class="p">(</span><span class="mf">2</span><span class="p">)</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
 <span class="w">  </span><span class="nx">liveAPI</span><span class="p">(</span><span class="s2">&quot;loadwidget&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">logoUrl</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;link_to_your_logo&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">siteLink</span><span class="o">:</span><span class="s2">&quot;link_to_your_site&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">tagNames</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;code&#39;</span><span class="p">],</span><span class="w"> </span><span class="c1">// Html tag where you want the widget to render</span>
-<span class="w">    </span><span class="nx">ids</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;liveapi-element&#39;</span><span class="p">],</span><span class="w"> </span><span class="c1">// Specify on which id you want the widget to be rendered</span>
-<span class="w">    </span><span class="nx">classNames</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;liveapi-element&#39;</span><span class="p">]</span><span class="w"> </span><span class="c1">// Specify on which class you want the widget to be rendered</span>
+<span class="w">    </span><span class="nx">selectors</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;#liveapi-element&#39;</span><span class="p">],</span><span class="w"> </span><span class="c1">// Specify selectors to control where you want the widget to be rendered</span>
 <span class="w">  </span><span class="p">});</span>
 <span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </code></pre></div>
 <h2 id="step-2">Step 2<a class="headerlink" href="#step-2" title="Permanent link">&para;</a></h2>
 <p>Use the following format in your code block</p>
-<div class="highlight"><pre><span></span><code>&lt;code&gt;
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">code</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;liveapi-element&quot;</span><span class="p">&gt;</span>
     GET
     url_to_be_executed
-&lt;/code&gt;
+<span class="p">&lt;/</span><span class="nt">code</span><span class="p">&gt;</span>
 </code></pre></div>
 <h3 id="example">Example<a class="headerlink" href="#example" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>&lt;code&gt;
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">code</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;liveapi-element&quot;</span><span class="p">&gt;</span>
     GET
     https://httpbin.org/ip
-&lt;/code&gt;
+<span class="p">&lt;/</span><span class="nt">code</span><span class="p">&gt;</span>
 </code></pre></div>
 <p>This will render the LiveAPI Widget on your page, like so</p>
 <pre id="liveapi-element">
@@ -1205,10 +1201,9 @@ https://httpbin.org/ip
 <li>Towards the end of the script used for importing the script, you can modify it as so</li>
 </ul>
 <div class="highlight"><pre><span></span><code><span class="nb">window</span><span class="p">.</span><span class="nx">liveAPI</span><span class="p">(</span><span class="s2">&quot;liveapi&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">tagName</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;code&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nx">logoUrl</span><span class="o">:</span>
-<span class="w">        </span><span class="s2">&quot;LINK_TO_YOUR_LOGO_IMAGE&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nx">siteLink</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;LINK_TO_YOUR_WEBSITE&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">selectors</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="s1">&#39;#liveapi-element&#39;</span><span class="p">],</span>
+<span class="w">    </span><span class="nx">logoUrl</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;LINK_TO_YOUR_LOGO_IMAGE&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">siteLink</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;LINK_TO_YOUR_WEBSITE&quot;</span><span class="p">,</span>
 <span class="p">})</span>
 </code></pre></div>
 <h3 id="adding-metadata-to-the-widgets">Adding Metadata to the widgets<a class="headerlink" href="#adding-metadata-to-the-widgets" title="Permanent link">&para;</a></h3>
@@ -1304,9 +1299,7 @@ _METADATA = {"sample_response":{
     d.head.appendChild(Object.assign(d.createElement("script"), { src: s, async: true }));
   })(window, document, `https://d2q4vn0gqet98u.cloudfront.net/latest/liveapi.js?foo=${Math.random().toString(36).slice(2)}`);
   liveAPI("loadwidget", {
-    tagNames: ['pre'],
-    ids: ['liveapi-element'],
-    classNames: ['liveapi-element']
+    selectors: ['#liveapi-element'],
   });
 </script>
 

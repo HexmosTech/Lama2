@@ -1811,9 +1811,7 @@ _METADATA={
     d.head.appendChild(Object.assign(d.createElement("script"), { src: s, async: true }));
   })(window, document, `https://d2q4vn0gqet98u.cloudfront.net/latest/liveapi.js?foo=${Math.random().toString(36).slice(2)}`);
   liveAPI("loadwidget", {
-    tagNames: ['pre'],
-    ids: ['liveapi-element'],
-    classNames: ['liveapi-element']
+    selectors: ['#liveapi-element'],
   });
 </script>
 

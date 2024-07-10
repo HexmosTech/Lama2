@@ -9,11 +9,7 @@
     d.head.appendChild(Object.assign(d.createElement("script"), { src: s, async: true }));
   })(window, document, `https://d2q4vn0gqet98u.cloudfront.net/latest/liveapi.js?foo=${Math.random().toString(36).slice(2)}`);
   liveAPI("loadwidget", {
-    logoUrl: "link_to_your_logo",
-    siteLink:"link_to_your_site",
-    tagNames: ['code'], // Html tag where you want the widget to render
-    ids: ['liveapi-element'], // Specify on which id you want the widget to be rendered
-    classNames: ['liveapi-element'] // Specify on which class you want the widget to be rendered
+    selectors: ['#liveapi-element'], // Specify selectors to control where you want the widget to be rendered
   });
 </script>
 ```
@@ -22,8 +18,8 @@
 
 Use the following format in your code block
 
-```
-<code>
+```html
+<code id="liveapi-element">
     GET
     url_to_be_executed
 </code>
@@ -31,8 +27,8 @@ Use the following format in your code block
 
 ### Example
 
-```
-<code>
+```html
+<code id="liveapi-element">
     GET
     https://httpbin.org/ip
 </code>
@@ -56,10 +52,9 @@ https://httpbin.org/ip
 
 ```js
 window.liveAPI("liveapi", {
-    tagName: "code",
-    logoUrl:
-        "LINK_TO_YOUR_LOGO_IMAGE",
-        siteLink: "LINK_TO_YOUR_WEBSITE",
+    selectors: ['#liveapi-element'],
+    logoUrl: "LINK_TO_YOUR_LOGO_IMAGE",
+    siteLink: "LINK_TO_YOUR_WEBSITE",
 })
 ```
 
