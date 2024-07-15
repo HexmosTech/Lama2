@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"os"
 	"strings"
-	"syscall/js"
 
 	"github.com/HexmosTech/gabs/v2"
 	"github.com/HexmosTech/httpie-go"
@@ -18,16 +17,13 @@ import (
 	"github.com/HexmosTech/lama2/parser"
 )
 
-func ExecuteProcessorBlock(block *gabs.Container, vm *goja.Runtime) httpie.ExResponse {
-	return ExecuteProcessorBlockHelper(block)
-}
 
-func ExecuteJsCodeWasm(script string) {
-	js.Global().Call("eval", script)
-}
 
 func HandleParsedFile(parsedAPI *gabs.Container) (httpie.ExResponse, *lama2cmd.Opts) {
-	return HandleParsedFileHelper(parsedAPI)
+	fmt.Println("HandleParsedFile:")
+	fmt.Println("HandleParsedFile:", parsedAPI)
+	vm := cmdexec.GetJSVm()
+	return HandleParsedFileHelper(parsedAPI, vm)
 }
 
 func ProcessWasmInput(data string) (httpie.ExResponse, *lama2cmd.Opts) {
@@ -66,7 +62,7 @@ func ExecuteRequestorBlockHelper(resp httpie.ExResponse, headersString string, e
 		fmt.Printf("'%s' is not present in the headers.\n", targetHeader)
 		if e1 == nil {
 			chainCode := cmdexec.GenerateChainCode(resp.Body)
-			ExecuteJsCodeWasm(chainCode)
+			cmdexec.RunVMCode(chainCode, vm)
 		} else {
 			fmt.Println("Error from ExecCommand", e1)
 			os.Exit(1)

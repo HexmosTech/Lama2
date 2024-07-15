@@ -24,13 +24,6 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-func ExecuteProcessorBlock(block *gabs.Container, vm *goja.Runtime) httpie.ExResponse {
-	return ExecuteProcessorBlockHelper(block, vm)
-}
-
-// func ExecuteRequestorBlock(block *gabs.Container, vm *goja.Runtime, opts *lama2cmd.Opts, dir string) httpie.ExResponse {
-// 	return ExecuteRequestorBlockHelper(block, vm, opts, dir)
-// }
 
 func HandleParsedFile(parsedAPI *gabs.Container, o *lama2cmd.Opts, dir string) (httpie.ExResponse, *lama2cmd.Opts) {
 	vm := cmdexec.GetJSVm()

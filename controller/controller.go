@@ -14,14 +14,14 @@ import (
 	"github.com/HexmosTech/lama2/lama2cmd"
 	"github.com/HexmosTech/lama2/preprocess"
 	"github.com/dop251/goja"
+	"github.com/rs/zerolog/log"
 )
 
 func GetParsedAPIBlocks(parsedAPI *gabs.Container) []*gabs.Container {
 	return parsedAPI.S("value").Data().(*gabs.Container).Children()
 }
 
-func extractArgs(args []interface{}) (*goja.Runtime, *lama2cmd.Opts, string) {
-	var vm *goja.Runtime
+func extractArgs(args []interface{}) (*lama2cmd.Opts, string) {
 	var o *lama2cmd.Opts
 	var dir string
 
@@ -32,12 +32,10 @@ func extractArgs(args []interface{}) (*goja.Runtime, *lama2cmd.Opts, string) {
 				o = v
 			case string:
 				dir = v
-			case *goja.Runtime:
-				vm = v
 			}
 		}
 	}
-	return vm, o, dir
+	return o, dir
 }
 
 func processLama2FileBlock(block *gabs.Container, vm *goja.Runtime, o *lama2cmd.Opts, dir string) httpie.ExResponse {
@@ -56,14 +54,16 @@ func processLama2FileBlock(block *gabs.Container, vm *goja.Runtime, o *lama2cmd.
 	return resp
 }
 
-func processBlocks(parsedAPIblocks []*gabs.Container, vm *goja.Runtime, o *lama2cmd.Opts, dir string) (httpie.ExResponse, *lama2cmd.Opts) {
+func processBlocks(parsedAPIblocks []*gabs.Container, o *lama2cmd.Opts, dir string) (httpie.ExResponse, *lama2cmd.Opts) {
+	vm := cmdexec.GetJSVm()
 	var resp httpie.ExResponse
-
-	for _, block := range parsedAPIblocks {
+	for i, block := range parsedAPIblocks {
+		log.Debug().Int("Block num", i).Msg("")
+		log.Debug().Str("Block getting processed", block.String()).Msg("")
 		blockType := block.S("type").Data().(string)
 		switch blockType {
 		case "processor":
-			resp = ExecuteProcessorBlock(block, vm)
+			ExecuteProcessorBlock(block, vm)
 		case "Lama2File":
 			resp = processLama2FileBlock(block, vm, o, dir)
 		}
@@ -73,20 +73,13 @@ func processBlocks(parsedAPIblocks []*gabs.Container, vm *goja.Runtime, o *lama2
 
 func HandleParsedFileHelper(parsedAPI *gabs.Container, args ...interface{}) (httpie.ExResponse, *lama2cmd.Opts) {
 	parsedAPIblocks := GetParsedAPIBlocks(parsedAPI)
-	vm, o, dir := extractArgs(args)
-	return processBlocks(parsedAPIblocks, vm, o, dir)
+	o, dir := extractArgs(args)
+	return processBlocks(parsedAPIblocks, o, dir)
 }
 
-func ExecuteProcessorBlockHelper(block *gabs.Container, vm ...*goja.Runtime) httpie.ExResponse {
+func ExecuteProcessorBlock(block *gabs.Container, vm *goja.Runtime) {
 	b := block.S("value").Data().(*gabs.Container)
+	log.Debug().Str("Processor block incoming block", block.String()).Msg("")
 	script := b.Data().(string)
-
-	// Check if vm is provided
-	if len(vm) > 0 && vm[0] != nil {
-		// log.Println("Executing with VM")
-		cmdexec.RunVMCode(script, vm[0])
-	} else {
-		cmdexec.RunVMCode(script, nil)
-	}
-	return httpie.ExResponse{} // Provide the actual ExResponse value you intend to return
+	cmdexec.RunVMCode(script, vm)
 }

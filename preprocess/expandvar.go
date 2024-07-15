@@ -7,8 +7,12 @@
 package preprocess
 
 import (
+	"os"
+	"strings"
+
 	"github.com/HexmosTech/lama2/utils"
 	"github.com/dop251/goja"
+	"github.com/rs/zerolog/log"
 )
 
 // Expand replaces ${var} or $var in the string based on the mapping function.
@@ -96,4 +100,30 @@ func getShellName(s string) (string, int) {
 // variables are replaced by the empty string.
 func ExpandEnv(s string, vm *goja.Runtime) string {
 	return Expand(s, vm, getEnvironMap())
+}
+
+func getJsValue(vm *goja.Runtime, name string, mapping map[string]string, buf []byte) []byte {
+	jsVal := vm.Get(name)
+	if jsVal != nil {
+		buf = append(buf, []byte(jsVal.String())...)
+	} else {
+		val, ok := mapping[name]
+		if ok {
+			buf = append(buf, val...)
+		} else {
+			buf = append(buf, ""...)
+			log.Warn().Str("Couldn't find the variable `"+name+"`,  in both Javascript processor block and environment variables. Replacing with empty string", "").Msg("")
+		}
+	}
+	return buf
+}
+
+func getEnvironMap() map[string]string {
+	m := make(map[string]string)
+	for _, e := range os.Environ() {
+		if i := strings.Index(e, "="); i >= 0 {
+			m[e[:i]] = e[i+1:]
+		}
+	}
+	return m
 }
