@@ -21,8 +21,8 @@ nav:
       - API Reference: reference/api.md
       - Contribute to LSP: reference/lsp.md
   - LiveAPI:
-      - About LiveAPI: liveapi/aboutliveapi.md
-      - How to set up LiveAPI: liveapi/setupliveapi.md
+      - About: liveapi/aboutliveapi.md
+      - Easy Installation: liveapi/setupliveapi.md
   - About:
       - Hexmos: about/hexmos.md
       - Talk to us: about/contact.md
