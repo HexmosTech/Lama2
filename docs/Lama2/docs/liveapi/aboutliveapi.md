@@ -25,6 +25,5 @@ A Theme selector is also available, so you can make sure the widget fits in well
 
 ![](themedemo.png)
 
-### 4. Code Converter
-Our built-in code converter feature allows the users to convert requests to any language of their choice. This makes it easier for the developers to integrate APIs to any environment.
-![alt text](<Group 41.png>)
+### 4. Code Generator
+Our built-in code generator feature allows the users to convert the Lama2 requests to any language of their choice. This makes it easier for the developers to integrate APIs to any environment.
