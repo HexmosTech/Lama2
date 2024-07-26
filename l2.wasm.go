@@ -54,7 +54,15 @@ func wasmCodeConverter() js.Func {
 		inputdata := args[0].String()
 		convertLang := args[1].String()
 		fmt.Println("inputdata", inputdata)
-		result, _ := controller.ProcessConverterInput(inputdata,convertLang)
-		return result
+		handler := js.FuncOf(func(this js.Value, args []js.Value) interface{} {
+			resolve := args[0]
+			go func() {
+				result, _ := controller.ProcessConverterInput(inputdata,convertLang)
+				resolve.Invoke(js.ValueOf(result))
+			}()
+			return nil
+		})
+		promiseConstructor := js.Global().Get("Promise")
+		return promiseConstructor.New(handler)
 	})
 }
