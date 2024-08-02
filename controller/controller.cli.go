@@ -78,7 +78,26 @@ func Process(version string) {
 	}
 }
 
-func ExecuteRequestorBlockHelper(resp httpie.ExResponse, headersString string, e1 error, vm *goja.Runtime) httpie.ExResponse {
+func processBlocks(parsedAPIblocks []*gabs.Container, o *lama2cmd.Opts, dir string) (httpie.ExResponse, *lama2cmd.Opts) {
+	vm := cmdexec.GetJSVm()
+	var resp httpie.ExResponse
+	for i, block := range parsedAPIblocks {
+		log.Debug().Int("Block num", i).Msg("")
+		log.Debug().Str("Block getting processed", block.String()).Msg("")
+		blockType := block.S("type").Data().(string)
+		switch blockType {
+		case "processor":
+			ExecuteProcessorBlock(block, vm)
+		case "Lama2File":
+			resp = processLama2FileBlock(block, vm, o, dir)
+		}
+	}
+	return resp, o
+}
+
+
+
+func ExecuteRequestorBlockHelper(resp httpie.ExResponse, headersString string, e1 error, vm interface{}) httpie.ExResponse {
 	if e1 == nil {
 		chainCode := cmdexec.GenerateChainCode(resp.Body)
 		cmdexec.RunVMCode(chainCode, vm)
@@ -87,4 +106,12 @@ func ExecuteRequestorBlockHelper(resp httpie.ExResponse, headersString string, e
 		os.Exit(1)
 	}
 	return resp
+}
+
+
+func ExecuteProcessorBlock(block *gabs.Container, vm interface{}) {
+	b := block.S("value").Data().(*gabs.Container)
+	log.Debug().Str("Processor block incoming block", block.String()).Msg("")
+	script := b.Data().(string)
+	cmdexec.RunVMCode(script, vm)
 }

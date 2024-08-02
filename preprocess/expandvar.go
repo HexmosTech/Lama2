@@ -17,7 +17,7 @@ import (
 
 // Expand replaces ${var} or $var in the string based on the mapping function.
 // For example, os.ExpandEnv(s) is equivalent to os.Expand(s, os.Getenv).
-func Expand(s string, vm *goja.Runtime, mapping map[string]string) string {
+func Expand(s string, vm interface{}, mapping map[string]string) string {
 	var buf []byte
 	// ${} is all ASCII, so bytes are fine for this operation.
 	i := 0
@@ -98,12 +98,12 @@ func getShellName(s string) (string, int) {
 // ExpandEnv replaces ${var} or $var in the string according to the values
 // of the current environment variables. References to undefined
 // variables are replaced by the empty string.
-func ExpandEnv(s string, vm *goja.Runtime) string {
+func ExpandEnv(s string, vm interface{}) string {
 	return Expand(s, vm, getEnvironMap())
 }
 
-func getJsValue(vm *goja.Runtime, name string, mapping map[string]string, buf []byte) []byte {
-	jsVal := vm.Get(name)
+func getJsValue(vm interface{}, name string, mapping map[string]string, buf []byte) []byte {
+	jsVal := vm.(*goja.Runtime).Get(name)
 	if jsVal != nil {
 		buf = append(buf, []byte(jsVal.String())...)
 	} else {

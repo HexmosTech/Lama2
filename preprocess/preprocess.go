@@ -16,7 +16,6 @@ import (
 	"github.com/HexmosTech/gabs/v2"
 	"github.com/HexmosTech/godotenv"
 	"github.com/HexmosTech/lama2/utils"
-	"github.com/dop251/goja"
 	"github.com/rs/zerolog/log"
 )
 
@@ -166,13 +165,13 @@ func LamaFile(inputFile string) (string, string) {
 	return content, dir
 }
 
-func ProcessVarsInBlock(block *gabs.Container, vm *goja.Runtime) {
+func ProcessVarsInBlock(block *gabs.Container, vm interface{}) {
 	ExpandURL(block, vm)
 	ExpandHeaders(block, vm)
 	ExpandJSON(block, vm)
 }
 
-func ExpandHeaders(block *gabs.Container, vm *goja.Runtime) {
+func ExpandHeaders(block *gabs.Container, vm interface{}) {
 	headerMap := block.S("details", "headers")
 	log.Debug().Str("HeaderMap", headerMap.String()).Msg("")
 	if headerMap == nil {
@@ -192,7 +191,7 @@ func ExpandHeaders(block *gabs.Container, vm *goja.Runtime) {
 	log.Debug().Str("Expanded Header block", block.String()).Msg("")
 }
 
-func ExpandURL(block *gabs.Container, vm *goja.Runtime) {
+func ExpandURL(block *gabs.Container, vm interface{}) {
 	b := block.S("url", "value").Data().(string)
 	log.Debug().Str("Url block", b).Msg("")
 	url := ExpandEnv(b, vm)
@@ -200,7 +199,7 @@ func ExpandURL(block *gabs.Container, vm *goja.Runtime) {
 	block.Set(url, "url", "value")
 }
 
-func ExpandJSON(block *gabs.Container, vm *goja.Runtime) {
+func ExpandJSON(block *gabs.Container, vm interface{}) {
 	log.Debug().Str("JSON block to be expanded", block.String()).Msg("")
 	dataBlock := block.S("details", "ip_data")
 	if dataBlock == nil {

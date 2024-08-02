@@ -9,15 +9,13 @@ import (
 
 	"github.com/HexmosTech/gabs/v2"
 	"github.com/HexmosTech/httpie-go"
-	"github.com/dop251/goja"
+	"github.com/rs/zerolog/log"
 
 	"github.com/HexmosTech/lama2/cmdexec"
 	"github.com/HexmosTech/lama2/codegen"
 	"github.com/HexmosTech/lama2/lama2cmd"
 	"github.com/HexmosTech/lama2/parser"
 )
-
-
 
 func HandleParsedFile(parsedAPI *gabs.Container) (httpie.ExResponse, *lama2cmd.Opts) {
 	fmt.Println("HandleParsedFile:")
@@ -52,7 +50,7 @@ func ProcessConverterInput(data string, ConvertLang string) (string, error) {
 	return snippet, nil
 }
 
-func ExecuteRequestorBlockHelper(resp httpie.ExResponse, headersString string, e1 error, vm *goja.Runtime) httpie.ExResponse {
+func ExecuteRequestorBlockHelper(resp httpie.ExResponse, headersString string, e1 error, vm interface{}) httpie.ExResponse {
 	targetHeader := "text/html"
 	isTextHTMLPresent := strings.Contains(headersString, targetHeader)
 	if isTextHTMLPresent {
@@ -62,11 +60,36 @@ func ExecuteRequestorBlockHelper(resp httpie.ExResponse, headersString string, e
 		fmt.Printf("'%s' is not present in the headers.\n", targetHeader)
 		if e1 == nil {
 			chainCode := cmdexec.GenerateChainCode(resp.Body)
-			cmdexec.RunVMCode(chainCode, vm)
+			// cmdexec.RunVMCode(chainCode, vm)
+			runCodeInWorker(chainCode)
 		} else {
 			fmt.Println("Error from ExecCommand", e1)
 			os.Exit(1)
 		}
 	}
 	return resp
+}
+
+func processBlocks(parsedAPIblocks []*gabs.Container, o *lama2cmd.Opts, dir string) (httpie.ExResponse, *lama2cmd.Opts) {
+	worker = initWebWorker() // Initialize the web worker
+	var resp httpie.ExResponse
+	for i, block := range parsedAPIblocks {
+		log.Debug().Int("Block num", i).Msg("")
+		log.Debug().Str("Block getting processed", block.String()).Msg("")
+		blockType := block.S("type").Data().(string)
+		switch blockType {
+		case "processor":
+			ExecuteProcessorBlock(block)
+		case "Lama2File":
+			resp = processLama2FileBlock(block, worker, o, dir)
+		}
+	}
+	return resp, o
+}
+
+func ExecuteProcessorBlock(block *gabs.Container) {
+	b := block.S("value").Data().(*gabs.Container)
+	log.Debug().Str("Processor block incoming block", block.String()).Msg("")
+	script := b.Data().(string)
+	runCodeInWorker(script)
 }
