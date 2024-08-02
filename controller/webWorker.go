@@ -19,7 +19,7 @@ var worker js.Value
 // }
 
 func initWebWorker() js.Value {
-	if worker == (js.Value{}) {
+	if worker.IsUndefined() {
 		worker = js.Global().Get("Worker").New("worker.js")
 		worker.Call("addEventListener", "message", js.FuncOf(func(this js.Value, args []js.Value) interface{} {
 			result := args[0].Get("data")
@@ -30,6 +30,7 @@ func initWebWorker() js.Value {
 	}
 	return worker
 }
+
 
 func runCodeInWorker(chainCode string) {
 	worker.Call("postMessage", chainCode)
