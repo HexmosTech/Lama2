@@ -20,10 +20,8 @@ import (
 	"github.com/HexmosTech/lama2/preprocess"
 	"github.com/HexmosTech/lama2/prettify"
 	"github.com/HexmosTech/lama2/utils"
-	"github.com/dop251/goja"
 	"github.com/rs/zerolog/log"
 )
-
 
 func HandleParsedFile(parsedAPI *gabs.Container, o *lama2cmd.Opts, dir string) (httpie.ExResponse, *lama2cmd.Opts) {
 	vm := cmdexec.GetJSVm()
@@ -95,8 +93,6 @@ func processBlocks(parsedAPIblocks []*gabs.Container, o *lama2cmd.Opts, dir stri
 	return resp, o
 }
 
-
-
 func ExecuteRequestorBlockHelper(resp httpie.ExResponse, headersString string, e1 error, vm interface{}) httpie.ExResponse {
 	if e1 == nil {
 		chainCode := cmdexec.GenerateChainCode(resp.Body)
@@ -107,7 +103,6 @@ func ExecuteRequestorBlockHelper(resp httpie.ExResponse, headersString string, e
 	}
 	return resp
 }
-
 
 func ExecuteProcessorBlock(block *gabs.Container, vm interface{}) {
 	b := block.S("value").Data().(*gabs.Container)

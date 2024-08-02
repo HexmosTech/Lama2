@@ -10,13 +10,14 @@ import (
 	"github.com/HexmosTech/gabs/v2"
 	"github.com/HexmosTech/lama2/cmdexec"
 	"github.com/atotto/clipboard"
+	"github.com/dop251/goja"
 	"github.com/rs/zerolog/log"
 )
 
 //go:embed httpsnippet.js
 var snippetcore string
 
-var globalVM *goja.Runtime
+var globalVM interface{}
 
 func initialize() {
 	globalVM = cmdexec.GetJSVm()
