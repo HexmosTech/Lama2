@@ -11,8 +11,9 @@ import (
 	"strings"
 
 	"github.com/HexmosTech/lama2/utils"
-	"github.com/dop251/goja"
+	// "github.com/dop251/goja"
 	"github.com/rs/zerolog/log"
+	"syscall/js"
 )
 
 // Expand replaces ${var} or $var in the string based on the mapping function.
@@ -37,7 +38,8 @@ func Expand(s string, vm interface{}, mapping map[string]string) string {
 				// name. Leave the dollar character untouched.
 				buf = append(buf, s[j])
 			} else {
-				buf = getJsValue(vm, name, mapping, buf)
+				// buf = getJsValue(vm, name, mapping, buf)
+				buf = getJsValue(name, mapping, buf)
 			}
 			j += w
 			i = j + 1
@@ -102,20 +104,67 @@ func ExpandEnv(s string, vm interface{}) string {
 	return Expand(s, vm, getEnvironMap())
 }
 
-func getJsValue(vm interface{}, name string, mapping map[string]string, buf []byte) []byte {
-	jsVal := vm.(*goja.Runtime).Get(name)
-	if jsVal != nil {
-		buf = append(buf, []byte(jsVal.String())...)
-	} else {
-		val, ok := mapping[name]
-		if ok {
-			buf = append(buf, val...)
-		} else {
-			buf = append(buf, ""...)
-			log.Warn().Str("Couldn't find the variable `"+name+"`,  in both Javascript processor block and environment variables. Replacing with empty string", "").Msg("")
-		}
-	}
-	return buf
+// func getJsValue(vm interface{}, name string, mapping map[string]string, buf []byte) []byte {
+// 	jsVal := vm.(*goja.Runtime).Get(name)
+// 	if jsVal != nil {
+// 		buf = append(buf, []byte(jsVal.String())...)
+// 	} else {
+// 		val, ok := mapping[name]
+// 		if ok {
+// 			buf = append(buf, val...)
+// 		} else {
+// 			buf = append(buf, ""...)
+// 			log.Warn().Str("Couldn't find the variable `"+name+"`,  in both Javascript processor block and environment variables. Replacing with empty string", "").Msg("")
+// 		}
+// 	}
+// 	return buf
+// }
+
+var worker js.Value
+
+func initWebWorker() js.Value {
+    if worker.IsUndefined() {
+        worker = js.Global().Get("Worker").New("worker.js")
+        worker.Call("addEventListener", "message", js.FuncOf(func(this js.Value, args []js.Value) interface{} {
+            result := args[0].String()
+			log.Debug().Str("CResult from web worker:", result).Msg("")
+            return nil
+        }))
+    }
+    return worker
+}
+
+func getJsValue(name string, mapping map[string]string, buf []byte) []byte {
+    worker := initWebWorker()
+    
+    // Use a channel to synchronize with the worker response
+    responseChan := make(chan string)
+    
+    // Setup a listener to capture the worker's response
+    js.Global().Get("addEventListener").Invoke("message", js.FuncOf(func(this js.Value, args []js.Value) interface{} {
+        result := args[0].String()
+        responseChan <- result
+        return nil
+    }))
+
+    // Send the request to the worker
+    worker.Call("postMessage", name)
+
+    // Wait for the worker response
+    jsVal := <-responseChan
+    
+    if jsVal != "" {
+        buf = append(buf, []byte(jsVal)...)
+    } else {
+        val, ok := mapping[name]
+        if ok {
+            buf = append(buf, val...)
+        } else {
+            buf = append(buf, ""...)
+            log.Warn().Str("Couldn't find the variable `"+name+"`, in both Javascript processor block and environment variables. Replacing with empty string", "").Msg("")
+        }
+    }
+    return buf
 }
 
 func getEnvironMap() map[string]string {
