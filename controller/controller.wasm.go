@@ -4,19 +4,18 @@ package contoller
 
 import (
 	"fmt"
-	"os"
 	"strings"
 
 	"github.com/HexmosTech/gabs/v2"
 	"github.com/HexmosTech/httpie-go"
 	"github.com/rs/zerolog/log"
 
-	"github.com/HexmosTech/lama2/cmdexec"
+	"syscall/js"
+
 	"github.com/HexmosTech/lama2/codegen"
 	"github.com/HexmosTech/lama2/lama2cmd"
 	"github.com/HexmosTech/lama2/parser"
 	preprocess "github.com/HexmosTech/lama2/preprocess"
-	"syscall/js"
 )
 
 var worker js.Value
@@ -24,8 +23,7 @@ var worker js.Value
 func HandleParsedFile(parsedAPI *gabs.Container) (httpie.ExResponse, *lama2cmd.Opts) {
 	fmt.Println("HandleParsedFile:")
 	fmt.Println("HandleParsedFile:", parsedAPI)
-	vm := initWebWorker()
-	return HandleParsedFileHelper(parsedAPI, vm)
+	return HandleParsedFileHelper(parsedAPI)
 }
 
 func ProcessWasmInput(data string) (httpie.ExResponse, *lama2cmd.Opts) {
@@ -46,7 +44,7 @@ func ProcessConverterInput(data string, ConvertLang string) (string, error) {
 	apiContent := data
 	p := parser.NewLama2Parser()
 	parsedAPI, e := p.Parse(apiContent)
-	fmt.Println("Parsed API:",parsedAPI)
+	fmt.Println("Parsed API:", parsedAPI)
 	if e != nil {
 		fmt.Println("Error while parsing API:", e)
 	}
@@ -63,14 +61,13 @@ func ExecuteRequestorBlockHelper(resp httpie.ExResponse, headersString string, e
 		return resp
 	} else {
 		fmt.Printf("'%s' is not present in the headers.\n", targetHeader)
-		if e1 == nil {
-			chainCode := cmdexec.GenerateChainCode(resp.Body)
-			// cmdexec.RunVMCode(chainCode, vm)
-			preprocess.RunCodeInWorker(chainCode)
-		} else {
-			fmt.Println("Error from ExecCommand", e1)
-			os.Exit(1)
-		}
+		// if e1 == nil {
+		// 	chainCode := cmdexec.GenerateChainCode(resp.Body)
+		// 	preprocess.RunCodeInWorker(chainCode)
+		// } else {
+		// 	fmt.Println("Error from ExecCommand", e1)
+		// 	os.Exit(1)
+		// }
 	}
 	return resp
 }
