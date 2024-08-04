@@ -21,9 +21,12 @@ func GenerateTargetCode(targetLangLib string, parsedAPI *gabs.Container) string 
 }
 
 func generateConvertedSippet(targetLangLib string, parsedAPI *gabs.Container) string {
-	parsedAPIblocks := parsedAPI.S("value").Data().(*gabs.Container).Children()
+	fmt.Println("targetLangLib:",targetLangLib)
+	// parsedAPIblocks := parsedAPI.S("value").Data().(*gabs.Container).Children()
 	convertedSnippetList := make([]string, 0)
-
+	fmt.Println("convertedSnippetList:", convertedSnippetList)
+	parsedAPIblocks := parsedAPI.S("value").Children()
+	fmt.Println("parsedAPIblocks:", parsedAPIblocks)
 	done := make(chan struct{})
 	worker := js.Global().Get("Worker").New("worker.js")
 
@@ -44,9 +47,11 @@ func generateConvertedSippet(targetLangLib string, parsedAPI *gabs.Container) st
 	}))
 
 	for i, block := range parsedAPIblocks {
-		log.Debug().Int("Block num", i).Msg("")
-		log.Debug().Str("Block getting processed", block.String()).Msg("")
-		blockType := block.S("type").Data().(string)
+		// log.Debug().Int("Block num", i).Msg("")
+		// log.Debug().Str("Block getting processed", block.String()).Msg("")
+		fmt.Println("Block type:", block)
+		fmt.Println("Block num:", i)
+		blockType := block.S("type").Data().(string) 
 		if blockType == "processor" {
 			snippet := block.S("value").Data().(string)
 			log.Debug().Str("Processor block incoming block", block.String()).Msg("")

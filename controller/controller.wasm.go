@@ -20,7 +20,7 @@ import (
 func HandleParsedFile(parsedAPI *gabs.Container) (httpie.ExResponse, *lama2cmd.Opts) {
 	fmt.Println("HandleParsedFile:")
 	fmt.Println("HandleParsedFile:", parsedAPI)
-	vm := cmdexec.GetJSVm()
+	vm := initWebWorker()
 	return HandleParsedFileHelper(parsedAPI, vm)
 }
 
@@ -41,7 +41,7 @@ func ProcessConverterInput(data string, ConvertLang string) (string, error) {
 	apiContent := data
 	p := parser.NewLama2Parser()
 	parsedAPI, e := p.Parse(apiContent)
-	fmt.Println(parsedAPI)
+	fmt.Println("Parsed API:",parsedAPI)
 	if e != nil {
 		fmt.Println("Error while parsing API:", e)
 	}
