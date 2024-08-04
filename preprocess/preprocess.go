@@ -195,6 +195,7 @@ func ExpandURL(block *gabs.Container, vm interface{}) {
 	b := block.S("url", "value").Data().(string)
 	log.Debug().Str("Url block", b).Msg("")
 	url := ExpandEnv(b, vm)
+	fmt.Println("WW: Expanded URL:", url)
 	block.Delete("url", "value")
 	block.Set(url, "url", "value")
 }

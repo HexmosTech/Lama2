@@ -93,6 +93,7 @@ func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, header
 // and finally generates a string representing the generated
 // command
 func ConstructCommandHelper(parsedInput *gabs.Container) (string, string, *gabs.Container, *gabs.Container, bool, bool) {
+	fmt.Println("WW parsedInput:", parsedInput.StringIndent("", "  "))
 	httpv := parsedInput.S("verb", "value")
 	url := parsedInput.S("url", "value")
 	jsonObj := parsedInput.S("details", "ip_data")
@@ -104,5 +105,7 @@ func ConstructCommandHelper(parsedInput *gabs.Container) (string, string, *gabs.
 		multipartBool = true
 	}
 	formBool := form != nil
+	fmt.Println("WW httpv:", httpv.Data().(string))
+	fmt.Println("WW url:", url.Data().(string))
 	return httpv.Data().(string), url.Data().(string), jsonObj, headers, multipartBool, formBool
 }
