@@ -11,23 +11,8 @@ package preprocess
 import (
 	"github.com/HexmosTech/lama2/utils"
 	"github.com/rs/zerolog/log"
-	"syscall/js"
+	"fmt"
 )
-
-var worker js.Value
-
-func initWebWorker() js.Value {
-    if worker.IsUndefined() {
-        worker = js.Global().Get("Worker").New("worker.js")
-        worker.Call("addEventListener", "message", js.FuncOf(func(this js.Value, args []js.Value) interface{} {
-            result := args[0].String()
-			log.Debug().Str("CResult from web worker:", result).Msg("")
-            return nil
-        }))
-    }
-    return worker
-}
-
 
 // Expand replaces ${var} or $var in the string based on the mapping function.
 // For example, os.ExpandEnv(s) is equivalent to os.Expand(s, os.Getenv).
@@ -53,6 +38,7 @@ func Expand(s string, vm interface{}, mapping map[string]string) string {
 			} else {
 				// buf = getJsValue(vm, name, mapping, buf)
 				buf = getJsValue(name, mapping, buf)
+				fmt.Println("WW: Buffer value:",name, string(buf))
 			}
 			j += w
 			i = j + 1
@@ -68,25 +54,11 @@ func Expand(s string, vm interface{}, mapping map[string]string) string {
 	return res2
 }
 func getJsValue(name string, mapping map[string]string, buf []byte) []byte {
-    worker := initWebWorker()
-    
-    // Use a channel to synchronize with the worker response
-    responseChan := make(chan string)
-    
-    // Setup a listener to capture the worker's response
-    js.Global().Get("addEventListener").Invoke("message", js.FuncOf(func(this js.Value, args []js.Value) interface{} {
-        result := args[0].String()
-        responseChan <- result
-        return nil
-    }))
-
-    // Send the request to the worker
-    worker.Call("postMessage", name)
-
-    // Wait for the worker response
-    jsVal := <-responseChan
-    
-    if jsVal != "" {
+	log.Debug().Str("WW Getting from worker", name).Msg("");
+    jsVal := GetFromWorker(name)
+	fmt.Println("WW: getjsvalue",name,jsVal)
+	log.Debug().Str("WW JavaScript Variable Value:", jsVal).Msg("");
+	if jsVal != "" {
         buf = append(buf, []byte(jsVal)...)
     } else {
         val, ok := mapping[name]
