@@ -32,6 +32,22 @@ func GenerateTargetCode(targetLangLib string, parsedAPI *gabs.Container) {
 	fmt.Println("Code copied to clipboard")
 }
 
+func PrepareHTTPSnippetGenerator(snippetArgs SnippetArgs) string {
+	var templOutput bytes.Buffer
+	templStr := `{{.SnippetCore}} 
+
+	const snippet = new window.HTTPSnippet({{.HARRequest}});
+	
+	window.convertedSnippet = snippet.convert('{{.Language}}'{{if .Library }}, '{{.Library}}'{{end}});
+	
+	console.log("convertedSnippet results from httpsnippet:",convertedSnippet)
+	`
+	tmpl, _ := template.New("httpsnippet").Parse(templStr)
+	tmpl.Execute(&templOutput, snippetArgs)
+	return templOutput.String()
+}
+
+
 func generateConvertedSippet(targetLangLib string, parsedAPI *gabs.Container) string {
 	initialize()
 	parsedAPIblocks := parsedAPI.S("value").Data().(*gabs.Container).Children()
