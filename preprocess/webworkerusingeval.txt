@@ -1,0 +1,85 @@
+package preprocess
+
+import (
+	"fmt"
+	"syscall/js"
+	"log"
+	"time"
+)
+
+// Initialize and return the eval function
+func InitWebWorker() js.Value {
+	fmt.Println("WW: Running eval function")
+	global := js.Global()
+	eval := global.Get("eval")
+	if eval.IsUndefined() {
+		log.Fatal("eval function not found")
+	}
+	return eval
+}
+
+// Run JavaScript code using eval
+func RunCodeInWorker(jsCode string) (string, error) {
+	eval := InitWebWorker()
+
+	// Define a result channel for handling asynchronous results
+	resultChan := make(chan string)
+
+	// Create a callback function to receive the result
+	js.FuncOf(func(this js.Value, p []js.Value) interface{} {
+		resultChan <- p[0].String()
+		return nil
+	})
+
+	// Execute the JavaScript code
+	eval.Invoke(jsCode)
+
+	// Wait for the result from the callback
+	result := <-resultChan
+	return result, nil
+}
+
+// Get a value from JavaScript using eval
+func GetFromWorker(variableName string) (string) {
+
+	// Create a JavaScript code string to retrieve the variable's value
+	jsCode := fmt.Sprintf("typeof %s !== 'undefined' ? %s : 'undefined'", variableName, variableName)
+
+	// Run the JavaScript code to get the variable's value
+	result, err := RunCodeInWorker(jsCode)
+	if err != nil {
+		return ""
+	}
+	return result
+}
+
+
+func asyncTask(resultChan0 chan<- string) {
+	time.Sleep(2 * time.Second)
+	resultChan0 <- "Task Completed"
+}
+
+func RunCodeInWorker(jsCode string) (string, error) {
+	global := js.Global()
+	eval := global.Get("eval")
+	eval.Invoke(jsCode)
+
+	resultChan0 := make(chan string)
+	go asyncTask(resultChan0)
+	results := <-resultChan0
+	fmt.Println(results)
+
+	evalAsync := global.Get("evaluateAsync")
+	if !evalAsync.Truthy() {
+		return "", fmt.Errorf("evaluateAsync function not found")
+	}
+	resultChan := make(chan string)
+
+	callback := js.FuncOf(func(this js.Value, p []js.Value) interface{} {
+		resultChan <- p[0].String()
+		return nil
+	})
+	evalAsync.Invoke(jsCode, callback)
+	result := <-resultChan
+	return result, nil
+}

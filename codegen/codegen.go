@@ -1,14 +1,10 @@
 package codegen
 
 import (
-	"bytes"
 	_ "embed"
 	"fmt"
-	"math/rand"
 	"net/url"
 	"strings"
-	"text/template"
-	"time"
 
 	"github.com/HexmosTech/gabs/v2"
 )
@@ -128,22 +124,4 @@ func postprocessURL(convertedSnippet string, flag int) string {
 		// return convertedSnippet
 	}
 	return convertedSnippet
-}
-
-func generateRandomNumber() int {
-	rand.Seed(time.Now().UnixNano())
-	return rand.Intn(10000)
-}
-
-func PrepareHTTPSnippetGenerator(snippetArgs SnippetArgs) string {
-	var templOutput bytes.Buffer
-	templStr := `{{.SnippetCore}} 
-
-	const snippet = new window.HTTPSnippet({{.HARRequest}});
-	
-	let convertedSnippet = snippet.convert('{{.Language}}'{{if .Library }}, '{{.Library}}'{{end}});
-	`
-	tmpl, _ := template.New("httpsnippet").Parse(templStr)
-	tmpl.Execute(&templOutput, snippetArgs)
-	return templOutput.String()
 }
