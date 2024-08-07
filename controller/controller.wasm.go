@@ -4,6 +4,7 @@ package contoller
 
 import (
 	"fmt"
+	"os"
 	"strings"
 
 	"github.com/HexmosTech/gabs/v2"
@@ -15,6 +16,8 @@ import (
 	"github.com/HexmosTech/lama2/codegen"
 	"github.com/HexmosTech/lama2/lama2cmd"
 	"github.com/HexmosTech/lama2/parser"
+
+	"github.com/HexmosTech/lama2/cmdexec"
 	preprocess "github.com/HexmosTech/lama2/preprocess"
 )
 
@@ -61,13 +64,13 @@ func ExecuteRequestorBlockHelper(resp httpie.ExResponse, headersString string, e
 		return resp
 	} else {
 		fmt.Printf("'%s' is not present in the headers.\n", targetHeader)
-		// if e1 == nil {
-		// 	chainCode := cmdexec.GenerateChainCode(resp.Body)
-		// 	preprocess.RunCodeInWorker(chainCode)
-		// } else {
-		// 	fmt.Println("Error from ExecCommand", e1)
-		// 	os.Exit(1)
-		// }
+		if e1 == nil {
+			chainCode := cmdexec.GenerateChainCode(resp.Body)
+			preprocess.RunCodeInWorker(chainCode)
+		} else {
+			fmt.Println("Error from ExecCommand", e1)
+			os.Exit(1)
+		}
 	}
 	return resp
 }
