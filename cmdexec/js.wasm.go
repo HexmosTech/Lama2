@@ -56,15 +56,14 @@ func RunVMCode(jsCode string, vm interface{}) {
 // GenerateChainCode takes in an HTTP response body and comes up with some JS code to define the "magic variable" result.
 func GenerateChainCode(httpRespBody string) string {
 	fmt.Println("WW: Value of httpRespBody is",httpRespBody)
-	code:= `result = ` + httpRespBody
-	// code := `try {
-	// 	result = JSON.parse(String.raw` + "`" + httpRespBody + "`" + `)	
-	// 	console.log("Stored as JSON")
-	// } catch (e) {
-	// 	result = String.raw` + "`" + httpRespBody + "`" + ` 	
-	// 	console.log(e)
-	// 	console.log("Stored as string")
-	// }`
+	code := `try {
+		result = JSON.parse(String.raw` + "`" + httpRespBody + "`" + `)	
+		console.log("Stored as JSON")
+	} catch (e) {
+		result = String.raw` + "`" + httpRespBody + "`" + ` 	
+		console.log(e)
+		console.log("Stored as string")
+	}`
 	log.Debug().Str("Chain code generated", code).Msg("")
 	return code
 }
