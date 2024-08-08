@@ -59,8 +59,8 @@ func evaluateJSCode(jsCode string) (string, error) {
 func generateConvertedSippet(targetLangLib string, parsedAPI *gabs.Container) string {
 	parsedAPIblocks := parsedAPI.S("value").Data().(*gabs.Container).Children()
 	convertedSnippetList := make([]string, 0)
-
-	for _, block := range parsedAPIblocks {
+	blockLength := len(parsedAPIblocks)
+	for i, block := range parsedAPIblocks {
 		fmt.Println("Block type:", block.S("type").Data().(string))
 		blockType := block.S("type").Data().(string)
 		if blockType == "processor" {
@@ -86,6 +86,9 @@ func generateConvertedSippet(targetLangLib string, parsedAPI *gabs.Container) st
 			convertedSnippetWithPostProcessing := postprocessURL(convertedSnippet, flag)
 			flag = 0
 			convertedSnippetList = append(convertedSnippetList, convertedSnippetWithPostProcessing)
+		}
+		if i != blockLength-1 {
+			convertedSnippetList = append(convertedSnippetList, "\n---\n")
 		}
 	}
 	convertedSnippetFinal := strings.Join(convertedSnippetList, "\n")
