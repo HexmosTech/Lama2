@@ -1,4 +1,5 @@
 //go:build wasm
+
 package preprocess
 
 import (
