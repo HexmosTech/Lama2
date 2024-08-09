@@ -20,51 +20,20 @@ var snippetcore string
 
 var flag = 0
 
+//go:noinline
 func GenerateTargetCode(targetLangLib string, parsedAPI *gabs.Container) string {
 	convertedSnippetFinal := generateConvertedSippet(targetLangLib, parsedAPI)
 	fmt.Println("This is the converted snippet:", convertedSnippetFinal)
 	return convertedSnippetFinal
 }
 
+//go:noinline
 func asyncTask(resultChan0 chan<- string) {
 	time.Sleep(2 * time.Second)
 	resultChan0 <- "Task Completed"
 }
 
-// func evaluateJSCode(jsCode string) (string, error) {
-// 	global := js.Global()
-// 	eval := global.Get("eval")
-// 	eval.Invoke(jsCode)
-
-// 	resultChan0 := make(chan string,10)
-// 	go asyncTask(resultChan0)
-// 	results := <-resultChan0
-// 	fmt.Println(results)
-
-// 	evalAsync := global.Get("evaluateAsync")
-// 	if !evalAsync.Truthy() {
-// 		return "", fmt.Errorf("evaluateAsync function not found")
-// 	}
-// 	resultChan := make(chan string,10)
-
-// 	callback := js.FuncOf(func(this js.Value, p []js.Value) interface{} {
-// 		resultChan <- p[0].String()
-// 		return nil
-// 	})
-// 	evalAsync.Invoke(jsCode, callback)
-// 	result := <-resultChan
-// 	return result, nil
-// }
-
-// func evaluateJSCode (code string) (string, error) {
-// 	// Create a new JavaScript function to run the code
-// 	result := js.Global().Call("eval", code)
-// 	// if result.Type() == js.TypeString {
-// 	// 	return result.String(), nil
-// 	// }
-// 	return result.String(), nil
-// }
-
+//go:noinline
 func generateConvertedSippet(targetLangLib string, parsedAPI *gabs.Container) string {
 	parsedAPIblocks := parsedAPI.S("value").Data().(*gabs.Container).Children()
 	convertedSnippetList := make([]string, 0)
@@ -109,6 +78,7 @@ func generateConvertedSippet(targetLangLib string, parsedAPI *gabs.Container) st
 			convertedSnippetList = append(convertedSnippetList, "\n---\n")
 		}
 	}
+
 	convertedSnippetFinal := strings.Join(convertedSnippetList, "\n")
 	return convertedSnippetFinal
 }
@@ -141,6 +111,7 @@ func generateConvertedSippet(targetLangLib string, parsedAPI *gabs.Container) st
 // 	return templOutput.String()
 // }
 
+//go:noinline
 func PrepareHTTPSnippetGenerator(snippetArgs SnippetArgs) string {
 	var templOutput bytes.Buffer
 	templStr := `{{.SnippetCore}} 
