@@ -61,7 +61,7 @@ func generateConvertedSippet(targetLangLib string, parsedAPI *gabs.Container) st
 			log.Debug().Str("Processor block incoming block", block.String()).Msg("")
 			convertedSnippetList = append(convertedSnippetList, snippet)
 		} else if blockType == "Lama2File" {
-			harRequest, flag := GetRequestHARString(block)
+			harRequest, flag := GetRequestHARString(block,targetLangLib)
 			snippetArgs := SnippetArgs{}
 			lang, lib := SplitLangLib(targetLangLib)
 			snippetArgs.Language = lang

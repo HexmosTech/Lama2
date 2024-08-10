@@ -16,14 +16,20 @@ type SnippetArgs struct {
 	SnippetCore string
 }
 
-func GetRequestHARString(block *gabs.Container) (string, int) {
-	httpv := block.S("verb", "value")
+func GetRequestHARString(block *gabs.Container, targetLang string) (string, int) {
+	httpv := block.S("verb", "value").String()
+	httpv = strings.Trim(httpv, `"`) 
+	httpv = strings.Trim(httpv, `'`)
 	url := block.S("url", "value")
 	flag := preprocessURL(url)
 	jsonObj := block.S("details", "ip_data")
 	headers := block.S("details", "headers")
 	harObj := gabs.New()
 
+	if strings.Contains(strings.ToLower(targetLang), "python") || strings.Contains(strings.ToLower(targetLang), "shell") {
+        httpv = strings.ToUpper(httpv)
+    }
+	
 	if jsonObj != nil {
 		postData := gabs.New()
 		postData.Set("application/json", "mimeType")
@@ -43,6 +49,7 @@ func GetRequestHARString(block *gabs.Container) (string, int) {
 	harObj.Set(url, "url")
 
 	res := harObj.String()
+	fmt.Println("HAR request:", res)
 	return res, flag
 }
 
@@ -100,26 +107,43 @@ func GetHARHeadersCookies(headers *gabs.Container) (*gabs.Container, *gabs.Conta
 func preprocessURL(url *gabs.Container) int {
 	urls := url.String()
 	flag := 0
+	fmt.Println("URL:", urls)
+	urls = strings.Trim(urls, `"`) 
+    urls = strings.Trim(urls, `'`)
+	fmt.Println("URL Updated:", urls)
 	if !strings.HasPrefix(urls, "https://") && !strings.HasPrefix(urls, "http://") {
-		http_string := "https://"
-		newURL := http_string + urls
-		url.Set(newURL)
-		flag = 1
-		return flag
-	}
+        fmt.Println("URL does not start with 'https://' or 'http://'")
+        newURL := "https://" + urls
+		// if !strings.Contains(newURL, ".com") {
+		// 	parts := strings.SplitN(newURL, "://", 2)
+		// 	protocol = parts[0] + "://"
+		// 	if len(parts) == 2 {
+		// 		domain := parts[1]
+		// 		newURL = parts[0] + "://" + domain + ".com"
+		// 	} else {
+		// 		newURL += ".com"
+		// 	}
+		// }
+        url.Set(newURL)
+        flag = 1
+   	 }
+	 
 	// Remove the outermost "${}" to isolate the placeholder content
+	fmt.Print("URL:", urls)
 	return flag
 }
 
 func postprocessURL(convertedSnippet string, flag int) string {
+	fmt.Println("Converted snippet to postprocess:", convertedSnippet)
 	if flag == 1 {
 		convertedSnippet = strings.Replace(convertedSnippet, "https://", "", 1)
+		convertedSnippet = strings.Replace(convertedSnippet, ".com", "", 1)
 		decodedURL, err := url.QueryUnescape(convertedSnippet)
 		if err != nil {
 			fmt.Println("Error decoding URL:", err)
 			return convertedSnippet
 		}
-		decodedURL = strings.Replace(decodedURL, `""`, `"`, -1)
+		// decodedURL = strings.Replace(decodedURL, `""`, `"`, -1) removed for python 
 		return decodedURL
 		// return convertedSnippet
 	}
