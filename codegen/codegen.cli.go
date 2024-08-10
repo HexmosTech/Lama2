@@ -14,8 +14,6 @@ import (
 	"github.com/atotto/clipboard"
 	"github.com/dop251/goja"
 	"github.com/rs/zerolog/log"
-	"bytes"
-    "text/template"
 )
 
 //go:embed httpsnippet.js
