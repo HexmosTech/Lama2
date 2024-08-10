@@ -20,20 +20,18 @@ var snippetcore string
 
 var flag = 0
 
-//go:noinline
 func GenerateTargetCode(targetLangLib string, parsedAPI *gabs.Container) string {
 	convertedSnippetFinal := generateConvertedSippet(targetLangLib, parsedAPI)
 	fmt.Println("This is the converted snippet:", convertedSnippetFinal)
 	return convertedSnippetFinal
 }
 
-//go:noinline
 func asyncTask(resultChan0 chan<- string) {
 	time.Sleep(2 * time.Second)
 	resultChan0 <- "Task Completed"
 }
 
-//go:noinline
+
 func generateConvertedSippet(targetLangLib string, parsedAPI *gabs.Container) string {
 	parsedAPIblocks := parsedAPI.S("value").Data().(*gabs.Container).Children()
 	convertedSnippetList := make([]string, 0)
@@ -48,28 +46,28 @@ func generateConvertedSippet(targetLangLib string, parsedAPI *gabs.Container) st
 			log.Debug().Str("Processor block incoming block", block.String()).Msg("")
 			convertedSnippetList = append(convertedSnippetList, snippet)
 		} else if blockType == "Lama2File" {
+			fmt.Println("CC: 1. Started on L2File block contents:",block)
 			fmt.Println("Block type is L2File")
 			harRequest, flag := GetRequestHARString(block)
+			fmt.Println("CC: 2. Finished HAR request",harRequest)
 			fmt.Println("HAR request:", harRequest)
 			snippetArgs := SnippetArgs{}
 			lang, lib := SplitLangLib(targetLangLib)
+			fmt.Println("CC: 2.1")
 			fmt.Println("Target lang:", lang)
 			snippetArgs.Language = lang
 			snippetArgs.Library = lib
 			snippetArgs.HARRequest = harRequest
 			snippetArgs.SnippetCore = snippetcore
 			fmt.Println("Snippet args:", snippetArgs)
+			fmt.Println("CC: 2.2")
 			httpsnippetCode := PrepareHTTPSnippetGenerator(snippetArgs)
-			//fmt.Println("httpsnippetCode:", httpsnippetCode)
+			// fmt.Println("CC: 3. Prepared HTTPSnippet",httpsnippetCode)
+			// fmt.Println("httpsnippetCode:", httpsnippetCode)
+			fmt.Println("CC: 3.1 Finished preparation, calling converstion")
 			convertedSnippet := js.Global().Call("eval", httpsnippetCode)
+			fmt.Println("CC: 4. Converted httpsnippet",convertedSnippet.String())
 			fmt.Println("convertedSnippet data:", convertedSnippet.String())
-			// convertedSnippet, err := evaluateJSCode(httpsnippetCode)
-			// if err != nil {
-			// 	log.Fatal().
-			// 		Str("Type", "CodeGen").
-			// 		Str("Error", err.Error()).
-			// 		Msg("Code generator error")
-			// }
 			convertedSnippetWithPostProcessing := postprocessURL(convertedSnippet.String(), flag)
 			flag = 0
 			convertedSnippetList = append(convertedSnippetList, convertedSnippetWithPostProcessing)
@@ -78,40 +76,11 @@ func generateConvertedSippet(targetLangLib string, parsedAPI *gabs.Container) st
 			convertedSnippetList = append(convertedSnippetList, "\n---\n")
 		}
 	}
-
 	convertedSnippetFinal := strings.Join(convertedSnippetList, "\n")
 	return convertedSnippetFinal
 }
 
-// func PrepareHTTPSnippetGenerator(snippetArgs SnippetArgs) string {
-// 	var templOutput bytes.Buffer
-// 	templStr := `{{.SnippetCore}}
 
-// 	const snippet = new window.HTTPSnippet({{.HARRequest}});
-
-// 	window.convertedSnippet = snippet.convert('{{.Language}}'{{if .Library }}, '{{.Library}}'{{end}});
-
-// 	console.log("convertedSnippet results from httpsnippet:",convertedSnippet)
-
-// 	function evaluateAsync(jsCode, callback) {
-//     new Promise((resolve, reject) => {
-//         setTimeout(() => {
-//             eval(jsCode);
-//             resolve(window.convertedSnippet);
-//         }, 1000);
-//     }).then(result => {
-//         callback(result);
-//     }).catch(error => {
-//         callback('Error: ' + error.message);
-//     });
-// 	}
-// 	`
-// 	tmpl, _ := template.New("httpsnippet").Parse(templStr)
-// 	tmpl.Execute(&templOutput, snippetArgs)
-// 	return templOutput.String()
-// }
-
-//go:noinline
 func PrepareHTTPSnippetGenerator(snippetArgs SnippetArgs) string {
 	var templOutput bytes.Buffer
 	templStr := `{{.SnippetCore}} 
