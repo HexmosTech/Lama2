@@ -13,11 +13,58 @@ var worker js.Value
 
 func InitWebWorker() js.Value {
 	if worker.IsUndefined() {
-		log.Debug().Msg("WW Initializing Web worker")
-		worker = js.Global().Get("Worker").New("worker.js")
+		script := `
+			var result;
+
+			self.addEventListener("message", function (e) {
+			  const { type, payload } = e.data;
+
+			  if (type === "execute") {
+			    console.log("WW: Execute Request!", payload);
+			    try {
+			      const evalresult = eval(payload);
+			      self.postMessage({ status: "success", evalresult });
+			    } catch (error) {
+			      console.log("WW: Execute Request! Failed:", error.message);
+			      self.postMessage({ status: "error", error: error.message });
+			    }
+			  } else if (type === "get") {
+			    const variableName = payload;
+			    var value = self[variableName];
+			    if (value == null) {
+			      value = variableName;
+			    }
+			    console.log("WW: Execute Get!", payload, value);
+			    console.log("WW: getfromworker worker.js", payload, value);
+			    self.postMessage({ status: "success", value });
+			  } else if (type === "close") {
+			    console.log("WW: Closing worker");
+			    self.close();
+			  } else {
+			    console.log("WW: Error Unknown request type");
+			    self.postMessage({ status: "error", error: "Unknown request type" });
+			  }
+			});
+		`
+		// Convert the script into a Blob and create a new worker
+		blob := js.Global().Get("Blob").New([]interface{}{script}, map[string]interface{}{"type": "application/javascript"})
+		workerURL := js.Global().Get("URL").Call("createObjectURL", blob)
+		worker = js.Global().Get("Worker").New(workerURL)
+
+		worker.Call("addEventListener", "message", js.FuncOf(func(this js.Value, args []js.Value) interface{} {
+			result := args[0].Get("data").Get("result")
+			err := args[0].Get("data").Get("error")
+			if err.String() != "null" {
+				fmt.Println("Error from web worker:", err)
+			} else {
+				fmt.Println("Result from web worker:", result)
+			}
+			return nil
+		}))
 	}
 	return worker
 }
+
 
 func RunCodeInWorker(chainCode string) {
 	// Ensure the worker is initialized

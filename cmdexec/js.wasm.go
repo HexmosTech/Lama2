@@ -8,31 +8,6 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-var worker js.Value
-
-// InitWebWorker initializes the Web Worker and returns the worker instance.
-func InitWebWorker() js.Value {
-	if worker.IsUndefined() {
-		worker = js.Global().Get("Worker").New("worker.js")
-		worker.Call("addEventListener", "message", js.FuncOf(func(this js.Value, args []js.Value) interface{} {
-			result := args[0].Get("data").Get("result")
-			err := args[0].Get("data").Get("error")
-			if err.String() != "null" {
-				fmt.Println("Error from web worker:", err)
-			} else {
-				fmt.Println("Result from web worker:", result)
-			}
-			return nil
-		}))
-	}
-	return worker
-}
-
-// GetJSVm initializes the Web Worker (this replaces the Goja VM creation)
-func GetJSVm() interface{} {
-	return InitWebWorker()
-}
-
 // RunVMCode takes in a JS snippet as a string, executes the code in a JS VM using Web Worker
 func RunVMCode(jsCode string, vm interface{}) {
 	worker := vm.(js.Value)
