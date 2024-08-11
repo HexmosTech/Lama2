@@ -26,7 +26,7 @@ func GetRequestHARString(block *gabs.Container, targetLang string) (string, int)
 	headers := block.S("details", "headers")
 	harObj := gabs.New()
 
-	if strings.Contains(strings.ToLower(targetLang), "python") || strings.Contains(strings.ToLower(targetLang), "shell") {
+	if strings.Contains(strings.ToLower(targetLang), "python") || strings.Contains(strings.ToLower(targetLang), "shell") || strings.Contains(strings.ToLower(targetLang), "php") {
         httpv = strings.ToUpper(httpv)
     }
 	
