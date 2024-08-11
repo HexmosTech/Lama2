@@ -4,8 +4,8 @@ github.com/HexmosTech/gabs/v2 v2.6.5 h1:08ZCTfpH/ZxGwrjOfipdZ7x75t0svRDIw2qjlGyA
 github.com/HexmosTech/gabs/v2 v2.6.5/go.mod h1:172vE+burNJgaTsFgfbzzqT4wF+FELkL3t2BCmxa2lo=
 github.com/HexmosTech/godotenv v0.0.0-20230327154318-72e1f3d32ed3 h1:erCSX5e8CH5f9HjQfpp9SMWuTJXD1ikmW9E9ns1DcwA=
 github.com/HexmosTech/godotenv v0.0.0-20230327154318-72e1f3d32ed3/go.mod h1:sln7CopgjyZgBSuIw7IkdpwIQf72vgZiy1kgYterloo=
-github.com/HexmosTech/httpie-go v1.0.9 h1:xTgkpUCpLocUfleBmo/d2psWG9R5SYwHMPfqFwHH9wo=
-github.com/HexmosTech/httpie-go v1.0.9/go.mod h1:U2lyp7l8mHMJUBR3DAsa79A2eY1b/FtuMOkUw1vKY8s=
+github.com/HexmosTech/httpie-go v1.0.10 h1:UBw2nsCs2mPmpGTR7vYJ/LuVSyt7ckB9PpBcyL6NT1U=
+github.com/HexmosTech/httpie-go v1.0.10/go.mod h1:U2lyp7l8mHMJUBR3DAsa79A2eY1b/FtuMOkUw1vKY8s=
 github.com/VividCortex/ewma v1.1.1 h1:MnEK4VOv6n0RSY4vtRe3h11qjxL3+t0B8yOL8iMXdcM=
 github.com/VividCortex/ewma v1.1.1/go.mod h1:2Tkkvm3sRDVXaiyucHiACn4cqf7DpdyLvmxzcbUokwA=
 github.com/Vivino/go-autocomplete-trie v0.0.0-20230301121706-da951497d081 h1:CgfvELsx826xvyUI3te9pUu6K/9xc7INVm6QwdbbH6A=
