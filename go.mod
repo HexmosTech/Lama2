@@ -5,7 +5,7 @@ go 1.19
 require (
 	github.com/HexmosTech/gabs/v2 v2.6.5
 	github.com/HexmosTech/godotenv v0.0.0-20230327154318-72e1f3d32ed3
-	github.com/HexmosTech/httpie-go v1.0.9
+	github.com/HexmosTech/httpie-go v1.0.10
 	github.com/Vivino/go-autocomplete-trie v0.0.0-20230301121706-da951497d081
 	github.com/atotto/clipboard v0.1.4
 	github.com/dop251/goja v0.0.0-20240516125602-ccbae20bcec2
