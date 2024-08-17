@@ -5,7 +5,9 @@
 package contoller
 
 import (
+	"fmt"
 	"os"
+	"strconv"
 
 	"github.com/HexmosTech/gabs/v2"
 	"github.com/HexmosTech/httpie-go"
@@ -22,6 +24,7 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
+
 func GetParsedAPIBlocks(parsedAPI *gabs.Container) []*gabs.Container {
 	return parsedAPI.S("value").Data().(*gabs.Container).Children()
 }
@@ -33,12 +36,12 @@ func ExecuteProcessorBlock(block *gabs.Container, vm *goja.Runtime) {
 	cmdexec.RunVMCode(script, vm)
 }
 
-func ExecuteRequestorBlock(block *gabs.Container, vm *goja.Runtime, opts *lama2cmd.Opts, dir string) httpie.ExResponse {
+func ExecuteRequestorBlock(block *gabs.Container, vm *goja.Runtime, opts *lama2cmd.Opts, dir string) (httpie.ExResponse,int64) {
 	preprocess.ProcessVarsInBlock(block, vm)
 	// TODO - replace stuff in headers, and varjson and json as well
 	cmd, stdinBody := cmdgen.ConstructCommand(block, opts)
 	log.Debug().Str("Stdin Body to be passed into httpie", stdinBody).Msg("")
-	resp, e1 := cmdexec.ExecCommand(cmd, stdinBody, dir)
+	resp,responseTime, e1 := cmdexec.ExecCommand(cmd, stdinBody, dir)
 	log.Debug().Str("Response from ExecCommand", resp.Body).Msg("")
 	if e1 == nil {
 		chainCode := cmdexec.GenerateChainCode(resp.Body)
@@ -47,13 +50,17 @@ func ExecuteRequestorBlock(block *gabs.Container, vm *goja.Runtime, opts *lama2c
 		log.Fatal().Str("Error from ExecCommand", e1.Error())
 		os.Exit(1)
 	}
-	return resp
+	return resp,responseTime
 }
 
 func HandleParsedFile(parsedAPI *gabs.Container, o *lama2cmd.Opts, dir string) {
 	parsedAPIblocks := GetParsedAPIBlocks(parsedAPI)
 	vm := cmdexec.GetJSVm()
 	var resp httpie.ExResponse
+	var responseTime []outputmanager.ResponseTime
+	var statusCodes []outputmanager.StatusCode
+	var contentSizes []outputmanager.ContentSize
+	var timeInMs int64
 	for i, block := range parsedAPIblocks {
 		log.Debug().Int("Block num", i).Msg("")
 		log.Debug().Str("Block getting processed", block.String()).Msg("")
@@ -61,13 +68,25 @@ func HandleParsedFile(parsedAPI *gabs.Container, o *lama2cmd.Opts, dir string) {
 		if blockType == "processor" {
 			ExecuteProcessorBlock(block, vm)
 		} else if blockType == "Lama2File" {
-			resp = ExecuteRequestorBlock(block, vm, o, dir)
+			resp, timeInMs = ExecuteRequestorBlock(block, vm, o, dir)
+			log.Info().Str("ResponseTime", fmt.Sprintf("%dms", timeInMs)).Msg("")
+			responseTime, statusCodes, contentSizes = CalculateMetrics(resp, timeInMs, responseTime, statusCodes, contentSizes)
 		}
 	}
 	if o.Output != "" {
-		outputmanager.WriteJSONOutput(resp, o.Output)
+		outputmanager.WriteJSONOutput(resp, responseTime, statusCodes, contentSizes, o.Output)
 	}
 }
+
+func CalculateMetrics(resp httpie.ExResponse, timeInMs int64, responseTime []outputmanager.ResponseTime, statusCodes []outputmanager.StatusCode, contentSizes []outputmanager.ContentSize) ([]outputmanager.ResponseTime, []outputmanager.StatusCode, []outputmanager.ContentSize) {
+	responseTime = append(responseTime, outputmanager.ResponseTime{Type: "l2block", TimeInMs: timeInMs})
+	statusCodes = append(statusCodes, outputmanager.StatusCode{Type: "l2block", Status: resp.StatusCode})
+	sizeInBytes, _ := strconv.Atoi(resp.Headers["Content-Length"])
+	contentSizes = append(contentSizes, outputmanager.ContentSize{Type: "l2block", SizeInBytes: sizeInBytes})
+	
+	return responseTime, statusCodes, contentSizes
+}
+
 
 // Process initiates the following tasks in the given order:
 // 1. Parse command line arguments
