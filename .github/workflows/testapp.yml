@@ -25,7 +25,7 @@ jobs:
       - name: Upload l2 binary
         uses: actions/upload-artifact@v3
         with:
-          name: l2-binary
+          name: l2
           path: build/l2
       # - name: Deploy hexmos doc
       #   run: curl -X POST --fail -F token=${{ secrets.TRIGGER_TOKEN }} -F ref=main https://git.apps.hexmos.com/api/v4/projects/85/trigger/pipeline

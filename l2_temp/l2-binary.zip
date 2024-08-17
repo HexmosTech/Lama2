@@ -1,0 +1,5 @@
+{
+  "message": "You must have the actions scope to download artifacts.",
+  "documentation_url": "https://docs.github.com/rest/actions/artifacts#download-an-artifact",
+  "status": "403"
+}
