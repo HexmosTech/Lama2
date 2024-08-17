@@ -1,8 +1,6 @@
 name: Lama2 Tests
 on: [push]
 
-
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -17,10 +15,15 @@ jobs:
         run: go mod tidy
       - name: Build
         run: go build -v ./...
-      - name: Test with the Go CLI
+      - name: Build l2 binary
         run: |
-          go mod tidy
-          go build -o build/l2 -ldflags "-X main.version=`git tag --sort=-version:refname | head -n 1`" l2.go
-          go test -v ./tests/
+          go build -o l2 -ldflags "-X main.version=`git tag --sort=-version:refname | head -n 1`" l2.go
+      - name: Test with the Go CLI
+        run: go test -v ./tests/
+      - name: Upload l2 binary
+        uses: actions/upload-artifact@v3
+        with:
+          name: l2-binary
+          path: l2
       - name: Deploy hexmos doc
         run: curl -X POST --fail -F token=${{ secrets.TRIGGER_TOKEN }} -F ref=main https://git.apps.hexmos.com/api/v4/projects/85/trigger/pipeline
