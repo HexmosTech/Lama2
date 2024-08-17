@@ -27,5 +27,5 @@ jobs:
         with:
           name: l2-binary
           path: build/l2
-      - name: Deploy hexmos doc
-        run: curl -X POST --fail -F token=${{ secrets.TRIGGER_TOKEN }} -F ref=main https://git.apps.hexmos.com/api/v4/projects/85/trigger/pipeline
+      # - name: Deploy hexmos doc
+      #   run: curl -X POST --fail -F token=${{ secrets.TRIGGER_TOKEN }} -F ref=main https://git.apps.hexmos.com/api/v4/projects/85/trigger/pipeline
