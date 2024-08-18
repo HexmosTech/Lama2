@@ -2,50 +2,38 @@
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
 NC='\033[0m' # No Color
 
 REPO="HexmosTech/Lama2"
-ARTIFACT_NAME="l2"
+BETA_VERSION="v1.6.2-beta"
 
-get_latest_run_id() {
-    curl -s "https://api.github.com/repos/$REPO/actions/runs?status=success" | 
-    jq '.workflow_runs[0].id'
-}
+echo -e "${YELLOW}Installing beta version $BETA_VERSION${NC}"
+RELEASE_URL="https://api.github.com/repos/$REPO/releases/tags/$BETA_VERSION"
 
-download_artifact() {
-    run_id=$(get_latest_run_id)
-    if [ -z "$run_id" ]; then
-        echo -e "${RED}Failed to get the latest successful run ID${NC}"
+download_and_install() {
+    release_info=$(curl -s $RELEASE_URL)
+    download_url=$(echo "$release_info" | grep "browser_download_url.*l2\"" | cut -d '"' -f 4)
+
+    if [ -z "$download_url" ]; then
+        echo -e "${RED}Failed to find the download URL for $BETA_VERSION${NC}"
         exit 1
     fi
 
-    artifact_url=$(curl -s "https://api.github.com/repos/$REPO/actions/runs/$run_id/artifacts" | 
-                   jq -r ".artifacts[] | select(.name == \"$ARTIFACT_NAME\") | .archive_download_url")
-
-    if [ -z "$artifact_url" ]; then
-        echo -e "${RED}Failed to find the artifact download URL${NC}"
-        exit 1
-    fi
-
-    echo "Downloading artifact from $artifact_url"
-    curl -L -o /tmp/l2.zip "$artifact_url"
+    echo -e "${GREEN}Downloading l2 from $download_url${NC}"
+    curl -L -o /tmp/l2 "$download_url"
     
-    unzip /tmp/l2.zip -d /tmp
-    rm /tmp/l2.zip
-}
-
-install_binary() {
-    sudo rm -f /usr/local/bin/l2 /usr/bin/l2
-    sudo mv /tmp/l2 /usr/local/bin
+    sudo mv /tmp/l2 /usr/local/bin/l2
     sudo chmod +x /usr/local/bin/l2
 }
 
 # Main execution
-download_artifact
-install_binary
+download_and_install
 
 if l2 --version > /dev/null 2>&1; then 
-    echo -e "${GREEN}Successfully installed Lama2; Type 'l2 <api_file>' to invoke Lama2${NC}"
+    echo -e "${GREEN}Successfully installed Lama2 beta version; Type 'l2 <api_file>' to invoke Lama2${NC}"
+    echo -e "${YELLOW}Installed version:${NC}"
+    l2 --version
 else 
     echo -e "${RED}Failure in installation; please report issue at github.com/HexmosTech/Lama2${NC}"
 fi

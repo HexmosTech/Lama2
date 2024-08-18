@@ -2,7 +2,7 @@ name: Lama2 Tests and Beta Release
 on:
   push:
     branches:
-      - feature/request-time 
+      # - feature/request-time 
 
 jobs:
   build:
