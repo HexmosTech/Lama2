@@ -1,8 +1,9 @@
 name: Lama2 Tests and Beta Release
 on:
+on:
   push:
-    branches:
-      - feature/request-time
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+(-.*)?'
 
 jobs:
   releases-matrix:
