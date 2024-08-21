@@ -5,7 +5,7 @@ on:
       - feature/request-time
 
 jobs:
-  release:
+  releases-matrix:
     name: Release Go Binary
     runs-on: ubuntu-latest
     strategy:
