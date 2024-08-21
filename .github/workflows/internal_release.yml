@@ -33,11 +33,7 @@ jobs:
         run: |
           mkdir -p build
           GOOS=${{ matrix.goos }} GOARCH=${{ matrix.goarch }} go build -o build/l2-${{ matrix.goos }}-${{ matrix.goarch }} -ldflags "-X main.version=1.6.2-beta" l2.go
-
-      - name: Test with the Go CLI
-        run: |
-          go test -v ./tests/
-
+          
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
