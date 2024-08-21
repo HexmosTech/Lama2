@@ -5,7 +5,7 @@ on:
       - feature/request-time
 
 jobs:
-  releases-matrix:
+  release:
     name: Release Go Binary
     runs-on: ubuntu-latest
     strategy:
@@ -28,4 +28,4 @@ jobs:
         goversion: "https://dl.google.com/go/go1.19.3.linux-amd64.tar.gz"
         binary_name: "l2"
         extra_files: LICENSE README.md
-        ldflags: -X main.version=${{  github.ref_name }}
+        ldflags: -X main.version=v1.6.3-beta
