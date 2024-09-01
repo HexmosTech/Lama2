@@ -12,6 +12,7 @@ type Params struct {
 	WorkspaceFolders      *[]WorkspaceFolder `json:"workspaceFolders,omitempty"`
 	SearchQuery           *string            `json:"searchQuery,omitempty"`
 	TextDocument          *Uri               `json:"textDocument,omitempty"`
+	File                  *string            `json:"file,omitempty"`
 }
 
 type ClientInfo struct {

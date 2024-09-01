@@ -1,16 +1,19 @@
 {
-  "version": "0.2.0",
-  "configurations": [
-    {
-      "name": "Launch",
-      "type": "go",
-      "request": "launch",
-      "mode": "auto",
-      "program": "${workspaceFolder}",
-      "env": {},
-      "args": ["build/a.l2", "-o demol2.json"],
-      "buildFlags": "-tags=cli",
-      "showLog": true
-    }
-  ]
-}
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Launch",
+        "type": "go",
+        "request": "launch",
+        "mode": "auto",
+        "program": "${workspaceFolder}",
+        "env": {},
+        "args": [
+          "/home/lince/hexmos/apihub/apihub/fb_backend_v3/search.l2"
+          ],
+        "buildFlags": "-tags=cli",
+        "showLog": true
+      }
+ 
+    ]
+  }

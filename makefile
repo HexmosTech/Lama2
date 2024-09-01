@@ -47,3 +47,10 @@ setbuild:
 	go build -o build/l2 -ldflags "-X main.version=`git tag --sort=-version:refname | head -n 1`" l2.go
 	sudo rm -rf /usr/local/bin/l2
 	sudo cp build/l2 /usr/local/bin/l2
+
+runlsp:
+	go run github.com/cosmtrek/air@v1.43.0 \
+		--build.cmd "go build -o lama2" --build.bin "./lama2 --lsp" --build.delay "1000" \
+		--build.exclude_dir "" \
+		--build.include_ext "go, tpl, tmpl, html, css, scss, js, ts, sql, jpeg, jpg, gif, png, bmp, svg, webp, ico" \
+		--misc.clean_on_exit "true" \
