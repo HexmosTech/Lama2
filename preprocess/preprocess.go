@@ -16,43 +16,8 @@ import (
 	"github.com/HexmosTech/gabs/v2"
 	"github.com/HexmosTech/godotenv"
 	"github.com/HexmosTech/lama2/utils"
-	"github.com/dop251/goja"
 	"github.com/rs/zerolog/log"
 )
-
-func ProcessVarsInBlock(block *gabs.Container, vm *goja.Runtime) {
-	ExpandURL(block, vm)
-	ExpandHeaders(block, vm)
-	ExpandJSON(block, vm)
-}
-
-func ExpandHeaders(block *gabs.Container, vm *goja.Runtime) {
-	headerMap := block.S("details", "headers")
-	log.Debug().Str("HeaderMap", headerMap.String()).Msg("")
-	if headerMap == nil {
-		return
-	}
-	newHeaderMap := gabs.New()
-	for k, v := range headerMap.ChildrenMap() {
-		log.Trace().Strs("Header pair", []string{k, " = ", v.String()}).Msg("")
-		key := ExpandEnv(k, vm)
-		val := ExpandEnv(v.Data().(*gabs.Container).Data().(string), vm)
-		valWrap := gabs.New()
-		valWrap.Set(val)
-		newHeaderMap.Set(valWrap, key)
-	}
-	block.Delete("details", "headers")
-	block.Set(newHeaderMap, "details", "headers")
-	log.Debug().Str("Expanded Header block", block.String()).Msg("")
-}
-
-func ExpandURL(block *gabs.Container, vm *goja.Runtime) {
-	b := block.S("url", "value").Data().(string)
-	log.Debug().Str("Url block", b).Msg("")
-	url := ExpandEnv(b, vm)
-	block.Delete("url", "value")
-	block.Set(url, "url", "value")
-}
 
 func debugOp(str string) {
 	file, err := os.Create("output.txt")
@@ -73,30 +38,9 @@ func debugOp(str string) {
 func escapeString(input string) string {
 	output, err := json.Marshal(input)
 	if err != nil {
-		log.Error().Str("Error marshaling JSON:", "escapeString()")
+		fmt.Println("Error marshaling JSON: escapeString()")
 	}
 	return string(output)
-}
-
-func ExpandJSON(block *gabs.Container, vm *goja.Runtime) {
-	log.Debug().Str("JSON block to be expanded", block.String()).Msg("")
-	dataBlock := block.S("details", "ip_data")
-	if dataBlock == nil {
-		return
-	}
-	dataBlockStr := dataBlock.String()
-	dataBlockStr = ExpandEnv(dataBlockStr, vm)
-	// dataBlockStr = escapeString(dataBlockStr)
-	dataBlockStr = strings.ReplaceAll(dataBlockStr, "\n", "")
-	log.Debug().Str("Expanded JSON data block", dataBlockStr).Msg("")
-	processedBlock, err := gabs.ParseJSON([]byte(dataBlockStr))
-	if err != nil {
-		log.Error().Str("Preprocess JSON block issue", "").Msg("")
-		return
-	}
-	block.Delete("details", "ip_data")
-	block.Set(processedBlock, "details", "ip_data")
-	log.Debug().Str("Processed JSON block", block.String()).Msg("")
 }
 
 func SearchL2ConfigEnv(dir string) (string, error) {
@@ -116,14 +60,14 @@ func LoadEnvFile(l2path string) {
 	envFileName := filepath.Base(l2path)
 	err := godotenv.Load(l2path)
 	if err != nil {
-		log.Info().Str("Type", "Preprocess").Msg("Didn't find " + envFileName + " in the API directory")
+		fmt.Println("Didn't find " + envFileName + " in the API directory")
 	}
 }
 
 func LoadEnvironments(dir string) {
 	l2ConfigPath, err := SearchL2ConfigEnv(dir)
 	if err != nil {
-		log.Info().Str("Type", "Preprocess").Msg(err.Error())
+		fmt.Println("Type", "Preprocess", err)
 	} else {
 		LoadEnvFile(l2ConfigPath) // Loads global variables from l2config.env
 	}
@@ -193,12 +137,13 @@ func GetL2EnvVariables(dir string) (map[string]map[string]interface{}, error) {
 	return finalEnvMap, nil
 }
 
-func GetLamaFileAsString(path string) string {
+func GetLamaFileAsString(path string) (string, error) {
 	b, err := ioutil.ReadFile(path) // just pass the file name
 	if err != nil {
-		log.Fatal().Str("Type", "Preprocess").Msg(fmt.Sprint("Couldn't read: ", path))
+		log.Printf("Couldn't read: %s\n", path)
+		return "", fmt.Errorf("failed to read file: %w", err)
 	}
-	return string(b)
+	return string(b), nil
 }
 
 // LamaFile takes in a path to an API file.
@@ -208,7 +153,7 @@ func GetLamaFileAsString(path string) string {
 // Once done, it reverts back to the original directory,
 // and returns the processed l2 file.
 func LamaFile(inputFile string) (string, string) {
-	content := GetLamaFileAsString(inputFile)
+	content, _ := GetLamaFileAsString(inputFile)
 	_, dir, _ := utils.GetFilePathComponents(inputFile)
 	oldDir, _ := os.Getwd()
 
@@ -218,4 +163,60 @@ func LamaFile(inputFile string) (string, string) {
 	utils.ChangeWorkingDir(oldDir)
 
 	return content, dir
+}
+
+func ProcessVarsInBlock(block *gabs.Container, vm interface{}) {
+	ExpandURL(block, vm)
+	ExpandHeaders(block, vm)
+	ExpandJSON(block, vm)
+}
+
+func ExpandHeaders(block *gabs.Container, vm interface{}) {
+	headerMap := block.S("details", "headers")
+	log.Debug().Str("HeaderMap", headerMap.String()).Msg("")
+	if headerMap == nil {
+		return
+	}
+	newHeaderMap := gabs.New()
+	for k, v := range headerMap.ChildrenMap() {
+		log.Trace().Strs("Header pair", []string{k, " = ", v.String()}).Msg("")
+		key := ExpandEnv(k, vm)
+		val := ExpandEnv(v.Data().(*gabs.Container).Data().(string), vm)
+		valWrap := gabs.New()
+		valWrap.Set(val)
+		newHeaderMap.Set(valWrap, key)
+	}
+	block.Delete("details", "headers")
+	block.Set(newHeaderMap, "details", "headers")
+	log.Debug().Str("Expanded Header block", block.String()).Msg("")
+}
+
+func ExpandURL(block *gabs.Container, vm interface{}) {
+	b := block.S("url", "value").Data().(string)
+	log.Debug().Str("Url block", b).Msg("")
+	url := ExpandEnv(b, vm)
+	fmt.Println("WW: Expanded URL:", url)
+	block.Delete("url", "value")
+	block.Set(url, "url", "value")
+}
+
+func ExpandJSON(block *gabs.Container, vm interface{}) {
+	log.Debug().Str("JSON block to be expanded", block.String()).Msg("")
+	dataBlock := block.S("details", "ip_data")
+	if dataBlock == nil {
+		return
+	}
+	dataBlockStr := dataBlock.String()
+	dataBlockStr = ExpandEnv(dataBlockStr, vm)
+	// dataBlockStr = escapeString(dataBlockStr)
+	dataBlockStr = strings.ReplaceAll(dataBlockStr, "\n", "")
+	log.Debug().Str("Expanded JSON data block", dataBlockStr).Msg("")
+	processedBlock, err := gabs.ParseJSON([]byte(dataBlockStr))
+	if err != nil {
+		log.Error().Str("Preprocess JSON block issue", "").Msg("")
+		return
+	}
+	block.Delete("details", "ip_data")
+	block.Set(processedBlock, "details", "ip_data")
+	log.Debug().Str("Processed JSON block", block.String()).Msg("")
 }

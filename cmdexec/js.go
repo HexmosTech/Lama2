@@ -1,3 +1,6 @@
+//go:build cli
+
+
 package cmdexec
 
 import (
@@ -9,7 +12,7 @@ import (
 
 // GetJSVm creates a new goja runtime instance
 // with console.log enabled
-func GetJSVm() *goja.Runtime {
+func GetJSVm() interface{} {
 	vm := goja.New()
 	new(require.Registry).Enable(vm)
 	console.Enable(vm)
@@ -23,8 +26,11 @@ func GetJSVm() *goja.Runtime {
 // Note: the vm runtime remains modified; so if
 // you reuse the vm for other operations, the state
 // from previous invocations carry over
-func RunVMCode(jsCode string, vm *goja.Runtime) {
-	_, err := vm.RunString(jsCode)
+func RunVMCode(jsCode string, vm interface{}) {
+	if vm == nil {
+		vm = GetJSVm()
+	}
+	_, err := vm.(*goja.Runtime).RunString(jsCode)
 	if ex, ok := err.(*goja.Exception); ok {
 		log.Fatal().Str("Error executing JS processor block", ex.String()).Msg("")
 	}

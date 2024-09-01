@@ -7,7 +7,7 @@ import (
 	"os"
 	"os/exec"
 
-	"github.com/rs/zerolog/log"
+	// "github.com/rs/zerolog/log"
 )
 
 type EnvData struct {
@@ -40,12 +40,12 @@ func runCommand(binPath string, cmdArgs ...string) (string, error) {
 
 	err := cmd.Run()
 	if err != nil {
-		log.Error().Str("Error", stderr.String()).Msg("Error running command")
+		// log.Error().Str("Error", stderr.String()).Msg("Error running command")
 		return "", fmt.Errorf("error running command: %v", err)
 	}
 
 	output := stdout.String()
-	log.Debug().Str("Test env_command", output).Msg("Output from command")
+	// log.Debug().Str("Test env_command", output).Msg("Output from command")
 	return output, nil
 }
 

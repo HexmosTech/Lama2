@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/HexmosTech/lama2/cmdexec"
+	"github.com/dop251/goja"
 )
 
 func TestRunVMCode(_ *testing.T) {
@@ -15,7 +16,7 @@ func TestRunVMCode(_ *testing.T) {
 
 func TestJSVmNegative(t *testing.T) {
 	vm := cmdexec.GetJSVm()
-	_, e := vm.RunString("faulty JS code")
+	_, e := vm.(*goja.Runtime).RunString("faulty JS code")
 	if e == nil {
 		t.Errorf("Expected failure on faulty JS code")
 	}
@@ -23,7 +24,7 @@ func TestJSVmNegative(t *testing.T) {
 
 func TestJSVm(t *testing.T) {
 	vm := cmdexec.GetJSVm()
-	_, e := vm.RunString("let x=10")
+	_, e := vm.(*goja.Runtime).RunString("let x=10")
 	if e != nil {
 		t.Errorf("Expected nil on valid JS code")
 	}

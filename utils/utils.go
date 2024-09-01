@@ -15,7 +15,6 @@ import (
 	"unicode"
 
 	"github.com/HexmosTech/gabs/v2"
-	"github.com/rs/zerolog/log"
 )
 
 // The following string fragment is used to mark unquoted
@@ -119,18 +118,6 @@ func GetFilePathComponents(name string) (string, string, string) {
 	return fullpath, dir, fname
 }
 
-// ChangeWorkingDirectory tries to set the CWD; on failure
-// it exits with a log error message
-func ChangeWorkingDir(dir string) {
-	err := os.Chdir(dir)
-	if err != nil {
-		log.Fatal().
-			Str("Type", "Preprocess").
-			Str("dir", dir).
-			Msg(fmt.Sprint("Moving into dir failed"))
-	}
-}
-
 func downloadFile(filepath string, url string) (err error) {
 	// Create the file
 	out, err := os.Create(filepath)
@@ -168,13 +155,4 @@ func UpdateSelf() {
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 	_ = cmd.Run()
-}
-
-func MarshalAndPrintJSON(data interface{}) {
-	filteredJSON, err := json.MarshalIndent(data, "", "  ")
-	if err != nil {
-		log.Error().Str("Type", "Preprocess").Msg(fmt.Sprintf("Failed to marshal JSON: %v", err))
-		os.Exit(0)
-	}
-	fmt.Println(string(filteredJSON))
 }

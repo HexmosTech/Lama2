@@ -3,10 +3,12 @@ package tests
 import (
 	"fmt"
 	"os"
+	"strings"
 	"testing"
 
 	controller "github.com/HexmosTech/lama2/controller"
 	"github.com/HexmosTech/lama2/parser"
+	testutils "github.com/HexmosTech/lama2/tests/utils"
 )
 
 func TestMultiStageCount(t *testing.T) {
@@ -77,5 +79,22 @@ func TestUnquotedVars(t *testing.T) {
 
 	if reqCount != 2 {
 		t.Fatalf("Expected requestor block count = 2")
+	}
+}
+
+func TestMultiStageResults(t *testing.T) {
+	fpath := "../examples/0024_vars_multistage/0024_vars_multistage_acess_token.l2"
+	cmdArgs := []string{fpath}
+
+	output, err := testutils.RunL2CommandAndGetOutput(cmdArgs...)
+	fmt.Println(output)
+	if err != nil {
+		t.Errorf("Error running L2 command: %v", err)
+		return
+	}
+
+	expectedOutputPart := "\"authenticated\": true"
+	if !strings.Contains(output, expectedOutputPart) {
+		t.Errorf("Expected output to contain %q, but got %q", expectedOutputPart, output)
 	}
 }

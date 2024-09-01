@@ -2,12 +2,12 @@ package parser
 
 import (
 	"errors"
+	"fmt"
 	"reflect"
 	"strings"
 
 	"github.com/HexmosTech/gabs/v2"
 	"github.com/HexmosTech/lama2/utils"
-	"github.com/rs/zerolog/log"
 )
 
 // Method Match is the most important of all in the
@@ -31,12 +31,9 @@ func (p *Parser) Match(rules []string) (*gabs.Container, error) {
 
 	for _, rule := range rules {
 		initialPos := p.Pos
-		log.Trace().Str("Rule", rule).Strs("Rules", rules).Msg("")
 		res := p.ruleMethodMap[rule].Call([]reflect.Value{})
 		op := res[0].Interface().(*gabs.Container)
-		log.Trace().Str("Rule res", op.String()).Msg("")
 		e := res[1]
-		log.Trace().Str("Rule error", e.String()).Msg("")
 		if e.IsNil() {
 			p.eatWhitespace()
 			return op, nil
@@ -70,12 +67,10 @@ func (p *Parser) LookAhead(rules []string) bool {
 
 	for _, rule := range rules {
 		initialPos := p.Pos
-		log.Trace().Str("Rule", rule).Strs("Rules", rules).Msg("")
 		res := p.ruleMethodMap[rule].Call([]reflect.Value{})
 		op := res[0].Interface().(*gabs.Container)
-		log.Trace().Str("Rule res", op.String()).Msg("")
+		fmt.Println(op.String())
 		e := res[1]
-		log.Trace().Str("Rule error", e.String()).Msg("")
 		p.Pos = initialPos
 		if e.IsNil() {
 			p.eatWhitespace()

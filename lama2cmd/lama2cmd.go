@@ -1,3 +1,4 @@
+
 // Package `lama2cmd` provides CLI argument parsing facilities.
 // It hosts the `Opts` structure to record user intentions
 package lama2cmd

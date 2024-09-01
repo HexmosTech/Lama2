@@ -6,7 +6,7 @@ import (
 
 	"github.com/HexmosTech/lama2/l2lsp/request"
 	"github.com/HexmosTech/lama2/l2lsp/response"
-	"github.com/rs/zerolog/log"
+	// "github.com/rs/zerolog/log"
 )
 
 func Initialize(req request.JSONRPCRequest) response.JSONRPCResponse {
@@ -41,7 +41,7 @@ func Initialize(req request.JSONRPCRequest) response.JSONRPCResponse {
 			}
 		}
 	*/
-	log.Info().Msg("L2 LSP initialized")
+	// log.Info().Msg("L2 LSP initialized")
 
 	serverCapabilities := response.ServerCapabilities{
 		TextDocumentSync: 0,
@@ -65,7 +65,7 @@ func Shutdown(req request.JSONRPCRequest, isShutdownRequested bool) response.JSO
 		}
 	*/
 
-	log.Info().Msg("L2 LSP shutdown requested")
+	// log.Info().Msg("L2 LSP shutdown requested")
 
 	isShutdownRequested = true
 	return response.CreateSuccessResponse(req.ID, nil)
@@ -80,7 +80,7 @@ func Exit(isShutdownRequested bool) response.JSONRPCResponse {
 		}
 	*/
 
-	log.Info().Msg("L2 LSP exit requested")
+	// log.Info().Msg("L2 LSP exit requested")
 
 	exitCode := 1
 	if isShutdownRequested {

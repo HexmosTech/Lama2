@@ -123,7 +123,7 @@ func TestJsonParserExhaustive(t *testing.T) {
 		}
 		jsonText, e := FileToString(m)
 		if e != nil {
-			log.Fatal().Str("Error:", e.Error()).Msg("")
+			// log.Fatal().Str("Error:", e.Error()).Msg("")
 		}
 
 		gj, e2 := jsonFileToGabs(m)
@@ -181,25 +181,25 @@ func TestNegativeJsonParserExhaustive(t *testing.T) {
 		"n_structure_whitespace_formfeed.json",
 	}
 	for _, m := range matchFiles {
-		log.Trace().Msg("### === === === === ===")
+		// log.Trace().Msg("### === === === === ===")
 		if utils.ContainsStringPartial(ignoreNames, m) {
 			continue
 		}
-		log.Trace().Str("m", m).Msg("")
+		// log.Trace().Str("m", m).Msg("")
 		jsonText, e := FileToString(m)
-		log.Trace().Str("JSONText", jsonText).Msg("")
+		// log.Trace().Str("JSONText", jsonText).Msg("")
 		if e != nil {
-			log.Trace().Msg("fileToString failed")
+			// log.Trace().Msg("fileToString failed")
 			return
 		}
 
 		preamble := "POST\nhttp://google.com\n"
 		lamaText := preamble + jsonText
-		log.Trace().Str("LamaText", lamaText).Msg("")
+		// log.Trace().Str("LamaText", lamaText).Msg("")
 		_, e3 := PerformParserMatch(lamaText)
 		if e3 == nil {
 			t.Fatalf("Expected parser to fail for %s", m)
 		}
-		log.Trace().Msg("*** === === === === ===")
+		// log.Trace().Msg("*** === === === === ===")
 	}
 }

@@ -1,12 +1,14 @@
 package tests
 
 import (
+	"fmt"
 	"reflect"
 	"strings"
 	"testing"
 
 	"github.com/HexmosTech/lama2/parser"
 	"github.com/rs/zerolog/log"
+	// "github.com/rs/zerolog/log"
 )
 
 func TestLama2Parser(_ *testing.T) {
@@ -108,11 +110,11 @@ func TestMatch(t *testing.T) {
 	got, e := p.Match([]string{"Lama2File"})
 	if e == nil {
 		log.Debug().Str("Got", got.String()).Msg("")
-		// fmt.Println(got)
-		// fmt.Println("===")
+		fmt.Println(got)
+		fmt.Println("===")
 	} else {
 		t.Errorf("Error not expected")
-		// fmt.Println(e)
+		fmt.Println(e)
 	}
 }
 
@@ -124,7 +126,7 @@ func TestFailMatch(t *testing.T) {
 		log.Debug().Str("Got", got.String()).Msg("")
 		t.Errorf("Expected an error!")
 	}
-	// fmt.Println("===")
+	fmt.Println("===")
 }
 
 func TestLama2Start(_ *testing.T) {

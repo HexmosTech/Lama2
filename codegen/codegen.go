@@ -1,23 +1,13 @@
 package codegen
 
 import (
-	"bytes"
 	_ "embed"
 	"fmt"
+	"net/url"
 	"strings"
-	"text/template"
-
-	"github.com/dop251/goja"
-	"github.com/rs/zerolog/log"
 
 	"github.com/HexmosTech/gabs/v2"
-	"github.com/HexmosTech/lama2/cmdexec"
-	"github.com/HexmosTech/lama2/preprocess"
-	"github.com/atotto/clipboard"
 )
-
-//go:embed httpsnippet.js
-var snippetcore string
 
 type SnippetArgs struct {
 	Language    string
@@ -26,23 +16,41 @@ type SnippetArgs struct {
 	SnippetCore string
 }
 
-var globalVM *goja.Runtime
+func GetRequestHARString(block *gabs.Container, targetLang string) (string, int) {
+	httpv := block.S("verb", "value").String()
+	httpv = strings.Trim(httpv, `"`) 
+	httpv = strings.Trim(httpv, `'`)
+	url := block.S("url", "value")
+	flag := preprocessURL(url)
+	jsonObj := block.S("details", "ip_data")
+	headers := block.S("details", "headers")
+	harObj := gabs.New()
 
-func initialize() {
-	globalVM = cmdexec.GetJSVm()
-}
-
-func PrepareHTTPSnippetGenerator(snippetArgs SnippetArgs) string {
-	var templOutput bytes.Buffer
-	templStr := `{{.SnippetCore}} 
-
-	const snippet = new window.HTTPSnippet({{.HARRequest}});
+	if strings.Contains(strings.ToLower(targetLang), "python") || strings.Contains(strings.ToLower(targetLang), "shell") || strings.Contains(strings.ToLower(targetLang), "php") {
+        httpv = strings.ToUpper(httpv)
+    }
 	
-	let convertedSnippet = snippet.convert('{{.Language}}'{{if .Library }}, '{{.Library}}'{{end}});
-	`
-	tmpl, _ := template.New("httpsnippet").Parse(templStr)
-	tmpl.Execute(&templOutput, snippetArgs)
-	return templOutput.String()
+	if jsonObj != nil {
+		postData := gabs.New()
+		postData.Set("application/json", "mimeType")
+		postData.Set(jsonObj.String(), "text")
+		harObj.Set(postData, "postData")
+	}
+
+	if headers != nil {
+		headersData, cookiesData := GetHARHeadersCookies(headers)
+		if cookiesData.String() != "[]" {
+			harObj.Set(cookiesData, "cookies")
+		}
+		harObj.Set(headersData, "headers")
+	}
+
+	harObj.Set(httpv, "method")
+	harObj.Set(url, "url")
+
+	res := harObj.String()
+	fmt.Println("HAR request:", res)
+	return res, flag
 }
 
 // takes in the headers in L2 format, and generates
@@ -96,82 +104,48 @@ func GetHARHeadersCookies(headers *gabs.Container) (*gabs.Container, *gabs.Conta
 	return headersData, cookiesData
 }
 
-func GetRequestHARString(block *gabs.Container) string {
-	preprocess.ProcessVarsInBlock(block, globalVM)
-	httpv := block.S("verb", "value")
-	url := block.S("url", "value")
-	jsonObj := block.S("details", "ip_data")
-	headers := block.S("details", "headers")
-	/*
-		TODO: Handle multipart case
-
-		multipart := block.S("multipart", "value")
-		multipartBool := false
-		if multipart != nil {
-			multipartBool = true
-		}
-	*/
-	harObj := gabs.New()
-
-	if jsonObj != nil {
-		postData := gabs.New()
-		postData.Set("application/json", "mimeType")
-		postData.Set(jsonObj.String(), "text")
-		harObj.Set(postData, "postData")
-	}
-
-	if headers != nil {
-		headersData, cookiesData := GetHARHeadersCookies(headers)
-		if cookiesData.String() != "[]" {
-			harObj.Set(cookiesData, "cookies")
-		}
-		harObj.Set(headersData, "headers")
-	}
-
-	harObj.Set(httpv, "method")
-	harObj.Set(url, "url")
-
-	res := harObj.String()
-	return res
+func preprocessURL(url *gabs.Container) int {
+	urls := url.String()
+	flag := 0
+	fmt.Println("URL:", urls)
+	urls = strings.Trim(urls, `"`) 
+    urls = strings.Trim(urls, `'`)
+	fmt.Println("URL Updated:", urls)
+	if !strings.HasPrefix(urls, "https://") && !strings.HasPrefix(urls, "http://") {
+        fmt.Println("URL does not start with 'https://' or 'http://'")
+        newURL := "https://" + urls
+		// if !strings.Contains(newURL, ".com") {
+		// 	parts := strings.SplitN(newURL, "://", 2)
+		// 	protocol = parts[0] + "://"
+		// 	if len(parts) == 2 {
+		// 		domain := parts[1]
+		// 		newURL = parts[0] + "://" + domain + ".com"
+		// 	} else {
+		// 		newURL += ".com"
+		// 	}
+		// }
+        url.Set(newURL)
+        flag = 1
+   	 }
+	 
+	// Remove the outermost "${}" to isolate the placeholder content
+	fmt.Print("URL:", urls)
+	return flag
 }
 
-func GenerateTargetCode(targetLangLib string, parsedAPI *gabs.Container) {
-	initialize()
-	parsedAPIblocks := parsedAPI.S("value").Data().(*gabs.Container).Children()
-	convertedSnippetList := make([]string, 0)
-
-	for i, block := range parsedAPIblocks {
-		log.Debug().Int("Block num", i).Msg("")
-		log.Debug().Str("Block getting processed", block.String()).Msg("")
-		blockType := block.S("type").Data().(string)
-		if blockType == "processor" {
-			snippet := block.S("value").Data().(*gabs.Container).Data().(string)
-			convertedSnippetList = append(convertedSnippetList, snippet)
-		} else if blockType == "Lama2File" {
-			harRequest := GetRequestHARString(block)
-			snippetArgs := SnippetArgs{}
-			lang, lib := SplitLangLib(targetLangLib)
-			snippetArgs.Language = lang
-			snippetArgs.Library = lib
-			snippetArgs.HARRequest = harRequest
-			snippetArgs.SnippetCore = snippetcore
-			httpsnippetCode := PrepareHTTPSnippetGenerator(snippetArgs)
-
-			vm := cmdexec.GetJSVm()
-			_, e := vm.RunString(httpsnippetCode)
-			if e != nil {
-				log.Fatal().
-					Str("Type", "CodeGen").
-					Str("Error", e.Error()).
-					Msg("Code generator error")
-			}
-			// Init returns an error if the package is not ready for use.
-			convertedSnippet := vm.Get("convertedSnippet").String()
-			convertedSnippetList = append(convertedSnippetList, convertedSnippet)
+func postprocessURL(convertedSnippet string, flag int) string {
+	fmt.Println("Converted snippet to postprocess:", convertedSnippet)
+	if flag == 1 {
+		convertedSnippet = strings.Replace(convertedSnippet, "https://", "", 1)
+		convertedSnippet = strings.Replace(convertedSnippet, ".com", "", 1)
+		decodedURL, err := url.QueryUnescape(convertedSnippet)
+		if err != nil {
+			fmt.Println("Error decoding URL:", err)
+			return convertedSnippet
 		}
+		// decodedURL = strings.Replace(decodedURL, `""`, `"`, -1) removed for python 
+		return decodedURL
+		// return convertedSnippet
 	}
-	convertedSnippetFinal := strings.Join(convertedSnippetList, "\n")
-	fmt.Println(convertedSnippetFinal)
-	clipboard.WriteAll(convertedSnippetFinal)
-	fmt.Println("Code copied to clipboard")
+	return convertedSnippet
 }
