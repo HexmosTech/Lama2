@@ -20,6 +20,9 @@ nav:
       - Formal Grammar: reference/grammar.md
       - API Reference: reference/api.md
       - Contribute to LSP: reference/lsp.md
+  - LiveAPI:
+      - About: liveapi/aboutliveapi.md
+      - Easy Installation: liveapi/setupliveapi.md
   - About:
       - Hexmos: about/hexmos.md
       - Talk to us: about/contact.md

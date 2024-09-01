@@ -2,8 +2,8 @@ POST
 FORM
 http://httpbin.org/post
 # DATA
-first='second'
-third='fourth'
+first=second
+third=fourth
 
 # FILES
 
