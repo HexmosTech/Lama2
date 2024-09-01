@@ -29,4 +29,4 @@ jobs:
         binary_name: "l2"
         extra_files: LICENSE README.md
         ldflags: -X main.version=${{  github.ref_name }}
-        build_tags: "cli"
+        build_flags: '-tags=cli '
