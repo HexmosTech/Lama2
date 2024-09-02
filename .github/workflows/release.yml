@@ -1,6 +1,8 @@
 name: Lama2 Release
 on:
   push:
+    branches:
+      - "**" 
     tags:
       - 'v[0-9]+.[0-9]+.[0-9]+'
 
@@ -29,4 +31,4 @@ jobs:
         binary_name: "l2"
         extra_files: LICENSE README.md
         ldflags: -X main.version=${{  github.ref_name }}
-        build_flags: '-tags=cli '
+        build_flags: '-tags=cli'
