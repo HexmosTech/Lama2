@@ -1,4 +1,3 @@
-// lsp_suggestEnv.go
 package methods
 
 import (
