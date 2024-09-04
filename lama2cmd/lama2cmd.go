@@ -8,12 +8,23 @@ import (
 	"os"
 
 	"github.com/HexmosTech/lama2/importer"
-	"github.com/HexmosTech/lama2/l2lsp"
 	outputmanager "github.com/HexmosTech/lama2/outputManager"
 	"github.com/HexmosTech/lama2/utils"
 	"github.com/jessevdk/go-flags"
 	"github.com/rs/zerolog/log"
 )
+
+// LSPServer defines the interface for starting an LSP server
+type LSPServer interface {
+	StartLspServer()
+}
+
+var lspServer LSPServer
+
+func SetLSPServer(server LSPServer) {
+	lspServer = server
+}
+
 
 // The Opts structure stores user preferences, and is used throughout
 // the module to make various decisions.
@@ -89,8 +100,9 @@ func ArgParsing(o *Opts, version string) {
 		os.Exit(0)
 	}
 	if o.Lsp {
-		l2lsp.StartLspServer()
-		// Incoming requests to the LSP will be handled by l2lsp.Process()
+		log.Info().Msg("Starting LSP server")
+		lspServer.StartLspServer()
+		os.Exit(0)
 	}
 	if len(o.PostmanFile) > 0 {
 		if len(o.LamaDir) > 0 {

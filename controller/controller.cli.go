@@ -9,6 +9,7 @@ package contoller
 import (
 	"fmt"
 	"os"
+	"strconv"
 
 	"github.com/HexmosTech/gabs/v2"
 	"github.com/HexmosTech/httpie-go"
@@ -23,9 +24,9 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-func HandleParsedFile(parsedAPI *gabs.Container, o *lama2cmd.Opts, dir string) (httpie.ExResponse, *lama2cmd.Opts) {
-	vm := cmdexec.GetJSVm()
-	return HandleParsedFileHelper(parsedAPI, o, dir, vm)
+func HandleParsedFile(parsedAPI *gabs.Container, o *lama2cmd.Opts, dir string) (httpie.ExResponse, *lama2cmd.Opts, []outputmanager.ResponseTime, []outputmanager.StatusCode, []outputmanager.ContentSize, error) {
+    vm := cmdexec.GetJSVm()
+    return HandleParsedFileHelper(parsedAPI, o, dir, vm)
 }
 
 // Process initiates the following tasks in the given order:
@@ -70,15 +71,22 @@ func Process(version string) {
 			Msg("Parse Error")
 	}
 	log.Debug().Str("Parsed API", parsedAPI.String()).Msg("")
-	res, out := HandleParsedFile(parsedAPI, o, dir)
+	res, out, responseTime, statusCodes, contentSizes, err := HandleParsedFile(parsedAPI, o, dir)
+	if err != nil {
+		log.Fatal().Str("Type", "Controller").Msg(fmt.Sprint("Error: ", err))
+	}
 	if out.Output != "" {
-		outputmanager.WriteJSONOutput(res, out.Output)
+		outputmanager.WriteJSONOutput(res, out.Output, responseTime, statusCodes, contentSizes)
 	}
 }
 
-func processBlocks(parsedAPIblocks []*gabs.Container, o *lama2cmd.Opts, dir string) (httpie.ExResponse, *lama2cmd.Opts) {
+func processBlocks(parsedAPIblocks []*gabs.Container, o *lama2cmd.Opts, dir string) (httpie.ExResponse, *lama2cmd.Opts, []outputmanager.ResponseTime, []outputmanager.StatusCode, []outputmanager.ContentSize) {
 	vm := cmdexec.GetJSVm()
 	var resp httpie.ExResponse
+	var responseTime []outputmanager.ResponseTime
+	var statusCodes []outputmanager.StatusCode
+	var contentSizes []outputmanager.ContentSize
+	var timeInMs int64
 	for i, block := range parsedAPIblocks {
 		log.Debug().Int("Block num", i).Msg("")
 		log.Debug().Str("Block getting processed", block.String()).Msg("")
@@ -87,10 +95,12 @@ func processBlocks(parsedAPIblocks []*gabs.Container, o *lama2cmd.Opts, dir stri
 		case "processor":
 			ExecuteProcessorBlock(block, vm)
 		case "Lama2File":
-			resp = processLama2FileBlock(block, vm, o, dir)
+			resp, timeInMs = processLama2FileBlock(block, vm, o, dir)
+			log.Info().Str("ResponseTime", fmt.Sprintf("%dms", timeInMs)).Msg("")
+			responseTime, statusCodes, contentSizes = CalculateMetrics(resp, timeInMs, responseTime, statusCodes, contentSizes)
 		}
 	}
-	return resp, o
+	return resp, o, responseTime, statusCodes, contentSizes
 }
 
 func ExecuteRequestorBlockHelper(resp httpie.ExResponse, headersString string, e1 error, vm interface{}) httpie.ExResponse {
@@ -109,4 +119,13 @@ func ExecuteProcessorBlock(block *gabs.Container, vm interface{}) {
 	log.Debug().Str("Processor block incoming block", block.String()).Msg("")
 	script := b.Data().(string)
 	cmdexec.RunVMCode(script, vm)
+}
+
+func CalculateMetrics(resp httpie.ExResponse, timeInMs int64, responseTime []outputmanager.ResponseTime, statusCodes []outputmanager.StatusCode, contentSizes []outputmanager.ContentSize) ([]outputmanager.ResponseTime, []outputmanager.StatusCode, []outputmanager.ContentSize) {
+	responseTime = append(responseTime, outputmanager.ResponseTime{Type: "l2block", TimeInMs: timeInMs})
+	statusCodes = append(statusCodes, outputmanager.StatusCode{Type: "l2block", Status: resp.StatusCode})
+	sizeInBytes, _ := strconv.Atoi(resp.Headers["Content-Length"])
+	contentSizes = append(contentSizes, outputmanager.ContentSize{Type: "l2block", SizeInBytes: sizeInBytes})
+
+	return responseTime, statusCodes, contentSizes
 }

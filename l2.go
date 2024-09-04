@@ -3,15 +3,25 @@
 package main
 
 import (
-	contoller "github.com/HexmosTech/lama2/controller"
+	controller "github.com/HexmosTech/lama2/controller"
+	"github.com/HexmosTech/lama2/l2lsp"
+	"github.com/HexmosTech/lama2/lama2cmd"
 )
 
 var version string
 var lamawasm string
 
+// func init() {
+	
+// }
+
 func main() {
 	if len(version) == 0 {
 		version = "vUnset"
 	}
-	contoller.Process(version)
+	lama2cmd.SetLSPServer(&l2lsp.DefaultLSPServer{})
+	controller.Process(version)
+	
+	
 }
+

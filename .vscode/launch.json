@@ -1,26 +1,19 @@
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-        {
-            "type": "by-gdb",
-            "request": "launch",
-            "name": "Launch(gdb)",
-            "program": "${fileBasenameNoExtension}",
-            "programArgs": "examples/0009_processor_basic/0009_processor_basic.l2",
-            "debuggerArgs": ["--args"],
-            "cwd": "${workspaceRoot}"
-        },
-    
-        {
-            "name": "Launch Package",
-            "type": "go",
-            "request": "launch",
-            "mode": "auto",
-            "program": "${fileDirname}",
-            "args": ["-h"]
-        }
+      {
+        "name": "Launch",
+        "type": "go",
+        "request": "launch",
+        "mode": "auto",
+        "program": "${workspaceFolder}",
+        "env": {},
+        "args": [
+          "/home/lince/hexmos/apihub/apihub/fb_backend_v3/search.l2"
+          ],
+        "buildFlags": "-tags=cli",
+        "showLog": true
+      }
+ 
     ]
-}
+  }

@@ -13,6 +13,7 @@ import (
 
 	"github.com/HexmosTech/httpie-go"
 	"github.com/HexmosTech/lama2/utils"
+	"time"
 )
 
 // ExecCommand changes directory to the given `apiDir`
@@ -21,13 +22,18 @@ import (
 // to stdout.
 // Once execution finishes, previous CWD is restored,
 // and the command output is returned as a string
-func ExecCommand(cmdSlice []string, stdinBody string, apiDir string) (httpie.ExResponse, error) {
+func ExecCommand(cmdSlice []string, stdinBody string, apiDir string) (httpie.ExResponse, int64,  error) {
 	oldDir, _ := os.Getwd()
 	utils.ChangeWorkingDir(apiDir)
+	start := time.Now()
 	resp, err := httpie.Lama2Entry(cmdSlice, strings.NewReader(stdinBody))
 	if err != nil {
-		return httpie.ExResponse{}, errors.New("Error from API executor: " + err.Error())
+		return httpie.ExResponse{}, 0, errors.New("Error from API executor: " + err.Error())
+		
 	}
 	utils.ChangeWorkingDir(oldDir)
-	return resp, nil
+	elapsed := time.Since(start)
+	responseTime := elapsed.Milliseconds()	
+
+	return resp, responseTime, nil
 }

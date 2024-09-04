@@ -25,6 +25,8 @@ func HandleMethod(req request.JSONRPCRequest) response.JSONRPCResponse {
 
 	case "suggest/environmentVariables":
 		return methods.SuggestEnvironmentVariables(req)
+	case "executeCommand":
+		return methods.ExecuteCommand(req)
 
 	default:
 		return response.DefaultResp(req)
