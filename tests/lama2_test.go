@@ -123,7 +123,7 @@ func TestJsonParserExhaustive(t *testing.T) {
 		}
 		jsonText, e := FileToString(m)
 		if e != nil {
-			// log.Fatal().Str("Error:", e.Error()).Msg("")
+			log.Fatal().Str("Error:", e.Error()).Msg("")
 		}
 
 		gj, e2 := jsonFileToGabs(m)

@@ -1,6 +1,7 @@
 package codegen
 
 import (
+	// embed is used to embed the contents of the template files into the binary
 	_ "embed"
 	"fmt"
 	"net/url"

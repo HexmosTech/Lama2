@@ -54,7 +54,6 @@ func (p *Lama2Parser) Lama2File() (*gabs.Container, error) {
 		return nil, utils.NewParseError(p.Pos+1, p.LineNum+1, "Separator without preceding processor block found", []string{})
 	} else if procE1 == nil && sepE1 != nil {
 		return nil, utils.NewParseError(p.Pos+1, p.LineNum+1, "Processor without subsequent requestor block found", []string{})
-	} else {
 	}
 
 	// match requester

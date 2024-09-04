@@ -7,14 +7,14 @@ import (
 
 	"github.com/HexmosTech/gabs/v2"
 	"github.com/HexmosTech/lama2/utils"
-	// "github.com/rs/zerolog/log"
+	"github.com/rs/zerolog/log"
 )
 
 func Prettify(parsedAPI *gabs.Container, context map[string]bool, markRange map[string]int, content string, fPath string) {
 	defer func() {
 		if err := recover(); err != nil { // catch
-			// log.Debug().Msg("Potential issue with prettify")
-			// os.Exit(0)
+			log.Debug().Msg("Potential issue with prettify")
+			os.Exit(0)
 		}
 	}()
 	parsedAPIblocks := parsedAPI.S("value").Data().(*gabs.Container).Children()
@@ -48,7 +48,7 @@ func Prettify(parsedAPI *gabs.Container, context map[string]bool, markRange map[
 			idxStr := strconv.Itoa(markMax)
 
 			content = content[:markRange["DataStart"+idxStr]] + jsonObj.StringIndent("", "  ") + "\n" + content[markRange["DataEnd"+idxStr]:]
-			markMax -= 1
+			markMax--
 		}
 
 		res2 := utils.RemoveUnquotedMarker(content)

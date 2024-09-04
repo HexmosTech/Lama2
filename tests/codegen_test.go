@@ -33,7 +33,7 @@ func TestSplitLangLib2(t *testing.T) {
 	}
 }
 
-func TestGenerateMultiStage(t *testing.T) {
+func TestGenerateMultiStage( _ *testing.T) {
 	l2Path := "../examples/0009_processor_basic/0009_processor_basic.l2"
 	apiContent, _ := os.ReadFile(l2Path)
 	_, dir, _ := utils.GetFilePathComponents(l2Path)
