@@ -45,13 +45,13 @@ func extractArgs(args []interface{}) (*lama2cmd.Opts, string) {
 }
 
 func processLama2FileBlock(block *gabs.Container, vm interface{}, o *lama2cmd.Opts, dir string) (httpie.ExResponse, int64) {
-	fmt.Println("WW: block value before:", block.String())
+	// fmt.Println("WW: block value before:", block.String())
 	preprocess.ProcessVarsInBlock(block, vm)
-	fmt.Println("WW: block value after:", block.String())
+	// fmt.Println("WW: block value after:", block.String())
 
 	cmd, stdinBody := cmdgen.ConstructCommand(block, o)
-	fmt.Println("WW: cmd:", cmd)
-	fmt.Println("WW: stdinBody:", stdinBody)
+	// fmt.Println("WW: cmd:", cmd)
+	// fmt.Println("WW: stdinBody:", stdinBody)
 	var resp httpie.ExResponse
 	var e1 error
 	resp, responseTime, e1 := cmdexec.ExecCommand(cmd, stdinBody, dir)

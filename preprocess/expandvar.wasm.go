@@ -38,7 +38,7 @@ func Expand(s string, vm interface{}, mapping map[string]string) string {
 			} else {
 				// buf = getJsValue(vm, name, mapping, buf)
 				buf = getJsValue(name, mapping, buf)
-				fmt.Println("WW: Buffer value:",name, string(buf))
+				// fmt.Println("WW: Buffer value:",name, string(buf))
 			}
 			j += w
 			i = j + 1

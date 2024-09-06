@@ -1,4 +1,3 @@
-
 // Package `lama2cmd` provides CLI argument parsing facilities.
 // It hosts the `Opts` structure to record user intentions
 package lama2cmd
@@ -46,6 +45,8 @@ type Opts struct {
 		LamaAPIFile string
 	} `positional-args:"yes"`
 }
+
+
 
 func getParsedInput(argList []string) (Opts, []string) {
 	argList = argList[1:] // remove command name
@@ -100,6 +101,7 @@ func ArgParsing(o *Opts, version string) {
 		os.Exit(0)
 	}
 	if o.Lsp {
+		outputmanager.DisableLogBuff()
 		log.Info().Msg("Starting LSP server")
 		lspServer.StartLspServer()
 		os.Exit(0)

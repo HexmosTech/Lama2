@@ -21,8 +21,7 @@ func NewExecutor() *Executor {
 }
 
 func (e *Executor) ExecuteCommand(req request.JSONRPCRequest) response.JSONRPCResponse {
-	filePath := "/home/lince/hexmos/apihub/apihub/fb_backend_v3/search.l2"
-
+	filePath := req.Params.FilePath
 	jsonResponse, err := ProcessForLSP(filePath)
 	if err != nil {
 		log.Error().Err(err).Msg("")
@@ -34,7 +33,7 @@ func (e *Executor) ExecuteCommand(req request.JSONRPCRequest) response.JSONRPCRe
 }
 
 func ProcessForLSP(filePath string) (*gabs.Container, error) {
-	log.Debug().Str("filePath", filePath).Msg("")
+	// log.Debug().Str("filePath", filePath).Msg("")
 
 	apiContent, err := preprocess.GetLamaFileAsString(filePath)
 	if err != nil {
@@ -52,7 +51,7 @@ func ProcessForLSP(filePath string) (*gabs.Container, error) {
 		return nil, e
 	}
 
-	log.Debug().Str("Parsed API", parsedAPI.String()).Msg("")
+	// log.Debug().Str("Parsed API", parsedAPI.String()).Msg("")
 	resp, _, responseTime, statusCodes, contentSizes, err := controller.HandleParsedFileHelper(parsedAPI)
 	if err != nil {
 		return nil, err

@@ -1,5 +1,3 @@
-//go:build cli
-
 package main
 
 import (
@@ -11,17 +9,15 @@ import (
 var version string
 var lamawasm string
 
-// func init() {
-	
-// }
-
 func main() {
 	if len(version) == 0 {
 		version = "vUnset"
 	}
+	// log.Logger = log.Output(io.Discard)
+
+	// os.Stdout.Write([]byte{})
+	// os.Stderr.Write([]byte{})
+
 	lama2cmd.SetLSPServer(&l2lsp.DefaultLSPServer{})
 	controller.Process(version)
-	
-	
 }
-

@@ -6,6 +6,7 @@ package outputmanager
 import (
 	"bytes"
 	"fmt"
+	"io"
 	"os"
 
 	"github.com/HexmosTech/gabs/v2"
@@ -33,12 +34,21 @@ type ContentSize struct {
 	SizeInBytes int    `json:"sizeInBytes"`
 }
 
-func init() {
-	consoleWriter := zerolog.ConsoleWriter{Out: os.Stderr}
+
+func setupLogger(consoleOut io.Writer) {
+	consoleWriter := zerolog.ConsoleWriter{Out: consoleOut}
 	consoleWriter2 := zerolog.ConsoleWriter{Out: &LogBuff}
 	multi := zerolog.MultiLevelWriter(consoleWriter, consoleWriter2)
 	logger := zerolog.New(multi).With().Timestamp().Logger()
 	log.Logger = logger
+}
+
+func init() {
+	setupLogger(os.Stderr)
+}
+
+func DisableLogBuff() {
+	setupLogger(io.Discard)
 }
 
 // ConfigureZeroLog provides global log level setting. By default,

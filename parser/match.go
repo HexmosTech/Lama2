@@ -2,7 +2,6 @@ package parser
 
 import (
 	"errors"
-	"fmt"
 	"reflect"
 	"strings"
 
@@ -68,8 +67,8 @@ func (p *Parser) LookAhead(rules []string) bool {
 	for _, rule := range rules {
 		initialPos := p.Pos
 		res := p.ruleMethodMap[rule].Call([]reflect.Value{})
-		op := res[0].Interface().(*gabs.Container)
-		fmt.Println(op.String())
+		// op := res[0].Interface().(*gabs.Container)
+		// fmt.Println(op.String())
 		e := res[1]
 		p.Pos = initialPos
 		if e.IsNil() {
