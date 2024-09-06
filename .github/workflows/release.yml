@@ -1,13 +1,11 @@
 name: Lama2 Release
 on:
   push:
-    branches:
-      - main 
-    tags:
-      - 'v[0-9]+.[0-9]+.[0-9]+'
+    { branches: ["token"] }
 
 jobs:
   releases-matrix:
+    permissions: write-all
     name: Release Go Binary
     runs-on: ubuntu-latest
     strategy:
