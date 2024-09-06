@@ -1,7 +1,7 @@
 name: Lama2 Release
 on:
-  push:
-    { branches: ["token"] }
+  release:
+    types: [created]
 
 jobs:
   releases-matrix:
