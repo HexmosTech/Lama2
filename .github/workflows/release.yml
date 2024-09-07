@@ -50,5 +50,6 @@ jobs:
           extra_files: LICENSE README.md
           ldflags: -X main.version=${{  github.ref_name }}
           build_flags: |
-            ${{ '-tags=wasm -a -gcflags="all=-l -B -wb=false" -ldflags="-w -s"' }}
+            -tags=wasm -a -gcflags=all=-l -B -wb=false -ldflags="-w -s"
+
   
