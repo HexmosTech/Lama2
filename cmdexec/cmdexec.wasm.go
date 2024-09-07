@@ -10,7 +10,6 @@ import (
 	"errors"
 	"fmt"
 	"os"
-
 	"strings"
 
 	"github.com/HexmosTech/httpie-go"

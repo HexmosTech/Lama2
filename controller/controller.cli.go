@@ -25,8 +25,8 @@ import (
 )
 
 func HandleParsedFile(parsedAPI *gabs.Container, o *lama2cmd.Opts, dir string) (httpie.ExResponse, *lama2cmd.Opts, []outputmanager.ResponseTime, []outputmanager.StatusCode, []outputmanager.ContentSize, error) {
-    vm := cmdexec.GetJSVm()
-    return HandleParsedFileHelper(parsedAPI, o, dir, vm)
+	vm := cmdexec.GetJSVm()
+	return HandleParsedFileHelper(parsedAPI, o, dir, vm)
 }
 
 // Process initiates the following tasks in the given order:

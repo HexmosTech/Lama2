@@ -40,7 +40,6 @@ func getRequestURI(req request.JSONRPCRequest) (string, int, error) {
 		return "", response.ErrUnsupportedFeature, errors.New("Windows is not supported as of now. To contribute visit here: https://github.com/HexmosTech/Lama2")
 	}
 	return "", response.ErrUnexpectedURIScheme, errors.New("encountered unexpected URI scheme. Ex: 'file:///path/to/workspace/myapi.l2'")
-
 }
 
 func SuggestEnvironmentVariables(req request.JSONRPCRequest) response.JSONRPCResponse {

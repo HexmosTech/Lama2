@@ -19,7 +19,7 @@ type SnippetArgs struct {
 
 func GetRequestHARString(block *gabs.Container, targetLang string) (string, int) {
 	httpv := block.S("verb", "value").String()
-	httpv = strings.Trim(httpv, `"`) 
+	httpv = strings.Trim(httpv, `"`)
 	httpv = strings.Trim(httpv, `'`)
 	url := block.S("url", "value")
 	flag := preprocessURL(url)
@@ -28,9 +28,9 @@ func GetRequestHARString(block *gabs.Container, targetLang string) (string, int)
 	harObj := gabs.New()
 
 	if strings.Contains(strings.ToLower(targetLang), "python") || strings.Contains(strings.ToLower(targetLang), "shell") || strings.Contains(strings.ToLower(targetLang), "php") {
-        httpv = strings.ToUpper(httpv)
-    }
-	
+		httpv = strings.ToUpper(httpv)
+	}
+
 	if jsonObj != nil {
 		postData := gabs.New()
 		postData.Set("application/json", "mimeType")
@@ -109,12 +109,12 @@ func preprocessURL(url *gabs.Container) int {
 	urls := url.String()
 	flag := 0
 	fmt.Println("URL:", urls)
-	urls = strings.Trim(urls, `"`) 
-    urls = strings.Trim(urls, `'`)
+	urls = strings.Trim(urls, `"`)
+	urls = strings.Trim(urls, `'`)
 	fmt.Println("URL Updated:", urls)
 	if !strings.HasPrefix(urls, "https://") && !strings.HasPrefix(urls, "http://") {
-        fmt.Println("URL does not start with 'https://' or 'http://'")
-        newURL := "https://" + urls
+		fmt.Println("URL does not start with 'https://' or 'http://'")
+		newURL := "https://" + urls
 		// if !strings.Contains(newURL, ".com") {
 		// 	parts := strings.SplitN(newURL, "://", 2)
 		// 	protocol = parts[0] + "://"
@@ -125,10 +125,10 @@ func preprocessURL(url *gabs.Container) int {
 		// 		newURL += ".com"
 		// 	}
 		// }
-        url.Set(newURL)
-        flag = 1
-   	 }
-	 
+		url.Set(newURL)
+		flag = 1
+	}
+
 	// Remove the outermost "${}" to isolate the placeholder content
 	fmt.Print("URL:", urls)
 	return flag
@@ -144,7 +144,7 @@ func postprocessURL(convertedSnippet string, flag int) string {
 			fmt.Println("Error decoding URL:", err)
 			return convertedSnippet
 		}
-		// decodedURL = strings.Replace(decodedURL, `""`, `"`, -1) removed for python 
+		// decodedURL = strings.Replace(decodedURL, `""`, `"`, -1) removed for python
 		return decodedURL
 		// return convertedSnippet
 	}

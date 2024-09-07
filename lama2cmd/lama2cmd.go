@@ -24,7 +24,6 @@ func SetLSPServer(server LSPServer) {
 	lspServer = server
 }
 
-
 // The Opts structure stores user preferences, and is used throughout
 // the module to make various decisions.
 type Opts struct {

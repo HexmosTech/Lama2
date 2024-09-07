@@ -34,7 +34,6 @@ type ContentSize struct {
 	SizeInBytes int    `json:"sizeInBytes"`
 }
 
-
 func setupLogger(consoleOut io.Writer) {
 	consoleWriter := zerolog.ConsoleWriter{Out: consoleOut}
 	consoleWriter2 := zerolog.ConsoleWriter{Out: &LogBuff}

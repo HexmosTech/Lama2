@@ -6,8 +6,10 @@ import (
 	"github.com/HexmosTech/lama2/lama2cmd"
 )
 
-var version string
-var lamawasm string
+var (
+	version  string
+	lamawasm string
+)
 
 func main() {
 	if len(version) == 0 {

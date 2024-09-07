@@ -9,4 +9,5 @@ func CreateEnvironmentVariablesResp(req request.JSONRPCRequest, envs interface{}
 		Result:  envs,
 	}
 }
+
 //  {"jsonrpc":"2.0","id":12,"method":"executeCommand","params":{"filePath":"/home/lince/hexmos/apihub/apihub/fb_backend_v3/search.l2"}}

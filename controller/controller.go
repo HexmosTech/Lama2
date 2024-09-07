@@ -17,10 +17,10 @@ import (
 )
 
 func HandleParsedFileHelper(parsedAPI *gabs.Container, args ...interface{}) (httpie.ExResponse, *lama2cmd.Opts, []outputmanager.ResponseTime, []outputmanager.StatusCode, []outputmanager.ContentSize, error) {
-    parsedAPIblocks := GetParsedAPIBlocks(parsedAPI)
-    o, dir := extractArgs(args)
-    resp, opts, responseTimes, statusCode, contentSize := processBlocks(parsedAPIblocks, o, dir)
-    return resp, opts, responseTimes, statusCode, contentSize, nil
+	parsedAPIblocks := GetParsedAPIBlocks(parsedAPI)
+	o, dir := extractArgs(args)
+	resp, opts, responseTimes, statusCode, contentSize := processBlocks(parsedAPIblocks, o, dir)
+	return resp, opts, responseTimes, statusCode, contentSize, nil
 }
 
 func GetParsedAPIBlocks(parsedAPI *gabs.Container) []*gabs.Container {
@@ -76,5 +76,3 @@ func processLama2FileBlock(block *gabs.Container, vm interface{}, o *lama2cmd.Op
 // 	}
 // 	return resp, o
 // }
-
-

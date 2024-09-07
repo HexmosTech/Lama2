@@ -53,21 +53,22 @@ func Expand(s string, vm interface{}, mapping map[string]string) string {
 	res2 := utils.RemoveUnquotedValueMarker(res)
 	return res2
 }
+
 func getJsValue(name string, mapping map[string]string, buf []byte) []byte {
-	log.Debug().Str("WW Getting from worker", name).Msg("");
-    jsVal := GetFromWorker(name)
-	fmt.Println("WW: getjsvalue",name,jsVal)
-	log.Debug().Str("WW JavaScript Variable Value:", jsVal).Msg("");
+	log.Debug().Str("WW Getting from worker", name).Msg("")
+	jsVal := GetFromWorker(name)
+	fmt.Println("WW: getjsvalue", name, jsVal)
+	log.Debug().Str("WW JavaScript Variable Value:", jsVal).Msg("")
 	if jsVal != "" {
-        buf = append(buf, []byte(jsVal)...)
-    } else {
-        val, ok := mapping[name]
-        if ok {
-            buf = append(buf, val...)
-        } else {
-            buf = append(buf, ""...)
-            log.Warn().Str("Couldn't find the variable `"+name+"`, in both Javascript processor block and environment variables. Replacing with empty string", "").Msg("")
-        }
-    }
-    return buf
+		buf = append(buf, []byte(jsVal)...)
+	} else {
+		val, ok := mapping[name]
+		if ok {
+			buf = append(buf, val...)
+		} else {
+			buf = append(buf, ""...)
+			log.Warn().Str("Couldn't find the variable `"+name+"`, in both Javascript processor block and environment variables. Replacing with empty string", "").Msg("")
+		}
+	}
+	return buf
 }

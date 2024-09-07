@@ -14,11 +14,10 @@ import (
 )
 
 /*
-	ExecuteCommand is the LSP method that handles the execution of the API file
-	filePath: the path to the API file
+ExecuteCommand is the LSP method that handles the execution of the API file
+filePath: the path to the API file
 */
 func ExecuteCommand(req request.JSONRPCRequest) response.JSONRPCResponse {
-
 	jsonResponse, err := ProcessForLSP(req.Params.FilePath)
 	if err != nil {
 		return response.ErrorResp(req, 500, err.Error())
@@ -29,11 +28,10 @@ func ExecuteCommand(req request.JSONRPCRequest) response.JSONRPCResponse {
 }
 
 /*
-	ProcessForLSP is the method that processes the API file
-	filePath: the path to the API file
+ProcessForLSP is the method that processes the API file
+filePath: the path to the API file
 */
 func ProcessForLSP(filePath string) (*gabs.Container, error) {
-
 	apiContent, err := preprocess.GetLamaFileAsString(filePath)
 	if err != nil {
 		return nil, err

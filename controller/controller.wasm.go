@@ -6,12 +6,11 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"syscall/js"
 
 	"github.com/HexmosTech/gabs/v2"
 	"github.com/HexmosTech/httpie-go"
 	"github.com/rs/zerolog/log"
-
-	"syscall/js"
 
 	"github.com/HexmosTech/lama2/codegen"
 	"github.com/HexmosTech/lama2/lama2cmd"
