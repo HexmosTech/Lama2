@@ -12,13 +12,19 @@ jobs:
     strategy:
       matrix:
         # build and publish in parallel: linux/386, linux/amd64, linux/arm64, windows/386, windows/amd64, darwin/amd64, darwin/arm64
-        goos: [linux, windows, darwin]
-        goarch: ["386", amd64, arm64]
+        goos: [linux, windows, darwin,js]
+        goarch: ["386", amd64, arm64,wasm]
         exclude:
           - goarch: "386"
             goos: darwin
           - goarch: arm64
             goos: windows
+          - goos: js
+            goarch: "386"
+          - goos: js
+            goarch: arm64
+          - goos: js
+            goarch: amd64
     steps:
     - uses: actions/checkout@v3
     - uses: wangyoucao577/go-release-action@v1.32
@@ -30,4 +36,7 @@ jobs:
         binary_name: "l2"
         extra_files: LICENSE README.md
         ldflags: -X main.version=${{  github.ref_name }}
-        build_flags: '-tags=cli'
+        build_flags: |
+          ${{ matrix.goos == 'js' && matrix.goarch == 'wasm' && '-a -gcflags=all="-l -B -wb=false" -ldflags="-w -s"' || '-tags=cli' }}
+        output_name: |
+          ${{ matrix.goos == 'js' && matrix.goarch == 'wasm' && 'main.wasm' }}
