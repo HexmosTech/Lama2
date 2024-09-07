@@ -25,6 +25,12 @@ jobs:
             goarch: arm64
           - goos: js
             goarch: amd64
+          - goarch: wasm
+            goos: windows
+          - goarch: wasm
+            goos: linux
+          - goarch: wasm
+            goos: darwin         
     steps:
     - uses: actions/checkout@v3
     - uses: wangyoucao577/go-release-action@v1.32
@@ -37,6 +43,6 @@ jobs:
         extra_files: LICENSE README.md
         ldflags: -X main.version=${{  github.ref_name }}
         build_flags: |
-          ${{ matrix.goos == 'js' && matrix.goarch == 'wasm' && '-a -gcflags=all="-l -B -wb=false" -ldflags="-w -s"' || '-tags=cli' }}
+          ${{ matrix.goos == 'js' && matrix.goarch == 'wasm' && '-a -gcflags="all=-l -B -wb=false" -ldflags="-w -s"' || '-tags=cli' }}
         output_name: |
           ${{ matrix.goos == 'js' && matrix.goarch == 'wasm' && 'main.wasm' }}
