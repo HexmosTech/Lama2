@@ -48,8 +48,8 @@ jobs:
           goversion: "https://dl.google.com/go/go1.19.3.linux-amd64.tar.gz"
           binary_name: "l2.wasm"
           extra_files: LICENSE README.md
-          ldflags: -X main.version=${{  github.ref_name }}
+          ldflags: -X main.version=${{  github.ref_name }} -w -s
           build_flags: |
-             -tags=wasm -a -gcflags="all=-l -wb=false -ldflags="-w -s"
+             -tags=wasm
 
   
