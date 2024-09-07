@@ -46,8 +46,6 @@ type Opts struct {
 	} `positional-args:"yes"`
 }
 
-
-
 func getParsedInput(argList []string) (Opts, []string) {
 	argList = argList[1:] // remove command name
 	o := Opts{}
@@ -101,10 +99,9 @@ func ArgParsing(o *Opts, version string) {
 		os.Exit(0)
 	}
 	if o.Lsp {
-		outputmanager.DisableLogBuff()
 		log.Info().Msg("Starting LSP server")
+		outputmanager.DisableLogBuff()
 		lspServer.StartLspServer()
-		os.Exit(0)
 	}
 	if len(o.PostmanFile) > 0 {
 		if len(o.LamaDir) > 0 {

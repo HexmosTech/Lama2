@@ -11,17 +11,15 @@ import (
 	"github.com/HexmosTech/lama2/parser"
 	"github.com/HexmosTech/lama2/preprocess"
 	"github.com/HexmosTech/lama2/utils"
-	"github.com/rs/zerolog/log"
 )
 	
 func ExecuteCommand(req request.JSONRPCRequest) response.JSONRPCResponse {
 
 	jsonResponse, err := ProcessForLSP(req.Params.FilePath)
 	if err != nil {
-		log.Error().Err(err).Msg("")
+		return response.ErrorResp(req, 500, err.Error())
 	}
-	resp := response.CreateExecuteCommandResponse(req, jsonResponse)
-	log.Info().Interface("resp", resp).Msg("")
+	resp := response.CreateSuccessResponse(req.ID, jsonResponse)
 
 	return resp
 }
@@ -56,3 +54,5 @@ func ProcessForLSP(filePath string) (*gabs.Container, error) {
 
 	return jsonResponse, nil
 }
+
+// {"jsonrpc":"2.0","id":12,"method":"executeCommand","params":{"filePath":"/home/lince/hexmos/apihub/apihub/fb_backend_v3/search.l2"}}

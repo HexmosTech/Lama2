@@ -25,7 +25,7 @@ func init() {
 }
 
 // DefaultLSPServer is the default implementation of LSPServer
-type DefaultLSPServer struct{}
+type DefaultLSPServer struct {}
 
 func (s *DefaultLSPServer) StartLspServer() {
 	log.Info().Msg("Started process")
