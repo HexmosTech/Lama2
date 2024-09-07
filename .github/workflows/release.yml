@@ -12,25 +12,13 @@ jobs:
     strategy:
       matrix:
         # build and publish in parallel: linux/386, linux/amd64, linux/arm64, windows/386, windows/amd64, darwin/amd64, darwin/arm64
-        goos: [linux, windows, darwin,js]
-        goarch: ["386", amd64, arm64,wasm]
+        goos: [linux, windows, darwin]
+        goarch: ["386", amd64, arm64]
         exclude:
           - goarch: "386"
             goos: darwin
           - goarch: arm64
-            goos: windows
-          - goos: js
-            goarch: "386"
-          - goos: js
-            goarch: arm64
-          - goos: js
-            goarch: amd64
-          - goarch: wasm
-            goos: windows
-          - goarch: wasm
-            goos: linux
-          - goarch: wasm
-            goos: darwin         
+            goos: windows       
     steps:
     - uses: actions/checkout@v3
     - uses: wangyoucao577/go-release-action@v1.32
@@ -42,7 +30,25 @@ jobs:
         binary_name: "l2"
         extra_files: LICENSE README.md
         ldflags: -X main.version=${{  github.ref_name }}
-        build_flags: |
-          ${{ matrix.goos == 'js' && matrix.goarch == 'wasm' && '-a -gcflags="all=-l -B -wb=false" -ldflags="-w -s"' || '-tags=cli' }}
-        output_name: |
-          ${{ matrix.goos == 'js' && matrix.goarch == 'wasm' && 'main.wasm' }}
+        build_flags: '-tags=cli'
+  
+  # Separate job for Wasm build
+  wasm-build:
+    permissions: write-all
+    name: Build WebAssembly Binary
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: wangyoucao577/go-release-action@v1.32
+        with:
+          go-version: "https://dl.google.com/go/go1.19.3.linux-amd64.tar.gz"
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          goos: js
+          goarch: wasm
+          goversion: "https://dl.google.com/go/go1.19.3.linux-amd64.tar.gz"
+          binary_name: "l2.wasm"
+          extra_files: LICENSE README.md
+          ldflags: -X main.version=${{  github.ref_name }}
+          build_flags: |
+            ${{ '-tags=wasm -a -gcflags="all=-l -B -wb=false" -ldflags="-w -s"' }}
+  
