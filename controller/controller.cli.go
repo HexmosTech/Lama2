@@ -84,8 +84,8 @@ func processBlocks(parsedAPIblocks []*gabs.Container, o *lama2cmd.Opts, dir stri
 	vm := cmdexec.GetJSVm()
 	var resp httpie.ExResponse
 	var responseTime []outputmanager.ResponseTime
-	var statusCodes []outputmanager.StatusCode
-	var contentSizes []outputmanager.ContentSize
+	var statusCode []outputmanager.StatusCode
+	var contentSize []outputmanager.ContentSize
 	var timeInMs int64
 	for i, block := range parsedAPIblocks {
 		log.Debug().Int("Block num", i).Msg("")
@@ -97,10 +97,10 @@ func processBlocks(parsedAPIblocks []*gabs.Container, o *lama2cmd.Opts, dir stri
 		case "Lama2File":
 			resp, timeInMs = processLama2FileBlock(block, vm, o, dir)
 			log.Info().Str("ResponseTime", fmt.Sprintf("%dms", timeInMs)).Msg("")
-			responseTime, statusCodes, contentSizes = CalculateMetrics(resp, timeInMs, responseTime, statusCodes, contentSizes)
+			responseTime, statusCode, contentSize = CalculateMetrics(resp, timeInMs, responseTime, statusCode, contentSize)
 		}
 	}
-	return resp, o, responseTime, statusCodes, contentSizes
+	return resp, o, responseTime, statusCode, contentSize
 }
 
 func ExecuteRequestorBlockHelper(resp httpie.ExResponse, headersString string, e1 error, vm interface{}) httpie.ExResponse {

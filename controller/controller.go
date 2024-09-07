@@ -10,17 +10,17 @@ import (
 	"github.com/HexmosTech/gabs/v2"
 	"github.com/HexmosTech/httpie-go"
 	"github.com/HexmosTech/lama2/cmdexec"
+	"github.com/HexmosTech/lama2/cmdgen"
 	"github.com/HexmosTech/lama2/lama2cmd"
 	outputmanager "github.com/HexmosTech/lama2/outputManager"
 	"github.com/HexmosTech/lama2/preprocess"
-	"github.com/HexmosTech/lama2/cmdgen"
 )
 
 func HandleParsedFileHelper(parsedAPI *gabs.Container, args ...interface{}) (httpie.ExResponse, *lama2cmd.Opts, []outputmanager.ResponseTime, []outputmanager.StatusCode, []outputmanager.ContentSize, error) {
     parsedAPIblocks := GetParsedAPIBlocks(parsedAPI)
     o, dir := extractArgs(args)
-    resp, opts, responseTimes, statusCodes, contentSizes := processBlocks(parsedAPIblocks, o, dir)
-    return resp, opts, responseTimes, statusCodes, contentSizes, nil
+    resp, opts, responseTimes, statusCode, contentSize := processBlocks(parsedAPIblocks, o, dir)
+    return resp, opts, responseTimes, statusCode, contentSize, nil
 }
 
 func GetParsedAPIBlocks(parsedAPI *gabs.Container) []*gabs.Container {
