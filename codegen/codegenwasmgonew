@@ -62,8 +62,6 @@ func generateConvertedSippet(targetLangLib string, parsedAPI *gabs.Container) st
 			fmt.Println("Snippet args:", snippetArgs)
 			fmt.Println("CC: 2.2")
 			httpsnippetCode := PrepareHTTPSnippetGenerator(snippetArgs)
-			// fmt.Println("CC: 3. Prepared HTTPSnippet",httpsnippetCode)
-			// fmt.Println("httpsnippetCode:", httpsnippetCode)
 			fmt.Println("CC: 3.1 Finished preparation, calling converstion")
 			convertedSnippet := js.Global().Call("eval", httpsnippetCode)
 			fmt.Println("CC: 4. Converted httpsnippet",convertedSnippet.String())

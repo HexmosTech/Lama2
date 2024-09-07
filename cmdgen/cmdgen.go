@@ -104,7 +104,5 @@ func ConstructCommandHelper(parsedInput *gabs.Container) (string, string, *gabs.
 		multipartBool = true
 	}
 	formBool := form != nil
-	// fmt.Println("WW httpv:", httpv.Data().(string))
-	// fmt.Println("WW url:", url.Data().(string))
 	return httpv.Data().(string), url.Data().(string), jsonObj, headers, multipartBool, formBool
 }

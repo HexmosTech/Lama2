@@ -12,7 +12,11 @@ import (
 	"github.com/HexmosTech/lama2/preprocess"
 	"github.com/HexmosTech/lama2/utils"
 )
-	
+
+/*
+	ExecuteCommand is the LSP method that handles the execution of the API file
+	filePath: the path to the API file
+*/
 func ExecuteCommand(req request.JSONRPCRequest) response.JSONRPCResponse {
 
 	jsonResponse, err := ProcessForLSP(req.Params.FilePath)
@@ -24,6 +28,10 @@ func ExecuteCommand(req request.JSONRPCRequest) response.JSONRPCResponse {
 	return resp
 }
 
+/*
+	ProcessForLSP is the method that processes the API file
+	filePath: the path to the API file
+*/
 func ProcessForLSP(filePath string) (*gabs.Container, error) {
 
 	apiContent, err := preprocess.GetLamaFileAsString(filePath)

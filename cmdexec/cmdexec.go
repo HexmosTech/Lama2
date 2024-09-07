@@ -11,9 +11,10 @@ import (
 	"os"
 	"strings"
 
+	"time"
+
 	"github.com/HexmosTech/httpie-go"
 	"github.com/HexmosTech/lama2/utils"
-	"time"
 )
 
 // ExecCommand changes directory to the given `apiDir`
@@ -31,8 +32,8 @@ func ExecCommand(cmdSlice []string, stdinBody string, apiDir string) (httpie.ExR
 		return httpie.ExResponse{}, 0, errors.New("Error from API executor: " + err.Error())
 		
 	}
-	utils.ChangeWorkingDir(oldDir)
 	elapsed := time.Since(start)
+	utils.ChangeWorkingDir(oldDir)
 	responseTime := elapsed.Milliseconds()	
 
 	return resp, responseTime, nil
