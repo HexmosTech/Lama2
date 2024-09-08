@@ -2,12 +2,12 @@ package parser
 
 import (
 	"errors"
-	"fmt"
 	"reflect"
 	"strings"
 
 	"github.com/HexmosTech/gabs/v2"
 	"github.com/HexmosTech/lama2/utils"
+	"github.com/rs/zerolog/log"
 )
 
 // Method Match is the most important of all in the
@@ -69,7 +69,7 @@ func (p *Parser) LookAhead(rules []string) bool {
 		initialPos := p.Pos
 		res := p.ruleMethodMap[rule].Call([]reflect.Value{})
 		op := res[0].Interface().(*gabs.Container)
-		fmt.Println(op.String())
+		log.Info().Msg(op.String())
 		e := res[1]
 		p.Pos = initialPos
 		if e.IsNil() {

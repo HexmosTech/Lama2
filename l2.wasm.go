@@ -20,7 +20,7 @@ func init() {
 }
 
 func main() {
-	//Set the global JavaScript property "goWebRequestFunc" to the result of wasmLamaPromise
+	// Set the global JavaScript property "goWebRequestFunc" to the result of wasmLamaPromise
 	js.Global().Set("goWebRequestFunc", wasmLamaPromise())
 	js.Global().Set("goCmdConvertFunc", wasmCodeConverter())
 
@@ -34,7 +34,7 @@ func wasmLamaPromise() js.Func {
 		handler := js.FuncOf(func(this js.Value, args []js.Value) interface{} {
 			resolve := args[0]
 			go func() {
-				result, _ := controller.ProcessWasmInput(inputdata)
+				result, _, _, _, _, _ := controller.ProcessWasmInput(inputdata)
 				resultJSON, err := json.Marshal(result)
 				if err != nil {
 					fmt.Println("Error:", err)
@@ -57,7 +57,7 @@ func wasmCodeConverter() js.Func {
 		handler := js.FuncOf(func(this js.Value, args []js.Value) interface{} {
 			resolve := args[0]
 			go func() {
-				result, _ := controller.ProcessConverterInput(inputdata,convertLang)
+				result, _ := controller.ProcessConverterInput(inputdata, convertLang)
 				resolve.Invoke(js.ValueOf(result))
 			}()
 			return nil

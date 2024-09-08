@@ -12,7 +12,6 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-
 // ChangeWorkingDirectory tries to set the CWD; on failure
 // it exits with a log error message
 func ChangeWorkingDir(dir string) {

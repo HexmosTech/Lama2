@@ -14,7 +14,6 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-
 // Expand replaces ${var} or $var in the string based on the mapping function.
 // For example, os.ExpandEnv(s) is equivalent to os.Expand(s, os.Getenv).
 func Expand(s string, vm interface{}, mapping map[string]string) string {

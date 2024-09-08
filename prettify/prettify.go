@@ -52,6 +52,6 @@ func Prettify(parsedAPI *gabs.Container, context map[string]bool, markRange map[
 		}
 
 		res2 := utils.RemoveUnquotedMarker(content)
-		os.WriteFile(fPath, []byte(res2), 0644)
+		os.WriteFile(fPath, []byte(res2), 0o644)
 	}
 }

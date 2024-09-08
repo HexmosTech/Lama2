@@ -60,7 +60,7 @@ func LoadEnvFile(l2path string) {
 	envFileName := filepath.Base(l2path)
 	err := godotenv.Load(l2path)
 	if err != nil {
-		fmt.Println("Didn't find " + envFileName + " in the API directory")
+		log.Warn().Msgf("Didn't find %s in the API directory", envFileName)
 	}
 }
 
@@ -195,7 +195,6 @@ func ExpandURL(block *gabs.Container, vm interface{}) {
 	b := block.S("url", "value").Data().(string)
 	log.Debug().Str("Url block", b).Msg("")
 	url := ExpandEnv(b, vm)
-	fmt.Println("WW: Expanded URL:", url)
 	block.Delete("url", "value")
 	block.Set(url, "url", "value")
 }

@@ -12,8 +12,16 @@ import (
 	"github.com/HexmosTech/lama2/cmdexec"
 	"github.com/HexmosTech/lama2/cmdgen"
 	"github.com/HexmosTech/lama2/lama2cmd"
+	outputmanager "github.com/HexmosTech/lama2/outputManager"
 	"github.com/HexmosTech/lama2/preprocess"
 )
+
+func HandleParsedFileHelper(parsedAPI *gabs.Container, args ...interface{}) (httpie.ExResponse, *lama2cmd.Opts, []outputmanager.ResponseTime, []outputmanager.StatusCode, []outputmanager.ContentSize, error) {
+	parsedAPIblocks := GetParsedAPIBlocks(parsedAPI)
+	o, dir := extractArgs(args)
+	resp, opts, responseTimes, statusCode, contentSize := processBlocks(parsedAPIblocks, o, dir)
+	return resp, opts, responseTimes, statusCode, contentSize, nil
+}
 
 func GetParsedAPIBlocks(parsedAPI *gabs.Container) []*gabs.Container {
 	return parsedAPI.S("value").Data().(*gabs.Container).Children()
@@ -36,17 +44,12 @@ func extractArgs(args []interface{}) (*lama2cmd.Opts, string) {
 	return o, dir
 }
 
-func processLama2FileBlock(block *gabs.Container, vm interface{}, o *lama2cmd.Opts, dir string) httpie.ExResponse {
-	fmt.Println("WW: block value before:", block.String())
+func processLama2FileBlock(block *gabs.Container, vm interface{}, o *lama2cmd.Opts, dir string) (httpie.ExResponse, int64) {
 	preprocess.ProcessVarsInBlock(block, vm)
-	fmt.Println("WW: block value after:", block.String())
-
 	cmd, stdinBody := cmdgen.ConstructCommand(block, o)
-	fmt.Println("WW: cmd:", cmd)
-    fmt.Println("WW: stdinBody:", stdinBody)
 	var resp httpie.ExResponse
 	var e1 error
-	resp, e1 = cmdexec.ExecCommand(cmd, stdinBody, dir)
+	resp, responseTime, e1 := cmdexec.ExecCommand(cmd, stdinBody, dir)
 	headers := resp.Headers
 	var headersString string
 	for key, value := range headers {
@@ -54,7 +57,7 @@ func processLama2FileBlock(block *gabs.Container, vm interface{}, o *lama2cmd.Op
 	}
 
 	resp = ExecuteRequestorBlockHelper(resp, headersString, e1, vm)
-	return resp
+	return resp, responseTime
 }
 
 // func processBlocks(parsedAPIblocks []*gabs.Container, o *lama2cmd.Opts, dir string) (httpie.ExResponse, *lama2cmd.Opts) {
@@ -73,9 +76,3 @@ func processLama2FileBlock(block *gabs.Container, vm interface{}, o *lama2cmd.Op
 // 	}
 // 	return resp, o
 // }
-
-func HandleParsedFileHelper(parsedAPI *gabs.Container, args ...interface{}) (httpie.ExResponse, *lama2cmd.Opts) {
-	parsedAPIblocks := GetParsedAPIBlocks(parsedAPI)
-	o, dir := extractArgs(args)
-	return processBlocks(parsedAPIblocks, o, dir)
-}

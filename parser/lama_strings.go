@@ -87,7 +87,6 @@ func (p *Lama2Parser) QuotedString() (*gabs.Container, error) {
 					r4, _ := strconv.Unquote(`"` + r3 + `"`)
 					// Uncomment to read the string slice:
 					// r4Rune := []rune(r4)
-					// fmt.Println(r4Rune)
 					chars = append(chars, r4)
 				}
 			} else {

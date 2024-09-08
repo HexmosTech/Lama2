@@ -1,0 +1,52 @@
+name: Lama2 Release
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+*'
+      
+jobs:
+  releases-matrix:
+    permissions: write-all
+    name: Release Go Binary
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        # build and publish in parallel: linux/386, linux/amd64, linux/arm64, windows/386, windows/amd64, darwin/amd64, darwin/arm64
+        goos: [linux, windows, darwin]
+        goarch: ["386", amd64, arm64]
+        exclude:
+          - goarch: "386"
+            goos: darwin
+          - goarch: arm64
+            goos: windows
+    steps:
+    - uses: actions/checkout@v3
+    - uses: wangyoucao577/go-release-action@v1.32
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        goos: ${{ matrix.goos }}
+        goarch: ${{ matrix.goarch }}
+        goversion: "https://dl.google.com/go/go1.19.3.linux-amd64.tar.gz"
+        binary_name: "l2"
+        extra_files: LICENSE README.md
+        ldflags: -X main.version=${{  github.ref_name }}
+        build_flags: '-tags=cli'
+    # Separate job for Wasm build
+  wasm-build:
+    permissions: write-all
+    name: Build WebAssembly Binary
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: wangyoucao577/go-release-action@v1.32
+        with:
+          go-version: "https://dl.google.com/go/go1.19.3.linux-amd64.tar.gz"
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          goos: js
+          goarch: wasm
+          goversion: "https://dl.google.com/go/go1.19.3.linux-amd64.tar.gz"
+          binary_name: "l2.wasm"
+          extra_files: LICENSE README.md
+          ldflags: -X main.version=${{  github.ref_name }}
+          build_flags: |
+            -tags=wasm -a -gcflags="all=-l -wb=false -ldflags="-w -s"

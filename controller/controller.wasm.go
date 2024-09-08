@@ -6,30 +6,30 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"syscall/js"
 
 	"github.com/HexmosTech/gabs/v2"
 	"github.com/HexmosTech/httpie-go"
 	"github.com/rs/zerolog/log"
-
-	"syscall/js"
 
 	"github.com/HexmosTech/lama2/codegen"
 	"github.com/HexmosTech/lama2/lama2cmd"
 	"github.com/HexmosTech/lama2/parser"
 
 	"github.com/HexmosTech/lama2/cmdexec"
+	outputmanager "github.com/HexmosTech/lama2/outputManager"
 	preprocess "github.com/HexmosTech/lama2/preprocess"
 )
 
 var worker js.Value
 
-func HandleParsedFile(parsedAPI *gabs.Container) (httpie.ExResponse, *lama2cmd.Opts) {
+func HandleParsedFile(parsedAPI *gabs.Container) (httpie.ExResponse, *lama2cmd.Opts, []outputmanager.ResponseTime, []outputmanager.StatusCode, []outputmanager.ContentSize, error) {
 	fmt.Println("HandleParsedFile:")
 	fmt.Println("HandleParsedFile:", parsedAPI)
 	return HandleParsedFileHelper(parsedAPI)
 }
 
-func ProcessWasmInput(data string) (httpie.ExResponse, *lama2cmd.Opts) {
+func ProcessWasmInput(data string) (httpie.ExResponse, *lama2cmd.Opts, []outputmanager.ResponseTime, []outputmanager.StatusCode, []outputmanager.ContentSize, error) {
 	apiContent := data
 	p := parser.NewLama2Parser()
 	fmt.Printf("apicontent %+v\n", apiContent)
@@ -75,7 +75,7 @@ func ExecuteRequestorBlockHelper(resp httpie.ExResponse, headersString string, e
 	return resp
 }
 
-func processBlocks(parsedAPIblocks []*gabs.Container, o *lama2cmd.Opts, dir string) (httpie.ExResponse, *lama2cmd.Opts) {
+func processBlocks(parsedAPIblocks []*gabs.Container, o *lama2cmd.Opts, dir string) (httpie.ExResponse, *lama2cmd.Opts, []outputmanager.ResponseTime, []outputmanager.StatusCode, []outputmanager.ContentSize) {
 	worker = preprocess.InitWebWorker() // Initialize the web worker
 	var resp httpie.ExResponse
 	for i, block := range parsedAPIblocks {
@@ -86,10 +86,10 @@ func processBlocks(parsedAPIblocks []*gabs.Container, o *lama2cmd.Opts, dir stri
 		case "processor":
 			ExecuteProcessorBlock(block)
 		case "Lama2File":
-			resp = processLama2FileBlock(block, worker, o, dir)
+			resp, _ = processLama2FileBlock(block, worker, o, dir)
 		}
 	}
-	return resp, o
+	return resp, o, nil, nil, nil
 }
 
 func ExecuteProcessorBlock(block *gabs.Container) {
