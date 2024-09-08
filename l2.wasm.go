@@ -34,7 +34,7 @@ func wasmLamaPromise() js.Func {
 		handler := js.FuncOf(func(this js.Value, args []js.Value) interface{} {
 			resolve := args[0]
 			go func() {
-				result, _ := controller.ProcessWasmInput(inputdata)
+				result, _, _, _, _, _ := controller.ProcessWasmInput(inputdata)
 				resultJSON, err := json.Marshal(result)
 				if err != nil {
 					fmt.Println("Error:", err)
