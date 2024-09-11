@@ -5,7 +5,6 @@ package codegen
 import (
 	"bytes"
 	_ "embed"
-	"fmt"
 	"strings"
 	"text/template"
 
@@ -27,11 +26,12 @@ func initialize() {
 
 var flag = 0
 
-func GenerateTargetCode(targetLangLib string, parsedAPI *gabs.Container) {
+func GenerateTargetCode(targetLangLib string, parsedAPI *gabs.Container) (string) {
 	convertedSnippetFinal := generateConvertedSippet(targetLangLib, parsedAPI)
-	fmt.Println("Converted snippet:\n", convertedSnippetFinal)
+	// fmt.Println("Converted snippet:\n", convertedSnippetFinal)
 	clipboard.WriteAll(convertedSnippetFinal)
-	fmt.Println("Code copied to clipboard")
+	// fmt.Println("Code copied to clipboard")
+	return convertedSnippetFinal
 }
 
 func PrepareHTTPSnippetGenerator(snippetArgs SnippetArgs) string {

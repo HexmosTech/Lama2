@@ -13,6 +13,8 @@ type Params struct {
 	SearchQuery           *string            `json:"searchQuery,omitempty"`
 	TextDocument          *Uri               `json:"textDocument,omitempty"`
 	FilePath              string             `json:"filePath,omitempty"`
+	Client                string             `json:"client,omitempty"`
+	Language              string             `json:"language,omitempty"`
 }
 
 type ClientInfo struct {

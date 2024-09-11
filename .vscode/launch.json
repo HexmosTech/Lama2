@@ -21,6 +21,21 @@
       "mode": "auto",
       "program": "${fileDirname}",
       "args": ["-h"]
+    },
+    {
+      "name": "Launch",
+      "type": "go",
+      "request": "launch",
+      "mode": "auto",
+      "program": "${workspaceFolder}",
+      "env": {},
+      "args": [
+        "-c",
+        "node.request",
+        "/home/lince/hexmos/apihub/apihub/fb_backend_v3/search.l2"
+      ],
+      "buildFlags": "-tags=cli",
+      "showLog": true
     }
   ]
 }
