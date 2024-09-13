@@ -60,8 +60,3 @@ func ProcessForLSP(filePath string) (*gabs.Container, error) {
 
 	return jsonResponse, nil
 }
-
-// {"jsonrpc":"2.0","id":12,"method":"executeCommand","params":{"filePath":"/home/lince/hexmos/apihub/apihub/fb_backend_v3/search.l2"}}
-
-
-// {"jsonrpc":"2.0","id":12,"method":"codeGeneration","params":{"filePath":"/home/lince/hexmos/apihub/apihub/fb_backend_v3/search.l2","language":"node", "client":"request"}}
