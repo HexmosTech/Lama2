@@ -10,6 +10,7 @@ import (
 
 	"github.com/HexmosTech/gabs/v2"
 	"github.com/HexmosTech/lama2/cmdexec"
+	"github.com/HexmosTech/lama2/preprocess"
 	"github.com/atotto/clipboard"
 	"github.com/dop251/goja"
 	"github.com/rs/zerolog/log"
@@ -61,6 +62,7 @@ func generateConvertedSippet(targetLangLib string, parsedAPI *gabs.Container) st
 			log.Debug().Str("Processor block incoming block", block.String()).Msg("")
 			convertedSnippetList = append(convertedSnippetList, snippet)
 		} else if blockType == "Lama2File" {
+			preprocess.ProcessVarsInBlock(block, globalVM)
 			harRequest, flag := GetRequestHARString(block, targetLangLib)
 			snippetArgs := SnippetArgs{}
 			lang, lib := SplitLangLib(targetLangLib)
