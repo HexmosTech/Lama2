@@ -8,6 +8,7 @@ import (
 	"strings"
 
 	"github.com/HexmosTech/gabs/v2"
+	"github.com/rs/zerolog/log"
 )
 
 type SnippetArgs struct {
@@ -50,7 +51,6 @@ func GetRequestHARString(block *gabs.Container, targetLang string) (string, int)
 	harObj.Set(url, "url")
 
 	res := harObj.String()
-	fmt.Println("HAR request:", res)
 	return res, flag
 }
 
@@ -108,12 +108,10 @@ func GetHARHeadersCookies(headers *gabs.Container) (*gabs.Container, *gabs.Conta
 func preprocessURL(url *gabs.Container) int {
 	urls := url.String()
 	flag := 0
-	fmt.Println("URL:", urls)
 	urls = strings.Trim(urls, `"`)
 	urls = strings.Trim(urls, `'`)
-	fmt.Println("URL Updated:", urls)
 	if !strings.HasPrefix(urls, "https://") && !strings.HasPrefix(urls, "http://") {
-		fmt.Println("URL does not start with 'https://' or 'http://'")
+		log.Info().Msgf("URL does not start with 'https://' or 'http://'")
 		newURL := "https://" + urls
 		// if !strings.Contains(newURL, ".com") {
 		// 	parts := strings.SplitN(newURL, "://", 2)
@@ -130,12 +128,12 @@ func preprocessURL(url *gabs.Container) int {
 	}
 
 	// Remove the outermost "${}" to isolate the placeholder content
-	fmt.Print("URL:", urls)
+	log.Info().Msgf("URL:", urls)
 	return flag
 }
 
 func postprocessURL(convertedSnippet string, flag int) string {
-	fmt.Println("Converted snippet to postprocess:", convertedSnippet)
+	log.Info().Msgf("Converted snippet to postprocess:", convertedSnippet)
 	if flag == 1 {
 		convertedSnippet = strings.Replace(convertedSnippet, "https://", "", 1)
 		convertedSnippet = strings.Replace(convertedSnippet, ".com", "", 1)

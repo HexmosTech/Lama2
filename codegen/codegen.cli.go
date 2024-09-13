@@ -5,12 +5,12 @@ package codegen
 import (
 	"bytes"
 	_ "embed"
-	"fmt"
 	"strings"
 	"text/template"
 
 	"github.com/HexmosTech/gabs/v2"
 	"github.com/HexmosTech/lama2/cmdexec"
+	"github.com/HexmosTech/lama2/preprocess"
 	"github.com/atotto/clipboard"
 	"github.com/dop251/goja"
 	"github.com/rs/zerolog/log"
@@ -27,11 +27,11 @@ func initialize() {
 
 var flag = 0
 
-func GenerateTargetCode(targetLangLib string, parsedAPI *gabs.Container) {
+func GenerateTargetCode(targetLangLib string, parsedAPI *gabs.Container) (string) {
 	convertedSnippetFinal := generateConvertedSippet(targetLangLib, parsedAPI)
-	fmt.Println("Converted snippet:\n", convertedSnippetFinal)
 	clipboard.WriteAll(convertedSnippetFinal)
-	fmt.Println("Code copied to clipboard")
+	log.Info().Msg("Code copied to clipboard")
+	return convertedSnippetFinal
 }
 
 func PrepareHTTPSnippetGenerator(snippetArgs SnippetArgs) string {
@@ -61,6 +61,7 @@ func generateConvertedSippet(targetLangLib string, parsedAPI *gabs.Container) st
 			log.Debug().Str("Processor block incoming block", block.String()).Msg("")
 			convertedSnippetList = append(convertedSnippetList, snippet)
 		} else if blockType == "Lama2File" {
+			preprocess.ProcessVarsInBlock(block, globalVM)
 			harRequest, flag := GetRequestHARString(block, targetLangLib)
 			snippetArgs := SnippetArgs{}
 			lang, lib := SplitLangLib(targetLangLib)

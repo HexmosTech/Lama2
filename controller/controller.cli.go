@@ -108,8 +108,8 @@ func ExecuteRequestorBlockHelper(resp httpie.ExResponse, headersString string, e
 		chainCode := cmdexec.GenerateChainCode(resp.Body)
 		cmdexec.RunVMCode(chainCode, vm)
 	} else {
-		fmt.Printf("Error from ExecCommand", e1)
-		os.Exit(1)
+		log.Error().Msgf(e1.Error())
+		return resp
 	}
 	return resp
 }
