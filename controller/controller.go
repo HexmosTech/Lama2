@@ -19,7 +19,10 @@ import (
 func HandleParsedFileHelper(parsedAPI *gabs.Container, args ...interface{}) (httpie.ExResponse, *lama2cmd.Opts, []outputmanager.ResponseTime, []outputmanager.StatusCode, []outputmanager.ContentSize, error) {
 	parsedAPIblocks := GetParsedAPIBlocks(parsedAPI)
 	o, dir := extractArgs(args)
-	resp, opts, responseTimes, statusCode, contentSize := processBlocks(parsedAPIblocks, o, dir)
+	resp, opts, responseTimes, statusCode, contentSize, e1 := processBlocks(parsedAPIblocks, o, dir)
+	if e1 != nil {
+		return httpie.ExResponse{}, o, responseTimes, statusCode, contentSize, e1
+	}
 	return resp, opts, responseTimes, statusCode, contentSize, nil
 }
 
@@ -44,12 +47,15 @@ func extractArgs(args []interface{}) (*lama2cmd.Opts, string) {
 	return o, dir
 }
 
-func processLama2FileBlock(block *gabs.Container, vm interface{}, o *lama2cmd.Opts, dir string) (httpie.ExResponse, int64) {
+func processLama2FileBlock(block *gabs.Container, vm interface{}, o *lama2cmd.Opts, dir string) (httpie.ExResponse, int64, error) {
 	preprocess.ProcessVarsInBlock(block, vm)
 	cmd, stdinBody := cmdgen.ConstructCommand(block, o)
 	var resp httpie.ExResponse
 	var e1 error
 	resp, responseTime, e1 := cmdexec.ExecCommand(cmd, stdinBody, dir)
+	if e1 != nil {
+		return httpie.ExResponse{}, 0, e1
+	}
 	headers := resp.Headers
 	var headersString string
 	for key, value := range headers {
@@ -57,7 +63,7 @@ func processLama2FileBlock(block *gabs.Container, vm interface{}, o *lama2cmd.Op
 	}
 
 	resp = ExecuteRequestorBlockHelper(resp, headersString, e1, vm)
-	return resp, responseTime
+	return resp, responseTime, nil
 }
 
 // func processBlocks(parsedAPIblocks []*gabs.Container, o *lama2cmd.Opts, dir string) (httpie.ExResponse, *lama2cmd.Opts) {
