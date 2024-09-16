@@ -12,8 +12,8 @@ import (
 )
 
 func CodeGeneration(req request.JSONRPCRequest) response.JSONRPCResponse {
-	filePath:= req.Params.FilePath
-	Language:= req.Params.Language
+	filePath := req.Params.FilePath
+	Language := req.Params.Language
 	client := req.Params.Client
 	generatedCode, err := ProcessCodeGeneration(filePath, Language, client)
 	if err != nil {
@@ -40,8 +40,6 @@ func ProcessCodeGeneration(filePath, Language, client string) (string, error) {
 		return "", e
 	}
 	generatedCode := codegen.GenerateTargetCode(languageMethod, parsedAPI)
-	
+
 	return generatedCode, nil
-
-
 }

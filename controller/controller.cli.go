@@ -72,7 +72,7 @@ func Process(version string) {
 	}
 	log.Debug().Str("Parsed API", parsedAPI.String()).Msg("")
 	res, out, responseTime, statusCodes, contentSizes, err := HandleParsedFile(parsedAPI, o, dir)
-	if err != nil {	
+	if err != nil {
 		log.Error().Str("Type", "Controller").Msg(fmt.Sprint("Error: ", err))
 	}
 	if out.Output != "" {
@@ -80,7 +80,7 @@ func Process(version string) {
 	}
 }
 
-func processBlocks(parsedAPIblocks []*gabs.Container, o *lama2cmd.Opts, dir string) (httpie.ExResponse, *lama2cmd.Opts, []outputmanager.ResponseTime, []outputmanager.StatusCode, []outputmanager.ContentSize,error) {
+func processBlocks(parsedAPIblocks []*gabs.Container, o *lama2cmd.Opts, dir string) (httpie.ExResponse, *lama2cmd.Opts, []outputmanager.ResponseTime, []outputmanager.StatusCode, []outputmanager.ContentSize, error) {
 	vm := cmdexec.GetJSVm()
 	var resp httpie.ExResponse
 	var responseTime []outputmanager.ResponseTime
@@ -95,7 +95,6 @@ func processBlocks(parsedAPIblocks []*gabs.Container, o *lama2cmd.Opts, dir stri
 		switch blockType {
 		case "processor":
 			err := ExecuteProcessorBlock(block, vm)
-		
 			if err != nil {
 				return httpie.ExResponse{}, o, responseTime, statusCode, contentSize, err
 			}
