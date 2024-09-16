@@ -27,7 +27,7 @@ func initialize() {
 
 var flag = 0
 
-func GenerateTargetCode(targetLangLib string, parsedAPI *gabs.Container) (string) {
+func GenerateTargetCode(targetLangLib string, parsedAPI *gabs.Container) string {
 	convertedSnippetFinal := generateConvertedSippet(targetLangLib, parsedAPI)
 	clipboard.WriteAll(convertedSnippetFinal)
 	log.Info().Msg("Code copied to clipboard")

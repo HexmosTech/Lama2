@@ -75,7 +75,7 @@ func ExecuteRequestorBlockHelper(resp httpie.ExResponse, headersString string, e
 	return resp
 }
 
-func processBlocks(parsedAPIblocks []*gabs.Container, o *lama2cmd.Opts, dir string) (httpie.ExResponse, *lama2cmd.Opts, []outputmanager.ResponseTime, []outputmanager.StatusCode, []outputmanager.ContentSize) {
+func processBlocks(parsedAPIblocks []*gabs.Container, o *lama2cmd.Opts, dir string) (httpie.ExResponse, *lama2cmd.Opts, []outputmanager.ResponseTime, []outputmanager.StatusCode, []outputmanager.ContentSize, error) {
 	worker = preprocess.InitWebWorker() // Initialize the web worker
 	var resp httpie.ExResponse
 	for i, block := range parsedAPIblocks {
@@ -86,10 +86,10 @@ func processBlocks(parsedAPIblocks []*gabs.Container, o *lama2cmd.Opts, dir stri
 		case "processor":
 			ExecuteProcessorBlock(block)
 		case "Lama2File":
-			resp, _ = processLama2FileBlock(block, worker, o, dir)
+			resp, _, _ = processLama2FileBlock(block, worker, o, dir)
 		}
 	}
-	return resp, o, nil, nil, nil
+	return resp, o, nil, nil, nil, nil
 }
 
 func ExecuteProcessorBlock(block *gabs.Container) {

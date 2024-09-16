@@ -7,7 +7,6 @@
 package cmdexec
 
 import (
-	"errors"
 	"os"
 	"strings"
 	"time"
@@ -28,7 +27,7 @@ func ExecCommand(cmdSlice []string, stdinBody string, apiDir string) (httpie.ExR
 	start := time.Now()
 	resp, err := httpie.Lama2Entry(cmdSlice, strings.NewReader(stdinBody))
 	if err != nil {
-		return httpie.ExResponse{}, 0, errors.New("Error from API executor: " + err.Error())
+		return httpie.ExResponse{}, 0, err
 	}
 	elapsed := time.Since(start)
 	utils.ChangeWorkingDir(oldDir)

@@ -3,6 +3,8 @@
 package cmdexec
 
 import (
+	"errors"
+
 	"github.com/dop251/goja"
 	"github.com/dop251/goja_nodejs/console"
 	"github.com/dop251/goja_nodejs/require"
@@ -25,14 +27,15 @@ func GetJSVm() interface{} {
 // Note: the vm runtime remains modified; so if
 // you reuse the vm for other operations, the state
 // from previous invocations carry over
-func RunVMCode(jsCode string, vm interface{}) {
+func RunVMCode(jsCode string, vm interface{}) error {
 	if vm == nil {
 		vm = GetJSVm()
 	}
 	_, err := vm.(*goja.Runtime).RunString(jsCode)
 	if ex, ok := err.(*goja.Exception); ok {
-		log.Fatal().Str("Error executing JS processor block", ex.String()).Msg("")
+		return errors.New("Executing JS processor block: " + ex.String())
 	}
+	return nil
 }
 
 // GenerateChainCode takes in an HTTP response body

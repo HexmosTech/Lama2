@@ -73,34 +73,41 @@ func Process(version string) {
 	log.Debug().Str("Parsed API", parsedAPI.String()).Msg("")
 	res, out, responseTime, statusCodes, contentSizes, err := HandleParsedFile(parsedAPI, o, dir)
 	if err != nil {
-		log.Fatal().Str("Type", "Controller").Msg(fmt.Sprint("Error: ", err))
+		log.Error().Str("Type", "Controller").Msg(fmt.Sprint("Error: ", err))
 	}
 	if out.Output != "" {
 		outputmanager.WriteJSONOutput(res, out.Output, responseTime, statusCodes, contentSizes)
 	}
 }
 
-func processBlocks(parsedAPIblocks []*gabs.Container, o *lama2cmd.Opts, dir string) (httpie.ExResponse, *lama2cmd.Opts, []outputmanager.ResponseTime, []outputmanager.StatusCode, []outputmanager.ContentSize) {
+func processBlocks(parsedAPIblocks []*gabs.Container, o *lama2cmd.Opts, dir string) (httpie.ExResponse, *lama2cmd.Opts, []outputmanager.ResponseTime, []outputmanager.StatusCode, []outputmanager.ContentSize, error) {
 	vm := cmdexec.GetJSVm()
 	var resp httpie.ExResponse
 	var responseTime []outputmanager.ResponseTime
 	var statusCode []outputmanager.StatusCode
 	var contentSize []outputmanager.ContentSize
 	var timeInMs int64
+	var e1 error
 	for i, block := range parsedAPIblocks {
 		log.Debug().Int("Block num", i).Msg("")
 		log.Debug().Str("Block getting processed", block.String()).Msg("")
 		blockType := block.S("type").Data().(string)
 		switch blockType {
 		case "processor":
-			ExecuteProcessorBlock(block, vm)
+			err := ExecuteProcessorBlock(block, vm)
+			if err != nil {
+				return httpie.ExResponse{}, o, responseTime, statusCode, contentSize, err
+			}
 		case "Lama2File":
-			resp, timeInMs = processLama2FileBlock(block, vm, o, dir)
+			resp, timeInMs, e1 = processLama2FileBlock(block, vm, o, dir)
+			if e1 != nil {
+				return httpie.ExResponse{}, o, responseTime, statusCode, contentSize, e1
+			}
 			log.Info().Str("ResponseTime", fmt.Sprintf("%dms", timeInMs)).Msg("")
 			responseTime, statusCode, contentSize = CalculateMetrics(resp, timeInMs, responseTime, statusCode, contentSize)
 		}
 	}
-	return resp, o, responseTime, statusCode, contentSize
+	return resp, o, responseTime, statusCode, contentSize, nil
 }
 
 func ExecuteRequestorBlockHelper(resp httpie.ExResponse, headersString string, e1 error, vm interface{}) httpie.ExResponse {
@@ -114,11 +121,15 @@ func ExecuteRequestorBlockHelper(resp httpie.ExResponse, headersString string, e
 	return resp
 }
 
-func ExecuteProcessorBlock(block *gabs.Container, vm interface{}) {
+func ExecuteProcessorBlock(block *gabs.Container, vm interface{}) error {
 	b := block.S("value").Data().(*gabs.Container)
 	log.Debug().Str("Processor block incoming block", block.String()).Msg("")
 	script := b.Data().(string)
-	cmdexec.RunVMCode(script, vm)
+	err := cmdexec.RunVMCode(script, vm)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 func CalculateMetrics(resp httpie.ExResponse, timeInMs int64, responseTime []outputmanager.ResponseTime, statusCodes []outputmanager.StatusCode, contentSizes []outputmanager.ContentSize) ([]outputmanager.ResponseTime, []outputmanager.StatusCode, []outputmanager.ContentSize) {
