@@ -11,12 +11,10 @@ Package \`utils\` provides useful functions for simplifying various programming 
 ## Index
 
 - [Constants](<#constants>)
-- [func ChangeWorkingDir\(dir string\)](<#ChangeWorkingDir>)
 - [func ContainsRune\(s \[\]rune, e rune\) bool](<#ContainsRune>)
 - [func ContainsString\(s \[\]string, e string\) bool](<#ContainsString>)
 - [func ContainsStringPartial\(s \[\]string, e string\) bool](<#ContainsStringPartial>)
 - [func GetFilePathComponents\(name string\) \(string, string, string\)](<#GetFilePathComponents>)
-- [func MarshalAndPrintJSON\(data interface\{\}\)](<#MarshalAndPrintJSON>)
 - [func PrettyPrint\(i interface\{\}\) string](<#PrettyPrint>)
 - [func RemoveUnquotedMarker\(content string\) string](<#RemoveUnquotedMarker>)
 - [func RemoveUnquotedValueMarker\(content string\) string](<#RemoveUnquotedValueMarker>)
@@ -44,17 +42,8 @@ Note the lack of quotes around the variable above. This hack is needed to work a
 const UNQUOTED_VAR_MARKER = "626f4c60"
 ```
 
-<a name="ChangeWorkingDir"></a>
-## func [ChangeWorkingDir](<https://github.com/HexmosTech/Lama2/blob/main/utils/utils.go#L124>)
-
-```go
-func ChangeWorkingDir(dir string)
-```
-
-ChangeWorkingDirectory tries to set the CWD; on failure it exits with a log error message
-
 <a name="ContainsRune"></a>
-## func [ContainsRune](<https://github.com/HexmosTech/Lama2/blob/main/utils/utils.go#L72>)
+## func [ContainsRune](<https://github.com/HexmosTech/Lama2/blob/main/utils/utils.go#L71>)
 
 ```go
 func ContainsRune(s []rune, e rune) bool
@@ -63,7 +52,7 @@ func ContainsRune(s []rune, e rune) bool
 ContainsRune searches for rune \`e\` in a slice of runes \`s\`; returns a boolean
 
 <a name="ContainsString"></a>
-## func [ContainsString](<https://github.com/HexmosTech/Lama2/blob/main/utils/utils.go#L83>)
+## func [ContainsString](<https://github.com/HexmosTech/Lama2/blob/main/utils/utils.go#L82>)
 
 ```go
 func ContainsString(s []string, e string) bool
@@ -72,7 +61,7 @@ func ContainsString(s []string, e string) bool
 ContainsString searches for string \`e\` in a slice of strings \`s\`; returns a boolean
 
 <a name="ContainsStringPartial"></a>
-## func [ContainsStringPartial](<https://github.com/HexmosTech/Lama2/blob/main/utils/utils.go#L94>)
+## func [ContainsStringPartial](<https://github.com/HexmosTech/Lama2/blob/main/utils/utils.go#L93>)
 
 ```go
 func ContainsStringPartial(s []string, e string) bool
@@ -81,7 +70,7 @@ func ContainsStringPartial(s []string, e string) bool
 ContainsStringPartial substring\-searches for string \`e\` in a slice of strings \`s\`; returns a boolean
 
 <a name="GetFilePathComponents"></a>
-## func [GetFilePathComponents](<https://github.com/HexmosTech/Lama2/blob/main/utils/utils.go#L115>)
+## func [GetFilePathComponents](<https://github.com/HexmosTech/Lama2/blob/main/utils/utils.go#L114>)
 
 ```go
 func GetFilePathComponents(name string) (string, string, string)
@@ -89,17 +78,8 @@ func GetFilePathComponents(name string) (string, string, string)
 
 GetFilePathComponent returns absolute path, directory, and filename given a filepath
 
-<a name="MarshalAndPrintJSON"></a>
-## func [MarshalAndPrintJSON](<https://github.com/HexmosTech/Lama2/blob/main/utils/utils.go#L173>)
-
-```go
-func MarshalAndPrintJSON(data interface{})
-```
-
-
-
 <a name="PrettyPrint"></a>
-## func [PrettyPrint](<https://github.com/HexmosTech/Lama2/blob/main/utils/utils.go#L65>)
+## func [PrettyPrint](<https://github.com/HexmosTech/Lama2/blob/main/utils/utils.go#L64>)
 
 ```go
 func PrettyPrint(i interface{}) string
@@ -108,7 +88,7 @@ func PrettyPrint(i interface{}) string
 PrettyPrint takes in a generic interface\{\} objects and uses standard JSON capabilities to try to print with indentation
 
 <a name="RemoveUnquotedMarker"></a>
-## func [RemoveUnquotedMarker](<https://github.com/HexmosTech/Lama2/blob/main/utils/utils.go#L37>)
+## func [RemoveUnquotedMarker](<https://github.com/HexmosTech/Lama2/blob/main/utils/utils.go#L36>)
 
 ```go
 func RemoveUnquotedMarker(content string) string
@@ -117,7 +97,7 @@ func RemoveUnquotedMarker(content string) string
 
 
 <a name="RemoveUnquotedValueMarker"></a>
-## func [RemoveUnquotedValueMarker](<https://github.com/HexmosTech/Lama2/blob/main/utils/utils.go#L44>)
+## func [RemoveUnquotedValueMarker](<https://github.com/HexmosTech/Lama2/blob/main/utils/utils.go#L43>)
 
 ```go
 func RemoveUnquotedValueMarker(content string) string
@@ -126,7 +106,7 @@ func RemoveUnquotedValueMarker(content string) string
 
 
 <a name="SetJSON"></a>
-## func [SetJSON](<https://github.com/HexmosTech/Lama2/blob/main/utils/utils.go#L55>)
+## func [SetJSON](<https://github.com/HexmosTech/Lama2/blob/main/utils/utils.go#L54>)
 
 ```go
 func SetJSON(parentObj *gabs.Container, childObj *gabs.Container, key string) *gabs.Container
@@ -135,7 +115,7 @@ func SetJSON(parentObj *gabs.Container, childObj *gabs.Container, key string) *g
 SetJSON is a helper function to work with the \`gabs\` library, which in turn is an API on top of the standard JSON library The function helps us create \`parentObj.key = childObj\` through using the \`Merge\` primitive available in \`gabs\`
 
 <a name="UnicodeCategory"></a>
-## func [UnicodeCategory](<https://github.com/HexmosTech/Lama2/blob/main/utils/utils.go#L104>)
+## func [UnicodeCategory](<https://github.com/HexmosTech/Lama2/blob/main/utils/utils.go#L103>)
 
 ```go
 func UnicodeCategory(r rune) string
@@ -144,7 +124,7 @@ func UnicodeCategory(r rune) string
 UnicodeCategory returns the Unicode Character Category of the given rune.
 
 <a name="UpdateSelf"></a>
-## func [UpdateSelf](<https://github.com/HexmosTech/Lama2/blob/main/utils/utils.go#L161>)
+## func [UpdateSelf](<https://github.com/HexmosTech/Lama2/blob/main/utils/utils.go#L148>)
 
 ```go
 func UpdateSelf()

@@ -10,11 +10,8 @@
       
         <link rel="canonical" href="http://hexmos.com/lama2/reference/parser.html">
       
-      
-      
-      
       <link rel="icon" href="../favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.27">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-8.5.10">
     
 
 <meta
@@ -52,6 +49,8 @@
   content="Hexmos Lama2: Human-friendly syntax and CLI for describing and executing APIs, store and collaborate on API files using version control. Ships with IDE and text-editor integrations. Markdown for APIs."
 />
 <meta name="twitter:image" content="https://hexmos.com/lama2/banner.png" />
+<script src="../analytics.js"></script>
+
 
     
       
@@ -59,17 +58,15 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.6543a935.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.975780f9.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.2505c338.min.css">
+        
       
       
 
-
     
-    
-      
     
     
       
@@ -90,7 +87,9 @@
   
   
 
-<script id="__analytics">function __md_analytics(){function n(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],n("js",new Date),n("config","G-WXSDF484XZ"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&n("event","search",{search_term:this.value})}),document$.subscribe(function(){var a=document.forms.feedback;if(void 0!==a)for(var e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");n("event","feedback",{page:t,data:e}),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}),location$.subscribe(function(e){n("config","G-WXSDF484XZ",{page_path:e.pathname})})});var e=document.createElement("script");e.async=!0,e.src="https://www.googletagmanager.com/gtag/js?id=G-WXSDF484XZ",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
+
+  <script id="__analytics">function __md_analytics(){function n(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],n("js",new Date),n("config","G-WXSDF484XZ"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&n("event","search",{search_term:this.value})}),document$.subscribe(function(){var a=document.forms.feedback;if(void 0!==a)for(var e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");n("event","feedback",{page:t,data:e}),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}),location$.subscribe(function(e){n("config","G-WXSDF484XZ",{page_path:e.pathname})})});var e=document.createElement("script");e.async=!0,e.src="https://www.googletagmanager.com/gtag/js?id=G-WXSDF484XZ",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
+
   
     <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
   
@@ -108,8 +107,11 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent="">
   
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
@@ -129,9 +131,7 @@
     
       
 
-  
-
-<header class="md-header md-header--shadow" data-md-component="header">
+<header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="../index.html" title="Hexmos Lama2" class="md-header__button md-logo" aria-label="Hexmos Lama2" data-md-component="logo">
       
@@ -139,7 +139,6 @@
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
-      
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
     </label>
     <div class="md-header__title" data-md-component="header-title">
@@ -159,39 +158,33 @@
       </div>
     </div>
     
-      
-        <form class="md-header__option" data-md-component="palette">
-  
-    
-    
-    
-    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
-    
-      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
-      </label>
-    
-  
-    
-    
-    
-    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
-    
-      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
-      </label>
-    
-  
-</form>
-      
-    
-    
-      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+            </label>
+          
+        
+          
+          
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+            </label>
+          
+        
+      </form>
     
     
     
       <label class="md-header__button md-icon" for="__search">
-        
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
       </label>
       <div class="md-search" data-md-component="search" role="dialog">
@@ -200,27 +193,24 @@
     <form class="md-search__form" name="search">
       <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
       <label class="md-search__icon md-icon" for="__search">
-        
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
-        
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
       </label>
       <nav class="md-search__options" aria-label="Search">
         
         <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
-          
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
         </button>
       </nav>
       
     </form>
     <div class="md-search__output">
-      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+      <div class="md-search__scrollwrap" data-md-scrollfix>
         <div class="md-search-result" data-md-component="search-result">
           <div class="md-search-result__meta">
             Initializing search
           </div>
-          <ol class="md-search-result__list" role="presentation"></ol>
+          <ol class="md-search-result__list"></ol>
         </div>
       </div>
     </div>
@@ -232,7 +222,7 @@
         <a href="https://github.com/HexmosTech/Lama2" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
   </div>
   <div class="md-source__repository">
     GitHub
@@ -262,7 +252,6 @@
                     
 
 
-
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href="../index.html" title="Hexmos Lama2" class="md-nav__button md-logo" aria-label="Hexmos Lama2" data-md-component="logo">
@@ -277,7 +266,7 @@
       <a href="https://github.com/HexmosTech/Lama2" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
   </div>
   <div class="md-source__repository">
     GitHub
@@ -289,19 +278,14 @@
     
       
       
-  
+      
+
   
   
   
     <li class="md-nav__item">
       <a href="../index.html" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Home
-  </span>
-  
-
+        Home
       </a>
     </li>
   
@@ -309,634 +293,446 @@
     
       
       
+      
+
   
   
   
-  
-    
-    
     
       
-        
-        
-      
-    
     
     <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
-        
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          Get Started
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Get Started" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Get Started
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
           
-          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
-            
-  
-  <span class="md-ellipsis">
-    Get Started
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_2">
-            <span class="md-nav__icon md-icon"></span>
-            Get Started
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
             
               
-                
-  
   
   
   
     <li class="md-nav__item">
       <a href="../tutorials/installation.html" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Installation
-  </span>
-  
-
+        Installation
       </a>
     </li>
   
 
-              
+            
+          
             
               
-                
-  
   
   
   
     <li class="md-nav__item">
       <a href="../tutorials/postman.html" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Import Postman
-  </span>
-  
-
+        Import Postman
       </a>
     </li>
   
 
-              
+            
+          
             
               
-                
-  
   
   
   
     <li class="md-nav__item">
       <a href="../tutorials/examples.html" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Examples
-  </span>
-  
-
+        Examples
       </a>
     </li>
   
 
-              
+            
+          
             
               
-                
-  
   
   
   
     <li class="md-nav__item">
       <a href="../tutorials/collaboration.html" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Collaboration
-  </span>
-  
-
+        Collaboration
       </a>
     </li>
   
 
-              
+            
+          
             
               
-                
-  
   
   
   
     <li class="md-nav__item">
       <a href="../tutorials/codegen.html" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Code Generation
-  </span>
-  
-
+        Code Generation
       </a>
     </li>
   
 
-              
+            
+          
             
               
-                
-  
   
   
   
     <li class="md-nav__item">
       <a href="../tutorials/misc.html" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Misc
-  </span>
-  
-
+        Misc
       </a>
     </li>
   
 
-              
             
-          </ul>
-        </nav>
-      
+          
+        </ul>
+      </nav>
     </li>
   
 
     
       
       
+      
+
   
   
   
-  
-    
-    
     
       
-        
-        
-      
-    
     
     <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
-        
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          Understand
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Understand" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Understand
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
           
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
-            
-  
-  <span class="md-ellipsis">
-    Understand
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3">
-            <span class="md-nav__icon md-icon"></span>
-            Understand
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
             
               
-                
-  
   
   
   
     <li class="md-nav__item">
       <a href="../explanation/syntax.html" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Syntax Guidance
-  </span>
-  
-
+        Syntax Guidance
       </a>
     </li>
   
 
-              
+            
+          
             
               
-                
-  
   
   
   
     <li class="md-nav__item">
       <a href="../explanation/l2format.html" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    The l2 Format
-  </span>
-  
-
+        The l2 Format
       </a>
     </li>
   
 
-              
+            
+          
             
               
-                
-  
   
   
   
     <li class="md-nav__item">
       <a href="../explanation/faq.html" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    FAQ/RAQ
-  </span>
-  
-
+        FAQ/RAQ
       </a>
     </li>
   
 
-              
             
-          </ul>
-        </nav>
-      
+          
+        </ul>
+      </nav>
     </li>
   
 
     
       
       
+      
+
   
   
   
-  
-    
-    
     
       
-        
-        
-      
-    
     
     <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
-        
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          Develop
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Develop" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Develop
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
           
-          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
-            
-  
-  <span class="md-ellipsis">
-    Develop
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4">
-            <span class="md-nav__icon md-icon"></span>
-            Develop
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
             
               
-                
-  
   
   
   
     <li class="md-nav__item">
       <a href="philosophy.html" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Design Philosophy
-  </span>
-  
-
+        Design Philosophy
       </a>
     </li>
   
 
-              
+            
+          
             
               
-                
-  
   
   
   
     <li class="md-nav__item">
       <a href="architecture.html" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Architecture
-  </span>
-  
-
+        Architecture
       </a>
     </li>
   
 
-              
+            
+          
             
               
-                
-  
   
   
   
     <li class="md-nav__item">
       <a href="../tutorials/editor.html" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    IDE/Editor Support
-  </span>
-  
-
+        IDE/Editor Support
       </a>
     </li>
   
 
-              
+            
+          
             
               
-                
-  
   
   
   
     <li class="md-nav__item">
       <a href="grammar.html" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Formal Grammar
-  </span>
-  
-
+        Formal Grammar
       </a>
     </li>
   
 
-              
+            
+          
             
               
-                
-  
   
   
   
     <li class="md-nav__item">
       <a href="api.html" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    API Reference
-  </span>
-  
-
+        API Reference
       </a>
     </li>
   
 
-              
+            
+          
             
               
-                
-  
   
   
   
     <li class="md-nav__item">
       <a href="lsp.html" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Contribute to LSP
-  </span>
-  
-
+        Contribute to LSP
       </a>
     </li>
   
 
-              
             
-          </ul>
-        </nav>
-      
+          
+        </ul>
+      </nav>
     </li>
   
 
     
       
       
+      
+
   
   
   
-  
-    
-    
     
       
-        
-        
-      
-    
     
     <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
-        
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          LiveAPI
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="LiveAPI" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          LiveAPI
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
           
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
-            
-  
-  <span class="md-ellipsis">
-    LiveAPI
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5">
-            <span class="md-nav__icon md-icon"></span>
-            LiveAPI
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
             
               
-                
-  
   
   
   
     <li class="md-nav__item">
       <a href="../liveapi/aboutliveapi.html" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    About
-  </span>
-  
-
+        About
       </a>
     </li>
   
 
-              
+            
+          
             
               
-                
-  
   
   
   
     <li class="md-nav__item">
       <a href="../liveapi/setupliveapi.html" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Easy Installation
-  </span>
-  
-
+        Easy Installation
       </a>
     </li>
   
 
-              
             
-          </ul>
-        </nav>
-      
+          
+        </ul>
+      </nav>
     </li>
   
 
     
       
       
+      
+
   
   
   
-  
-    
-    
     
       
-        
-        
-      
-    
     
     <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
-        
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6">
+          About
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="About" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          About
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
           
-          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
-            
-  
-  <span class="md-ellipsis">
-    About
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_6">
-            <span class="md-nav__icon md-icon"></span>
-            About
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
             
               
-                
-  
   
   
   
     <li class="md-nav__item">
       <a href="../about/hexmos.html" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Hexmos
-  </span>
-  
-
+        Hexmos
       </a>
     </li>
   
 
-              
+            
+          
             
               
-                
-  
   
   
   
     <li class="md-nav__item">
       <a href="../about/contact.html" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Talk to us
-  </span>
-  
-
+        Talk to us
       </a>
     </li>
   
 
-              
             
-          </ul>
-        </nav>
-      
+          
+        </ul>
+      </nav>
     </li>
   
 
@@ -969,36 +765,28 @@
       
         <li class="md-nav__item">
   <a href="#index" class="md-nav__link">
-    <span class="md-ellipsis">
-      Index
-    </span>
+    Index
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#variables" class="md-nav__link">
-    <span class="md-ellipsis">
-      Variables
-    </span>
+    Variables
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#func-custompairmerge" class="md-nav__link">
-    <span class="md-ellipsis">
-      func CustomPairMerge
-    </span>
+    func CustomPairMerge
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#type-lama2parser" class="md-nav__link">
-    <span class="md-ellipsis">
-      type Lama2Parser
-    </span>
+    type Lama2Parser
   </a>
   
     <nav class="md-nav" aria-label="type Lama2Parser">
@@ -1006,405 +794,315 @@
         
           <li class="md-nav__item">
   <a href="#func-newlama2parser" class="md-nav__link">
-    <span class="md-ellipsis">
-      func NewLama2Parser
-    </span>
+    func NewLama2Parser
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#func-lama2parser-anytype" class="md-nav__link">
-    <span class="md-ellipsis">
-      func (*Lama2Parser) AnyType
-    </span>
+    func (*Lama2Parser) AnyType
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#func-lama2parser-boolean" class="md-nav__link">
-    <span class="md-ellipsis">
-      func (*Lama2Parser) Boolean
-    </span>
+    func (*Lama2Parser) Boolean
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#func-lama2parser-complextype" class="md-nav__link">
-    <span class="md-ellipsis">
-      func (*Lama2Parser) ComplexType
-    </span>
+    func (*Lama2Parser) ComplexType
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#func-lama2parser-dataheader" class="md-nav__link">
-    <span class="md-ellipsis">
-      func (*Lama2Parser) DataHeader
-    </span>
+    func (*Lama2Parser) DataHeader
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#func-lama2parser-datainput" class="md-nav__link">
-    <span class="md-ellipsis">
-      func (*Lama2Parser) DataInput
-    </span>
+    func (*Lama2Parser) DataInput
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#func-lama2parser-details" class="md-nav__link">
-    <span class="md-ellipsis">
-      func (*Lama2Parser) Details
-    </span>
+    func (*Lama2Parser) Details
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#func-lama2parser-digit" class="md-nav__link">
-    <span class="md-ellipsis">
-      func (*Lama2Parser) Digit
-    </span>
+    func (*Lama2Parser) Digit
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#func-lama2parser-digits" class="md-nav__link">
-    <span class="md-ellipsis">
-      func (*Lama2Parser) Digits
-    </span>
+    func (*Lama2Parser) Digits
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#func-lama2parser-exponent" class="md-nav__link">
-    <span class="md-ellipsis">
-      func (*Lama2Parser) Exponent
-    </span>
+    func (*Lama2Parser) Exponent
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#func-lama2parser-filespair" class="md-nav__link">
-    <span class="md-ellipsis">
-      func (*Lama2Parser) FilesPair
-    </span>
+    func (*Lama2Parser) FilesPair
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#func-lama2parser-filesunquoted" class="md-nav__link">
-    <span class="md-ellipsis">
-      func (*Lama2Parser) FilesUnquoted
-    </span>
+    func (*Lama2Parser) FilesUnquoted
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#func-lama2parser-form" class="md-nav__link">
-    <span class="md-ellipsis">
-      func (*Lama2Parser) Form
-    </span>
+    func (*Lama2Parser) Form
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#func-lama2parser-fraction" class="md-nav__link">
-    <span class="md-ellipsis">
-      func (*Lama2Parser) Fraction
-    </span>
+    func (*Lama2Parser) Fraction
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#func-lama2parser-fractionrule1" class="md-nav__link">
-    <span class="md-ellipsis">
-      func (*Lama2Parser) FractionRule1
-    </span>
+    func (*Lama2Parser) FractionRule1
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#func-lama2parser-httpverb" class="md-nav__link">
-    <span class="md-ellipsis">
-      func (*Lama2Parser) HTTPVerb
-    </span>
+    func (*Lama2Parser) HTTPVerb
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#func-lama2parser-headerdata" class="md-nav__link">
-    <span class="md-ellipsis">
-      func (*Lama2Parser) HeaderData
-    </span>
+    func (*Lama2Parser) HeaderData
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#func-lama2parser-headerpair" class="md-nav__link">
-    <span class="md-ellipsis">
-      func (*Lama2Parser) HeaderPair
-    </span>
+    func (*Lama2Parser) HeaderPair
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#func-lama2parser-headers" class="md-nav__link">
-    <span class="md-ellipsis">
-      func (*Lama2Parser) Headers
-    </span>
+    func (*Lama2Parser) Headers
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#func-lama2parser-integer" class="md-nav__link">
-    <span class="md-ellipsis">
-      func (*Lama2Parser) Integer
-    </span>
+    func (*Lama2Parser) Integer
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#func-lama2parser-integerrule1" class="md-nav__link">
-    <span class="md-ellipsis">
-      func (*Lama2Parser) IntegerRule1
-    </span>
+    func (*Lama2Parser) IntegerRule1
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#func-lama2parser-integerrule2" class="md-nav__link">
-    <span class="md-ellipsis">
-      func (*Lama2Parser) IntegerRule2
-    </span>
+    func (*Lama2Parser) IntegerRule2
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#func-lama2parser-integerrule3" class="md-nav__link">
-    <span class="md-ellipsis">
-      func (*Lama2Parser) IntegerRule3
-    </span>
+    func (*Lama2Parser) IntegerRule3
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#func-lama2parser-integerrule4" class="md-nav__link">
-    <span class="md-ellipsis">
-      func (*Lama2Parser) IntegerRule4
-    </span>
+    func (*Lama2Parser) IntegerRule4
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#func-lama2parser-l2variable" class="md-nav__link">
-    <span class="md-ellipsis">
-      func (*Lama2Parser) L2Variable
-    </span>
+    func (*Lama2Parser) L2Variable
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#func-lama2parser-lama2file" class="md-nav__link">
-    <span class="md-ellipsis">
-      func (*Lama2Parser) Lama2File
-    </span>
+    func (*Lama2Parser) Lama2File
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#func-lama2parser-list" class="md-nav__link">
-    <span class="md-ellipsis">
-      func (*Lama2Parser) List
-    </span>
+    func (*Lama2Parser) List
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#func-lama2parser-map" class="md-nav__link">
-    <span class="md-ellipsis">
-      func (*Lama2Parser) Map
-    </span>
+    func (*Lama2Parser) Map
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#func-lama2parser-multipart" class="md-nav__link">
-    <span class="md-ellipsis">
-      func (*Lama2Parser) Multipart
-    </span>
+    func (*Lama2Parser) Multipart
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#func-lama2parser-null" class="md-nav__link">
-    <span class="md-ellipsis">
-      func (*Lama2Parser) Null
-    </span>
+    func (*Lama2Parser) Null
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#func-lama2parser-number" class="md-nav__link">
-    <span class="md-ellipsis">
-      func (*Lama2Parser) Number
-    </span>
+    func (*Lama2Parser) Number
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#func-lama2parser-onenine" class="md-nav__link">
-    <span class="md-ellipsis">
-      func (*Lama2Parser) OneNine
-    </span>
+    func (*Lama2Parser) OneNine
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#func-lama2parser-pair" class="md-nav__link">
-    <span class="md-ellipsis">
-      func (*Lama2Parser) Pair
-    </span>
+    func (*Lama2Parser) Pair
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#func-lama2parser-primitivetype" class="md-nav__link">
-    <span class="md-ellipsis">
-      func (*Lama2Parser) PrimitiveType
-    </span>
+    func (*Lama2Parser) PrimitiveType
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#func-lama2parser-processor" class="md-nav__link">
-    <span class="md-ellipsis">
-      func (*Lama2Parser) Processor
-    </span>
+    func (*Lama2Parser) Processor
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#func-lama2parser-quotedstring" class="md-nav__link">
-    <span class="md-ellipsis">
-      func (*Lama2Parser) QuotedString
-    </span>
+    func (*Lama2Parser) QuotedString
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#func-lama2parser-requester" class="md-nav__link">
-    <span class="md-ellipsis">
-      func (*Lama2Parser) Requester
-    </span>
+    func (*Lama2Parser) Requester
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#func-lama2parser-separator" class="md-nav__link">
-    <span class="md-ellipsis">
-      func (*Lama2Parser) Separator
-    </span>
+    func (*Lama2Parser) Separator
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#func-lama2parser-sign" class="md-nav__link">
-    <span class="md-ellipsis">
-      func (*Lama2Parser) Sign
-    </span>
+    func (*Lama2Parser) Sign
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#func-lama2parser-start" class="md-nav__link">
-    <span class="md-ellipsis">
-      func (*Lama2Parser) Start
-    </span>
+    func (*Lama2Parser) Start
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#func-lama2parser-theurl" class="md-nav__link">
-    <span class="md-ellipsis">
-      func (*Lama2Parser) TheURL
-    </span>
+    func (*Lama2Parser) TheURL
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#func-lama2parser-unquoted" class="md-nav__link">
-    <span class="md-ellipsis">
-      func (*Lama2Parser) Unquoted
-    </span>
+    func (*Lama2Parser) Unquoted
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#func-lama2parser-varjson" class="md-nav__link">
-    <span class="md-ellipsis">
-      func (*Lama2Parser) VarJSON
-    </span>
+    func (*Lama2Parser) VarJSON
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#func-lama2parser-varjsonpair" class="md-nav__link">
-    <span class="md-ellipsis">
-      func (*Lama2Parser) VarJSONPair
-    </span>
+    func (*Lama2Parser) VarJSONPair
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#func-lama2parser-varjsonunquoted" class="md-nav__link">
-    <span class="md-ellipsis">
-      func (*Lama2Parser) VarJSONUnquoted
-    </span>
+    func (*Lama2Parser) VarJSONUnquoted
   </a>
   
 </li>
@@ -1416,18 +1114,14 @@
       
         <li class="md-nav__item">
   <a href="#type-minimalparser" class="md-nav__link">
-    <span class="md-ellipsis">
-      type MinimalParser
-    </span>
+    type MinimalParser
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#type-parser" class="md-nav__link">
-    <span class="md-ellipsis">
-      type Parser
-    </span>
+    type Parser
   </a>
   
     <nav class="md-nav" aria-label="type Parser">
@@ -1435,99 +1129,77 @@
         
           <li class="md-nav__item">
   <a href="#func-parser-char" class="md-nav__link">
-    <span class="md-ellipsis">
-      func (*Parser) Char
-    </span>
+    func (*Parser) Char
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#func-parser-charclass" class="md-nav__link">
-    <span class="md-ellipsis">
-      func (*Parser) CharClass
-    </span>
+    func (*Parser) CharClass
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#func-parser-init" class="md-nav__link">
-    <span class="md-ellipsis">
-      func (*Parser) Init
-    </span>
+    func (*Parser) Init
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#func-parser-keyword" class="md-nav__link">
-    <span class="md-ellipsis">
-      func (*Parser) Keyword
-    </span>
+    func (*Parser) Keyword
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#func-parser-lookahead" class="md-nav__link">
-    <span class="md-ellipsis">
-      func (*Parser) LookAhead
-    </span>
+    func (*Parser) LookAhead
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#func-parser-match" class="md-nav__link">
-    <span class="md-ellipsis">
-      func (*Parser) Match
-    </span>
+    func (*Parser) Match
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#func-parser-matchuntil" class="md-nav__link">
-    <span class="md-ellipsis">
-      func (*Parser) MatchUntil
-    </span>
+    func (*Parser) MatchUntil
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#func-parser-parse" class="md-nav__link">
-    <span class="md-ellipsis">
-      func (*Parser) Parse
-    </span>
+    func (*Parser) Parse
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#func-parser-settext" class="md-nav__link">
-    <span class="md-ellipsis">
-      func (*Parser) SetText
-    </span>
+    func (*Parser) SetText
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#func-parser-splitcharranges" class="md-nav__link">
-    <span class="md-ellipsis">
-      func (*Parser) SplitCharRanges
-    </span>
+    func (*Parser) SplitCharRanges
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#func-parser-start" class="md-nav__link">
-    <span class="md-ellipsis">
-      func (*Parser) Start
-    </span>
+    func (*Parser) Start
   </a>
   
 </li>
@@ -1551,8 +1223,10 @@
                 
                   
 
-  
-  
+  <a href="https://github.com/HexmosTech/Lama2/edit/master/docs/reference/parser.md" title="Edit this page" class="md-content__button md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+  </a>
 
 
 <!-- Code generated by gomarkdoc. DO NOT EDIT -->
@@ -1631,12 +1305,12 @@
 <div class="highlight"><pre><span></span><code><span class="kd">var</span><span class="w"> </span><span class="nx">DataInputType</span><span class="w"> </span><span class="kt">string</span>
 </code></pre></div>
 <p><a name="CustomPairMerge"></a></p>
-<h2 id="func-custompairmerge">func <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/jsonparser.go#L59">CustomPairMerge</a><a class="headerlink" href="#func-custompairmerge" title="Permanent link">&para;</a></h2>
+<h2 id="func-custompairmerge">func <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/jsonparser.go#L58">CustomPairMerge</a><a class="headerlink" href="#func-custompairmerge" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">CustomPairMerge</span><span class="p">(</span><span class="nx">destination</span><span class="p">,</span><span class="w"> </span><span class="nx">source</span><span class="w"> </span><span class="kd">interface</span><span class="p">{})</span><span class="w"> </span><span class="kd">interface</span><span class="p">{}</span>
 </code></pre></div>
 <p>CustomPairMerge uses a gabs feature to deal with merge conflicts. More here: https://github.com/HexmosTech/gabs/blob/master/gabs.go#L511</p>
 <p><a name="Lama2Parser"></a></p>
-<h2 id="type-lama2parser">type <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/lama2parser.go#L12-L16">Lama2Parser</a><a class="headerlink" href="#type-lama2parser" title="Permanent link">&para;</a></h2>
+<h2 id="type-lama2parser">type <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/lama2parser.go#L11-L15">Lama2Parser</a><a class="headerlink" href="#type-lama2parser" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="kd">type</span><span class="w"> </span><span class="nx">Lama2Parser</span><span class="w"> </span><span class="kd">struct</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="o">*</span><span class="nx">Parser</span>
 <span class="w">    </span><span class="nx">Context</span><span class="w">   </span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">bool</span>
@@ -1644,33 +1318,33 @@
 <span class="p">}</span>
 </code></pre></div>
 <p><a name="NewLama2Parser"></a></p>
-<h3 id="func-newlama2parser">func <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/lama2parser.go#L20">NewLama2Parser</a><a class="headerlink" href="#func-newlama2parser" title="Permanent link">&para;</a></h3>
+<h3 id="func-newlama2parser">func <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/lama2parser.go#L19">NewLama2Parser</a><a class="headerlink" href="#func-newlama2parser" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nx">NewLama2Parser</span><span class="p">()</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span>
 </code></pre></div>
 <p>NewLama2Parser creates a new Lama2Parser and initializes it properly</p>
 <p><a name="Lama2Parser.AnyType"></a></p>
-<h3 id="func-lama2parser-anytype">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/jsonparser.go#L13">AnyType</a><a class="headerlink" href="#func-lama2parser-anytype" title="Permanent link">&para;</a></h3>
+<h3 id="func-lama2parser-anytype">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/jsonparser.go#L12">AnyType</a><a class="headerlink" href="#func-lama2parser-anytype" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">AnyType</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
 <p>AnyType is the top-most element of a JSON structure It consists of Complex and Primitive Types</p>
 <p><a name="Lama2Parser.Boolean"></a></p>
-<h3 id="func-lama2parser-boolean">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/jsonparser.go#L156">Boolean</a><a class="headerlink" href="#func-lama2parser-boolean" title="Permanent link">&para;</a></h3>
+<h3 id="func-lama2parser-boolean">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/jsonparser.go#L154">Boolean</a><a class="headerlink" href="#func-lama2parser-boolean" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">Boolean</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
 <p><a name="Lama2Parser.ComplexType"></a></p>
-<h3 id="func-lama2parser-complextype">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/jsonparser.go#L18">ComplexType</a><a class="headerlink" href="#func-lama2parser-complextype" title="Permanent link">&para;</a></h3>
+<h3 id="func-lama2parser-complextype">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/jsonparser.go#L17">ComplexType</a><a class="headerlink" href="#func-lama2parser-complextype" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">ComplexType</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
 <p><a name="Lama2Parser.DataHeader"></a></p>
-<h3 id="func-lama2parser-dataheader">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/headers.go#L30">DataHeader</a><a class="headerlink" href="#func-lama2parser-dataheader" title="Permanent link">&para;</a></h3>
+<h3 id="func-lama2parser-dataheader">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/headers.go#L27">DataHeader</a><a class="headerlink" href="#func-lama2parser-dataheader" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">DataHeader</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
 <p><a name="Lama2Parser.DataInput"></a></p>
-<h3 id="func-lama2parser-datainput">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/headers.go#L46">DataInput</a><a class="headerlink" href="#func-lama2parser-datainput" title="Permanent link">&para;</a></h3>
+<h3 id="func-lama2parser-datainput">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/headers.go#L43">DataInput</a><a class="headerlink" href="#func-lama2parser-datainput" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">DataInput</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
 <p><a name="Lama2Parser.Details"></a></p>
-<h3 id="func-lama2parser-details">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/lama2parser.go#L260">Details</a><a class="headerlink" href="#func-lama2parser-details" title="Permanent link">&para;</a></h3>
+<h3 id="func-lama2parser-details">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/lama2parser.go#L224">Details</a><a class="headerlink" href="#func-lama2parser-details" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">Details</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
 <p><a name="Lama2Parser.Digit"></a></p>
@@ -1697,7 +1371,7 @@
 </code></pre></div>
 <p>FilesUnquoted matches a string of characters other than `@` and returns them as a String</p>
 <p><a name="Lama2Parser.Form"></a></p>
-<h3 id="func-lama2parser-form">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/lama2parser.go#L247">Form</a><a class="headerlink" href="#func-lama2parser-form" title="Permanent link">&para;</a></h3>
+<h3 id="func-lama2parser-form">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/lama2parser.go#L211">Form</a><a class="headerlink" href="#func-lama2parser-form" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">Form</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
 <p><a name="Lama2Parser.Fraction"></a></p>
@@ -1710,19 +1384,19 @@
 </code></pre></div>
 <p>A Fraction consists of mandatory "." (dot), followed by Digits.</p>
 <p><a name="Lama2Parser.HTTPVerb"></a></p>
-<h3 id="func-lama2parser-httpverb">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/lama2parser.go#L214">HTTPVerb</a><a class="headerlink" href="#func-lama2parser-httpverb" title="Permanent link">&para;</a></h3>
+<h3 id="func-lama2parser-httpverb">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/lama2parser.go#L179">HTTPVerb</a><a class="headerlink" href="#func-lama2parser-httpverb" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">HTTPVerb</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
 <p><a name="Lama2Parser.HeaderData"></a></p>
-<h3 id="func-lama2parser-headerdata">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/headers.go#L13">HeaderData</a><a class="headerlink" href="#func-lama2parser-headerdata" title="Permanent link">&para;</a></h3>
+<h3 id="func-lama2parser-headerdata">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/headers.go#L12">HeaderData</a><a class="headerlink" href="#func-lama2parser-headerdata" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">HeaderData</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
 <p><a name="Lama2Parser.HeaderPair"></a></p>
-<h3 id="func-lama2parser-headerpair">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/headers.go#L89">HeaderPair</a><a class="headerlink" href="#func-lama2parser-headerpair" title="Permanent link">&para;</a></h3>
+<h3 id="func-lama2parser-headerpair">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/headers.go#L86">HeaderPair</a><a class="headerlink" href="#func-lama2parser-headerpair" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">HeaderPair</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
 <p><a name="Lama2Parser.Headers"></a></p>
-<h3 id="func-lama2parser-headers">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/headers.go#L65">Headers</a><a class="headerlink" href="#func-lama2parser-headers" title="Permanent link">&para;</a></h3>
+<h3 id="func-lama2parser-headers">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/headers.go#L62">Headers</a><a class="headerlink" href="#func-lama2parser-headers" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">Headers</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
 <p>Headers detects HTTP headers; essentially strings separated by ":" character</p>
@@ -1751,29 +1425,29 @@
 </code></pre></div>
 <p>IntegerRule4 starts with a mandatory Sign, and follows with IntegerRule2</p>
 <p><a name="Lama2Parser.L2Variable"></a></p>
-<h3 id="func-lama2parser-l2variable">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/jsonparser.go#L28">L2Variable</a><a class="headerlink" href="#func-lama2parser-l2variable" title="Permanent link">&para;</a></h3>
+<h3 id="func-lama2parser-l2variable">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/jsonparser.go#L27">L2Variable</a><a class="headerlink" href="#func-lama2parser-l2variable" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">L2Variable</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
 <p><a name="Lama2Parser.Lama2File"></a></p>
-<h3 id="func-lama2parser-lama2file">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/lama2parser.go#L40">Lama2File</a><a class="headerlink" href="#func-lama2parser-lama2file" title="Permanent link">&para;</a></h3>
+<h3 id="func-lama2parser-lama2file">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/lama2parser.go#L38">Lama2File</a><a class="headerlink" href="#func-lama2parser-lama2file" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">Lama2File</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
 <p><a name="Lama2Parser.List"></a></p>
-<h3 id="func-lama2parser-list">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/jsonparser.go#L99">List</a><a class="headerlink" href="#func-lama2parser-list" title="Permanent link">&para;</a></h3>
+<h3 id="func-lama2parser-list">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/jsonparser.go#L97">List</a><a class="headerlink" href="#func-lama2parser-list" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">List</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
 <p>List is a slightly lenient version of standard JSON list. In Lama2 List, it is OK to have a trailing comma after the last element (whereas in strict JSON, it is not OK to have trailing comma)</p>
 <p><a name="Lama2Parser.Map"></a></p>
-<h3 id="func-lama2parser-map">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/jsonparser.go#L67">Map</a><a class="headerlink" href="#func-lama2parser-map" title="Permanent link">&para;</a></h3>
+<h3 id="func-lama2parser-map">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/jsonparser.go#L66">Map</a><a class="headerlink" href="#func-lama2parser-map" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">Map</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
 <p>Map is a slightly lenient version of standard JSON map. In Lama2 Map, it is OK to have a trailing comma after the last element (whereas in strict JSON, it is not OK to have trailing comma)</p>
 <p><a name="Lama2Parser.Multipart"></a></p>
-<h3 id="func-lama2parser-multipart">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/lama2parser.go#L234">Multipart</a><a class="headerlink" href="#func-lama2parser-multipart" title="Permanent link">&para;</a></h3>
+<h3 id="func-lama2parser-multipart">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/lama2parser.go#L198">Multipart</a><a class="headerlink" href="#func-lama2parser-multipart" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">Multipart</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
 <p><a name="Lama2Parser.Null"></a></p>
-<h3 id="func-lama2parser-null">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/jsonparser.go#L172">Null</a><a class="headerlink" href="#func-lama2parser-null" title="Permanent link">&para;</a></h3>
+<h3 id="func-lama2parser-null">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/jsonparser.go#L170">Null</a><a class="headerlink" href="#func-lama2parser-null" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">Null</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
 <p><a name="Lama2Parser.Number"></a></p>
@@ -1786,15 +1460,15 @@
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">OneNine</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
 <p><a name="Lama2Parser.Pair"></a></p>
-<h3 id="func-lama2parser-pair">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/jsonparser.go#L135">Pair</a><a class="headerlink" href="#func-lama2parser-pair" title="Permanent link">&para;</a></h3>
+<h3 id="func-lama2parser-pair">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/jsonparser.go#L133">Pair</a><a class="headerlink" href="#func-lama2parser-pair" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">Pair</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
 <p><a name="Lama2Parser.PrimitiveType"></a></p>
-<h3 id="func-lama2parser-primitivetype">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/jsonparser.go#L23">PrimitiveType</a><a class="headerlink" href="#func-lama2parser-primitivetype" title="Permanent link">&para;</a></h3>
+<h3 id="func-lama2parser-primitivetype">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/jsonparser.go#L22">PrimitiveType</a><a class="headerlink" href="#func-lama2parser-primitivetype" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">PrimitiveType</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
 <p><a name="Lama2Parser.Processor"></a></p>
-<h3 id="func-lama2parser-processor">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/lama2parser.go#L111">Processor</a><a class="headerlink" href="#func-lama2parser-processor" title="Permanent link">&para;</a></h3>
+<h3 id="func-lama2parser-processor">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/lama2parser.go#L103">Processor</a><a class="headerlink" href="#func-lama2parser-processor" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">Processor</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
 <p><a name="Lama2Parser.QuotedString"></a></p>
@@ -1803,12 +1477,12 @@
 </code></pre></div>
 <p>QuotedString accepts both single-quoted and double-quoted types of strings. Moreover, it can deal with unicode escape characters, control characters appropriately Ultimately, we get a string wrapped in a gabs container</p>
 <p><a name="Lama2Parser.Requester"></a></p>
-<h3 id="func-lama2parser-requester">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/lama2parser.go#L141">Requester</a><a class="headerlink" href="#func-lama2parser-requester" title="Permanent link">&para;</a></h3>
+<h3 id="func-lama2parser-requester">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/lama2parser.go#L128">Requester</a><a class="headerlink" href="#func-lama2parser-requester" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">Requester</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
 <p>Requester applies the rule: HTTPVerb Multipart? TheURL Details?</p>
 <p><a name="Lama2Parser.Separator"></a></p>
-<h3 id="func-lama2parser-separator">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/lama2parser.go#L128">Separator</a><a class="headerlink" href="#func-lama2parser-separator" title="Permanent link">&para;</a></h3>
+<h3 id="func-lama2parser-separator">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/lama2parser.go#L116">Separator</a><a class="headerlink" href="#func-lama2parser-separator" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">Separator</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
 <p><a name="Lama2Parser.Sign"></a></p>
@@ -1816,16 +1490,16 @@
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">Sign</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
 <p><a name="Lama2Parser.Start"></a></p>
-<h3 id="func-lama2parser-start">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/lama2parser.go#L28">Start</a><a class="headerlink" href="#func-lama2parser-start" title="Permanent link">&para;</a></h3>
+<h3 id="func-lama2parser-start">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/lama2parser.go#L27">Start</a><a class="headerlink" href="#func-lama2parser-start" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">Start</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
 <p>Start primarily calls the Lama2File method</p>
 <p><a name="Lama2Parser.TheURL"></a></p>
-<h3 id="func-lama2parser-theurl">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/lama2parser.go#L175">TheURL</a><a class="headerlink" href="#func-lama2parser-theurl" title="Permanent link">&para;</a></h3>
+<h3 id="func-lama2parser-theurl">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/lama2parser.go#L161">TheURL</a><a class="headerlink" href="#func-lama2parser-theurl" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">TheURL</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
 <p><a name="Lama2Parser.Unquoted"></a></p>
-<h3 id="func-lama2parser-unquoted">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/lama_strings.go#L114">Unquoted</a><a class="headerlink" href="#func-lama2parser-unquoted" title="Permanent link">&para;</a></h3>
+<h3 id="func-lama2parser-unquoted">func (*Lama2Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/lama_strings.go#L113">Unquoted</a><a class="headerlink" href="#func-lama2parser-unquoted" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Lama2Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">Unquoted</span><span class="p">()</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
 <p><a name="Lama2Parser.VarJSON"></a></p>
@@ -1877,14 +1551,14 @@
 <h3 id="func-parser-init">func (*Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/parser.go#L68">Init</a><a class="headerlink" href="#func-parser-init" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">Init</span><span class="p">()</span>
 </code></pre></div>
-<p>Method Init creates the most important data stucture for parsing: ruleMethodMap. We use reflection to create a mapping of each Pm.\&lt;method_name&gt; to \&lt;method_value&gt;</p>
+<p>Method Init creates the most important data stucture for parsing: ruleMethodMap. We use reflection to create a mapping of each Pm.\&lt;method_name> to \&lt;method_value></p>
 <p><a name="Parser.Keyword"></a></p>
 <h3 id="func-parser-keyword">func (*Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/keyword.go#L13">Keyword</a><a class="headerlink" href="#func-parser-keyword" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">Keyword</span><span class="p">(</span><span class="nx">kw</span><span class="w"> </span><span class="kt">string</span><span class="p">,</span><span class="w"> </span><span class="nx">eatWsStart</span><span class="w"> </span><span class="kt">bool</span><span class="p">,</span><span class="w"> </span><span class="nx">eatWsEnd</span><span class="w"> </span><span class="kt">bool</span><span class="p">,</span><span class="w"> </span><span class="nx">caseInsensitive</span><span class="w"> </span><span class="kt">bool</span><span class="p">)</span><span class="w"> </span><span class="p">([]</span><span class="kt">rune</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
 <p>Method Keyword is a versatile; it can eat whitespace before/after the expected string, and it can do an optionally case insensitive match for the keyword</p>
 <p><a name="Parser.LookAhead"></a></p>
-<h3 id="func-parser-lookahead">func (*Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/match.go#L68">LookAhead</a><a class="headerlink" href="#func-parser-lookahead" title="Permanent link">&para;</a></h3>
+<h3 id="func-parser-lookahead">func (*Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/match.go#L65">LookAhead</a><a class="headerlink" href="#func-parser-lookahead" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">LookAhead</span><span class="p">(</span><span class="nx">rules</span><span class="w"> </span><span class="p">[]</span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="kt">bool</span>
 </code></pre></div>
 <p><a name="Parser.Match"></a></p>
@@ -1893,7 +1567,7 @@
 </code></pre></div>
 <p>Method Match is the most important of all in the parser package. Match takes in a slice of rules (essentially method names), and then executes them one by one. On successful match, we return a gabs Container with `error` set to `nil` When a rule fails to match, we reset the scan position to initial position; moreover, we keep a continuous track of the farthest/longest match till present. The farthest match error is potentially the most useful error message to the user; thus, for error report, Match returns the farthest matching error</p>
 <p><a name="Parser.MatchUntil"></a></p>
-<h3 id="func-parser-matchuntil">func (*Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/match.go#L89">MatchUntil</a><a class="headerlink" href="#func-parser-matchuntil" title="Permanent link">&para;</a></h3>
+<h3 id="func-parser-matchuntil">func (*Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/match.go#L84">MatchUntil</a><a class="headerlink" href="#func-parser-matchuntil" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">MatchUntil</span><span class="p">(</span><span class="nx">end</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="nx">gabs</span><span class="p">.</span><span class="nx">Container</span><span class="p">,</span><span class="w"> </span><span class="kt">error</span><span class="p">)</span>
 </code></pre></div>
 <p><a name="Parser.Parse"></a></p>
@@ -1902,7 +1576,7 @@
 </code></pre></div>
 <p>Method Parse normalizes newlines and then creates a rune version of the input data. The Start() method proceeds to process the rune version of data</p>
 <p><a name="Parser.SetText"></a></p>
-<h3 id="func-parser-settext">func (*Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/parser.go#L126">SetText</a><a class="headerlink" href="#func-parser-settext" title="Permanent link">&para;</a></h3>
+<h3 id="func-parser-settext">func (*Parser) <a href="https://github.com/HexmosTech/Lama2/blob/main/parser/parser.go#L127">SetText</a><a class="headerlink" href="#func-parser-settext" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="p">(</span><span class="nx">p</span><span class="w"> </span><span class="o">*</span><span class="nx">Parser</span><span class="p">)</span><span class="w"> </span><span class="nx">SetText</span><span class="p">(</span><span class="nx">text</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span>
 </code></pre></div>
 <p>Method SetText is a utility used primarily in testing, when we don't want to call Start() automatically as in Parse</p>
@@ -1918,13 +1592,6 @@
 <p>Generated by <a href="https://github.com/princjef/gomarkdoc">gomarkdoc</a></p>
 
 
-
-
-
-
-
-
-
   
 
 
@@ -1935,14 +1602,12 @@
             </div>
           
           
-<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
         
-          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
-  Back to top
-</button>
+          <a href="#" class="md-top md-icon" data-md-component="top" hidden>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            Back to top
+          </a>
         
       </main>
        
@@ -1981,14 +1646,14 @@
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tracking", "navigation.sections", "toc.follow", "navigation.top"], "search": "../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
     
-    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tracking", "navigation.sections", "toc.follow", "navigation.top"], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
-    
-      <script src="../assets/javascripts/bundle.ad660dcc.min.js"></script>
+      <script src="../assets/javascripts/bundle.5a2dcb6a.min.js"></script>
       
         <script src="../links.js"></script>
       
+    
     
   </body>
 </html>

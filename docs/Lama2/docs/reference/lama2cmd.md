@@ -11,12 +11,14 @@ Package \`lama2cmd\` provides CLI argument parsing facilities. It hosts the \`Op
 ## Index
 
 - [func ArgParsing\(o \*Opts, version string\)](<#ArgParsing>)
+- [func SetLSPServer\(server LSPServer\)](<#SetLSPServer>)
+- [type LSPServer](<#LSPServer>)
 - [type Opts](<#Opts>)
   - [func GetAndValidateCmd\(ipArgs \[\]string\) \*Opts](<#GetAndValidateCmd>)
 
 
 <a name="ArgParsing"></a>
-## func [ArgParsing](<https://github.com/HexmosTech/Lama2/blob/main/lama2cmd/lama2cmd.go#L81>)
+## func [ArgParsing](<https://github.com/HexmosTech/Lama2/blob/main/lama2cmd/lama2cmd.go#L91>)
 
 ```go
 func ArgParsing(o *Opts, version string)
@@ -24,8 +26,28 @@ func ArgParsing(o *Opts, version string)
 
 
 
+<a name="SetLSPServer"></a>
+## func [SetLSPServer](<https://github.com/HexmosTech/Lama2/blob/main/lama2cmd/lama2cmd.go#L23>)
+
+```go
+func SetLSPServer(server LSPServer)
+```
+
+
+
+<a name="LSPServer"></a>
+## type [LSPServer](<https://github.com/HexmosTech/Lama2/blob/main/lama2cmd/lama2cmd.go#L17-L19>)
+
+LSPServer defines the interface for starting an LSP server
+
+```go
+type LSPServer interface {
+    StartLspServer()
+}
+```
+
 <a name="Opts"></a>
-## type [Opts](<https://github.com/HexmosTech/Lama2/blob/main/lama2cmd/lama2cmd.go#L19-L36>)
+## type [Opts](<https://github.com/HexmosTech/Lama2/blob/main/lama2cmd/lama2cmd.go#L29-L46>)
 
 The Opts structure stores user preferences, and is used throughout the module to make various decisions.
 
@@ -51,7 +73,7 @@ type Opts struct {
 ```
 
 <a name="GetAndValidateCmd"></a>
-### func [GetAndValidateCmd](<https://github.com/HexmosTech/Lama2/blob/main/lama2cmd/lama2cmd.go#L117>)
+### func [GetAndValidateCmd](<https://github.com/HexmosTech/Lama2/blob/main/lama2cmd/lama2cmd.go#L128>)
 
 ```go
 func GetAndValidateCmd(ipArgs []string) *Opts

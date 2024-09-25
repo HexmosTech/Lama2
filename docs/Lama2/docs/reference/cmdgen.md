@@ -10,14 +10,14 @@ Package \`cmdgen\` provides an API to generate API request commands \(by default
 
 ## Index
 
-- [func ConstructCommand\(parsedInput \*gabs.Container, o \*lama2cmd.Opts\) \(\[\]string, string\)](<#ConstructCommand>)
+- [func ConstructCommandHelper\(parsedInput \*gabs.Container\) \(string, string, \*gabs.Container, \*gabs.Container, bool, bool\)](<#ConstructCommandHelper>)
 
 
-<a name="ConstructCommand"></a>
-## func [ConstructCommand](<https://github.com/HexmosTech/Lama2/blob/main/cmdgen/cmdgen.go#L108>)
+<a name="ConstructCommandHelper"></a>
+## func [ConstructCommandHelper](<https://github.com/HexmosTech/Lama2/blob/main/cmdgen/cmdgen.go#L96>)
 
 ```go
-func ConstructCommand(parsedInput *gabs.Container, o *lama2cmd.Opts) ([]string, string)
+func ConstructCommandHelper(parsedInput *gabs.Container) (string, string, *gabs.Container, *gabs.Container, bool, bool)
 ```
 
 ConstructCommand extracts the HTTP verb, url and other API file inputs, figures out the type of target command and finally generates a string representing the generated command

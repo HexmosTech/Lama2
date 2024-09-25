@@ -72,4 +72,3 @@ extra:
     property: G-WXSDF484XZ
 extra_javascript:
   - links.js
-  - analytics.js
