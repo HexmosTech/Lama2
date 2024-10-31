@@ -1,4 +1,4 @@
-name: Lama2 Release
+name: Release
 on:
   push:
     tags:
