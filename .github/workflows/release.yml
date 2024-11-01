@@ -37,8 +37,8 @@ jobs:
             goos: darwin
           - goarch: arm64
             goos: windows
-          - goarch: linux
-            goos: amd64        
+          - goarch: amd64
+            goos: linux        
     steps:
     - uses: actions/checkout@v3
     - uses: wangyoucao577/go-release-action@v1.32
