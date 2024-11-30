@@ -11,7 +11,6 @@ import (
 )
 
 var version string
-var LaBearerAuthToken string // Exported global variable
 func init() {
 	// Initialize version if not set
 	if len(version) == 0 {
@@ -30,8 +29,8 @@ func main() {
 
 func wasmLamaPromise() js.Func {
 	return js.FuncOf(func(this js.Value, args []js.Value) interface{} {
-		LaBearerAuthToken = args[2].String()
-		js.Global().Set("LaBearerAuthToken", LaBearerAuthToken)
+		laBearerAuthToken := args[2].String()
+		js.Global().Set("LaBearerAuthToken", laBearerAuthToken)
 		inputdata := args[0].String()
 		handler := js.FuncOf(func(this js.Value, args []js.Value) interface{} {
 			resolve := args[0]

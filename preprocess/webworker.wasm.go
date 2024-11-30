@@ -106,35 +106,3 @@ func GetFromWorker(variableName string) string {
 	fmt.Println("WW: getfromworker webworker.go", variableName, result.Get("value").String())
 	return result.Get("value").String()
 }
-
-func GetFromLocalStorage(key string) string {
-    worker := InitWebWorker() // Initialize the Web Worker
-    responseChannel := make(chan js.Value, 1) // Single-buffered channel for one response
-
-    // Send the request to the Web Worker
-    worker.Call("postMessage", map[string]interface{}{
-        "action": "get",
-        "key":    key,
-    })
-
-    // Set up an event listener to handle the Web Worker's response
-    worker.Call("addEventListener", "message", js.FuncOf(func(this js.Value, args []js.Value) interface{} {
-        data := args[0].Get("data")
-        if data.Get("result").IsUndefined() {
-            log.Error().Msg("WW: LocalStorage value is undefined")
-            return nil
-        }
-
-        select {
-        case responseChannel <- data:
-            log.Debug().Msg("WW: Value received from Web Worker")
-        default:
-            log.Error().Msg("WW: responseChannel is full, cannot write data")
-        }
-        return nil
-    }))
-
-    // Wait for the response and retrieve the result
-    result := <-responseChannel
-    return result.Get("result").String()
-}

@@ -73,13 +73,7 @@ func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, header
 		}
 	}
 
-	// Add the Authorization header
-	// LaBearerAuthToken := js.Global().Get("LaBearerAuthToken").String()
-	// command = append(command, "Authorization: Bearer " + LaBearerAuthToken)
-
 	LaBearerAuthToken := js.Global().Get("LaBearerAuthToken").String()
-
-	// Check if Authorization header is already present
 	authHeaderExists := false
 	for _, header := range command {
 		if len(header) >= len("Authorization:") && header[:len("Authorization:")] == "Authorization:" {
@@ -87,9 +81,7 @@ func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, header
 			break
 		}
 	}
-
-	// Append the Authorization header only if it doesn't already exist
-	if !authHeaderExists {
+    if !authHeaderExists {
 		command = append(command, "Authorization: Bearer "+LaBearerAuthToken)
 	}
 
