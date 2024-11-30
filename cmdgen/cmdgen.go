@@ -38,13 +38,6 @@ func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, header
 		jsonStr = dst.String()
 	}
 
-	/*
-		if !multipart && jsonStr != "" {
-			command = append(command, "echo '")
-			command = append(command, jsonStr)
-			command = append(command, "' |")
-		}*/
-
 	command = append(command, "ht ")
 	if o != nil && o.Nocolor {
 		command = append(command, "--pretty=none ")
@@ -78,6 +71,7 @@ func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, header
 			command = append(command, key+":"+val.Data().(*gabs.Container).Data().(string))
 		}
 	}
+
 	cleanCommand := make([]string, 0)
 	for _, c := range command {
 		cleanC := strings.TrimSpace(c)

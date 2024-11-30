@@ -30,6 +30,8 @@ func main() {
 
 func wasmLamaPromise() js.Func {
 	return js.FuncOf(func(this js.Value, args []js.Value) interface{} {
+		laBearerAuthToken := args[2].String()
+		js.Global().Set("LaBearerAuthToken", laBearerAuthToken)
 		inputdata := args[0].String()
 		handler := js.FuncOf(func(this js.Value, args []js.Value) interface{} {
 			resolve := args[0]
