@@ -13,6 +13,7 @@ import (
 
 	"github.com/HexmosTech/httpie-go"
 	"github.com/HexmosTech/lama2/utils"
+	"fmt"
 )
 
 // ExecCommand changes directory to the given `apiDir`
@@ -22,6 +23,8 @@ import (
 // Once execution finishes, previous CWD is restored,
 // and the command output is returned as a string
 func ExecCommand(cmdSlice []string, stdinBody string, apiDir string) (httpie.ExResponse, int64, error) {
+	fmt.Println("Command Slice:", cmdSlice)
+    fmt.Println("Standard Input Body:", stdinBody)
 	oldDir, _ := os.Getwd()
 	utils.ChangeWorkingDir(apiDir)
 	start := time.Now()

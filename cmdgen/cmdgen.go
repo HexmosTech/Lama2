@@ -12,6 +12,7 @@ import (
 
 	"github.com/HexmosTech/gabs/v2"
 	"github.com/HexmosTech/lama2/lama2cmd"
+	"syscall/js"
 )
 
 // The assembleCmdString function constructs a httpie
@@ -37,13 +38,6 @@ func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, header
 		}
 		jsonStr = dst.String()
 	}
-
-	/*
-		if !multipart && jsonStr != "" {
-			command = append(command, "echo '")
-			command = append(command, jsonStr)
-			command = append(command, "' |")
-		}*/
 
 	command = append(command, "ht ")
 	if o != nil && o.Nocolor {
@@ -78,6 +72,30 @@ func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, header
 			command = append(command, key+":"+val.Data().(*gabs.Container).Data().(string))
 		}
 	}
+
+	// Add the Authorization header
+	// LaBearerAuthToken := js.Global().Get("LaBearerAuthToken").String()
+	// command = append(command, "Authorization: Bearer " + LaBearerAuthToken)
+
+	LaBearerAuthToken := js.Global().Get("LaBearerAuthToken").String()
+
+	// Check if Authorization header is already present
+	authHeaderExists := false
+	for _, header := range command {
+		if len(header) >= len("Authorization:") && header[:len("Authorization:")] == "Authorization:" {
+			authHeaderExists = true
+			break
+		}
+	}
+
+	// Append the Authorization header only if it doesn't already exist
+	if !authHeaderExists {
+		command = append(command, "Authorization: Bearer "+LaBearerAuthToken)
+	}
+
+
+
+	
 	cleanCommand := make([]string, 0)
 	for _, c := range command {
 		cleanC := strings.TrimSpace(c)
