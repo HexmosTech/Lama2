@@ -8,11 +8,10 @@ import (
 	"syscall/js"
 )
 
-
 func ConstructCommand(parsedInput *gabs.Container, o *lama2cmd.Opts) ([]string, string) {
 	httpv, url, jsonObj, headers, multipartBool, formBool := ConstructCommandHelper(parsedInput)
 	res, stdinBody := assembleCmdString(httpv, url, jsonObj, headers, multipartBool, formBool, nil)
-	
+
 	LaBearerAuthToken := js.Global().Get("LaBearerAuthToken").String()
 	authHeaderExists := false
 	for _, header := range res {
