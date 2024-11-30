@@ -81,13 +81,10 @@ func assembleCmdString(httpv string, url string, jsonObj *gabs.Container, header
 			break
 		}
 	}
-    if !authHeaderExists {
+	if !authHeaderExists {
 		command = append(command, "Authorization: Bearer "+LaBearerAuthToken)
 	}
 
-
-
-	
 	cleanCommand := make([]string, 0)
 	for _, c := range command {
 		cleanC := strings.TrimSpace(c)

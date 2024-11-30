@@ -11,6 +11,7 @@ import (
 )
 
 var version string
+
 func init() {
 	// Initialize version if not set
 	if len(version) == 0 {
