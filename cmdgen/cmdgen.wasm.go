@@ -11,10 +11,12 @@ import (
 	"github.com/HexmosTech/gabs/v2"
 	"github.com/HexmosTech/lama2/lama2cmd"
 )
+ 
 
 func ConstructCommand(parsedInput *gabs.Container, o *lama2cmd.Opts) ([]string, string) {
 	httpv, url, jsonObj, headers, multipartBool, formBool := ConstructCommandHelper(parsedInput)
 	res, stdinBody := assembleCmdString(httpv, url, jsonObj, headers, multipartBool, formBool, nil)
+
 	LaBearerAuthToken := js.Global().Get("liveapiManifest").String()
 
 	// Parse JSON
@@ -33,11 +35,13 @@ func ConstructCommand(parsedInput *gabs.Container, o *lama2cmd.Opts) ([]string, 
 
 	projectRoot := getProjectRoot()
 	if projectRoot == "" {
-		fmt.Println("DBGYYY: No project_root meta tag found")
+		fmt.Println("DBGYYZ: No project_root meta tag found")
 		return res, stdinBody
 	}
 
-	fmt.Println("DBGYYY: projectRoot:", projectRoot)
+	fmt.Println("DBGYYZ: projectRoot:", projectRoot)
+
+	var selectedAuthHeader string
 
 	// Find the matching project
 	for _, project := range projects {
@@ -49,11 +53,11 @@ func ConstructCommand(parsedInput *gabs.Container, o *lama2cmd.Opts) ([]string, 
 		if projectMap["project_root"] == projectRoot {
 			authData, exists := projectMap["result"].(map[string]interface{})["auth"]
 			if !exists {
-				fmt.Println("DBGYYY: No auth data found for this project")
+				fmt.Println("DBGYYZ: No auth data found for this project")
 			} else {
 				authArray, ok := authData.([]interface{})
 				if !ok {
-					fmt.Println("DBGYYY: Auth data is not in expected format")
+					fmt.Println("DBGYYZ: Auth data is not in expected format")
 					return res, stdinBody
 				}
 
@@ -67,11 +71,62 @@ func ConstructCommand(parsedInput *gabs.Container, o *lama2cmd.Opts) ([]string, 
 					selected, exists := authMap["selected"].(bool)
 					if exists && selected {
 						authJSON, _ := json.MarshalIndent(authMap, "", "  ")
-						fmt.Println("DBGYYY: Selected Auth Data:", string(authJSON))
+						fmt.Println("DBGYYZ: Selected Auth Data:", string(authJSON))
+
+						// Construct Authorization header based on type
+						authType := authMap["type"].(string)
+						authValue := authMap["value"].(map[string]interface{})
+						fmt.Println("DBGYYZ: authType:", authType)
+						fmt.Println("DBGYYZ: authValue:", authValue)
+						switch authType {
+						case "bearer-token":
+							if token, ok := authValue["token"].(string); ok {
+								fmt.Println("DBGYYZ: token:", token)
+								selectedAuthHeader = "Authorization: " + token
+							}
+						case "jwt":
+							if jwt, ok := authValue["jwt"].(string); ok {
+								fmt.Println("DBGYYZ: jwt:", jwt)
+								selectedAuthHeader = "Authorization: Bearer " + jwt
+							}
+						case "api-key":
+							if key, ok := authValue["key"].(string); ok {
+								fmt.Println("DBGYYZ: key:", key)
+								if value, ok := authValue["value"].(string); ok {
+									fmt.Println("DBGYYZ: value:", value)
+									selectedAuthHeader = key + ": " + value
+								}
+							}
+						case "basic-auth":
+							if username, ok := authValue["username"].(string); ok {
+								fmt.Println("DBGYYZ: username:", username)
+								if password, ok := authValue["password"].(string); ok {
+									fmt.Println("DBGYYZ: password:", password)
+									selectedAuthHeader = "Authorization: Basic " + username + ":" + password
+								}
+							}
+						}
+						break // Stop after the first selected auth method
 					}
 				}
 			}
 			break
+		}
+	}
+	fmt.Println("DBGYYZ: selectedAuthHeader:", selectedAuthHeader)
+	// Add the selected authentication method to headers if not already present
+	if selectedAuthHeader != "" {
+		authHeaderExists := false
+		for _, header := range res {
+			if len(header) >= len("Authorization:") && header[:len("Authorization:")] == "Authorization:" {
+				authHeaderExists = true
+				break
+			}
+		}
+
+		if !authHeaderExists {
+			res = append(res, selectedAuthHeader)
+			fmt.Println("DBGYYZ: Added Auth Header:", selectedAuthHeader)
 		}
 	}
 
