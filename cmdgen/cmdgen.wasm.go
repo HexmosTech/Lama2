@@ -99,10 +99,10 @@ func ConstructCommand(parsedInput *gabs.Container, o *lama2cmd.Opts) ([]string, 
 							}
 						case "basic-auth":
 							if username, ok := authValue["username"].(string); ok {
-								fmt.Println("DBGYYZ: username:", username)
 								if password, ok := authValue["password"].(string); ok {
-									fmt.Println("DBGYYZ: password:", password)
-									selectedAuthHeader = "Authorization: Basic " + username + ":" + password
+									credentials := username + ":" + password
+									encoded := js.Global().Get("btoa").Invoke(credentials).String()
+									selectedAuthHeader = "Authorization: Basic " + encoded
 								}
 							}
 						}
