@@ -3,8 +3,6 @@
 package cmdgen
 
 import (
-	"encoding/json"
-	"fmt"
 	"log"
 	"syscall/js"
 
@@ -31,15 +29,12 @@ func ConstructCommand(parsedInput *gabs.Container, o *lama2cmd.Opts) ([]string, 
 		log.Fatal("Failed to parse projects")
 	}
 
-	fmt.Println("Project count:", len(projects))
 
 	projectRoot := getProjectRoot()
 	if projectRoot == "" {
-		fmt.Println("DBGYYZ: No project_root meta tag found")
 		return res, stdinBody
 	}
 
-	fmt.Println("DBGYYZ: projectRoot:", projectRoot)
 
 	var selectedAuthHeader string
 
@@ -53,11 +48,9 @@ func ConstructCommand(parsedInput *gabs.Container, o *lama2cmd.Opts) ([]string, 
 		if projectMap["project_root"] == projectRoot {
 			authData, exists := projectMap["result"].(map[string]interface{})["auth"]
 			if !exists {
-				fmt.Println("DBGYYZ: No auth data found for this project")
 			} else {
 				authArray, ok := authData.([]interface{})
 				if !ok {
-					fmt.Println("DBGYYZ: Auth data is not in expected format")
 					return res, stdinBody
 				}
 
@@ -70,30 +63,21 @@ func ConstructCommand(parsedInput *gabs.Container, o *lama2cmd.Opts) ([]string, 
 
 					selected, exists := authMap["selected"].(bool)
 					if exists && selected {
-						authJSON, _ := json.MarshalIndent(authMap, "", "  ")
-						fmt.Println("DBGYYZ: Selected Auth Data:", string(authJSON))
-
 						// Construct Authorization header based on type
 						authType := authMap["type"].(string)
 						authValue := authMap["value"].(map[string]interface{})
-						fmt.Println("DBGYYZ: authType:", authType)
-						fmt.Println("DBGYYZ: authValue:", authValue)
 						switch authType {
 						case "bearer-token":
 							if token, ok := authValue["token"].(string); ok {
-								fmt.Println("DBGYYZ: token:", token)
 								selectedAuthHeader = "Authorization: Bearer " + token
 							}
 						case "jwt":
 							if jwt, ok := authValue["jwt"].(string); ok {
-								fmt.Println("DBGYYZ: jwt:", jwt)
 								selectedAuthHeader = "Authorization: Bearer " + jwt
 							}
 						case "api-key":
 							if key, ok := authValue["key"].(string); ok {
-								fmt.Println("DBGYYZ: key:", key)
 								if value, ok := authValue["value"].(string); ok {
-									fmt.Println("DBGYYZ: value:", value)
 									selectedAuthHeader = key + ": " + value
 								}
 							}
@@ -113,7 +97,6 @@ func ConstructCommand(parsedInput *gabs.Container, o *lama2cmd.Opts) ([]string, 
 			break
 		}
 	}
-	fmt.Println("DBGYYZ: selectedAuthHeader:", selectedAuthHeader)
 	// Add the selected authentication method to headers if not already present
 	if selectedAuthHeader != "" {
 		authHeaderExists := false
@@ -126,7 +109,6 @@ func ConstructCommand(parsedInput *gabs.Container, o *lama2cmd.Opts) ([]string, 
 
 		if !authHeaderExists {
 			res = append(res, selectedAuthHeader)
-			fmt.Println("DBGYYZ: Added Auth Header:", selectedAuthHeader)
 		}
 	}
 
