@@ -82,7 +82,7 @@ func ConstructCommand(parsedInput *gabs.Container, o *lama2cmd.Opts) ([]string, 
 						case "bearer-token":
 							if token, ok := authValue["token"].(string); ok {
 								fmt.Println("DBGYYZ: token:", token)
-								selectedAuthHeader = "Authorization: " + token
+								selectedAuthHeader = "Authorization: Bearer " + token
 							}
 						case "jwt":
 							if jwt, ok := authValue["jwt"].(string); ok {
