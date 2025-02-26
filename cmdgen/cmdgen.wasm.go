@@ -15,10 +15,10 @@ func ConstructCommand(parsedInput *gabs.Container, o *lama2cmd.Opts) ([]string, 
 	httpv, url, jsonObj, headers, multipartBool, formBool := ConstructCommandHelper(parsedInput)
 	res, stdinBody := assembleCmdString(httpv, url, jsonObj, headers, multipartBool, formBool, nil)
 
-	LaBearerAuthToken := js.Global().Get("liveapiManifest").String()
+	manisfestData := js.Global().Get("liveapiManifest").String()
 
 	// Parse JSON
-	parsedJson, err := gabs.ParseJSON([]byte(LaBearerAuthToken))
+	parsedJson, err := gabs.ParseJSON([]byte(manisfestData))
 	if err != nil {
 		log.Fatal("Error parsing JSON:", err)
 	}
