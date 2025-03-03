@@ -22,8 +22,9 @@ var flag = 0
 
 //go:noinline
 func GenerateTargetCode(targetLangLib string, parsedAPI *gabs.Container) string {
+	fmt.Println("WASM: Generating target code")
 	convertedSnippetFinal := generateConvertedSippet(targetLangLib, parsedAPI)
-	fmt.Println("This is the converted snippet:", convertedSnippetFinal)
+	fmt.Println("WASM: This is the converted snippet:", convertedSnippetFinal)
 	return convertedSnippetFinal
 }
 
@@ -35,33 +36,34 @@ func asyncTask(resultChan0 chan<- string) {
 
 //go:noinline
 func generateConvertedSippet(targetLangLib string, parsedAPI *gabs.Container) string {
+	fmt.Println("WASM: Generating converted snippet")
 	parsedAPIblocks := parsedAPI.S("value").Data().(*gabs.Container).Children()
 	convertedSnippetList := make([]string, 0)
 	blockLength := len(parsedAPIblocks)
-	fmt.Println("Parsed API", parsedAPIblocks)
+	fmt.Println("WASM: Parsed API", parsedAPIblocks)
 	for i, block := range parsedAPIblocks {
 		blockType := block.S("type").Data().(string)
-		fmt.Println("Block type:", blockType)
+		fmt.Println("WASM: Block type:", blockType)
 		if blockType == "processor" {
-			fmt.Println("Block type is processor")
+			fmt.Println("WASM: Block type is processor")
 			snippet := block.S("value").Data().(*gabs.Container).Data().(string)
 			log.Debug().Str("Processor block incoming block", block.String()).Msg("")
 			convertedSnippetList = append(convertedSnippetList, snippet)
 		} else if blockType == "Lama2File" {
-			fmt.Println("Block type is L2File")
+			fmt.Println("WASM: Block type is L2File")
 			harRequest, flag := GetRequestHARString(block, targetLangLib)
-			fmt.Println("HAR request:", harRequest)
+			fmt.Println("WASM: HAR request:", harRequest)
 			snippetArgs := SnippetArgs{}
 			lang, lib := SplitLangLib(targetLangLib)
-			fmt.Println("Target lang:", lang)
+			fmt.Println("WASM: Target lang:", lang)
 			snippetArgs.Language = lang
 			snippetArgs.Library = lib
 			snippetArgs.HARRequest = harRequest
 			snippetArgs.SnippetCore = snippetcore
-			fmt.Println("Snippet args:", snippetArgs)
+			fmt.Println("WASM: Snippet args:", snippetArgs)
 			httpsnippetCode := PrepareHTTPSnippetGenerator(snippetArgs)
 			convertedSnippet := js.Global().Call("eval", httpsnippetCode)
-			fmt.Println("convertedSnippet data:", convertedSnippet.String())
+			fmt.Println("WASM: convertedSnippet data:", convertedSnippet.String())
 			// convertedSnippet, err := evaluateJSCode(httpsnippetCode)
 			// if err != nil {
 			// 	log.Fatal().
@@ -79,6 +81,7 @@ func generateConvertedSippet(targetLangLib string, parsedAPI *gabs.Container) st
 	}
 
 	convertedSnippetFinal := strings.Join(convertedSnippetList, "\n")
+	fmt.Println("WASM: Converted snippet final:", convertedSnippetFinal)
 	return convertedSnippetFinal
 }
 
@@ -112,6 +115,7 @@ func generateConvertedSippet(targetLangLib string, parsedAPI *gabs.Container) st
 
 //go:noinline
 func PrepareHTTPSnippetGenerator(snippetArgs SnippetArgs) string {
+	fmt.Println("WASM: Snippet args:", snippetArgs)
 	var templOutput bytes.Buffer
 	templStr := `{{.SnippetCore}} 
 
@@ -121,5 +125,6 @@ func PrepareHTTPSnippetGenerator(snippetArgs SnippetArgs) string {
 	`
 	tmpl, _ := template.New("httpsnippet").Parse(templStr)
 	tmpl.Execute(&templOutput, snippetArgs)
+	fmt.Println("WASM: Templ output:", templOutput.String())
 	return templOutput.String()
 }

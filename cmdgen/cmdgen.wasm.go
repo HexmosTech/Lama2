@@ -15,26 +15,37 @@ func ConstructCommand(parsedInput *gabs.Container, o *lama2cmd.Opts) ([]string, 
 	httpv, url, jsonObj, headers, multipartBool, formBool := ConstructCommandHelper(parsedInput)
 	res, stdinBody := assembleCmdString(httpv, url, jsonObj, headers, multipartBool, formBool, nil)
 
-	manisfestData := js.Global().Get("liveapiManifest").String()
+	log.Printf("WASM: Initial command: %v", res)
+	
+	manifestObj := js.Global().Get("liveapiManifest")
+	if manifestObj.IsUndefined() {
+		log.Printf("WASM: liveapiManifest is undefined, returning early")
+		return res, stdinBody
+	}
+	manifestData := manifestObj.String()
+	log.Printf("WASM: Found manifest data: %s", manifestData)
 
 	// Parse JSON
-	parsedJson, err := gabs.ParseJSON([]byte(manisfestData))
+	parsedJson, err := gabs.ParseJSON([]byte(manifestData))
 	if err != nil {
-		log.Fatal("Error parsing JSON:", err)
+		log.Printf("WASM: Error parsing JSON: %v", err)
+		return res, stdinBody
 	}
 
 	// Get project count
 	projects, ok := parsedJson.Path("projects").Data().([]interface{})
 	if !ok {
-		log.Fatal("Failed to parse projects")
+		log.Printf("WASM: Failed to parse projects from manifest")
+		return res, stdinBody
 	}
-
+	log.Printf("WASM: Found %d projects in manifest", len(projects))
 
 	projectRoot := getProjectRoot()
 	if projectRoot == "" {
+		log.Printf("WASM: Project root is empty")
 		return res, stdinBody
 	}
-
+	log.Printf("WASM: Current project root: %s", projectRoot)
 
 	var selectedAuthHeader string
 

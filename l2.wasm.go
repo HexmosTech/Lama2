@@ -20,6 +20,7 @@ func init() {
 }
 
 func main() {
+	fmt.Println("WASM: Starting main")
 	// Set the global JavaScript property "goWebRequestFunc" to the result of wasmLamaPromise
 	js.Global().Set("goWebRequestFunc", wasmLamaPromise())
 	js.Global().Set("goCmdConvertFunc", wasmCodeConverter())
@@ -29,6 +30,7 @@ func main() {
 }
 
 func wasmLamaPromise() js.Func {
+	fmt.Println("WASM: Creating wasmLamaPromise")
 	return js.FuncOf(func(this js.Value, args []js.Value) interface{} {
 		liveapiManifest := args[2].String()
 		js.Global().Set("liveapiManifest", liveapiManifest)
@@ -52,6 +54,7 @@ func wasmLamaPromise() js.Func {
 }
 
 func wasmCodeConverter() js.Func {
+	fmt.Println("WASM: Creating wasmCodeConverter")
 	return js.FuncOf(func(this js.Value, args []js.Value) interface{} {
 		inputdata := args[0].String()
 		convertLang := args[1].String()

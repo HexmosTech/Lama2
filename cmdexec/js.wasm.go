@@ -3,6 +3,7 @@
 package cmdexec
 
 import (
+	"fmt"
 	"syscall/js"
 
 	"github.com/rs/zerolog/log"
@@ -10,6 +11,7 @@ import (
 
 // RunVMCode takes in a JS snippet as a string, executes the code in a JS VM using Web Worker
 func RunVMCode(jsCode string, vm interface{}) {
+	fmt.Println("WASM: Running VM code")
 	worker := vm.(js.Value)
 	resultChan := make(chan js.Value)
 	worker.Call("postMessage", map[string]interface{}{
@@ -26,10 +28,12 @@ func RunVMCode(jsCode string, vm interface{}) {
 	if err != "null" {
 		log.Fatal().Str("Error executing JS processor block", err).Msg("")
 	}
+	fmt.Println("WASM: VM code executed successfully")
 }
 
 // GenerateChainCode takes in an HTTP response body and comes up with some JS code to define the "magic variable" result.
 func GenerateChainCode(httpRespBody string) string {
+	fmt.Println("WASM: Generating chain code")
 	code := `try {
 		result = JSON.parse(String.raw` + "`" + httpRespBody + "`" + `)	
 		console.log("Stored as JSON")
@@ -38,6 +42,6 @@ func GenerateChainCode(httpRespBody string) string {
 		console.log(e)
 		console.log("Stored as string")
 	}`
-	log.Debug().Str("Chain code generated", code).Msg("")
+	fmt.Println("WASM: Chain code generated", code)
 	return code
 }
