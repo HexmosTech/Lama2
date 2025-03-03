@@ -24,51 +24,54 @@ import (
 var worker js.Value
 
 func HandleParsedFile(parsedAPI *gabs.Container) (httpie.ExResponse, *lama2cmd.Opts, []outputmanager.ResponseTime, []outputmanager.StatusCode, []outputmanager.ContentSize, error) {
-	fmt.Println("HandleParsedFile:")
-	fmt.Println("HandleParsedFile:", parsedAPI)
+	fmt.Println("WASM: HandleParsedFile:")
+	fmt.Println("WASM: HandleParsedFile:", parsedAPI)
 	return HandleParsedFileHelper(parsedAPI)
 }
 
 func ProcessWasmInput(data string) (httpie.ExResponse, *lama2cmd.Opts, []outputmanager.ResponseTime, []outputmanager.StatusCode, []outputmanager.ContentSize, error) {
+	fmt.Println("WASM: ProcessWasmInput")
 	apiContent := data
 	p := parser.NewLama2Parser()
-	fmt.Printf("apicontent %+v\n", apiContent)
+	fmt.Printf("WASM: apicontent %+v\n", apiContent)
 	parsedAPI, e := p.Parse(apiContent)
 	if e != nil {
 		fmt.Println("Error while parsing API:", e)
 	}
 
 	// Print the parsedAPI value
-	fmt.Printf("Parsed API: %+v\n", parsedAPI)
+	fmt.Printf("WASM: Parsed API: %+v\n", parsedAPI)
 	return HandleParsedFile(parsedAPI)
 }
 
 func ProcessConverterInput(data string, ConvertLang string) (string, error) {
+	fmt.Println("WASM: ProcessConverterInput")
 	apiContent := data
 	p := parser.NewLama2Parser()
 	parsedAPI, e := p.Parse(apiContent)
-	fmt.Println("Parsed API:", parsedAPI)
+	fmt.Println("WASM: Parsed API:", parsedAPI)
 	if e != nil {
-		fmt.Println("Error while parsing API:", e)
+		fmt.Println("WASM: Error while parsing API:", e)
 	}
 	snippet := codegen.GenerateTargetCode(ConvertLang, parsedAPI)
-	fmt.Println("Generated Snippet:", snippet)
+	fmt.Println("WASM: Generated Snippet:", snippet)
 	return snippet, nil
 }
 
 func ExecuteRequestorBlockHelper(resp httpie.ExResponse, headersString string, e1 error, vm interface{}) httpie.ExResponse {
+	fmt.Println("WASM: ExecuteRequestorBlockHelper")
 	targetHeader := "text/html"
 	isTextHTMLPresent := strings.Contains(headersString, targetHeader)
 	if isTextHTMLPresent {
-		fmt.Printf("'%s' is present in the headers.\n", targetHeader)
+		fmt.Printf("WASM: '%s' is present in the headers.\n", targetHeader)
 		return resp
 	} else {
-		fmt.Printf("'%s' is not present in the headers.\n", targetHeader)
+		fmt.Printf("WASM: '%s' is not present in the headers.\n", targetHeader)
 		if e1 == nil {
 			chainCode := cmdexec.GenerateChainCode(resp.Body)
 			preprocess.RunCodeInWorker(chainCode)
 		} else {
-			fmt.Println("Error from ExecCommand", e1)
+			fmt.Println("WASM: Error from ExecCommand", e1)
 			os.Exit(1)
 		}
 	}
@@ -76,6 +79,7 @@ func ExecuteRequestorBlockHelper(resp httpie.ExResponse, headersString string, e
 }
 
 func processBlocks(parsedAPIblocks []*gabs.Container, o *lama2cmd.Opts, dir string) (httpie.ExResponse, *lama2cmd.Opts, []outputmanager.ResponseTime, []outputmanager.StatusCode, []outputmanager.ContentSize, error) {
+	fmt.Println("WASM: processBlocks")
 	worker = preprocess.InitWebWorker() // Initialize the web worker
 	var resp httpie.ExResponse
 	for i, block := range parsedAPIblocks {
@@ -89,12 +93,15 @@ func processBlocks(parsedAPIblocks []*gabs.Container, o *lama2cmd.Opts, dir stri
 			resp, _, _ = processLama2FileBlock(block, worker, o, dir)
 		}
 	}
+	fmt.Println("WASM: processBlocks returning")
 	return resp, o, nil, nil, nil, nil
 }
 
 func ExecuteProcessorBlock(block *gabs.Container) {
+	fmt.Println("WASM: ExecuteProcessorBlock")
 	b := block.S("value").Data().(*gabs.Container)
 	log.Debug().Str("Processor block incoming block", block.String()).Msg("")
 	script := b.Data().(string)
 	preprocess.RunCodeInWorker(script)
+	fmt.Println("WASM: ExecuteProcessorBlock returning")
 }

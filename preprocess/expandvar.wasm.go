@@ -18,6 +18,7 @@ import (
 // Expand replaces ${var} or $var in the string based on the mapping function.
 // For example, os.ExpandEnv(s) is equivalent to os.Expand(s, os.Getenv).
 func Expand(s string, vm interface{}, mapping map[string]string) string {
+	fmt.Println("WASM: Expanding variables")
 	var buf []byte
 	// ${} is all ASCII, so bytes are fine for this operation.
 	i := 0
@@ -51,10 +52,12 @@ func Expand(s string, vm interface{}, mapping map[string]string) string {
 		res = string(buf) + s[i:]
 	}
 	res2 := utils.RemoveUnquotedValueMarker(res)
+	fmt.Println("WASM: Expanded variables", res2)
 	return res2
 }
 
 func getJsValue(name string, mapping map[string]string, buf []byte) []byte {
+	fmt.Println("WASM: Getting JavaScript value")
 	log.Debug().Str("WW Getting from worker", name).Msg("")
 	jsVal := GetFromWorker(name)
 	fmt.Println("WW: getjsvalue", name, jsVal)
@@ -70,5 +73,6 @@ func getJsValue(name string, mapping map[string]string, buf []byte) []byte {
 			log.Warn().Str("Couldn't find the variable `"+name+"`, in both Javascript processor block and environment variables. Replacing with empty string", "").Msg("")
 		}
 	}
+	fmt.Println("WASM: Returning buffer", buf)
 	return buf
 }

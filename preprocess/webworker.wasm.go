@@ -12,6 +12,7 @@ import (
 var worker js.Value
 
 func InitWebWorker() js.Value {
+	fmt.Println("WASM: Initializing web worker")
 	if worker.IsUndefined() {
 		script := `
 			var result;
@@ -62,10 +63,12 @@ func InitWebWorker() js.Value {
 			return nil
 		}))
 	}
+	fmt.Println("WASM: Web worker initialized")
 	return worker
 }
 
 func RunCodeInWorker(chainCode string) {
+	fmt.Println("WASM: Running code in web worker")
 	// Ensure the worker is initialized
 	InitWebWorker()
 	// Send the message to the worker
@@ -73,9 +76,11 @@ func RunCodeInWorker(chainCode string) {
 		"type":    "execute",
 		"payload": chainCode,
 	})
+	fmt.Println("WASM: Code sent to web worker")
 }
 
 func GetFromWorker(variableName string) string {
+	fmt.Println("WASM: Getting from web worker")
 	worker := InitWebWorker()
 	responseChannel := make(chan js.Value, 20)
 
@@ -103,6 +108,6 @@ func GetFromWorker(variableName string) string {
 	fmt.Println("WW: Webworker call complete:", variableName)
 	var result js.Value
 	result = <-responseChannel
-	fmt.Println("WW: getfromworker webworker.go", variableName, result.Get("value").String())
+	fmt.Println("WASM: getfromworker webworker.go", variableName, result.Get("value").String())
 	return result.Get("value").String()
 }
