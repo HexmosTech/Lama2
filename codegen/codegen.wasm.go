@@ -125,6 +125,6 @@ func PrepareHTTPSnippetGenerator(snippetArgs SnippetArgs) string {
 	`
 	tmpl, _ := template.New("httpsnippet").Parse(templStr)
 	tmpl.Execute(&templOutput, snippetArgs)
-	fmt.Println("WASM: Templ output:", templOutput.String())
+	fmt.Println("WASM: Templ output:")
 	return templOutput.String()
 }
